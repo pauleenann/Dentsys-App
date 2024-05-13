@@ -29,6 +29,7 @@ const AdminNavbar = () => {
                         <p className="admin-appointments-text m-0 adminnav-menu">Appointments</p>
                     </div>
                 </div></Link>
+                <Link className='adminnav-link' to='/patient-list'>
                 <div className="admin-nav-patients row">
                     <div className="col-2 p-0">
                     <i className="fa-solid fa-hospital-user adminnav-menu"></i>   
@@ -37,7 +38,7 @@ const AdminNavbar = () => {
                     <p className="admin-patients-text m-0 adminnav-menu">Patients</p> 
                     </div>
                     
-                </div>
+                </div></Link>
                 </div>
             </div>
             </div>

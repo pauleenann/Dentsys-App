@@ -9,6 +9,7 @@ import Admin from "./Components/Admin/Admin";
 import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
 import Dashboard from "./Pages/Dashboard";
 import AdminAppointmentList from "./Pages/AdminAppointmentList";
+import AdminPatients from "./Components/AdminPatients/AdminPatients";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/appointment-list" element={<AdminAppointmentList/>} />
+        <Route path="/patient-list" element={<AdminPatients/>} />
         
       </Routes>
       

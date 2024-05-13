@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+
+
+#content {
+    width: 100%;
+    padding: 30px 50px;
+    min-height: 100vh;
+    transition: all 0;
+}
+
+.patient-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+ }
+ 
+ .patient-button-color{
+     background-color: #31A3B9;
+ }
+ 
+ .button-text{
+     color: #fff;
+     padding: 10px;
+ }
+
+ .search{
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+ }
+
+
+ .search-bar{
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    background-color: #00000005;
+    color: #31A3B9;
+    border-radius: 25px;
+    color: #000;
+ }
+
+ .filter-button, .orderby-button{
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    background-color: #00000005;
+    border-radius: 25px;
+    display: flex;
+    color: #000;
+ }
+
+ .patient-record{
+    background-color: #31a2b918;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+
+ }
+
+ .button-edit-container{
+    background-color: #fff;
+    border: 1px solid #31A3B9;
+    margin-left: 10px;
+ }
+
+ .button-edit-container:hover{
+    background-color: #31A3B9;
+ }
+
+ .button-edit:hover{
+    color: #fff;
+ }

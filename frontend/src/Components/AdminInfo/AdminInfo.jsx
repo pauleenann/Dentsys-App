@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './AdminInfo.css'
 
 const AdminInfo = () => {
     const [currentTime, setCurrentTime] = useState(new Date());

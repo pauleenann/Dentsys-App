@@ -8,6 +8,7 @@ import ServicesPage from "./Components/ServicesPage/ServicesPage";
 import Admin from "./Components/Admin/Admin";
 import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
 import Dashboard from "./Pages/Dashboard";
+import AdminAppointmentList from "./Pages/AdminAppointmentList";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
         <Route path="/services-page" element={<ServicesPage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/appointment-list" element={<AdminAppointmentList/>} />
         
       </Routes>
       

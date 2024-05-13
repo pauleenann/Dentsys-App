@@ -18,3 +18,131 @@ body {
     min-height: 100vh;
     transition: all 0;
 }
+
+.appoint-header{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 25px;
+}
+
+.app-button-color{
+    background-color: #31A3B9;
+}
+
+.button-text{
+    color: #fff;
+    padding: 10px;
+}
+
+.buttons{
+    display: flex;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.button-border-text{
+    color: #31A3B9;
+    border: 1px solid #31A3B9;
+}
+
+.button-radius{
+    padding: 3px 18px;
+    border-radius: 20px;
+}
+
+.upcoming-row{
+    background-color: #EBF9F7;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.app-patient-label{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #36CE57;
+}
+
+.app-patient-info{
+    color: #36CE57;
+}
+
+.button-resched{
+    color: #31A3B9;
+    border: 1px solid #31A3B9;
+    background-color: #fff;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.button-delete{
+    color: #B93131;
+    border: 1px solid #B93131;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.pending-row{
+    background-color: #ffeec4;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.app-patient-label-pending{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #B99331;
+}
+
+.app-patient-info-pending{
+    color: #B99331;
+}
+
+.button-accept{
+    color: #36CE57;
+    border: 1px solid #36CE57;
+    background-color: #fff;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.button-calendar{
+    color: #31A3B9;
+    border: 1px solid #31A3B9;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.finished-row{
+    background-color: #31a2b918;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.app-patient-label-finished{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #31A3B9;
+}
+
+.app-patient-info-finished{
+    color: #31A3B9;
+}
+
+.button-view{
+    background-color: #31A3B9;
+    color: #fff;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+

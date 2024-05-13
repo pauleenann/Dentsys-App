@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #31A3B9;
+    color: #fff;
+    transition: all 0.3s;
+    
+}
+
+
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #31A3B9;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-nav-dashboard{
+    display: flex;
+    align-items: center;
+}
+
+.adminnav-menu{
+    color: #fff;
+}
+
+.admin-navbar-container{
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    
+}
+
+.admin-navbar{
+    background-color: #31A3B9;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    
+}
+
+.admin-navbar-logo{
+    width: 120px;
+    margin-bottom: 30px;
+}
+
+
+.admin-nav-dashboard, .admin-nav-appointments, .admin-nav-patients{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+
+.admin-dashboard-text, .admin-appointments-text,
+.admin-patients-text
+{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.admin-info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: end;
+}
+
+.admin-info-user-button{
+    color: #36CE57;
+    width: 250px;
+}
+
+.admin-hello, .admin-info-name{
+    color: #36CE57;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.admin-info-dashtext{
+    padding-top: 10px;
+    font-size: 3rem;
+}
+
+#content {
+    width: 100%;
+    padding: 30px 50px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.admin-dash-cards{
+    display: flex;
+    gap: 25px;
+    padding: 0 13px;
+}
+
+.dashboard-card{
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashcard-p{
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.total{
+    font-size: 4rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.patients-today{
+    background-color: #36CE57;
+}
+
+.pending-appointments{
+    background-color: #B99331;
+}
+
+.cancelled-appointments{
+    background-color: #B93131;
+}
+
+.recent-visits{
+    background-color: #87D99E;
+}
+
+.earnings-today{
+    background-color: #3180B9;
+}
+
+.appointnment-today-card{ 
+    border-radius: 10px;
+    background-color: #EBF9F7;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.row2{
+    display: flex;
+    gap: 25px;
+    padding: 0 13px;
+}
+
+.appointments-today-p{
+    font-size: 1.3rem;
+    color: #36CE56;
+    font-weight: 500;
+}
+
+.no-bg-color{
+    background-color: transparent !important; 
+}
+
+.up-app{
+    padding: 30px 30px;
+    background-color: #31B957;
+    border-radius: 10px;
+
+}
+
+.button-link{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.up-app-button{
+    background-color: #87D99E;
+    padding: 10px 30px;
+    margin-top: 50px;
+}
+
+.up-app-button:hover{
+    background-color: #3bff72;
+}
+
+.up-app-text{
+    font-size: 1.3rem;
+    font-weight: 500;
+    
+}
+
+.up-app-label{
+    font-weight: 200;
+}
+
+.up-app-info{
+    font-size: 1.2rem;
+}
+
+.app-today-info{
+    font-weight: 500;
+    color: #36CE56 !important;
+}
+
+.up-app-link{
+    font-style: italic;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+.nothing{
+    font-style: italic;
+    color: #36CE56;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.row3{
+    padding: 25px 13px;
+}
+
+.recent-visits-card{
+    background-color: #62d3ea14;
+    padding: 30px 50px;
+    border-radius: 10px;
+}
+
+.nothing2{
+    font-style: italic;
+    color: #31A3B9;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.recent-visit-info{
+    padding-top: 15px !important; 
+    color: #31A3B9 !important;
+    font-weight: 500;
+}
+
+.recent-visit-th{
+    color: #31A3B9 !important;
+}
+
+.app-list-th{
+    color: #36CE56 !important;
+}
+
+.recent-visit-total-earnings{
+    text-align: end;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    margin-right: 240px;
+}
+
+.rv-total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+}
+
+.recent-visit-header, .rv-total-label{
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.rv-total-amount{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.rv-button{
+    background-color: #31A3B9;
+    padding: 5px 30px;
+    color: #fff;
+}
+
+.rv-button:hover{
+    background-color: #39c4e0;
+    color: #fff;
+}

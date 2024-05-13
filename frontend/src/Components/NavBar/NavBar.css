@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-box{
+    padding: 12px 150px;
+    background-color: #31a2b9b0;
+    color: #ffffff;
+}
+
+.logo{
+    width: 60px;
+    height: 58px;
+}
+
+.menu li{
+    margin-left: 40px;
+}
+
+.menu li a{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 1200px) {
+    .navigation-box{
+        padding: 12px 50px;
+    }   
+}

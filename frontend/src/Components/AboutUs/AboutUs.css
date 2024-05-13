@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    color: #31A3B9;
+}
+
+.aboutus-container{
+    width: 100%;
+    
+}
+
+.aboutus-row{
+
+}
+
+.aboutus-img{
+    background: url('./../../Assets/aboutus.jpg');
+    background-size: cover;
+    height: 700px;
+}
+
+.aboutus-content-container{
+    display: flex;
+    align-items: center;
+}
+
+.aboutus-content{
+    padding: 0 50px;
+}
+
+
+.aboutus-content-h2{
+    font-size: 3rem;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    color: #31A3B9;
+}
+
+.aboutus-content-p{
+    font-size: 1.4rem;
+    color: #31A3B9;
+}
+
+@media screen and (max-width: 1000px) {
+    .aboutus-img{
+        height: 500px;
+        width: 100%;
+    }
+
+    .aboutus-content{
+        padding: 0 40px;
+    }
+
+    .aboutus-content-h2{
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .aboutus-content-p{
+        font-size: 1.2rem
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .aboutus-img{
+        height: 300px;
+        width: 100%;
+    }
+
+}

@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.appointment-submitted{
+   
+    margin-top: 50px;
+    padding: 0 30px;
+}
+
+.appointment-submitted-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #36CE57;
+}
+
+.check-icon{
+    font-size: 35px;
+    color: #36CE57;
+}
+
+.appointment-request-receipt{
+    margin-top: 20px;
+    background-color: #EBF9F7;
+    padding: 40px;
+    color: #36CE57;
+    
+}
+
+.request-reminders{
+    font-weight: bold;
+    font-style: italic;
+    color: #36CE57;
+}
+
+.back-text, .chevron{
+    color: #31A3B9;
+}
+
+.thankyou-text{
+    color: #36CE57;
+}
+
+.hello{
+    color: #36CE57;
+    font-size: 1.5rem;
+}
+
+.client-container{
+    padding: 0
+    
+}
+
+.client-container-email, .client-container-phone{
+    color: #36CE57;
+}
+
+
+.submitted-client-name{
+    color: #36CE57;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 1000px) {
+    .back-text{
+        display: none;
+    }
+}

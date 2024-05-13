@@ -46,6 +46,17 @@ body {
     border: 1px solid #31A3B9;
 }
 
+.button-border-text:hover, .button-border-text:active{
+    background-color: #31A3B9;
+    color: #fff;
+}
+
+
+
+.app-button-color:hover{
+    background-color: #008ca9;
+}
+
 .button-radius{
     padding: 3px 18px;
     border-radius: 20px;
@@ -77,6 +88,11 @@ body {
     box-shadow: 1px 1px 2px #a9a9a989;
 }
 
+.button-resched:hover, .button-resched:hover{
+    background-color: #31A3B9;
+    color: #fff;
+}
+
 .button-delete{
     color: #B93131;
     border: 1px solid #B93131;
@@ -85,6 +101,12 @@ body {
     background-color: #fff;
     box-shadow: 1px 1px 2px #a9a9a989;
 }
+
+.button-delete:hover, .button-delete:active{
+    color: #fff;
+    background-color: #B93131;
+}
+
 
 .pending-row{
     background-color: #ffeec4;
@@ -112,6 +134,11 @@ body {
     box-shadow: 1px 1px 2px #a9a9a989;
 }
 
+.button-accept:hover, .button-accept:active{
+    color: #fff;
+    background-color: #36CE57;
+}
+
 .button-calendar{
     color: #31A3B9;
     border: 1px solid #31A3B9;
@@ -119,6 +146,11 @@ body {
     padding: 10px;
     border-radius: 8px;
     box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.button-calendar:hover{
+    color: #fff;
+    background-color: #31A3B9;
 }
 
 .finished-row{
@@ -144,5 +176,10 @@ body {
     background-color: #31A3B9;
     color: #fff;
     box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.button-view:hover{
+    background-color: #00849f;
+    color: #fff;
 }
 

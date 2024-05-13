@@ -11,7 +11,7 @@ const AdminAppointment = () => {
                 <AdminInfo></AdminInfo>
                 <div className="appoint-header">
                   <h1>Appointments</h1>
-                  <button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light'> Add an Appointment</span></button>
+                  <button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button>
                 </div>
 
                 {/* buttons */}

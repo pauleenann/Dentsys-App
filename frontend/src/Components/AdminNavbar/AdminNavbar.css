@@ -66,8 +66,13 @@ body {
 .admin-nav-dashboard, .admin-nav-appointments, .admin-nav-patients{
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
     cursor: pointer;
+    /* background-color: #36CE57; */
+    padding: 10px 37px;
+}
+
+.admin-nav-dashboard:hover, .admin-nav-appointments:hover, .admin-nav-patients:hover, .admin-nav-dashboard:active, .admin-nav-appointments:active, .admin-nav-patients:active{
+    background-color: #36CE57;
 }
 
 
@@ -87,6 +92,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
 }
+
 
 .admin-info{
     display: flex;

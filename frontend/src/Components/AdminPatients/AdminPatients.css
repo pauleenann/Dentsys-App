@@ -30,6 +30,10 @@ body {
  .patient-button-color{
      background-color: #31A3B9;
  }
+
+ .patient-button-color:hover{
+    background-color: #0088a3;
+ }
  
  .button-text{
      color: #fff;
@@ -81,6 +85,7 @@ body {
 
  .button-edit-container:hover{
     background-color: #31A3B9;
+    color: #fff;
  }
 
  .button-edit:hover{

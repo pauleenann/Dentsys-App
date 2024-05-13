@@ -2,6 +2,7 @@ import React from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminPatients.css'
+import { Link } from 'react-router-dom'
 
 const AdminPatients = () => {
   return (
@@ -11,7 +12,9 @@ const AdminPatients = () => {
             <AdminInfo></AdminInfo>
             <div className="patient-header">
                   <h1>Patients</h1>
+                  <Link to='/add-new-patient'>
                   <button className='btn patient-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add a New Patient</span></button>
+                  </Link>
                 </div>
 
                 {/* patient search, filter, and sort */}

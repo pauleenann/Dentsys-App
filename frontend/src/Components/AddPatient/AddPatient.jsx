@@ -72,6 +72,7 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 
 
 const AddPatient = () => {
+    
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
         2: { default: tooth2, selected: selected2 },
@@ -109,15 +110,36 @@ const AddPatient = () => {
 
     const [selectedTeeth, setSelectedTeeth] = useState({});
 
+    const [patient, setPatient] = useState({
+        fname: '',
+        lname: '',
+        mname: '',
+        ename: '',
+        age: '',
+        gender: '',
+        email: '',
+        phone: '',
+        date_: '',
+        time_: '',
+        service_: '',
+        selectedTeeth: {}, 
+        dentist: '',
+        payment: '',
+        paid_amount: ''
+    });
+
     const handleToothClick = (toothId) => {
-        setSelectedTeeth(prevState => ({
+        setPatient((prevState) => ({
             ...prevState,
-            [toothId]: !prevState[toothId]
+            selectedTeeth: {
+                ...prevState.selectedTeeth,
+                [toothId]: !prevState.selectedTeeth[toothId],
+            },
         }));
     };
 
     const renderTooth = (toothId) => {
-        const isSelected = selectedTeeth[toothId];
+        const isSelected = patient.selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
 
         return (
@@ -131,7 +153,7 @@ const AddPatient = () => {
     };
 
     const renderTooth2 = (toothId) => {
-        const isSelected = selectedTeeth[toothId];
+        const isSelected = patient.selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
 
         return (
@@ -140,38 +162,12 @@ const AddPatient = () => {
                     {toothId}
                 </button>
                 <img src={imgSrc} className='tooth' alt="" />
-                
             </div>
         );
     };
     
-    const [patient, setPatient] = useState({
-        fname: '',
-        lname: '',
-        mname: '',
-        ename: '',
-        age: '',
-        gender: '',
-        email: '',
-        phone: '',
-        date_: '',
-        time_: '',
-        service_: '',
-        
-    });
 
-    const [formData, setFormData] = useState({
-        fname: '',
-        lname: '',
-        mname: '',
-        ename: '',
-        email: '',
-        phone: '',
-        service_: '',
-        date_: '',
-        time_: ''
-    });
-
+    
     
 
     const services = [
@@ -206,8 +202,8 @@ const AddPatient = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setPatient({
+            ...patient,
             [name]: value
         });
     }
@@ -217,15 +213,15 @@ const AddPatient = () => {
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-          await axios.post("http://localhost:80/api2/user/save", formData);
-          navigate("/appointment-request-submitted", {state: formData});
+          await axios.post("http://localhost:80/api2/user/save", patient);
+          navigate("/appointment-request-submitted", {state: patient});
         } catch (err) {
           console.log(err);
         //   setError(true)
         }
       };
 
-    console.log(formData);
+    console.log(patient);
 
   return (
     <div className='wrapper'>
@@ -256,37 +252,37 @@ const AddPatient = () => {
                     {/* fname */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname' required/>
+                        <input type="text" className="form-control " name='fname' id='fname' value={patient.fname} onChange={handleChange} required/>
                     </div>
 
                     {/* lname */}
                     <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >Last name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname' required/>
+                        <label htmlFor="" className="form-label labels" >Last name <span className='required-field'>*</span></label>
+                        <input type="text" className="form-control " name='lname' id='lname' value={patient.lname} onChange={handleChange} required/>
                     </div>
 
                     {/* mname */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Middle name</label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='mname' id='mname' value={patient.mname} onChange={handleChange}/>
                     </div>
 
                     {/* ename */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Extension name</label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='ename' id='ename' value={patient.ename} onChange={handleChange}/>
                     </div>
 
                     {/* age */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Age <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='age' id='age' value={patient.age} onChange={handleChange}/>
                     </div>
 
                     {/* gender */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-lavel labels">Gender</label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" >
+                        <select class="form-select" aria-label="Default select example" id="gender" name="gender" value={patient.gender} onChange={handleChange} >
                             <option value="" labels disabled>Select Gender</option>
                                     {gender.map((gender) => (
                                         <option key={gender.value} value={gender.value}>{gender.label}</option>
@@ -297,13 +293,13 @@ const AddPatient = () => {
                     {/* email */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-label labels" >Email <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='email' id='email' value={patient.email} onChange={handleChange}/>
                     </div>
 
                     {/* phone */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-label labels" >Phone number <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='phone' id='phone' value={patient.phone} onChange={handleChange}/>
                     </div>
 
                     <hr />
@@ -311,7 +307,7 @@ const AddPatient = () => {
                     {/* date */}
                     <div className="col-4 mb-5 mt-5 ">
                         <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" />
+                        <input  type="date" id="date" name="date_" className="form-control labels" value={patient.date_} onChange={handleChange}/>
                     </div>
 
                     {/* time */}
@@ -378,7 +374,7 @@ const AddPatient = () => {
                     {/* services */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-lavel labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
+                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={patient.service_} onChange={handleChange}>
                             <option value="" labels disabled>Select a Service</option>
                                     {services.map((service) => (
                                         <option key={service.value} value={service.value}>{service.label}</option>
@@ -422,7 +418,7 @@ const AddPatient = () => {
             <div className="row mt-5">
                 <div className="col-6">
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="dentist" name="dentist" value={formData.dentist} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="dentist" name="dentist" value={patient.dentist} onChange={handleChange}>
                         <option value="" labels disabled>Select Dentist</option>
                                 {dentist.map((dentist) => (
                                             <option key={dentist.value} value={dentist.value}>{dentist.label}</option>
@@ -478,7 +474,7 @@ const AddPatient = () => {
                 {/* payement method */}
                 <div className="col-4">
                     <label htmlFor="" className="form-lavel labels mb-2">Payment Method</label>
-                    <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.payment} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="service" name="service_" value={patient.payment} onChange={handleChange}>
                         <option value="" labels disabled>Select Payment Method</option>
                                     {payment.map((payment) => (
                                         <option key={payment.value} value={payment.value}>{payment.label}</option>
@@ -488,7 +484,7 @@ const AddPatient = () => {
                 {/* paid amount */}
                 <div className="col-4">
                     <label htmlFor="" className="form-label labels" >Paid Amount</label>
-                    <input type="text" className="form-control " name='fname' id='fname'/>
+                    <input type="text" className="form-control " name='paid_amount' id='paid_amount' value={patient.paid_amount} onChange={handleChange}/>
                 </div>
             </div>
             {/* end of payment row */}
@@ -497,7 +493,7 @@ const AddPatient = () => {
             <div className="row text-end">
                 <div className="col total-paid mb-2">
                     <h6>Total Paid</h6>
-                    <p className='m-0'>₱ <span>1,500.00</span></p>
+                    <p className='m-0'>₱ <span>0.00</span></p>
                 </div>
                 <hr />
             </div>
@@ -513,10 +509,6 @@ const AddPatient = () => {
             <div className="text-center">
                 <button className='btn save-patient-button'>Save</button>
             </div>
-
-
-
-
         </div>
 
       </div>

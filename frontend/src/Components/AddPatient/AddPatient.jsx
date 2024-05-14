@@ -128,6 +128,8 @@ const AddPatient = () => {
         paid_amount: ''
     });
 
+    const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
+
     const handleToothClick = (toothId) => {
         setPatient((prevState) => ({
             ...prevState,
@@ -136,6 +138,15 @@ const AddPatient = () => {
                 [toothId]: !prevState.selectedTeeth[toothId],
             },
         }));
+
+        // displays selected tooth sa tooth number input field
+        setSelectedToothNumbers(prevSelectedToothNumbers => {
+            const updatedSelectedToothNumbers = prevSelectedToothNumbers.includes(toothId) ?
+                prevSelectedToothNumbers.filter(id => id !== toothId) :
+                [...prevSelectedToothNumbers, toothId];
+
+            return updatedSelectedToothNumbers;
+        });
     };
 
     const renderTooth = (toothId) => {
@@ -233,7 +244,7 @@ const AddPatient = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-right chevron"></i> <span>Go back</span></p>
+                <p><i class="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
             </div>
             </Link>
         </div>
@@ -385,7 +396,7 @@ const AddPatient = () => {
                     {/* tooth num */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-label labels" >Tooth Number </label>
-                        <input type="text" className="form-control " name='fname' id='fname'/>
+                        <input type="text" className="form-control " name='toothNumber' id='toothNumber' value={selectedToothNumbers} onChange={() => {}} />
                     </div>
                 </div>
 
@@ -474,7 +485,7 @@ const AddPatient = () => {
                 {/* payement method */}
                 <div className="col-4">
                     <label htmlFor="" className="form-lavel labels mb-2">Payment Method</label>
-                    <select class="form-select" aria-label="Default select example" id="service" name="service_" value={patient.payment} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="payment" name="payment" value={patient.payment} onChange={handleChange}>
                         <option value="" labels disabled>Select Payment Method</option>
                                     {payment.map((payment) => (
                                         <option key={payment.value} value={payment.value}>{payment.label}</option>

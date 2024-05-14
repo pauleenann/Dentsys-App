@@ -2,8 +2,14 @@ import React from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminAppointment.css'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import Reschedule from '../Reschedule/Reschedule'
+
 
 const AdminAppointment = () => {
+  const [showReschedule, setShowReschedule] = useState(false); // State to toggle Reschedule
+
   return (
     <div className="wrapper">
             <AdminNavbar></AdminNavbar>
@@ -36,7 +42,7 @@ const AdminAppointment = () => {
                     UPCOMING
                   </div>
                   <div className="col ">
-                    <button className='btn button-resched'>Reschedule</button>
+                    <button className='btn button-resched ' onClick={() => setShowReschedule(true)}>Reschedule</button>
                     <button className='btn'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                   </div>
                 </div>
@@ -55,6 +61,7 @@ const AdminAppointment = () => {
                   </div>
                   <div className="col ">
                     <button className='btn button-accept'>Accept</button>
+                    
                     <button className='btn'><i class="fa-regular fa-calendar button-calendar button-calendar"></i></button>
                     <button className='btn p-0 '><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                   </div>
@@ -78,7 +85,14 @@ const AdminAppointment = () => {
                 </div>
                   
             </div>
+            {/* shows reschedule component pag clinick resched button */}
+            {showReschedule && (
+        <div className="reschedule-overlay">
+          <Reschedule onClose={() => setShowReschedule(false)} />
         </div>
+      )}
+        </div>
+      
   )
 }
 

@@ -450,7 +450,13 @@ const AddPatient = () => {
                             <div className="receipt-procedure">
                                 <ul>
                                     <li>{patient.service_}<ul>
-                                    <li>Tooth No.: <span>{Object.keys(patient.selectedTeeth).join(', ')}</span></li></ul></li>
+                                    <li>Tooth No.: <span>
+                                        {Object.entries(patient.selectedTeeth)
+                                            .filter(([toothNumber, isSelected]) => isSelected)
+                                            .map(([toothNumber]) => toothNumber)
+                                            .join(', ')
+                                        }
+                                    </span></li></ul></li>
                                 </ul>
                             </div>
                             {/* receipt cost */}

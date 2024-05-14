@@ -19,3 +19,43 @@ body {
     min-height: 100vh;
     transition: all 0;
 }
+
+
+.add-patient-container{
+    background-color: #EBF9F7;
+    padding: 50px 80px;
+}
+
+.receipt-container{
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.receipt-header{
+    background-color: #31A3B9;
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.receipt-info{
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.receipt-total{
+    background-color: #b5f3ff73;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 0 0 10px  10px;
+}
+
+.receipt-total-amount{
+    display: flex;
+    gap: 150px;
+    padding: 15px 0;
+}

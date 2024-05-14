@@ -178,9 +178,6 @@ const AddPatient = () => {
     };
     
 
-    
-    
-
     const services = [
         { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
         { value: 'Composite Restoration', label: 'Composite Restoration' },
@@ -452,8 +449,8 @@ const AddPatient = () => {
                             {/* receipt procedure */}
                             <div className="receipt-procedure">
                                 <ul>
-                                    <li>Procedure <ul>
-                                        <li>Tooth No.: <span>0,0,0</span></li></ul></li>
+                                    <li>{patient.service_}<ul>
+                                    <li>Tooth No.: <span>{Object.keys(patient.selectedTeeth).join(', ')}</span></li></ul></li>
                                 </ul>
                             </div>
                             {/* receipt cost */}
@@ -518,7 +515,7 @@ const AddPatient = () => {
 
             {/* button */}
             <div className="text-center">
-                <button className='btn save-patient-button'>Save</button>
+                <button className='btn save-patient-button' onClick={handleClick}>Save</button>
             </div>
         </div>
 

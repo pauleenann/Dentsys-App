@@ -9,6 +9,7 @@ const AppointmentForm = () => {
     
 
     const [formData, setFormData] = useState({
+        action: 'addAppointment',
         fname: '',
         lname: '',
         mname: '',

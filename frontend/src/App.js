@@ -12,6 +12,7 @@ import AdminAppointmentList from "./Pages/AdminAppointmentList";
 import AdminPatients from "./Components/AdminPatients/AdminPatients";
 import AddNewPatient from "./Pages/AddNewPatient";
 import Reschedule from "./Components/Reschedule/Reschedule";
+import RescheduleDone from "./Components/RescheduleDone/RescheduleDone";
 
 const App = () => {
   return (
@@ -31,6 +32,8 @@ const App = () => {
         <Route path="/patient-list" element={<AdminPatients/>} />
         <Route path="/add-new-patient" element={<AddNewPatient/>} />
         <Route path="/reschedule" element={<Reschedule></Reschedule>} />
+        <Route path="/rescheduled" element={<RescheduleDone></RescheduleDone>} />
+        
         
       </Routes>
       

@@ -77,7 +77,7 @@ const AdminAppointment = () => {
                     10:00 AM - 11:00 AM
                   </div>
                   <div className="col app-patient-info-finished">
-                    PENDING
+                    FINISHED
                   </div>
                   <div className="col ">
                     <button className='btn button-view'>View</button>

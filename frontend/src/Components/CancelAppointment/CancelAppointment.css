@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+.cancel-app{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel-app-card{
+    width: 850px;
+    height: 300px;
+    box-shadow: 1px 1px 5px #0000003d;
+    background-color: #fff;
+    
+}
+
+.cancel-app-header{
+    background-color: #B93131;
+}
+
+.black-color{
+    color: #000;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.discard-button{
+    border: 2px solid #B93131;
+    color: #B93131;
+    font-weight: 600;
+    width: 200px;
+}
+
+.cancel-button{
+    background-color: #B93131;
+    color: #fff;
+    font-weight: 600;
+    width: 200px;
+}

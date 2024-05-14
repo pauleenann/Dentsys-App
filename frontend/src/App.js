@@ -15,6 +15,7 @@ import Reschedule from "./Components/Reschedule/Reschedule";
 import RescheduleDone from "./Components/RescheduleDone/RescheduleDone";
 import AppointmentDetails from "./Components/AppointmentDetails/AppointmentDetails";
 import AppointmentConfirmed from "./Components/AppoinmentConfirmed/AppointmentConfirmed";
+import CancelAppointment from "./Components/CancelAppointment/CancelAppointment";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/rescheduled" element={<RescheduleDone></RescheduleDone>} />
         <Route path="/appointment-details" element={<AppointmentDetails/>} />
         <Route path="/appointment-confirmed" element={<AppointmentConfirmed/>} />
+        <Route path="/cancel-appointment" element={<CancelAppointment/>} />
 
         
         

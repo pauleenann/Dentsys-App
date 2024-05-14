@@ -13,6 +13,7 @@ import AdminPatients from "./Components/AdminPatients/AdminPatients";
 import AddNewPatient from "./Pages/AddNewPatient";
 import Reschedule from "./Components/Reschedule/Reschedule";
 import RescheduleDone from "./Components/RescheduleDone/RescheduleDone";
+import AppointmentDetails from "./Components/AppointmentDetails/AppointmentDetails";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/add-new-patient" element={<AddNewPatient/>} />
         <Route path="/reschedule" element={<Reschedule></Reschedule>} />
         <Route path="/rescheduled" element={<RescheduleDone></RescheduleDone>} />
+        <Route path="/appointment-details" element={<AppointmentDetails/>} />
         
         
       </Routes>

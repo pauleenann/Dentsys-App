@@ -1,19 +1,17 @@
 import React from 'react'
-import './AppointmentDetails.css'
+import './AppointmentConfirmed.css'
 
-const AppointmentDetails = () => {
+const AppointmentConfirmed = () => {
   return (
-    <div className='app-details'>
-      <div className="app-details-card">
+    <div className='app-confirmed'>
+      <div className="app-confirmed-card">
         {/* header */}
-        <div className="app-details-header py-4 px-4">
+        <div className="app-confirmed-header py-4 px-4">
             <div className="row">
-                <div className="col-2"></div>
-                <div className="col-8">
-                    <h5 className='text-light m-0 text-center '>Appointment Details</h5>
-                </div>
-                <div className="col-2 text-end">
-                    <i class="fa-solid fa-x text-light close-resched" ></i>
+                <div className="col-12 text-end"><i class="fa-solid fa-x text-light" ></i></div>
+                <div className="col text-center">
+                    <i class="fa-regular fa-calendar-check text-light fs-1 mb-3"></i>
+                    <h5 className='text-light'>Appointment Confirmed</h5>
                 </div>
             </div>
         </div>
@@ -28,8 +26,11 @@ const AppointmentDetails = () => {
             <div className="col-7 mb-2">0/0/0</div>
             <div className="col-5 mb-2">Time:</div>
             <div className="col-7 mb-2">10:00 AM - 11:00 AM</div>
+            <div className="col-12 text-center mt-5">
+                <i>Client has been emailed about the<br/>changes in their appointment</i>            
+            </div>
             <div className="button-okay text-center mt-5 mb-5">
-                <button className='btn okay-button'>Accept Appointment</button>
+                <button className='btn okay-button'>Okay</button>
             </div>
             <div className="col-6 resched-link">Reschedule</div>
             <div className="col-6 text-end cancel-link">Cancel Appointment</div>
@@ -41,4 +42,4 @@ const AppointmentDetails = () => {
   )
 }
 
-export default AppointmentDetails
+export default AppointmentConfirmed

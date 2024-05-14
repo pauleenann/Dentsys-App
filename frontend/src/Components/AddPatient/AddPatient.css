@@ -24,6 +24,7 @@ body {
 .add-patient-container{
     background-color: #EBF9F7;
     padding: 50px 80px;
+    border-radius: 15px;
 }
 
 .receipt-container{
@@ -58,4 +59,34 @@ body {
     display: flex;
     gap: 150px;
     padding: 15px 0;
+}
+
+.total-paid{
+    display: flex;
+    justify-content: end;
+    gap: 100px;
+    margin-top: 60px;
+}
+
+.balance{
+    display: flex;
+    justify-content: end;
+    gap: 100px;
+}
+
+.balance-text{
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #36CE57;
+}
+
+.save-patient-button{
+    background-color: #31A3B9;
+    color: #fff;
+    padding: 10px 25px;
+}
+
+.save-patient-button:hover{
+    background-color: #028da8;
+    color: #fff;
 }

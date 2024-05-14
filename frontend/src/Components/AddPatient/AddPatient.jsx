@@ -428,6 +428,7 @@ const AddPatient = () => {
             <h5 className='mb-4 mt-5'>Payment</h5>
 
             
+            {/* row for payment */}
             <div className="row">
                 {/* payement method */}
                 <div className="col-4">
@@ -444,8 +445,28 @@ const AddPatient = () => {
                     <label htmlFor="" className="form-label labels" >Paid Amount</label>
                     <input type="text" className="form-control " name='fname' id='fname'/>
                 </div>
+            </div>
+            {/* end of payment row */}
 
-                
+            {/* total paid */}
+            <div className="row text-end">
+                <div className="col total-paid mb-2">
+                    <h6>Total Paid</h6>
+                    <p className='m-0'>₱ <span>1,500.00</span></p>
+                </div>
+                <hr />
+            </div>
+
+            <div className="row text-end">
+                <div className="col balance mb-3">
+                    <h6 className='balance-text'>Balance</h6>
+                    <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
+                </div>
+            </div>
+
+            {/* button */}
+            <div className="text-center">
+                <button className='btn save-patient-button'>Save</button>
             </div>
 
 

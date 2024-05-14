@@ -90,3 +90,24 @@ body {
     background-color: #028da8;
     color: #fff;
 }
+
+.tooth{
+    width: 50px;
+    height: 90px;
+}
+
+.tooth-button{
+    margin: 5px 0;
+    background-color: #31A3B9;
+    color: #fff;
+    width: 50px;
+}
+
+.tooth-button:hover{
+    background-color: #0093b0;
+    color: #fff;
+}
+
+.tooth-container{
+    
+}

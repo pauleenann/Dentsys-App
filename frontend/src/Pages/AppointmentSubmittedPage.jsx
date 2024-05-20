@@ -8,6 +8,7 @@ const AppointmentSubmittedPage = () => {
       <NavBar></NavBar>
       <AppointmentSubmitted></AppointmentSubmitted>
     </div>
+    
   )
 }
 

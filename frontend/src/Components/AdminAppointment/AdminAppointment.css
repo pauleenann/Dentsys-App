@@ -118,6 +118,7 @@ body {
 }
 
 .app-patient-label-pending{
+    text-transform: capitalize;
     font-size: 1.5rem;
     font-weight: 500;
     color: #B99331;

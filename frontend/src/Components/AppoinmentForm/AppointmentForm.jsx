@@ -42,6 +42,7 @@ const AppointmentForm = () => {
         });
     }
 
+
     const navigate = useNavigate();
 
     const handleClick = async (e) => {
@@ -67,19 +68,19 @@ const AppointmentForm = () => {
                 <div className="row">
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname' value={formData.fname} onChange={handleChange} required/>
+                        <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} required/>
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control" name='lname' id='lname' value={formData.lname} onChange={handleChange} required/>
+                        <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} required/>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Middle name </label>
-                        <input type="text" className="form-control" name='mname' id='mname' value={formData.mname} onChange={handleChange}/>
+                        <input type="text" className="form-control input-form" name='mname' id='mname' value={formData.mname} onChange={handleChange}/>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Extension  name </label>
-                        <input type="text" className="form-control" name='ename' id='ename' value={formData.ename} onChange={handleChange}/>
+                        <input type="text" className="form-control input-form" name='ename' id='ename' value={formData.ename} onChange={handleChange}/>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
@@ -177,7 +178,7 @@ const AppointmentForm = () => {
                         <div className="col-4 mb-3 d-flex align-items-center labels">
                             Email:
                         </div>
-                        <div className="col-8 mb-3 client labels">
+                        <div className="col-8 mb-3 client labels-email">
                             {formData.email}
                         </div>
                         <div className="col-4 mb-3 d-flex align-items-center labels">

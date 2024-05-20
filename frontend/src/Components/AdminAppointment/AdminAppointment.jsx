@@ -104,7 +104,7 @@ const AdminAppointment = () => {
                       </div>
                     );
                   }
-                  else if (appointment.status === '') {
+                  else if (appointment.status === null) {
                     return (
                       <div className="row pending-row" key={key}>
                         <div className="col">

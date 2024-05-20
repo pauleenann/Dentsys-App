@@ -18,6 +18,9 @@
     
     
 }
+.input-form{
+    text-transform: capitalize;
+}
 
 .patient-info{
     background-color: #EBF9F7;
@@ -28,8 +31,12 @@
     color: #31A3B9;
 }
 
-.labels, .time-text{
+.labels, .time-text, .labels-email{
     color: #31A3B9;
+}
+
+.labels{
+    text-transform: capitalize;
 }
 
 .appointment-summary{

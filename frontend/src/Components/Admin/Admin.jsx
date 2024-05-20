@@ -40,9 +40,8 @@ const Admin = () => {
       });
       const data = await response.json();
             if (data.status === 1) {
-                // Redirect to another page upon successful login
                 localStorage.setItem('username', loginData.username);
-                window.location.href = '/dashboard'; // Change '/dashboard' to the desired URL
+                window.location.href = '/dashboard'; 
             } else {
                 console.error(data.message);
             }

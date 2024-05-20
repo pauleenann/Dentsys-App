@@ -111,21 +111,22 @@ const AddPatient = () => {
     const [selectedTeeth, setSelectedTeeth] = useState({});
 
     const [patient, setPatient] = useState({
-        fname: '',
-        lname: '',
-        mname: '',
-        ename: '',
-        age: '',
-        gender: '',
-        email: '',
-        phone: '',
-        date_: '',
-        time_: '',
-        service_: '',
-        selectedTeeth: {}, 
-        dentist: '',
-        payment: '',
-        paid_amount: ''
+        action: 'addNewPatient',
+        p_fname: '',
+        p_lname: '',
+        p_mname: '',
+        p_ename: '',
+        p_age: '',
+        p_gender: '',
+        p_email: '',
+        p_phone: '',
+        p_date: '',
+        p_time: '',
+        p_service: '',
+        p_selectedTeeth: {}, 
+        p_dentist: '',
+        p_payment: '',
+        p_paidamount: ''
     });
 
     const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
@@ -133,9 +134,9 @@ const AddPatient = () => {
     const handleToothClick = (toothId) => {
         setPatient((prevState) => ({
             ...prevState,
-            selectedTeeth: {
-                ...prevState.selectedTeeth,
-                [toothId]: !prevState.selectedTeeth[toothId],
+            p_selectedTeeth: {
+                ...prevState.p_selectedTeeth,
+                [toothId]: !prevState.p_selectedTeeth[toothId],
             },
         }));
 
@@ -150,7 +151,7 @@ const AddPatient = () => {
     };
 
     const renderTooth = (toothId) => {
-        const isSelected = patient.selectedTeeth[toothId];
+        const isSelected = patient.p_selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
 
         return (
@@ -164,7 +165,7 @@ const AddPatient = () => {
     };
 
     const renderTooth2 = (toothId) => {
-        const isSelected = patient.selectedTeeth[toothId];
+        const isSelected = patient.p_selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
 
         return (
@@ -210,10 +211,7 @@ const AddPatient = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setPatient({
-            ...patient,
-            [name]: value
-        });
+        setPatient({...patient,[name]: value});
     }
 
     const navigate = useNavigate();
@@ -222,7 +220,7 @@ const AddPatient = () => {
         e.preventDefault();
         try {
           await axios.post("http://localhost:80/api2/user/save", patient);
-          navigate("/appointment-request-submitted", {state: patient});
+          //navigate("/appointment-request-submitted", {state: patient});
         } catch (err) {
           console.log(err);
         //   setError(true)
@@ -260,37 +258,37 @@ const AddPatient = () => {
                     {/* fname */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='fname' id='fname' value={patient.fname} onChange={handleChange} required/>
+                        <input type="text" className="form-control " name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} required/>
                     </div>
 
                     {/* lname */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Last name <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control " name='lname' id='lname' value={patient.lname} onChange={handleChange} required/>
+                        <input type="text" className="form-control " name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} required/>
                     </div>
 
                     {/* mname */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Middle name</label>
-                        <input type="text" className="form-control " name='mname' id='mname' value={patient.mname} onChange={handleChange}/>
+                        <input type="text" className="form-control " name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange}/>
                     </div>
 
                     {/* ename */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Extension name</label>
-                        <input type="text" className="form-control " name='ename' id='ename' value={patient.ename} onChange={handleChange}/>
+                        <input type="text" className="form-control " name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange}/>
                     </div>
 
                     {/* age */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-label labels" >Age <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='age' id='age' value={patient.age} onChange={handleChange}/>
+                        <input type="text" className="form-control " name='p_age' id='p_age' value={patient.p_age} onChange={handleChange}/>
                     </div>
 
                     {/* gender */}
                     <div className="col-4 mb-4">
                         <label htmlFor="" className="form-lavel labels">Gender</label>
-                        <select class="form-select" aria-label="Default select example" id="gender" name="gender" value={patient.gender} onChange={handleChange} >
+                        <select class="form-select" aria-label="Default select example" id="p_gender" name="p_gender" value={patient.p_gender} onChange={handleChange} >
                             <option value="" labels disabled>Select Gender</option>
                                     {gender.map((gender) => (
                                         <option key={gender.value} value={gender.value}>{gender.label}</option>
@@ -301,13 +299,13 @@ const AddPatient = () => {
                     {/* email */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-label labels" >Email <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='email' id='email' value={patient.email} onChange={handleChange}/>
+                        <input type="text" className="form-control " name='p_email' id='p_email' value={patient.p_email} onChange={handleChange}/>
                     </div>
 
                     {/* phone */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-label labels" >Phone number <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='phone' id='phone' value={patient.phone} onChange={handleChange}/>
+                        <input type="text" className="form-control " name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange}/>
                     </div>
 
                     <hr />
@@ -315,7 +313,7 @@ const AddPatient = () => {
                     {/* date */}
                     <div className="col-4 mb-5 mt-5 ">
                         <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={patient.date_} onChange={handleChange}/>
+                        <input  type="date" id="p_date" name="p_date" className="form-control labels" value={patient.p_date} onChange={handleChange}/>
                     </div>
 
                     {/* time */}
@@ -324,25 +322,25 @@ const AddPatient = () => {
                     <div className="row">
                         <div className="col-xl-6 col-sm-12 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             10:00 AM - 11:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             11:00 AM - 12:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             12:00 PM - 1:00 PM
                             </label>
@@ -350,25 +348,25 @@ const AddPatient = () => {
                         </div>
                         <div className="col-xl-6 col-sm-12 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             1:00 PM - 2:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             2:00 PM - 3:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             3:00 PM - 4:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             4:00 PM - 5:00 PM
                             </label>
@@ -382,7 +380,7 @@ const AddPatient = () => {
                     {/* services */}
                     <div className="col-4 mb-5">
                         <label htmlFor="" className="form-lavel labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={patient.service_} onChange={handleChange}>
+                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange}>
                             <option value="" labels disabled>Select a Service</option>
                                     {services.map((service) => (
                                         <option key={service.value} value={service.value}>{service.label}</option>
@@ -426,7 +424,7 @@ const AddPatient = () => {
             <div className="row mt-5">
                 <div className="col-6">
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="dentist" name="dentist" value={patient.dentist} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" value={patient.p_dentist} onChange={handleChange}>
                         <option value="" labels disabled>Select Dentist</option>
                                 {dentist.map((dentist) => (
                                             <option key={dentist.value} value={dentist.value}>{dentist.label}</option>
@@ -449,9 +447,9 @@ const AddPatient = () => {
                             {/* receipt procedure */}
                             <div className="receipt-procedure">
                                 <ul>
-                                    <li>{patient.service_}<ul>
+                                    <li>{patient.p_service}<ul>
                                     <li>Tooth No.: <span>
-                                        {Object.entries(patient.selectedTeeth)
+                                        {Object.entries(patient.p_selectedTeeth)
                                             .filter(([toothNumber, isSelected]) => isSelected)
                                             .map(([toothNumber]) => toothNumber)
                                             .join(', ')
@@ -488,7 +486,7 @@ const AddPatient = () => {
                 {/* payement method */}
                 <div className="col-4">
                     <label htmlFor="" className="form-lavel labels mb-2">Payment Method</label>
-                    <select class="form-select" aria-label="Default select example" id="payment" name="payment" value={patient.payment} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="p_payment" name="p_payment" value={patient.p_payment} onChange={handleChange}>
                         <option value="" labels disabled>Select Payment Method</option>
                                     {payment.map((payment) => (
                                         <option key={payment.value} value={payment.value}>{payment.label}</option>
@@ -498,7 +496,7 @@ const AddPatient = () => {
                 {/* paid amount */}
                 <div className="col-4">
                     <label htmlFor="" className="form-label labels" >Paid Amount</label>
-                    <input type="text" className="form-control " name='paid_amount' id='paid_amount' value={patient.paid_amount} onChange={handleChange}/>
+                    <input type="text" className="form-control " name='p_paidamount' id='paidamount' value={patient.p_paidamount} onChange={handleChange}/>
                 </div>
             </div>
             {/* end of payment row */}

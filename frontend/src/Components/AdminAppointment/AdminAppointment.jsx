@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminAppointment.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Reschedule from '../Reschedule/Reschedule'
+import axios from 'axios'
 
 
 const AdminAppointment = () => {
   const [showReschedule, setShowReschedule] = useState(false); // State to toggle Reschedule
 
+  const [appointment, setAppointment] = useState([])
+
+  useEffect(()=>{
+    getAppointment()
+  },[])
+
+  function getAppointment(){
+    axios.get('http://localhost:80/api2/users/').then(function(response){
+      console.log(response.data);
+      //saves data to state
+      setAppointment(response.data);
+    });
+  }
+
+  
   return (
     <div className="wrapper">
             <AdminNavbar></AdminNavbar>
@@ -30,7 +46,7 @@ const AdminAppointment = () => {
                 </div>
 
                 {/* appointment list - upcoming*/}
-                <div className="row upcoming-row">
+                {/* <div className="row upcoming-row">
                   <div className="col">
                     <p className='m-0 app-patient-label'>Giolliana Plandez</p>
                     <p className='m-0 app-patient-info'>Tech Cleaning</p>
@@ -45,29 +61,75 @@ const AdminAppointment = () => {
                     <button className='btn button-resched ' onClick={() => setShowReschedule(true)}>Reschedule</button>
                     <button className='btn'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                   </div>
-                </div>
+                </div> */}
 
                 {/* appointment list - pending*/}
-                <div className="row pending-row">
-                  <div className="col">
-                    <p className='m-0 app-patient-label-pending'>Giolliana Plandez</p>
-                    <p className='m-0 app-patient-info-pending'>Tech Cleaning</p>
-                  </div>
-                  <div className="col app-patient-info-pending">
-                    10:00 AM - 11:00 AM
-                  </div>
-                  <div className="col app-patient-info-pending">
-                    PENDING
-                  </div>
-                  <div className="col ">
-                    <button className='btn button-accept'>Accept</button>
-                    
-                    <button className='btn'><i class="fa-regular fa-calendar button-calendar button-calendar"></i></button>
-                    <button className='btn p-0 '><i className="fa-regular fa-circle-xmark button-delete"></i></button>
-                  </div>
-                </div>
+                {appointment.map((appointment, key) => {
+                  if(appointment.status === 'upcoming'){
+                    return(
+                      <div className="row upcoming-row">
+                        <div className="col">
+                          <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
+                          <p className='m-0 app-patient-info'>{appointment.service_}</p>
+                        </div>
+                        <div className="col app-patient-info">
+                          {appointment.time_}
+                        </div>
+                        <div className="col app-patient-info">
+                          UPCOMING
+                        </div>
+                        <div className="col ">
+                          <button className='btn button-resched ' onClick={() => setShowReschedule(true)}>Reschedule</button>
+                          <button className='btn'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                        </div>
+                      </div>
+                    );
+                  }
+                  else if(appointment.status === 'finished'){
+                    return(
+                      <div className="row finished-row">
+                        <div className="col">
+                          <p className='m-0 app-patient-label-finished'>{appointment.fname} {appointment.lname}</p>
+                          <p className='m-0 app-patient-info-finished'>{appointment.service_}</p>
+                        </div>
+                        <div className="col app-patient-info-finished">
+                          {appointment.time_}
+                        </div>
+                        <div className="col app-patient-info-finished">
+                          FINISHED
+                        </div>
+                        <div className="col ">
+                          <button className='btn button-view'>View</button>
+                        </div>
+                      </div>
+                    );
+                  }
+                  else if (appointment.status === '') {
+                    return (
+                      <div className="row pending-row" key={key}>
+                        <div className="col">
+                          <p className='m-0 app-patient-label-pending'>{appointment.fname} {appointment.lname}</p>
+                          <p className='m-0 app-patient-info-pending'>{appointment.service_}</p>
+                        </div>
+                        <div className="col app-patient-info-pending">
+                          {appointment.time_}
+                        </div>
+                        <div className="col app-patient-info-pending">
+                          PENDING
+                        </div>
+                        <div className="col">
+                          <button className='btn button-accept'>Accept</button>
+                          <button className='btn'><i className="fa-regular fa-calendar button-calendar"></i></button>
+                          <button className='btn p-0'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return null; // Render nothing if the service is not 'pending'
+                  }
+              })}
 
-                {/* appointment list - finished*/}
+                {/* appointment list - finished
                 <div className="row finished-row">
                   <div className="col">
                     <p className='m-0 app-patient-label-finished'>Giolliana Plandez</p>
@@ -82,7 +144,7 @@ const AdminAppointment = () => {
                   <div className="col ">
                     <button className='btn button-view'>View</button>
                   </div>
-                </div>
+                </div> */}
                   
             </div>
             {/* shows reschedule component pag clinick resched button */}

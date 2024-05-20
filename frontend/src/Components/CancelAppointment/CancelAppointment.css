@@ -42,9 +42,19 @@ body {
     width: 200px;
 }
 
+.discard-button:hover{
+    border: 2px solid #B93131;
+    color: #B93131;
+}
+
 .cancel-button{
     background-color: #B93131;
     color: #fff;
     font-weight: 600;
     width: 200px;
+}
+
+.cancel-button:hover{
+    background-color: #990000;
+    color: #fff;
 }

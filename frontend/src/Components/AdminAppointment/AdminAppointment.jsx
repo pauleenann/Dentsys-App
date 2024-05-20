@@ -6,10 +6,13 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Reschedule from '../Reschedule/Reschedule'
 import axios from 'axios'
+import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed'
 
 
 const AdminAppointment = () => {
   const [showReschedule, setShowReschedule] = useState(false); // State to toggle Reschedule
+  const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const [appointment, setAppointment] = useState([])
 
@@ -118,7 +121,7 @@ const AdminAppointment = () => {
                           PENDING
                         </div>
                         <div className="col">
-                          <button className='btn button-accept'>Accept</button>
+                          <button className='btn button-accept' onClick={() => {setShowConfirm(true);setKeyOfSelectedAppointment(appointment.id); }}>Accept</button>
                           <button className='btn'><i className="fa-regular fa-calendar button-calendar"></i></button>
                           <button className='btn p-0'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                         </div>
@@ -153,7 +156,14 @@ const AdminAppointment = () => {
           <Reschedule onClose={() => setShowReschedule(false)} />
         </div>
       )}
+
+      {showConfirm && (
+        <div className="confirmpage-overlay">
+          <AppointmentConfirmed onClose={()=> setShowConfirm(false)} keyOfSelectedAppointment={keyOfSelectedAppointment}></AppointmentConfirmed>
         </div>
+      )}
+        </div>
+        
       
   )
 }

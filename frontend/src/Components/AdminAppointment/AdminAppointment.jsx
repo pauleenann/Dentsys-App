@@ -20,14 +20,26 @@ const AdminAppointment = () => {
     getAppointment()
   },[])
 
-  function getAppointment(){
-    axios.get('http://localhost:80/api2/users/').then(function(response){
-      console.log(response.data);
-      //saves data to state
-      setAppointment(response.data);
-    });
+  function getAppointment() {
+    axios.get('http://localhost:80/api2/?action=getAppointments')
+      .then(response => {
+        console.log(response.data);
+        if (Array.isArray(response.data)) {
+          setAppointment(response.data);
+        } else {
+          console.error('Data is not an array:', response.data);
+          setAppointment([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching appointments:', error);
+        setAppointment([]);
+      });
   }
+  
 
+
+  console.log(appointment)
   
   return (
     <div className="wrapper">
@@ -68,7 +80,7 @@ const AdminAppointment = () => {
 
                 {/* appointment list - pending*/}
                 {appointment.map((appointment, key) => {
-                  if(appointment.status === 'upcoming'){
+                  if(appointment.status_ === 'upcoming'){
                     return(
                       <div className="row upcoming-row">
                         <div className="col">
@@ -88,7 +100,7 @@ const AdminAppointment = () => {
                       </div>
                     );
                   }
-                  else if(appointment.status === 'finished'){
+                  else if(appointment.status_ === 'finished'){
                     return(
                       <div className="row finished-row">
                         <div className="col">
@@ -107,7 +119,7 @@ const AdminAppointment = () => {
                       </div>
                     );
                   }
-                  else if (appointment.status === null) {
+                  else if (appointment.status_ === 'pending') {
                     return (
                       <div className="row pending-row" key={key}>
                         <div className="col">
@@ -121,7 +133,7 @@ const AdminAppointment = () => {
                           PENDING
                         </div>
                         <div className="col">
-                          <button className='btn button-accept' onClick={() => {setShowConfirm(true);setKeyOfSelectedAppointment(appointment.id); }}>Accept</button>
+                          <button className='btn button-accept' onClick={() => {setShowConfirm(true);setKeyOfSelectedAppointment(appointment.a_id); }}>Accept</button>
                           <button className='btn'><i className="fa-regular fa-calendar button-calendar"></i></button>
                           <button className='btn p-0'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                         </div>
@@ -159,7 +171,7 @@ const AdminAppointment = () => {
 
       {showConfirm && (
         <div className="confirmpage-overlay">
-          <AppointmentConfirmed onClose={()=> setShowConfirm(false)} keyOfSelectedAppointment={keyOfSelectedAppointment}></AppointmentConfirmed>
+          <AppointmentConfirmed onClose={()=> setShowConfirm(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}></AppointmentConfirmed>
         </div>
       )}
         </div>

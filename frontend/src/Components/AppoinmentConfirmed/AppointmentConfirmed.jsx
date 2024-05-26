@@ -2,23 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './AppointmentConfirmed.css'
 import axios from 'axios'
 
-const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment}) => {
+const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments}) => {
 
   console.log(keyOfSelectedAppointment)
-
-  const [appointment, setAppointment] = useState([])
-
-  useEffect(()=>{
-    getAppointment()
-  },[])
-
-  function getAppointment(){
-    axios.get('http://localhost:80/api2/users/').then(function(response){
-      console.log(response.data);
-      //saves data to state
-      setAppointment(response.data);
-    });
-  }
 
 
   return (
@@ -36,8 +22,8 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment}) => {
         </div>
 
         {/* rescheduled info */}
-        {appointment.map((appointment,key)=>{
-          if(appointment.id === keyOfSelectedAppointment){
+        {appointments.map((appointment,key)=>{
+          if(appointment.a_id === keyOfSelectedAppointment){
             return(
                 <div className="row p-5 ">
                 <div className="col-5 mb-2">Client Name:</div>
@@ -52,7 +38,7 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment}) => {
                     <i>Client has been emailed about the<br/>changes in their appointment</i>            
                 </div>
                 <div className="button-okay text-center mt-5 mb-5">
-                    <button className='btn okay-button'>Okay</button>
+                    <button className='btn okay-button' >Okay</button>
                 </div>
                 <div className="col-6 resched-link">Reschedule</div>
                 <div className="col-6 text-end cancel-link">Cancel Appointment</div>

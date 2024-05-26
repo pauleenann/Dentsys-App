@@ -1,11 +1,29 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './AppointmentForm.css'
 
 
 const AppointmentForm = () => {
+
+    const [service, setService] = useState([]);
+
+    useEffect(() => {
+        getServices();
+    }, []);
+
+
+     function getServices() {
+        axios.get('http://localhost:80/api2/services/?action=getServices') 
+        .then(function(response) {
+            console.log(response.data);
+            setService(response.data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
     
 
     const [formData, setFormData] = useState({
@@ -18,21 +36,10 @@ const AppointmentForm = () => {
         phone: '',
         service_: '',
         date_: '',
-        time_: ''
+        time_: '',
+        status_: 'pending'
     });
 
-    const services = [
-        { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
-        { value: 'Composite Restoration', label: 'Composite Restoration' },
-        { value: 'Teeth Whitening', label: 'Teeth Whitening' },
-        { value: 'Veneers', label: 'Veneers' },
-        { value: 'Dental Crowns', label: 'Dental Crowns' },
-        { value: 'Dental Bridges', label: 'Dental Bridges' },
-        { value: 'Dental Implants', label: 'Dental Implants' },
-        { value: 'Orthodontic Treatment (Braces)', label: 'Dental Implants' },
-        { value: 'Oral Surgeries', label: 'Oral Surgeries' },
-        { value: 'Root Canal Treats', label: 'Root Canal Treats' }
-    ];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -96,8 +103,8 @@ const AppointmentForm = () => {
                         <label htmlFor="" className="form-lavel labels">Type of Service</label>
                         <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
                             <option value="" labels>Select a Service</option>
-                                    {services.map((service) => (
-                                        <option key={service.value} value={service.value}>{service.label}</option>
+                                    {service.map((service, key) => (
+                                        <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
                     </div>

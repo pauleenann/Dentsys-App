@@ -40,12 +40,14 @@ const AdminAppointment = () => {
   const acceptAppointment = (event) => {
     event.preventDefault();
     setLoading(true); // Set loading to true when the request is sent
-    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/accept`, appointment)
+    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=accept`, appointment)
       .then(function (response) {
         console.log("response")
         console.log(response.data);
         if(response.data !== null){
           setShowConfirm(true);
+        }else{
+          console.log("Please try again");
         }
       })
       .finally(() => setLoading(false)); // Set loading to false when the request is completed

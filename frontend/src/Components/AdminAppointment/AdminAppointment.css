@@ -173,14 +173,42 @@ body {
     color: #31A3B9;
 }
 
-.button-view{
+.cancelled-row{
+    background-color: #da454518;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.app-patient-label-cancelled{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #da4545fb;
+}
+
+.app-patient-info-cancelled{
+    color: #da4545fb;
+}
+.button-view-finished{
     background-color: #31A3B9;
     color: #fff;
     box-shadow: 1px 1px 2px #a9a9a989;
 }
 
-.button-view:hover{
+.button-view-finished:hover{
     background-color: #00849f;
+    color: #fff;
+}
+.button-view-cancelled{
+    background-color: #da4545fb;
+    color: #fff;
+    box-shadow: 1px 1px 2px #a9a9a989;
+}
+
+.button-view-cancelled:hover{
+    background-color: #bd0202fb;
     color: #fff;
 }
 

@@ -15,6 +15,9 @@ const AdminAppointment = () => {
   const [showCancel, setShowCancel] = useState(false);
   const [appointment, setAppointment] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState('all');
+
+
 
   useEffect(() => {
     getAppointment();
@@ -37,8 +40,6 @@ const AdminAppointment = () => {
       });
   }
 
-  const navigate = useNavigate();
-
   const acceptAppointment = (event) => {
     event.preventDefault();
     setLoading(true); // Set loading to true when the request is sent
@@ -56,6 +57,19 @@ const AdminAppointment = () => {
     console.log(appointment)
   }
 
+  const filteredAppointments = appointment.filter(appt => {
+    if (filter === 'all') return true;
+    if (filter === 'today') {
+      const today = new Date().toISOString().split('T')[0];
+      return appt.date_ === today;
+    }
+    if (filter === 'pending') return appt.status_ === 'pending';
+    if (filter === 'cancelled') return appt.status_ === 'cancelled';
+    if (filter === 'recent') return appt.status_ === 'finished'; // Assuming recent visits are finished appointments
+    return true;
+  });
+  
+
   return (
     <div className="wrapper">
       <AdminNavbar />
@@ -68,15 +82,16 @@ const AdminAppointment = () => {
 
         {/* buttons */}
         <div className="buttons">
-          <button className='btn button-border-text button-radius'>All</button>
-          <button className='btn button-border-text button-radius'>Appointments Today</button>
-          <button className='btn button-border-text button-radius'>Pending Appointments</button>
-          <button className='btn button-border-text button-radius'>Cancelled Appointments</button>
-          <button className='btn button-border-text  button-radius'>Recent Visits</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('all')}>All</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('today')}>Appointments Today</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('pending')}>Pending Appointments</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('cancelled')}>Cancelled Appointments</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('recent')}>Recent Visits</button>
         </div>
 
+
         {/* appointment list - pending*/}
-        {appointment.map((appointment, index) => {
+        {filteredAppointments.map((appointment, index) => {
           if (appointment.status_ === 'accepted') {
             return (
               <div className="row upcoming-row" key={index}>
@@ -110,7 +125,7 @@ const AdminAppointment = () => {
                   FINISHED
                 </div>
                 <div className="col">
-                  <button className='btn button-view'>View</button>
+                  <button className='btn button-view-finished'>View</button>
                 </div>
               </div>
             );
@@ -134,7 +149,26 @@ const AdminAppointment = () => {
                 </div>
               </div>
             );
-          } else {
+          }else if(appointment.status_ === 'cancelled'){
+            return (
+              <div className="row cancelled-row" key={index}>
+                <div className="col">
+                  <p className='m-0 app-patient-label-cancelled'>{appointment.fname} {appointment.lname}</p>
+                  <p className='m-0 app-patient-info-cancelled'>{appointment.service_}</p>
+                </div>
+                <div className="col app-patient-info-cancelled">
+                  {appointment.time_}
+                </div>
+                <div className="col app-patient-info-cancelled">
+                  CANCELLED
+                </div>
+                <div className="col">
+                  <button className='btn button-view-cancelled'>View</button>
+                </div>
+              </div>
+            );
+          }
+           else {
             return null; 
           }
         })}

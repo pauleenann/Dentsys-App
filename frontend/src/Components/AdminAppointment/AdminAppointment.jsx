@@ -6,11 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Reschedule from '../Reschedule/Reschedule';
 import axios from 'axios';
 import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed';
+import CancelAppointment from '../CancelAppointment/CancelAppointment';
 
 const AdminAppointment = () => {
   const [showReschedule, setShowReschedule] = useState(false); // State to toggle Reschedule
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showCancel, setShowCancel] = useState(false);
   const [appointment, setAppointment] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -90,7 +92,7 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col">
                   <button className='btn button-resched ' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button>
-                  <button className='btn'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                  <button className='btn' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>
             );
@@ -127,13 +129,13 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col">
                   <button className='btn button-accept' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(event); }}>Accept</button>
-                  <button className='btn'><i className="fa-regular fa-calendar button-calendar"></i></button>
-                  <button className='btn p-0'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                  <button className='btn' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button>
+                  <button className='btn p-0' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>
             );
           } else {
-            return null; // Render nothing if the service is not 'pending'
+            return null; 
           }
         })}
 
@@ -160,6 +162,12 @@ const AdminAppointment = () => {
       {showConfirm && (
         <div key={keyOfSelectedAppointment} className="confirmpage-overlay">
           <AppointmentConfirmed onClose={() => setShowConfirm(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
+        </div>
+      )}
+
+      {showCancel && (
+        <div key={keyOfSelectedAppointment} className="cancelpage-overlay">
+          <CancelAppointment onClose={() => setShowCancel(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
         </div>
       )}
 

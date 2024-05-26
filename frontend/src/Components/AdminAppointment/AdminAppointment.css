@@ -185,7 +185,7 @@ body {
 }
 
 
-.reschedule-overlay, .confirmpage-overlay {
+.reschedule-overlay, .confirmpage-overlay, .cancelpage-overlay {
     position: fixed; 
     top: 0;
     left: 0;

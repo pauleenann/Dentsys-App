@@ -3,8 +3,9 @@ import './Reschedule.css'
 import { useState } from 'react';
 
 
-const Reschedule = ({ onClose }) => {
+const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
     const [showRescheduled, setShowRescheduled] = useState(false);
+    console.log(keyOfSelectedAppointment, appointments);
 
   return (
     <div className='resched-container'>
@@ -24,34 +25,48 @@ const Reschedule = ({ onClose }) => {
 
             {/* row for patient info */}
             <div className="row resched-patient-info">
-                {/* col for client name */}
-                <div className="col-6">
+                
+
+            {appointments.map((appointment, index) => {
+            if (appointment.a_id === keyOfSelectedAppointment) {
+                return (
+                <div key={index} className='row p-0'>
+                    {/* col for client name */}
+                    <div className="col-6">
                     <div className="row mb-2">
                         <div className="col-6">Client Name: </div>
-                        <div className="col-6">Giolliana Plandez</div>
+                        <div className="col-6">{appointment.fname} {appointment.lname}</div>
                     </div>
-                </div>
-                {/* col for date */}
-                <div className="col-6">
+                    </div>
+                    {/* col for date */}
+                    <div className="col-6">
                     <div className="row mb-2">
                         <div className="col-4">Date: </div>
-                        <div className="col-8">10/0/0</div>
+                        <div className="col-8">{appointment.date_}</div>
                     </div>
-                </div>
-                {/* col for service */}
-                <div className="col-6">
+                    </div>
+                    {/* col for service */}
+                    <div className="col-6">
                     <div className="row mb-2">
-                        <div className="col-6">Sevice Acquired: </div>
-                        <div className="col">Teeth Cleaning</div>
+                        <div className="col-6">Service Acquired: </div>
+                        <div className="col">{appointment.service_}</div>
                     </div>
-                </div>
-                {/* col for time */}
-                <div className="col-6">
+                    </div>
+                    {/* col for time */}
+                    <div className="col-6">
                     <div className="row mb-2">
                         <div className="col-4">Time: </div>
-                        <div className="col-8">10:00 AM - 11:00 AM</div>
+                        <div className="col-8">{appointment.time_}</div>
+                    </div>
                     </div>
                 </div>
+                );
+            } else {
+                return null;
+            }
+            })}
+
+
                 <hr className='my-4'/>
 
                 <h5 className='text-center mt-2 mb-4'>Choose a new date & time</h5>

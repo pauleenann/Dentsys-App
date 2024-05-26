@@ -40,7 +40,7 @@ const AdminAppointment = () => {
   const acceptAppointment = (event) => {
     event.preventDefault();
     setLoading(true); // Set loading to true when the request is sent
-    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/edit`, appointment)
+    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/accept`, appointment)
       .then(function (response) {
         console.log("response")
         console.log(response.data);
@@ -87,7 +87,7 @@ const AdminAppointment = () => {
                   UPCOMING
                 </div>
                 <div className="col">
-                  <button className='btn button-resched ' onClick={() => setShowReschedule(true)}>Reschedule</button>
+                  <button className='btn button-resched ' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button>
                   <button className='btn'><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>
@@ -150,7 +150,7 @@ const AdminAppointment = () => {
       {/* shows reschedule component pag clinick resched button */}
       {showReschedule && (
         <div className="reschedule-overlay">
-          <Reschedule onClose={() => setShowReschedule(false)} />
+          <Reschedule onClose={() => setShowReschedule(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}/>
         </div>
       )}
 

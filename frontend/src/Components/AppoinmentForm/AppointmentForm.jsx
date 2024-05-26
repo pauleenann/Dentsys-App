@@ -6,7 +6,7 @@ import './AppointmentForm.css'
 
 
 const AppointmentForm = () => {
-
+    const [loading, setLoading] = useState(false);
     const [service, setService] = useState([]);
 
     useEffect(() => {
@@ -54,13 +54,15 @@ const AppointmentForm = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-          await axios.post("http://localhost:80/api2/user/save", formData);
+          await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
           navigate("/appointment-request-submitted", {state: formData});
         } catch (err) {
           console.log(err);
         //   setError(true)
         }
+        
       };
 
     console.log(formData);
@@ -227,6 +229,15 @@ const AppointmentForm = () => {
 
         </div>
         </form>
+
+        {loading && (
+          <div className="spinner-overlay">
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          
+        )}
     </div>
   )
 }

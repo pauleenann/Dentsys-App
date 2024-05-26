@@ -44,7 +44,9 @@ const AdminAppointment = () => {
       .then(function (response) {
         console.log("response")
         console.log(response.data);
-        setShowConfirm(true);
+        if(response.data !== null){
+          setShowConfirm(true);
+        }
       })
       .finally(() => setLoading(false)); // Set loading to false when the request is completed
     console.log(appointment)

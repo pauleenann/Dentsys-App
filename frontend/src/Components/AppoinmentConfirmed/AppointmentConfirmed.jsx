@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './AppointmentConfirmed.css'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments}) => {
-
-  console.log(keyOfSelectedAppointment)
-
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
   return (
     <div className='app-confirmed'>
@@ -38,7 +39,10 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments})
                     <i>Client has been emailed about the<br/>changes in their appointment</i>            
                 </div>
                 <div className="button-okay text-center mt-5 mb-5">
-                    <button className='btn okay-button' >Okay</button>
+                  <button className='btn okay-button' onClick={reloadPage}>Okay</button>
+                  
+                  
+                    
                 </div>
                 <div className="col-6 resched-link">Reschedule</div>
                 <div className="col-6 text-end cancel-link">Cancel Appointment</div>

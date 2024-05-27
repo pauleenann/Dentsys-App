@@ -7,22 +7,29 @@ import './AppointmentForm.css'
 
 const AppointmentForm = () => {
     const [loading, setLoading] = useState(false);
-    const [service, setService] = useState([]);
+    const [services, setServices] = useState([]);
 
     useEffect(() => {
         getServices();
     }, []);
 
 
-     function getServices() {
-        axios.get('http://localhost:80/api2/services/?action=getServices') 
-        .then(function(response) {
-            console.log(response.data);
-            setService(response.data);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+    async function getServices() {
+        try {
+            const response = await axios.get('http://localhost:80/api2/?action=getServices');
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setServices(response.data);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setServices([]);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setServices([]);
+        }
     }
     
 
@@ -105,7 +112,7 @@ const AppointmentForm = () => {
                         <label htmlFor="" className="form-lavel labels">Type of Service</label>
                         <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
                             <option value="" labels>Select a Service</option>
-                                    {service.map((service, key) => (
+                                    {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>

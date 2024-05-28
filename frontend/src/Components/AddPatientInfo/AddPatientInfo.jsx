@@ -155,7 +155,8 @@ const AddPatientInfo = () => {
                                 <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <div className="col-12 text-center"><button type="submit" className="btn button-save">Save</button></div>
+                        
                     </form>
                 </div>
             </div>

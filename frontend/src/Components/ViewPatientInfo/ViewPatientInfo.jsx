@@ -112,7 +112,7 @@ const ViewPatientInfo = () => {
                             </div>
 
                             <div className="col-12 text-end">
-                                <Link to='/edit-patient-info'><button className='btn button-edit-record'> Edit</button></Link>
+                                <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-record'> Edit</button></Link>
                                 
                             </div>
                         </div>

@@ -91,7 +91,7 @@ const AdminPatients = () => {
                       </div>
                       <div className="col">
                         <Link to={`/view-patient-info/${patient.id}`}><button className='btn button-view'>View</button></Link>
-                        <Link to='/edit-patient-info'><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link>
+                        <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link>
                       </div>
                     </div>
                   ); 

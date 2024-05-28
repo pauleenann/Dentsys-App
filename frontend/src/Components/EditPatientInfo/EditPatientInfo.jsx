@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './EditPatientInfo.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-const EditPatientInfo = () => {
 
+const EditPatientInfo = () => {
+    const [loading, setLoading] = useState(false);
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
         p_fname: '',
@@ -18,37 +19,22 @@ const EditPatientInfo = () => {
         p_gender: '',
         p_email: '',
         p_phone: '',
-        p_date: '',
-        p_time: '',
-        p_service: '',
-        p_selectedTeeth: {}, 
-        p_dentist: '',
-        p_payment: '',
-        p_paidamount: ''
     });
 
-    const services = [
-        { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
-        { value: 'Composite Restoration', label: 'Composite Restoration' },
-        { value: 'Teeth Whitening', label: 'Teeth Whitening' },
-        { value: 'Veneers', label: 'Veneers' },
-        { value: 'Dental Crowns', label: 'Dental Crowns' },
-        { value: 'Dental Bridges', label: 'Dental Bridges' },
-        { value: 'Dental Implants', label: 'Dental Implants' },
-        { value: 'Orthodontic Treatment (Braces)', label: 'Orthodontic Treatment (Braces)' },
-        { value: 'Oral Surgeries', label: 'Oral Surgeries' },
-        { value: 'Root Canal Treats', label: 'Root Canal Treats' }
-    ];
+    const {id} = useParams();
+    
+    useEffect(()=>{
+        getPatient();
+    }, []);
 
-    const dentist = [
-        { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-        { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    ];
-
-    const payment = [
-        { value: 'CASH', label: 'CASH' },
-        { value: 'GCASH', label: 'GCASH' },
-    ];
+    function getPatient() {
+        axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
+          .then(function(response) {
+            console.log(response.data); 
+              setPatient(response.data);
+          
+          })
+    };
 
     const gender = [
         { value: 'Male', label: 'Male' },
@@ -66,10 +52,11 @@ const EditPatientInfo = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-          await axios.post("http://localhost:80/api2/user/save", patient);
+          await axios.put(`http://localhost:80/api2/${id}/?action=editPatient`, patient).finally(() => setLoading(false));
           // Uncomment the next line if you want to navigate after submission
-          // navigate("/appointment-request-submitted", {state: patient});
+          navigate(`/view-patient-info/${patient.id}`);
         } catch (err) {
           console.log(err);
         }
@@ -84,7 +71,7 @@ const EditPatientInfo = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/patient-list'>
+                <Link to={`/view-patient-info/${patient.id}`}>
                     <div className="back-to-patients">
                         <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
                     </div>
@@ -117,13 +104,13 @@ const EditPatientInfo = () => {
                             {/* mname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Middle name</label>
-                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname}onChange={handleChange} />
                             </div>
 
                             {/* ename */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Extension name</label>
-                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename}onChange={handleChange} />
                             </div>
 
                             {/* age */}
@@ -189,6 +176,14 @@ const EditPatientInfo = () => {
                 </div>
             </div>
         </div>
+        {loading && (
+          <div className="spinner-overlay">
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          
+        )}
     </div>
   )
 }

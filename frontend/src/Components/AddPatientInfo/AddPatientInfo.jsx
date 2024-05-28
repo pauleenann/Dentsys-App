@@ -40,7 +40,7 @@ const AddPatientInfo = () => {
         e.preventDefault();
         setLoading(true);
         try {
-          await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
+          await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));
           // Uncomment the next line if you want to navigate after submission
           navigate("/patient-list");
         } catch (err) {

@@ -117,14 +117,6 @@ const AddService = () => {
 
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
-        p_fname: '',
-        p_lname: '',
-        p_mname: '',
-        p_ename: '',
-        p_age: '',
-        p_gender: '',
-        p_email: '',
-        p_phone: '',
         p_date: '',
         p_time: '',
         p_service: '',

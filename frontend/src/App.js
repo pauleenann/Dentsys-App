@@ -44,7 +44,7 @@ const App = () => {
         <Route path="/appointment-details" element={<AppointmentDetails/>} />
         <Route path="/appointment-confirmed" element={<AppointmentConfirmed/>} />
         <Route path="/cancel-appointment" element={<CancelAppointment/>} />
-        <Route path="/view-patient-info" element={<ViewPatientInfo/>} />
+        <Route path="/view-patient-info/:id" element={<ViewPatientInfo/>} />
         <Route path="/edit-patient-info" element={<EditPatientInfo/>} />
         <Route path="/add-service" element={<AddService/>} />
         <Route path="/dental-history" element={<DentalHistory/>} />

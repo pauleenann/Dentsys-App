@@ -1,69 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ViewPatientInfo.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ViewPatientInfo = () => {
-
-    const [patient, setPatient] = useState({
-        action: 'addNewPatient',
-        p_fname: '',
-        p_lname: '',
-        p_mname: '',
-        p_ename: '',
-        p_age: '',
-        p_gender: '',
-        p_email: '',
-        p_phone: '',
-        p_date: '',
-        p_time: '',
-        p_service: '',
-        p_selectedTeeth: {}, 
-        p_dentist: '',
-        p_payment: '',
-        p_paidamount: ''
-    });
-
-    const services = [
-        { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
-        { value: 'Composite Restoration', label: 'Composite Restoration' },
-        { value: 'Teeth Whitening', label: 'Teeth Whitening' },
-        { value: 'Veneers', label: 'Veneers' },
-        { value: 'Dental Crowns', label: 'Dental Crowns' },
-        { value: 'Dental Bridges', label: 'Dental Bridges' },
-        { value: 'Dental Implants', label: 'Dental Implants' },
-        { value: 'Orthodontic Treatment (Braces)', label: 'Orthodontic Treatment (Braces)' },
-        { value: 'Oral Surgeries', label: 'Oral Surgeries' },
-        { value: 'Root Canal Treats', label: 'Root Canal Treats' }
-    ];
-
-    const dentist = [
-        { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-        { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    ];
-
-    const payment = [
-        { value: 'CASH', label: 'CASH' },
-        { value: 'GCASH', label: 'GCASH' },
-    ];
-
-    const gender = [
-        { value: 'Male', label: 'Male' },
-        { value: 'Female', label: 'Female' },
-        { value: 'Non-binary', label: 'Non-binary' },
-        { value: 'Prefer not to say', label: 'Prefer not to say' },
-    ];
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPatient({...patient,[name]: value});
-    }
-
+    const [patient, setPatient] = useState([]);
     const navigate = useNavigate();
 
+    const {id} = useParams();
+    
+    useEffect(()=>{
+        getPatient();
+    }, []);
+
+    function getPatient() {
+        axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
+          .then(function(response) {
+            console.log(response.data); 
+              setPatient(response.data);
+          
+          })
+    };
+    
     const handleClick = async (e) => {
         e.preventDefault();
         try {
@@ -105,49 +66,49 @@ const ViewPatientInfo = () => {
                             {/* fname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >First name </label>
-                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname}  readOnly/>
                             </div>
 
                             {/* lname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Last name </label>
-                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} readOnly />
+                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} readOnly />
                             </div>
 
                             {/* mname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Middle name</label>
-                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname === '' ? 'n/a' : patient.p_mname} readOnly/>
                             </div>
 
                             {/* ename */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Extension name</label>
-                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename === '' ? 'n/a' : patient.p_ename} readOnly/>
                             </div>
 
                             {/* age */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Age </label>
-                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age}  readOnly/>
                             </div>
 
                             {/* gender */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels">Gender</label>
-                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient.p_gender} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient.p_gender} readOnly/>
                             </div>
 
                             {/* email */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Email</label>
-                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email} onChange={handleChange} readOnly/>
+                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email}  readOnly/>
                             </div>
 
                             {/* phone */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Phone number </label>
-                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone}  readOnly/>
                             </div>
 
                             <div className="col-12 text-end">

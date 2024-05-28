@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddPatientInfo = () => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
@@ -17,38 +19,8 @@ const AddPatientInfo = () => {
         p_age: '',
         p_gender: '',
         p_email: '',
-        p_phone: '',
-        p_date: '',
-        p_time: '',
-        p_service: '',
-        p_selectedTeeth: {}, 
-        p_dentist: '',
-        p_payment: '',
-        p_paidamount: ''
+        p_phone: ''
     });
-
-    const services = [
-        { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
-        { value: 'Composite Restoration', label: 'Composite Restoration' },
-        { value: 'Teeth Whitening', label: 'Teeth Whitening' },
-        { value: 'Veneers', label: 'Veneers' },
-        { value: 'Dental Crowns', label: 'Dental Crowns' },
-        { value: 'Dental Bridges', label: 'Dental Bridges' },
-        { value: 'Dental Implants', label: 'Dental Implants' },
-        { value: 'Orthodontic Treatment (Braces)', label: 'Orthodontic Treatment (Braces)' },
-        { value: 'Oral Surgeries', label: 'Oral Surgeries' },
-        { value: 'Root Canal Treats', label: 'Root Canal Treats' }
-    ];
-
-    const dentist = [
-        { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-        { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    ];
-
-    const payment = [
-        { value: 'CASH', label: 'CASH' },
-        { value: 'GCASH', label: 'GCASH' },
-    ];
 
     const gender = [
         { value: 'Male', label: 'Male' },
@@ -62,14 +34,15 @@ const AddPatientInfo = () => {
         setPatient({...patient,[name]: value});
     }
 
-    const navigate = useNavigate();
+    
 
     const handleClick = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-          await axios.post("http://localhost:80/api2/user/save", patient);
+          await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
           // Uncomment the next line if you want to navigate after submission
-          // navigate("/appointment-request-submitted", {state: patient});
+          navigate("/patient-list");
         } catch (err) {
           console.log(err);
         }
@@ -155,12 +128,20 @@ const AddPatientInfo = () => {
                                 <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} />
                             </div>
                         </div>
-                        <div className="col-12 text-center"><button type="submit" className="btn button-save">Save</button></div>
+                        <div className="col-12 text-center"><button type="submit" className="btn button-save" onClick={handleClick}>Save</button></div>
                         
                     </form>
                 </div>
             </div>
         </div>
+        {loading && (
+          <div className="spinner-overlay">
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          
+        )}
     </div>
   )
 }

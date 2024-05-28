@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminPatients.css'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 
 const AdminPatients = () => {
+  const [patients, setPatients] = useState([]);
+  const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
+  
+  useEffect(() => {
+    getPatients();
+  }, []);
+
+  function getPatients() {
+    axios.get('http://localhost:80/api2/?action=getPatients')
+      .then(response => {
+        console.log(response.data);
+        if (Array.isArray(response.data)) {
+          setPatients(response.data);
+        } else {
+          console.error('Data is not an array:', response.data);
+          setPatients(response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching appointments:', error);
+        setPatients([]);
+      });
+  }
+
   return (
     <div className='wrapper'>
         <AdminNavbar></AdminNavbar>
@@ -52,9 +77,11 @@ const AdminPatients = () => {
 
                 </div>
                 {/* patients list */}
-                <div className="row patient-record">
+                {patients.map((patient, index)=>{
+                  return(
+                    <div className="row patient-record" key={index}>
                       <div className="col patient-name">
-                        Giolliana Pladez
+                        {patient.p_fname} {patient.p_lname}
                       </div>
                       <div className="col patient-service">
                         Teeth Cleaning
@@ -63,11 +90,13 @@ const AdminPatients = () => {
                         10/21/23
                       </div>
                       <div className="col">
-                        <Link to='/view-patient-info'><button className='btn button-view'>View</button></Link>
+                        <Link to={`/view-patient-info/${patient.id}`}><button className='btn button-view'>View</button></Link>
                         <Link to='/edit-patient-info'><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link>
-                        
                       </div>
                     </div>
+                  ); 
+                })}
+                
 
 
         </div>

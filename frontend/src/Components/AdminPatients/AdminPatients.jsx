@@ -4,6 +4,7 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminPatients.css'
 import { Link } from 'react-router-dom'
 
+
 const AdminPatients = () => {
   return (
     <div className='wrapper'>
@@ -12,7 +13,7 @@ const AdminPatients = () => {
             <AdminInfo></AdminInfo>
             <div className="patient-header">
                   <h1>Patients</h1>
-                  <Link to='/add-new-patient'>
+                  <Link to='/view-patient-info'>
                   <button className='btn patient-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add a New Patient</span></button>
                   </Link>
                 </div>
@@ -63,7 +64,7 @@ const AdminPatients = () => {
                       </div>
                       <div className="col">
                         <button className='btn button-view'>View</button>
-                        <button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit"></i></button>
+                        <button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button>
                       </div>
                     </div>
 

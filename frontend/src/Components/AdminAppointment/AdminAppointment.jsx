@@ -163,7 +163,7 @@ const AdminAppointment = () => {
                   CANCELLED
                 </div>
                 <div className="col">
-                  <button className='btn button-view-cancelled'>View</button>
+                  
                 </div>
               </div>
             );

@@ -1,10 +1,10 @@
 import React from 'react'
-import AddPatient from '../Components/AddPatient/AddPatient'
+import AddPatientInfo from '../Components/AddPatientInfo/AddPatientInfo'
 
 const AddNewPatient = () => {
   return (
     <div>
-      <AddPatient></AddPatient>
+      <AddPatientInfo/>
     </div>
   )
 }

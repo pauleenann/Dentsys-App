@@ -88,8 +88,16 @@ body {
     color: #fff;
  }
 
- .button-edit:hover{
+ .button-edit-pencil:hover{
     color: #fff;
  }
 
- 
+ .button-view{
+   background-color: #31A3B9;
+   color: #fff;
+ }
+
+ .button-view:hover{
+   background-color: #298b9e;
+   color: #fff;
+ }

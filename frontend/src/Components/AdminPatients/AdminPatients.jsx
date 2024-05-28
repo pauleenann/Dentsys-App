@@ -13,7 +13,7 @@ const AdminPatients = () => {
             <AdminInfo></AdminInfo>
             <div className="patient-header">
                   <h1>Patients</h1>
-                  <Link to='/view-patient-info'>
+                  <Link to='/add-new-patient'>
                   <button className='btn patient-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add a New Patient</span></button>
                   </Link>
                 </div>
@@ -63,8 +63,9 @@ const AdminPatients = () => {
                         10/21/23
                       </div>
                       <div className="col">
-                        <button className='btn button-view'>View</button>
-                        <button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button>
+                        <Link to='/view-patient-info'><button className='btn button-view'>View</button></Link>
+                        <Link to='/edit-patient-info'><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link>
+                        
                       </div>
                     </div>
 

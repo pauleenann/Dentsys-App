@@ -1,5 +1,5 @@
 import React from 'react'
-import './AddPatient.css'
+import './DentalHistory.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
@@ -71,7 +71,7 @@ import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
 
 
-const AddPatient = () => {
+const DentalHistory = () => {
     
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
@@ -157,9 +157,8 @@ const AddPatient = () => {
         return (
             <div className="col tooth-container" key={toothId}>
                 <img src={imgSrc} className='tooth' alt="" />
-                <button className='btn tooth-button' onClick={() => handleToothClick(toothId)}>
-                    {toothId}
-                </button>
+                <p className='text-center fw-semibold mt-2 mb-0'>{toothId}</p>
+                
             </div>
         );
     };
@@ -170,9 +169,7 @@ const AddPatient = () => {
 
         return (
             <div className="col tooth-container" key={toothId}>
-                <button className='btn tooth-button' onClick={() => handleToothClick(toothId)}>
-                    {toothId}
-                </button>
+                <p className='text-center fw-semibold mt-2 mb-2'>{toothId}</p>
                 <img src={imgSrc} className='tooth' alt="" />
             </div>
         );
@@ -246,157 +243,46 @@ const AddPatient = () => {
 
         {/* Header */}
         <div className="rol">
-            <h1>Add a New Patient</h1>
+            <h1>Dental History</h1>
         </div>
 
         {/* form */}
         <div className="rol add-patient-container mt-4">
-            <div className="col">
-                <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
-                
+            <div className="col">                
                 <div className="row">
-                    {/* fname */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} required/>
+                    {/* date of service */}
+                    <div className="col-2 text">
+                        Date of Service:
+                    </div>
+                    <div className="col-10 fw-semibold">
+                        0/0/0
+                    </div>
+                    {/* procedure */}
+                    <div className="col-2 text mt-3">
+                        Procedure:
+                    </div>
+                    <div className="col-10 fw-semibold mt-3">
+                        Teeth Cleaning
+                    </div>
+                    {/* Tooth no */}
+                    <div className="col-2 text mt-3">
+                        Tooth no.:
+                    </div>
+                    <div className="col-10 fw-semibold mt-3">
+                        0
+                    </div>
+                    {/* dentist */}
+                    <div className="col-2 text mt-3">
+                        Dentist:
+                    </div>
+                    <div className="col-10 fw-semibold mt-3">
+                        Dr.
                     </div>
 
-                    {/* lname */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >Last name <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control " name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} required/>
-                    </div>
-
-                    {/* mname */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >Middle name</label>
-                        <input type="text" className="form-control " name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange}/>
-                    </div>
-
-                    {/* ename */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >Extension name</label>
-                        <input type="text" className="form-control " name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange}/>
-                    </div>
-
-                    {/* age */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-label labels" >Age <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='p_age' id='p_age' value={patient.p_age} onChange={handleChange}/>
-                    </div>
-
-                    {/* gender */}
-                    <div className="col-4 mb-4">
-                        <label htmlFor="" className="form-lavel labels">Gender</label>
-                        <select class="form-select" aria-label="Default select example" id="p_gender" name="p_gender" value={patient.p_gender} onChange={handleChange} >
-                            <option value="" labels disabled>Select Gender</option>
-                                    {gender.map((gender) => (
-                                        <option key={gender.value} value={gender.value}>{gender.label}</option>
-                                    ))} 
-                        </select>
-                    </div>
-
-                    {/* email */}
-                    <div className="col-4 mb-5">
-                        <label htmlFor="" className="form-label labels" >Email <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='p_email' id='p_email' value={patient.p_email} onChange={handleChange}/>
-                    </div>
-
-                    {/* phone */}
-                    <div className="col-4 mb-5">
-                        <label htmlFor="" className="form-label labels" >Phone number <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control " name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange}/>
-                    </div>
-
-                    <hr />
-
-                    {/* date */}
-                    <div className="col-4 mb-5 mt-5 ">
-                        <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="p_date" name="p_date" className="form-control labels" value={patient.p_date} onChange={handleChange}/>
-                    </div>
-
-                    {/* time */}
-                    <div className="col-6 mt-5 mb-3">
-                    <label htmlFor="" className="form-label labels" >Time</label>
-                    <div className="row">
-                        <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            9:00 AM - 10:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            10:00 AM - 11:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            11:00 AM - 12:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            12:00 PM - 1:00 PM
-                            </label>
-                            </div>
-                        </div>
-                        <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            1:00 PM - 2:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            2:00 PM - 3:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            3:00 PM - 4:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            4:00 PM - 5:00 PM
-                            </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-        
-
-                    {/* services */}
-                    <div className="col-4 mb-5">
-                        <label htmlFor="" className="form-lavel labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange}>
-                            <option value="" labels disabled>Select a Service</option>
-                                    {services.map((service) => (
-                                        <option key={service.value} value={service.value}>{service.label}</option>
-                                    ))}
-                        </select>
-                    </div>
-
-                    {/* tooth num */}
-                    <div className="col-4 mb-5">
-                        <label htmlFor="" className="form-label labels" >Tooth Number </label>
-                        <input type="text" className="form-control " name='toothNumber' id='toothNumber' value={selectedToothNumbers} onChange={() => {}} />
-                    </div>
                 </div>
 
                 {/* tooth chart */}
-                <div className="tooth-chart">
+                <div className="tooth-chart mt-4">
                 <div className="row">
                     <div className="col-6">
                         <div className="row">
@@ -419,19 +305,11 @@ const AddPatient = () => {
             </div>
             {/* end of row for tooth chart */}
 
+            <hr className='mt-5'/>
+            <h4 className='text-center mt-5'>Payment Summary</h4>
 
-            {/* dentist */}
-            <div className="row mt-5">
-                <div className="col-6">
-                    <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" value={patient.p_dentist} onChange={handleChange}>
-                        <option value="" labels disabled>Select Dentist</option>
-                                {dentist.map((dentist) => (
-                                            <option key={dentist.value} value={dentist.value}>{dentist.label}</option>
-                                        ))}
-                    </select>
-                </div>
-            </div>
+
+            
 
             {/* receipt */}
             <div className=" row mt-5 mb-5">
@@ -483,29 +361,25 @@ const AddPatient = () => {
             
             {/* row for payment */}
             <div className="row">
-                {/* payement method */}
-                <div className="col-4">
-                    <label htmlFor="" className="form-lavel labels mb-2">Payment Method</label>
-                    <select class="form-select" aria-label="Default select example" id="p_payment" name="p_payment" value={patient.p_payment} onChange={handleChange}>
-                        <option value="" labels disabled>Select Payment Method</option>
-                                    {payment.map((payment) => (
-                                        <option key={payment.value} value={payment.value}>{payment.label}</option>
-                                    ))}
-                    </select>
-                </div>
-                {/* paid amount */}
-                <div className="col-4">
-                    <label htmlFor="" className="form-label labels" >Paid Amount</label>
-                    <input type="text" className="form-control " name='p_paidamount' id='paidamount' value={patient.p_paidamount} onChange={handleChange}/>
-                </div>
+                <table className='table payment-table'>
+                    <tbody>
+                        <tr>
+                            <td className='payment-table-text'>05/24/2024</td>
+                            <td className='payment-table-text'>10:30 AM</td>
+                            <td className='payment-table-text'>CASH</td>
+                            <td className='payment-table-text '>₱ 500</td>
+                        </tr>
+                    </tbody>
+
+                </table>
             </div>
             {/* end of payment row */}
 
             {/* total paid */}
             <div className="row text-end">
                 <div className="col total-paid mb-2">
-                    <h6>Total Paid</h6>
-                    <p className='m-0'>₱ <span>0.00</span></p>
+                    <h5>Total Paid</h5>
+                    <h5 className='m-0'>₱ <span>0.00</span></h5>
                 </div>
                 <hr />
             </div>
@@ -516,11 +390,6 @@ const AddPatient = () => {
                     <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
                 </div>
             </div>
-
-            {/* button */}
-            <div className="text-center">
-                <button className='btn save-patient-button' onClick={handleClick}>Save</button>
-            </div>
         </div>
 
       </div>
@@ -528,4 +397,4 @@ const AddPatient = () => {
   )
 }
 
-export default AddPatient
+export default DentalHistory

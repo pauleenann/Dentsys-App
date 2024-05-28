@@ -11,11 +11,13 @@ body {
     align-items: stretch;
 }
 
+
+
 #content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0.3s;
+    transition: all 0;
 }
 
 .no-bg-color{
@@ -27,28 +29,13 @@ body {
     font-weight: 500;
 }
 
-.button-view{
+.button-view,  .button-save-record{
     background-color: #31A3B9;
     color: #fff;
   }
  
-  .button-view:hover{
+  .button-view:hover, .button-save-record:hover{
     background-color: #298b9e;
     color: #fff;
   }
 
-  .button-edit-record{
-    background-color: #fff;
-    border: 1px solid #31A3B9;
-    color: #31A3B9;
-  }
-  .button-edit-record:hover{
-    background-color: #298b9e;
-    border: none;
-    color: #ffffff;
-  }
-
-  .button-service-icon, .button-service{
-    color: #31A3B9 !important;
-    font-weight: 500;
-  }

@@ -1,12 +1,12 @@
 import React from 'react'
-import './ViewPatientInfo.css'
+import './EditPatientInfo.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ViewPatientInfo = () => {
+const EditPatientInfo = () => {
 
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
@@ -93,7 +93,7 @@ const ViewPatientInfo = () => {
 
             {/* Header */}
             <div className="rol">
-                <h1>Patient Record</h1>
+                <h1>Edit Patient Record</h1>
             </div>
 
             {/* form */}
@@ -105,53 +105,53 @@ const ViewPatientInfo = () => {
                             {/* fname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >First name </label>
-                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} />
                             </div>
 
                             {/* lname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Last name </label>
-                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} readOnly />
+                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} />
                             </div>
 
                             {/* mname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Middle name</label>
-                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient.p_mname} onChange={handleChange} />
                             </div>
 
                             {/* ename */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Extension name</label>
-                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient.p_ename} onChange={handleChange} />
                             </div>
 
                             {/* age */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Age </label>
-                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age} onChange={handleChange} />
                             </div>
 
                             {/* gender */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels">Gender</label>
-                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient.p_gender} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient.p_gender} onChange={handleChange}/>
                             </div>
 
                             {/* email */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Email</label>
-                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email} onChange={handleChange} readOnly/>
+                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email} onChange={handleChange} />
                             </div>
 
                             {/* phone */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Phone number </label>
-                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} readOnly/>
+                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} />
                             </div>
 
-                            <div className="col-12 text-end">
-                                <button className='btn button-edit-record'> Edit</button>
+                            <div className="col-12 text-center mt-3">
+                                <button className='btn button-save-record'>Save</button>
                             </div>
                         </div>
                     </form>
@@ -165,7 +165,7 @@ const ViewPatientInfo = () => {
 
                     {/* table */}
                     <div className="col">
-                    <table className="table ">
+                    <table class="table ">
                             <thead>
                                 <tr>
                                 <td className='no-bg-color dhistory-list-th' scope="col">Date of Service</td>
@@ -179,21 +179,12 @@ const ViewPatientInfo = () => {
                                 <td className='no-bg-color dhistory-info pt-3'scope="row">0/0/0</td>
                                 <td className='no-bg-color dhistory-info pt-3' >Dr. </td>
                                 <td className='no-bg-color dhistory-info pt-3' >Teeth Cleaning</td>
-                                <td className='no-bg-color app-today-info' ><Link to='/dental-history'><button className='btn button-view'>View</button>
-                                </Link>
-                                    </td>
+                                <td className='no-bg-color app-today-info' ><Link to='/dental-history'>
+                                <button className='btn button-view'>View</button></Link></td>
                                 </tr>
                             </tbody>
                             </table>
                     </div>
-
-                    <div className="col-12 text-center">
-                        <Link to='/add-service'>
-                            <button className='btn service-button-color'><i class="fa-regular fa-square-plus button-service-icon"></i><span className='text-light button-service'> Add another service</span></button>
-                        </Link>
-                    </div>
-
-
 
                 </div>
             </div>
@@ -202,4 +193,4 @@ const ViewPatientInfo = () => {
   )
 }
 
-export default ViewPatientInfo;
+export default EditPatientInfo;

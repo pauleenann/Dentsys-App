@@ -18,6 +18,9 @@ import AppointmentConfirmed from "./Components/AppoinmentConfirmed/AppointmentCo
 import CancelAppointment from "./Components/CancelAppointment/CancelAppointment";
 import AppointmentSubmittedPage from "./Pages/AppointmentSubmittedPage";
 import ViewPatientInfo from "./Components/ViewPatientInfo/ViewPatientInfo";
+import EditPatientInfo from "./Components/EditPatientInfo/EditPatientInfo";
+import AddService from "./Components/AddService/AddService";
+import DentalHistory from "./Components/DentalHistory/DentalHistory";
 
 const App = () => {
   return (
@@ -42,6 +45,9 @@ const App = () => {
         <Route path="/appointment-confirmed" element={<AppointmentConfirmed/>} />
         <Route path="/cancel-appointment" element={<CancelAppointment/>} />
         <Route path="/view-patient-info" element={<ViewPatientInfo/>} />
+        <Route path="/edit-patient-info" element={<EditPatientInfo/>} />
+        <Route path="/add-service" element={<AddService/>} />
+        <Route path="/dental-history" element={<DentalHistory/>} />
 
 
         

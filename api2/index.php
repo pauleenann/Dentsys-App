@@ -232,6 +232,36 @@ if($method ==='PUT'){
                 echo json_encode($response);
                 break;
 
+            case 'procedureHistory':
+                // Add new appointment
+                $sql = "INSERT INTO patienthistory(id, p_id, p_date, p_time, service_, p_selectedTeeth, p_dentist, p_payment, p_paidamount) VALUES(null, :p_id, :p_date, :p_time, :service_, :p_selectedTeeth, :p_dentist, :p_payment, :p_paidamount)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':p_id', $user->p_id);
+                $stmt->bindParam(':p_date', $user->p_date);
+                $stmt->bindParam(':p_time', $user->p_time);
+                $stmt->bindParam(':service_', $user->service_);
+                //$stmt->bindParam(':p_selectedTeeth', (string) $user->p_selectedTeeth);
+                $p_selectedteeth_json = json_encode($user->p_selectedTeeth);
+                $stmt->bindParam(':p_selectedTeeth', $p_selectedteeth_json);
+                //$stmt->bindParam(':p_selectedTeeth', $user->p_selectedTeeth);
+                $stmt->bindParam(':p_dentist', $user->p_dentist);
+                $stmt->bindParam(':p_payment', $user->p_payment);
+                $stmt->bindParam(':p_paidamount', $user->p_paidamount);
+                // $stmt->bindParam(':p_date', $user->p_date);
+                // $stmt->bindParam(':p_time', $user->p_time);
+                // $stmt->bindParam(':p_service', $user->p_service);
+                // $p_selectedteeth_json = json_encode($user->p_selectedteeth);
+                //  $stmt->bindParam(':p_selectedteeth', $p_selectedteeth_json);
+                // $stmt->bindParam(':p_dentist', $user->p_dentist);
+                // $stmt->bindParam(':p_payment', $user->p_payment);
+                // $stmt->bindParam(':p_paidamount', $user->p_paidamount);
+                if($stmt->execute()){
+                    $response = ['status' => 1, 'message' => 'Record created successfully.'];
+                }else{
+                    $response = ['status' => 0, 'message' => 'Failed to create Record.'];
+                }
+                break;
+
             default:
                 echo json_encode(['error' => 'Invalid action']);
                 break;

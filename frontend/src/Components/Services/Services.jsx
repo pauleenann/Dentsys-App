@@ -2,6 +2,8 @@ import './Services.css'
 import teethExamine from '../../Assets/teethExamine.jpg'
 import veeners from '../../Assets/veeners.jpg'
 import braces from '../../Assets/braces.jpg'
+import { Link } from 'react-router-dom'
+
 
 const Services = () => {
   return (
@@ -37,7 +39,9 @@ const Services = () => {
   </div>
   </div>
   <div className="more">
-    <a href="">See more</a>
+    <Link to='/services-page'>See more</Link>
+    
+    
     <img src="" alt="" />
   </div>
 </div>

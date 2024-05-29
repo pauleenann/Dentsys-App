@@ -31,6 +31,17 @@
     font-size: 18px;
     font-weight: 600;
 }
+.menu li a:hover{
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.menu li a:focus{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
 
 @media screen and (max-width: 1200px) {
     .navigation-box{

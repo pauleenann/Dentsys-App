@@ -57,6 +57,22 @@ const AdminAppointment = () => {
     console.log(appointment)
   }
 
+  const finishAppointment = (event) => {
+    event.preventDefault();
+    setLoading(true); // Set loading to true when the request is sent
+    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=finish`, appointment)
+      .then(function (response) {
+        console.log("response")
+        console.log(response.data);
+        if(response.data !== null){
+        }else{
+          console.log("Please try again");
+        }
+      })
+      .finally(() => setLoading(false)); // Set loading to false when the request is completed
+    console.log(appointment)
+  }
+
   const filteredAppointments = appointment.filter(appt => {
     if (filter === 'all') return true;
     if (filter === 'today') {
@@ -77,7 +93,8 @@ const AdminAppointment = () => {
         <AdminInfo />
         <div className="appoint-header">
           <h1>Appointments</h1>
-          <button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button>
+          <Link to='/add-appointment'><button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button></Link>
+          
         </div>
 
         {/* buttons */}
@@ -107,7 +124,11 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col">
                   <button className='btn button-resched ' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button>
-                  <button className='btn' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                  <button className='btn p-0 mx-2' onClick={(event)=>{
+                    setKeyOfSelectedAppointment(appointment.a_id); finishAppointment(event);
+                  }}><i class="fa-solid fa-check button-finish"></i></button>
+                  <button className='btn p-0' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                  
                 </div>
               </div>
             );
@@ -144,12 +165,20 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col">
                   <button className='btn button-accept' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(event); }}>Accept</button>
-                  <button className='btn' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button>
+                  <button className='btn p-0 mx-2' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button>
                   <button className='btn p-0' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>
             );
-          }else if(appointment.status_ === 'cancelled'){
+          }
+           else {
+            return null; 
+          }
+        })}
+
+        {/* display cancelled appointments */}
+        {filteredAppointments.map((appointment, index) => {
+          if(appointment.status_ === 'cancelled'){
             return (
               <div className="row cancelled-row" key={index}>
                 <div className="col">

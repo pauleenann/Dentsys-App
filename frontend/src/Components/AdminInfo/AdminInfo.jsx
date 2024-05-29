@@ -31,6 +31,11 @@ const AdminInfo = () => {
         return currentDateTime.toLocaleDateString(undefined, options);
     };
 
+    const logout = () =>{
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+    }
+
   return (
     <div>
       <nav className="navbar admin-info">
@@ -53,7 +58,7 @@ const AdminInfo = () => {
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="/admin" onClick={logout}>Log out</a></li>
                         </ul>
                         </div>
                     </div>

@@ -3,8 +3,65 @@ import './AdminDash.css';
 import logowhite from './../../Assets/logowhite.png';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
+import axios from 'axios';
 
 const AdminDash = () => {
+    const [totalPending, setTotalPending] = useState(0);
+    const [totalCancelled, setTotalCancelled] = useState(0);
+    const [recentVisits, setRecentVisits] = useState(0);
+    const [totalUpcoming, setTotalUpcoming] = useState(0);
+
+
+
+  useEffect(() => {
+    getTotalPendingAppointments();
+    getCancelledAppointments();
+    getRecentAppointments();
+    getUpcomingAppointments();
+  }, []);
+
+  const getTotalPendingAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getPendingAppointments')
+      .then(response => {
+        setTotalPending(response.data.total_pending);
+      })
+      .catch(error => {
+        console.error('Error fetching total pending appointments:', error);
+      });
+  };
+
+  const getCancelledAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getCancelledAppointments')
+      .then(response => {
+        setTotalCancelled(response.data.total_cancelled);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  const getRecentAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getRecentAppointments')
+      .then(response => {
+        setRecentVisits(response.data.recent_visits);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  const getUpcomingAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getUpcomingAppointments')
+      .then(response => {
+        setTotalUpcoming(response.data.total_upcoming);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  console.log(totalUpcoming)
+  
     return (
         <div className="wrapper">
             <AdminNavbar></AdminNavbar>
@@ -16,25 +73,25 @@ const AdminDash = () => {
                         <p className='m-0 dashcard-p'>
                             Patients<br/>today
                         </p>
-                        <span className='total-patients-today total'>3</span>
+                        <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
                     </div>
                     <div className="col pending-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Pending<br/>Appointments
                         </p>
-                        <span className='total-pending-appoint total'>3</span>
+                        <span className='total-pending-appoint total'>{totalPending}</span>
                     </div>
                     <div className="col cancelled-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Cancelled<br/>Appointments
                         </p>
-                        <span className='total-cancelled-appoint total'>3</span>
+                        <span className='total-cancelled-appoint total'>{totalCancelled}</span>
                     </div>
                     <div className="col recent-visits text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Recent<br/>Visits
                         </p>
-                        <span className='total-recent-visits total'>3</span>
+                        <span className='total-recent-visits total'>{recentVisits}</span>
                     </div>
                     <div className="col earnings-today text-center dashboard-card">
                         <p className='m-0 dashcard-p'> 

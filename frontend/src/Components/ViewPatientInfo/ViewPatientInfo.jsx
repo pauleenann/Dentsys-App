@@ -150,7 +150,7 @@ const ViewPatientInfo = () => {
                     </div>
 
                     <div className="col-12 text-center">
-                        <Link to='/add-service'>
+                        <Link to={`/add-service/${id}`}>
                             <button className='btn service-button-color'><i class="fa-regular fa-square-plus button-service-icon"></i><span className='text-light button-service'> Add another service</span></button>
                         </Link>
                     </div>

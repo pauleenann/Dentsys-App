@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/view-patient-info/:id" element={<ViewPatientInfo/>} />
         <Route path="/edit-patient-info/:id" element={<EditPatientInfo/>} />
         <Route path="/add-service/:id" element={<AddService/>} />
-        <Route path="/dental-history" element={<DentalHistory/>} />
+        <Route path="/dental-history/:id" element={<DentalHistory/>} />
         <Route path="/add-appointment" element={<AddAppointment/>} />
 
 

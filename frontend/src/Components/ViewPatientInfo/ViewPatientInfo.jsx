@@ -156,7 +156,7 @@ const ViewPatientInfo = () => {
                                                     <td className='no-bg-color dhistory-info pt-3'scope="row">{item.p_date}</td>
                                                     <td className='no-bg-color dhistory-info pt-3' >{item.p_dentist} </td>
                                                     <td className='no-bg-color dhistory-info pt-3' >{item.service_}</td>
-                                                    <td className='no-bg-color app-today-info' ><Link to='/dental-history'><button className='btn button-view'>View</button>
+                                                    <td className='no-bg-color app-today-info' ><Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
                                                     </Link></td>
                                                 </tr>
                                         ))

@@ -21,6 +21,9 @@ import ViewPatientInfo from "./Components/ViewPatientInfo/ViewPatientInfo";
 import EditPatientInfo from "./Components/EditPatientInfo/EditPatientInfo";
 import AddService from "./Components/AddService/AddService";
 import DentalHistory from "./Components/DentalHistory/DentalHistory";
+import Services from "./Components/Services/Services";
+import ServicesOffered from "./Pages/ServicesOffered";
+import AddAppointment from "./Components/AddAppointment/AddAppointment";
 
 const App = () => {
   return (
@@ -33,7 +36,7 @@ const App = () => {
         <Route></Route>
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/appointment-request-submitted" element={<AppointmentSubmittedPage/>} />
-        <Route path="/services-page" element={<ServicesPage />} />
+        <Route path="/services-page" element={<ServicesOffered/>} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/appointment-list" element={<AdminAppointmentList/>} />
@@ -48,6 +51,7 @@ const App = () => {
         <Route path="/edit-patient-info/:id" element={<EditPatientInfo/>} />
         <Route path="/add-service" element={<AddService/>} />
         <Route path="/dental-history" element={<DentalHistory/>} />
+        <Route path="/add-appointment" element={<AddAppointment/>} />
 
 
         

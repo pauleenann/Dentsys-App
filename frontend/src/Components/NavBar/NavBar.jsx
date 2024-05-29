@@ -2,7 +2,7 @@ import './NavBar.css'
 import logowhite from './../../Assets/logowhite.png'
 import { Link, useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ onAboutUsClick,  onServicesClick}) => {
   return (
     <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-main">
@@ -17,10 +17,10 @@ const NavBar = () => {
                     <a className="nav-link" href="/">Home</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="">About Us</a>
+                    <a className="nav-link" href="" onClick={onAboutUsClick}>About Us</a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">Services</a>
+                      <a className="nav-link" href="#" onClick={onServicesClick}>Services</a>
                     </li>
                     
                 </ul>

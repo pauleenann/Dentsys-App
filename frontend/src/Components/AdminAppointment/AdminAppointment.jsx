@@ -77,7 +77,8 @@ const AdminAppointment = () => {
         <AdminInfo />
         <div className="appoint-header">
           <h1>Appointments</h1>
-          <button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button>
+          <Link to='/add-appointment'><button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button></Link>
+          
         </div>
 
         {/* buttons */}
@@ -149,7 +150,15 @@ const AdminAppointment = () => {
                 </div>
               </div>
             );
-          }else if(appointment.status_ === 'cancelled'){
+          }
+           else {
+            return null; 
+          }
+        })}
+
+        {/* display cancelled appointments */}
+        {filteredAppointments.map((appointment, index) => {
+          if(appointment.status_ === 'cancelled'){
             return (
               <div className="row cancelled-row" key={index}>
                 <div className="col">

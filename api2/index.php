@@ -136,6 +136,48 @@ if($method ==='PUT'){
             echo json_encode($users);
             break;
 
+            case 'getProcedureHistory':
+                $sql = "SELECT * from patienthistory WHERE p_id = :id";
+                
+                $path = explode('/',$_SERVER['REQUEST_URI']);
+                // print_r($path);
+                if(isset($path[2]) && is_numeric($path[2])){
+                    //$sql .= " WHERE p_id = :id";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':id', $path[2]);
+                    $stmt->execute();
+                    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                }else{
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                
+                echo json_encode($users);
+                break;
+
+                case 'getProcedureHistory1':
+                    $sql = "SELECT * from patienthistory WHERE id = :id";
+                    
+                    $path = explode('/',$_SERVER['REQUEST_URI']);
+                    // print_r($path);
+                    if(isset($path[2]) && is_numeric($path[2])){
+                        //$sql .= " WHERE id = :id";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bindParam(':id', $path[2]);
+                        $stmt->execute();
+                        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        
+                    }else{
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
+                        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    }
+                    
+                    echo json_encode($users);
+                    break;
+
         default:
             echo json_encode(['error' => 'Invalid action']);
             break;

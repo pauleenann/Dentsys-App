@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, startTransition } from 'react';
 import './AdminDash.css';
 import logowhite from './../../Assets/logowhite.png';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
@@ -6,61 +6,30 @@ import AdminInfo from '../AdminInfo/AdminInfo';
 import axios from 'axios';
 
 const AdminDash = () => {
-    const [totalPending, setTotalPending] = useState(0);
-    const [totalCancelled, setTotalCancelled] = useState(0);
-    const [recentVisits, setRecentVisits] = useState(0);
-    const [totalUpcoming, setTotalUpcoming] = useState(0);
+    
+    const [stats, setStats] = useState({
+        total_pending: 0,
+        total_cancelled: 0,
+        total_today: 0,
+        recent_visit: 0,
+        total_paid_today: 0.0,
+        patients_today: []
+    });
 
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const response = await axios.get('http://localhost:80/api2/?action=getAppointmentList');
+                setStats(response.data);
+            } catch (error) {
+                console.error('Error fetching statistics:', error);
+            }
+        };
 
+        fetchStats();
+    }, []);
 
-  useEffect(() => {
-    getTotalPendingAppointments();
-    getCancelledAppointments();
-    getRecentAppointments();
-    getUpcomingAppointments();
-  }, []);
-
-  const getTotalPendingAppointments = () => {
-    axios.get('http://localhost:80/api2/?action=getPendingAppointments')
-      .then(response => {
-        setTotalPending(response.data.total_pending);
-      })
-      .catch(error => {
-        console.error('Error fetching total pending appointments:', error);
-      });
-  };
-
-  const getCancelledAppointments = () => {
-    axios.get('http://localhost:80/api2/?action=getCancelledAppointments')
-      .then(response => {
-        setTotalCancelled(response.data.total_cancelled);
-      })
-      .catch(error => {
-        console.error('Error fetching total cancelled appointments:', error);
-      });
-  };
-
-  const getRecentAppointments = () => {
-    axios.get('http://localhost:80/api2/?action=getRecentAppointments')
-      .then(response => {
-        setRecentVisits(response.data.recent_visits);
-      })
-      .catch(error => {
-        console.error('Error fetching total cancelled appointments:', error);
-      });
-  };
-
-  const getUpcomingAppointments = () => {
-    axios.get('http://localhost:80/api2/?action=getUpcomingAppointments')
-      .then(response => {
-        setTotalUpcoming(response.data.total_upcoming);
-      })
-      .catch(error => {
-        console.error('Error fetching total cancelled appointments:', error);
-      });
-  };
-
-  console.log(totalUpcoming)
+  console.log(stats)
   
     return (
         <div className="wrapper">
@@ -73,32 +42,32 @@ const AdminDash = () => {
                         <p className='m-0 dashcard-p'>
                             Patients<br/>today
                         </p>
-                        <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
+                        <span className='total-patients-today total'>{stats.total_today === 0 ? 0 : stats.total_today}</span>
                     </div>
                     <div className="col pending-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Pending<br/>Appointments
                         </p>
-                        <span className='total-pending-appoint total'>{totalPending}</span>
+                        <span className='total-pending-appoint total'>{stats.total_pending}</span>
                     </div>
                     <div className="col cancelled-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Cancelled<br/>Appointments
                         </p>
-                        <span className='total-cancelled-appoint total'>{totalCancelled}</span>
+                        <span className='total-cancelled-appoint total'>{stats.total_cancelled}</span>
                     </div>
                     <div className="col recent-visits text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Recent<br/>Visits
                         </p>
-                        <span className='total-recent-visits total'>{recentVisits}</span>
+                        <span className='total-recent-visits total'>{stats.recent_visit}</span>
                     </div>
                     <div className="col earnings-today text-center dashboard-card">
                         <p className='m-0 dashcard-p'> 
                             Earnings<br/>Today
                         </p>
                         <p className='total'>
-                        ₱<span className='total-earnings-today total'>0</span>
+                        ₱<span className='total-earnings-today total'>{stats.total_paid_today }</span>
                         </p>
                     </div>
                 </div>

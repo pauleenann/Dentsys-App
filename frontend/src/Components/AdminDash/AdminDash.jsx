@@ -1,4 +1,4 @@
-import React, { useState, useEffect, startTransition } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminDash.css';
 import logowhite from './../../Assets/logowhite.png';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
@@ -10,47 +10,57 @@ const AdminDash = () => {
     const [totalCancelled, setTotalCancelled] = useState(0);
     const [recentVisits, setRecentVisits] = useState(0);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
-    const [appointment, setAppointment] = useState([]);
-
-    useEffect(() => {
-        getAppointment();
-      }, []);
-    
-      function getAppointment() {
-        axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
-          .then(response => {
-            console.log(response.data);
-            if (Array.isArray(response.data)) {
-              setAppointment(response.data);
-            } else {
-              console.error('Data is not an array:', response.data);
-              setAppointment([]);
-            }
-          })
-          .catch(error => {
-            console.error('Error fetching appointments:', error);
-            setAppointment([]);
-          });
-      }
-
-      console.log("today");
-      console.log(appointment);
 
 
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const response = await axios.get('http://localhost:80/api2/?action=getAppointmentList');
-                setStats(response.data);
-            } catch (error) {
-                console.error('Error fetching statistics:', error);
-            }
-        };
 
-        fetchStats();
-    }, []);
+  useEffect(() => {
+    getTotalPendingAppointments();
+    getCancelledAppointments();
+    getRecentAppointments();
+    getUpcomingAppointments();
+  }, []);
 
-  console.log(stats)
+  const getTotalPendingAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getPendingAppointments')
+      .then(response => {
+        setTotalPending(response.data.total_pending);
+      })
+      .catch(error => {
+        console.error('Error fetching total pending appointments:', error);
+      });
+  };
+
+  const getCancelledAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getCancelledAppointments')
+      .then(response => {
+        setTotalCancelled(response.data.total_cancelled);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  const getRecentAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getRecentAppointments')
+      .then(response => {
+        setRecentVisits(response.data.recent_visits);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  const getUpcomingAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getUpcomingAppointments')
+      .then(response => {
+        setTotalUpcoming(response.data.total_upcoming);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  console.log(totalUpcoming)
   
     return (
         <div className="wrapper">
@@ -63,43 +73,95 @@ const AdminDash = () => {
                         <p className='m-0 dashcard-p'>
                             Patients<br/>today
                         </p>
-                        <span className='total-patients-today total'>{stats.total_today === 0 ? 0 : stats.total_today}</span>
+                        <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
                     </div>
                     <div className="col pending-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Pending<br/>Appointments
                         </p>
-                        <span className='total-pending-appoint total'>{stats.total_pending}</span>
+                        <span className='total-pending-appoint total'>{totalPending}</span>
                     </div>
                     <div className="col cancelled-appointments text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Cancelled<br/>Appointments
                         </p>
-                        <span className='total-cancelled-appoint total'>{stats.total_cancelled}</span>
+                        <span className='total-cancelled-appoint total'>{totalCancelled}</span>
                     </div>
                     <div className="col recent-visits text-center dashboard-card">
                         <p className='m-0 dashcard-p'>
                             Recent<br/>Visits
                         </p>
-                        <span className='total-recent-visits total'>{stats.recent_visit}</span>
+                        <span className='total-recent-visits total'>{recentVisits}</span>
                     </div>
                     <div className="col earnings-today text-center dashboard-card">
                         <p className='m-0 dashcard-p'> 
                             Earnings<br/>Today
                         </p>
                         <p className='total'>
-                        ₱<span className='total-earnings-today total'>{stats.total_paid_today }</span>
+                        ₱<span className='total-earnings-today total'>0</span>
                         </p>
                     </div>
                 </div>
 
-                {/* {appointment.mapP((appointment, index)=>{
-                    return(
-
-                    );
-                })}; */}
-
-                
+                <div className="row mt-5 row2">
+                    <div className="col appointnment-today-card">
+                        <div>
+                        <div className="appointments-today-header">
+                            <p className='appointments-today-p'>Appointments Today</p>
+                        </div>
+                        <div className="appointment-list">
+                        <table className="table ">
+                            <thead>
+                                <tr>
+                                <td className='no-bg-color app-list-th' scope="col">Name</td>
+                                <td className='no-bg-color app-list-th'  scope="col">Phone Number</td>
+                                <td className='no-bg-color app-list-th'  scope="col">Service</td>
+                                <td className='no-bg-color app-list-th'  scope="col">Time</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td className='no-bg-color app-today-info'scope="row">Giolliana Plandez</td>
+                                <td className='no-bg-color app-today-info' >09212787283</td>
+                                <td className='no-bg-color app-today-info' >Teeth Cleaning</td>
+                                <td className='no-bg-color app-today-info' >10:00 AM - 11:00 AM</td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <div className="nothing text-center ">
+                            -- Nothing follows --
+                        </div>
+                    </div>
+                    <div className="col-4 up-app">
+                        <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
+                        <div className="up-app-time ">
+                            <p className='m-0 text-light up-app-label'>Time</p>
+                            <p className='text-light up-app-info'>10:00 AM - 11:00 AM</p>
+                        </div>
+                        <div className="up-app-service">
+                            <p className='m-0 text-light up-app-label '>Service</p>
+                            <p className='text-light up-app-info'>Teeth Cleaning</p>
+                        </div>
+                        <div className="up-app-patient">
+                            <p className='m-0 text-light up-app-label'>Patient Name</p>
+                            <p className='text-light up-app-info'>Giolliana Plandez</p>
+                        </div>
+                        <div className="up-app-email">
+                            <p className='m-0 text-light up-app-label'>Patient Email</p>
+                            <p className='text-light up-app-info'>giolliana@gmail.com</p>
+                        </div>
+                        <div className="up-app-phone">
+                            <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
+                            <p className='text-light up-app-info'>09212787283</p>
+                        </div>
+                        <div className="button-link">
+                        <button type="" className="btn text-light up-app-button" >View Appointment</button>
+                        <p className='text-light up-app-info up-app-link'>View more appoinments</p>
+                        </div>
+                    </div>
+                </div>
                 
                 <div className="row row3">
                 <div className="col recent-visits-card">
@@ -108,7 +170,7 @@ const AdminDash = () => {
                             <p className='recent-visit-header'>Recent Visits</p>
                         </div>
                         <div className="">
-                        <table class="table ">
+                        <table className="table ">
                             <thead>
                                 <tr>
                                 <td className='no-bg-color recent-visit-th' scope="col ">Name</td>

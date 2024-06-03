@@ -51,14 +51,14 @@ const AdminInfo = () => {
                         {getFormattedDate()}
                     </div>
                     <div className="admin-info-user">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle admin-info-user-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div className="dropdown">
+                        <button className="btn dropdown-toggle admin-info-user-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <p className='p-0 m-0 admin-hello'>Hello,  <span className='admin-info-name'>Giolliana</span></p>
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="/admin" onClick={logout}>Log out</a></li>
+                        <ul className="dropdown-menu">
+                            <li><a className="dropdown-item" href="#">Action</a></li>
+                            <li><a className="dropdown-item" href="#">Another action</a></li>
+                            <li><a className="dropdown-item" href="/admin" onClick={logout}>Log out</a></li>
                         </ul>
                         </div>
                     </div>

@@ -62,7 +62,7 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
                 return (
                 <div className="row p-5 " key={index}>
                   <div className="col-3 mb-2 black-color">Client Name:</div>
-                  <div className="col-3 mb-2 fw-bold  black-color">{appointment.fname} {appointment.lname}</div>
+                  <div className="col-3 mb-2 fw-bold  black-color text-capitalize">{appointment.fname} {appointment.lname}</div>
                   <div className="col-3 mb-2 black-color">Service Acquired:</div>
                   <div className="col-3 mb-2 black-color fw-bold  ">{appointment.service_}</div>
                   <div className="col-3 mb-2 black-color">Date:</div>

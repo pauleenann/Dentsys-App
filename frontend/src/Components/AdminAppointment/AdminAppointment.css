@@ -223,7 +223,7 @@ body {
 }
 
 
-.reschedule-overlay, .confirmpage-overlay, .cancelpage-overlay {
+.reschedule-overlay, .confirmpage-overlay, .cancelpage-overlay, .viewpage-overlay {
     position: fixed; 
     top: 0;
     left: 0;

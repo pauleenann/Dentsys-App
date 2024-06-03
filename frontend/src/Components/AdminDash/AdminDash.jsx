@@ -4,22 +4,27 @@ import logowhite from './../../Assets/logowhite.png';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const AdminDash = () => {
+    //usestates for total num of pending, cancelled, recent, and upcoming appointments
+    //usestate for appointment today
     const [totalPending, setTotalPending] = useState(0);
     const [totalCancelled, setTotalCancelled] = useState(0);
     const [recentVisits, setRecentVisits] = useState(0);
+    const [recentAppDetail, setRecentAppDetail] = useState([]);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
     const [appToday, setAppToday] = useState([]);
 
-
-
+//loads when componenct renders
   useEffect(() => {
     getTotalPendingAppointments();
     getCancelledAppointments();
     getRecentAppointments();
     getUpcomingAppointments();
-    getAppointmentsToday()
+    getAppointmentsToday();
+    getRecentAppointmentDetails();
   }, []);
 
   const getTotalPendingAppointments = () => {
@@ -66,16 +71,25 @@ const AdminDash = () => {
     axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
       .then(response => {
         setAppToday(response.data);
+        console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching total cancelled appointments:', error);
       });
   };
 
-  console.log(appToday[0])
-  
+  const getRecentAppointmentDetails = () => {
+    axios.get('http://localhost:80/api2/?action=getRecentAppointmentDetails')
+      .then(response => {
+        setRecentAppDetail(response.data.recent_visits);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
 
-  console.log(totalUpcoming)
+  console.log(recentAppDetail)
+
   
     return (
         <div className="wrapper">
@@ -125,7 +139,7 @@ const AdminDash = () => {
             <div className="appointments-today-header">
                 <p className='appointments-today-p'>Appointments Today</p>
             </div>
-            {appToday.length != 0  ? (
+            {appToday.length > 0  ? (
                 <div className="appointment-list">
                     <table className="table">
                         <thead>
@@ -139,7 +153,7 @@ const AdminDash = () => {
                         <tbody>
                             {appToday.map((appointment, index) => (
                                 <tr key={index}>
-                                    <td className='no-bg-color app-today-info' scope="row">{appointment.fname} {appointment.lname}</td>
+                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.phone}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.service_}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.time_}</td>
@@ -161,27 +175,28 @@ const AdminDash = () => {
         <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
         <div className="up-app-time ">
             <p className='m-0 text-light up-app-label'>Time</p>
-            <p className='text-light up-app-info'>{appToday[0].time_}</p>
+            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].time_}</p>
         </div>
         <div className="up-app-service">
             <p className='m-0 text-light up-app-label '>Service</p>
-            <p className='text-light up-app-info'>{appToday[0].service_}</p>
+            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].service_}</p>
         </div>
         <div className="up-app-patient">
             <p className='m-0 text-light up-app-label'>Patient Name</p>
-            <p className='text-light up-app-info'>{appToday[0].fname} {appToday.lname}</p>
+            <p className='text-light up-app-info text-capitalize'>{appToday.length == 0 ? "":`${appToday[0].fname} ${appToday[0].lname}`}</p>
         </div>
         <div className="up-app-email">
             <p className='m-0 text-light up-app-label'>Patient Email</p>
-            <p className='text-light up-app-info'>{appToday[0].email}</p>
+            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].email}</p>
         </div>
         <div className="up-app-phone">
             <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
-            <p className='text-light up-app-info'>{appToday[0].phone}</p>
+            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].phone}</p>
         </div>
         <div className="button-link">
             <button type="" className="btn text-light up-app-button" >View Appointment</button>
-            <p className='text-light up-app-info up-app-link'>View more appointments</p>
+            <Link to='/appointment-list'><p className='text-light up-app-info up-app-link'>View more appointments</p></Link>
+            
         </div>
     </div>
 </div>

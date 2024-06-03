@@ -56,8 +56,6 @@ const AdminInfo = () => {
                             <p className='p-0 m-0 admin-hello'>Hello,  <span className='admin-info-name'>Giolliana</span></p>
                         </button>
                         <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">Action</a></li>
-                            <li><a className="dropdown-item" href="#">Another action</a></li>
                             <li><a className="dropdown-item" href="/admin" onClick={logout}>Log out</a></li>
                         </ul>
                         </div>

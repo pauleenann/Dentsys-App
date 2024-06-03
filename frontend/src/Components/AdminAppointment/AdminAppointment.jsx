@@ -7,9 +7,11 @@ import Reschedule from '../Reschedule/Reschedule';
 import axios from 'axios';
 import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed';
 import CancelAppointment from '../CancelAppointment/CancelAppointment';
+import ViewAppointment from '../ViewAppointment/ViewAppointment';
 
 const AdminAppointment = () => {
-  const [showReschedule, setShowReschedule] = useState(false); // State to toggle Reschedule
+  const [showReschedule, setShowReschedule] = useState(false);
+  const [showView, setShowView] = useState(false);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
@@ -65,9 +67,11 @@ const AdminAppointment = () => {
         console.log("response")
         console.log(response.data);
         if(response.data !== null){
+          window.location.reload();
         }else{
           console.log("Please try again");
         }
+        
       })
       .finally(() => setLoading(false)); // Set loading to false when the request is completed
     console.log(appointment)
@@ -76,8 +80,9 @@ const AdminAppointment = () => {
   const filteredAppointments = appointment.filter(appt => {
     if (filter === 'all') return true;
     if (filter === 'today') {
-      const today = new Date().toISOString().split('T')[0];
-      return appt.date_ === today;
+      // const today = new Date().toISOString().split('T')[0];
+      // return appt.date_ === today;
+      return appt.status_ === 'accepted';
     }
     if (filter === 'pending') return appt.status_ === 'pending';
     if (filter === 'cancelled') return appt.status_ === 'cancelled';
@@ -146,7 +151,7 @@ const AdminAppointment = () => {
                   FINISHED
                 </div>
                 <div className="col">
-                  <button className='btn button-view-finished'>View</button>
+                  <button className='btn button-view-finished' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowView(true);}}>View</button>
                 </div>
               </div>
             );
@@ -231,6 +236,12 @@ const AdminAppointment = () => {
       {showCancel && (
         <div key={keyOfSelectedAppointment} className="cancelpage-overlay">
           <CancelAppointment onClose={() => setShowCancel(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
+        </div>
+      )}
+
+      {showView && (
+        <div key={keyOfSelectedAppointment} className="viewpage-overlay">
+          <ViewAppointment onClose={() => setShowView(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
         </div>
       )}
 

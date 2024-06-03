@@ -10,6 +10,32 @@ const AdminDash = () => {
     const [totalCancelled, setTotalCancelled] = useState(0);
     const [recentVisits, setRecentVisits] = useState(0);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
+    const [appointment, setAppointment] = useState([]);
+
+    useEffect(() => {
+        getAppointment();
+      }, []);
+    
+      function getAppointment() {
+        axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
+          .then(response => {
+            console.log(response.data);
+            if (Array.isArray(response.data)) {
+              setAppointment(response.data);
+            } else {
+              console.error('Data is not an array:', response.data);
+              setAppointment([]);
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching appointments:', error);
+            setAppointment([]);
+          });
+      }
+
+      console.log("today");
+      console.log(appointment);
+
 
 
 
@@ -103,65 +129,13 @@ const AdminDash = () => {
                     </div>
                 </div>
 
-                <div className="row mt-5 row2">
-                    <div className="col appointnment-today-card">
-                        <div>
-                        <div className="appointments-today-header">
-                            <p className='appointments-today-p'>Appointments Today</p>
-                        </div>
-                        <div className="appointment-list">
-                        <table class="table ">
-                            <thead>
-                                <tr>
-                                <td className='no-bg-color app-list-th' scope="col">Name</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Phone Number</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Service</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Time</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td className='no-bg-color app-today-info'scope="row">Giolliana Plandez</td>
-                                <td className='no-bg-color app-today-info' >09212787283</td>
-                                <td className='no-bg-color app-today-info' >Teeth Cleaning</td>
-                                <td className='no-bg-color app-today-info' >10:00 AM - 11:00 AM</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-                        </div>
-                        <div className="nothing text-center ">
-                            -- Nothing follows --
-                        </div>
-                    </div>
-                    <div className="col-4 up-app">
-                        <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
-                        <div className="up-app-time ">
-                            <p className='m-0 text-light up-app-label'>Time</p>
-                            <p className='text-light up-app-info'>10:00 AM - 11:00 AM</p>
-                        </div>
-                        <div className="up-app-service">
-                            <p className='m-0 text-light up-app-label '>Service</p>
-                            <p className='text-light up-app-info'>Teeth Cleaning</p>
-                        </div>
-                        <div className="up-app-patient">
-                            <p className='m-0 text-light up-app-label'>Patient Name</p>
-                            <p className='text-light up-app-info'>Giolliana Plandez</p>
-                        </div>
-                        <div className="up-app-email">
-                            <p className='m-0 text-light up-app-label'>Patient Email</p>
-                            <p className='text-light up-app-info'>giolliana@gmail.com</p>
-                        </div>
-                        <div className="up-app-phone">
-                            <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
-                            <p className='text-light up-app-info'>09212787283</p>
-                        </div>
-                        <div className="button-link">
-                        <button type="" className="btn text-light up-app-button" >View Appointment</button>
-                        <p className='text-light up-app-info up-app-link'>View more appoinments</p>
-                        </div>
-                    </div>
-                </div>
+                {/* {appointment.mapP((appointment, index)=>{
+                    return(
+
+                    );
+                })}; */}
+
+                
                 
                 <div className="row row3">
                 <div className="col recent-visits-card">

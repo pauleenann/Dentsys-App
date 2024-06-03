@@ -10,6 +10,7 @@ const AdminDash = () => {
     const [totalCancelled, setTotalCancelled] = useState(0);
     const [recentVisits, setRecentVisits] = useState(0);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
+    const [appToday, setAppToday] = useState([]);
 
 
 
@@ -18,6 +19,7 @@ const AdminDash = () => {
     getCancelledAppointments();
     getRecentAppointments();
     getUpcomingAppointments();
+    getAppointmentsToday()
   }, []);
 
   const getTotalPendingAppointments = () => {
@@ -59,6 +61,19 @@ const AdminDash = () => {
         console.error('Error fetching total cancelled appointments:', error);
       });
   };
+
+  const getAppointmentsToday = () => {
+    axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
+      .then(response => {
+        setAppToday(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  console.log(appToday)
+  
 
   console.log(totalUpcoming)
   
@@ -102,38 +117,48 @@ const AdminDash = () => {
                         </p>
                     </div>
                 </div>
+                
+              <div className="row mt-5 row2">
+                {/* appointments today */}
+               
+                  <div className="col appointment-today-card">
+                      <div>
+                          <div className="appointments-today-header">
+                              <p className='appointments-today-p'>Appointments Today</p>
+                          </div>
+                          {appToday.map((appointment, index) => {
+                              return (
+                                  <div className="appointment-list">
+                                      <table className="table ">
+                                          <thead>
+                                              <tr>
+                                                  <td className='no-bg-color app-list-th' scope="col">Name</td>
+                                                  <td className='no-bg-color app-list-th' scope="col">Phone Number</td>
+                                                  <td className='no-bg-color app-list-th' scope="col">Service</td>
+                                                  <td className='no-bg-color app-list-th' scope="col">Time</td>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr>
+                                                  <td className='no-bg-color app-today-info' scope="row">{appointment.fname} {appointment.lname}</td>
+                                                  <td className='no-bg-color app-today-info'>{appointment.phone}</td>
+                                                  <td className='no-bg-color app-today-info'>{appointment.service_}</td>
+                                                  <td className='no-bg-color app-today-info'>{appointment.time_}</td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              );
+                          })}
+                          {/* "Nothing follows" message */}
+                          <div className="nothing text-center">
+                              {appToday.length === 0 && "-- Nothing follows --"}
+                          </div>
+                      </div>
+                  </div>
+              
 
-                <div className="row mt-5 row2">
-                    <div className="col appointnment-today-card">
-                        <div>
-                        <div className="appointments-today-header">
-                            <p className='appointments-today-p'>Appointments Today</p>
-                        </div>
-                        <div className="appointment-list">
-                        <table className="table ">
-                            <thead>
-                                <tr>
-                                <td className='no-bg-color app-list-th' scope="col">Name</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Phone Number</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Service</td>
-                                <td className='no-bg-color app-list-th'  scope="col">Time</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td className='no-bg-color app-today-info'scope="row">Giolliana Plandez</td>
-                                <td className='no-bg-color app-today-info' >09212787283</td>
-                                <td className='no-bg-color app-today-info' >Teeth Cleaning</td>
-                                <td className='no-bg-color app-today-info' >10:00 AM - 11:00 AM</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-                        </div>
-                        <div className="nothing text-center ">
-                            -- Nothing follows --
-                        </div>
-                    </div>
+                    {/* upcoming appointments */}
                     <div className="col-4 up-app">
                         <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
                         <div className="up-app-time ">
@@ -162,9 +187,10 @@ const AdminDash = () => {
                         </div>
                     </div>
                 </div>
-                
+
+              
                 <div className="row row3">
-                <div className="col recent-visits-card">
+                <div className="col-12 recent-visits-card">
                         <div>
                         <div className="">
                             <p className='recent-visit-header'>Recent Visits</p>
@@ -208,7 +234,7 @@ const AdminDash = () => {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     );
 }
 

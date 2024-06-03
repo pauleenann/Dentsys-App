@@ -234,9 +234,8 @@ const AddService = () => {
 
         try {
           console.log("Sending patient data to server:", patient);
-          
           await axios.post("http://localhost:80/api2/user/save", patient);
-          navigate("/appointment-request-submitted", {state: patient});
+          //navigate("/appointment-request-submitted", {state: patient});
         } catch (err) {
           console.log(err);
         //   setError(true)

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './DentalHistory.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import tooth1 from './../../Assets/Tooth/tooth1.png'
 import tooth2 from './../../Assets/Tooth/tooth2.png'
@@ -72,7 +72,23 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 
 
 const DentalHistory = () => {
-    
+    const [history, setHistory] = useState([]);
+
+    const {id} = useParams();
+
+    useEffect(()=>{
+        getProcedureHistory1();
+    }, []);
+    function getProcedureHistory1() {
+        axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`)
+          .then(function(response) {
+            console.log(response.data); 
+              setHistory(response.data);
+          
+          })
+    };
+
+
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
         2: { default: tooth2, selected: selected2 },
@@ -247,152 +263,155 @@ const DentalHistory = () => {
         </div>
 
         {/* form */}
-        <div className="rol add-patient-container mt-4">
-            <div className="col">                
-                <div className="row">
-                    {/* date of service */}
-                    <div className="col-2 text">
-                        Date of Service:
-                    </div>
-                    <div className="col-10 fw-semibold">
-                        0/0/0
-                    </div>
-                    {/* procedure */}
-                    <div className="col-2 text mt-3">
-                        Procedure:
-                    </div>
-                    <div className="col-10 fw-semibold mt-3">
-                        Teeth Cleaning
-                    </div>
-                    {/* Tooth no */}
-                    <div className="col-2 text mt-3">
-                        Tooth no.:
-                    </div>
-                    <div className="col-10 fw-semibold mt-3">
-                        0
-                    </div>
-                    {/* dentist */}
-                    <div className="col-2 text mt-3">
-                        Dentist:
-                    </div>
-                    <div className="col-10 fw-semibold mt-3">
-                        Dr.
-                    </div>
-
-                </div>
-
-                {/* tooth chart */}
-                <div className="tooth-chart mt-4">
-                <div className="row">
-                    <div className="col-6">
-                        <div className="row">
-                            {[16, 15, 14, 13, 12, 11, 10, 9].map(renderTooth)}
-                        </div>
-                        <div className="row">
-                            {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="row">
-                            {[8, 7, 6, 5, 4, 3, 2, 1].map(renderTooth)}
-                        </div>
-                        <div className="row">
-                            {[25, 26, 27, 28, 29, 30, 31, 32].map(renderTooth2)}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            {/* end of row for tooth chart */}
-
-            <hr className='mt-5'/>
-            <h4 className='text-center mt-5'>Payment Summary</h4>
-
-
-            
-
-            {/* receipt */}
-            <div className=" row mt-5 mb-5">
-                <div className="col p-0">
-                    <div className="receipt-container">
-                        {/* receipt header */}
-                        <div className="receipt-header">
-                            <h6 className='m-0'>Procedure Description</h6>
-                            <h6 className='m-0'>Cost</h6>
-                        </div>
-                        {/* receipt info */}
-                        <div className="receipt-info">
-                            {/* receipt procedure */}
-                            <div className="receipt-procedure">
-                                <ul>
-                                    <li>{patient.p_service}<ul>
-                                    <li>Tooth No.: <span>
-                                        {Object.entries(patient.p_selectedTeeth)
-                                            .filter(([toothNumber, isSelected]) => isSelected)
-                                            .map(([toothNumber]) => toothNumber)
-                                            .join(', ')
-                                        }
-                                    </span></li></ul></li>
-                                </ul>
-                            </div>
-                            {/* receipt cost */}
-                            <div className="receipt-cost">
-                                <p>₱ <span>0</span></p>
-                            </div>
-                        </div>
-                        {/* total */}
-                        <div className="receipt-total">
-                            <div>
+        {Array.isArray(history) && history.length > 0 ? (
+         history.map((item, index) => (
+                    <div className="rol add-patient-container mt-4">
+                        <div className="col">                
+                            <div className="row">
+                                {/* date of service */}
+                                <div className="col-2 text">
+                                    Date of Service:
+                                </div>
+                                <div className="col-10 fw-semibold">
+                                    {item.p_date}
+                                </div>
+                                {/* procedure */}
+                                <div className="col-2 text mt-3">
+                                    Procedure:
+                                </div>
+                                <div className="col-10 fw-semibold mt-3">
+                                    {item.service_}
+                                </div>
+                                {/* Tooth no */}
+                                <div className="col-2 text mt-3">
+                                    Tooth no.:
+                                </div>
+                                <div className="col-10 fw-semibold mt-3">
+                                    {item.p_selectedTeeth}
+                                </div>
+                                {/* dentist */}
+                                <div className="col-2 text mt-3">
+                                    Dentist:
+                                </div>
+                                <div className="col-10 fw-semibold mt-3">
+                                    {item.p_dentist}
+                                </div>
 
                             </div>
-                            <div className="receipt-total-amount">
-                                <h6 className='m-0'>Total Due</h6>
-                                <p className='m-0'>₱ <span>0.00</span></p>
+
+                            {/* tooth chart */}
+                            <div className="tooth-chart mt-4">
+                            <div className="row">
+                                <div className="col-6">
+                                    <div className="row">
+                                        {[16, 15, 14, 13, 12, 11, 10, 9].map(renderTooth)}
+                                    </div>
+                                    <div className="row">
+                                        {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="row">
+                                        {[8, 7, 6, 5, 4, 3, 2, 1].map(renderTooth)}
+                                    </div>
+                                    <div className="row">
+                                        {[25, 26, 27, 28, 29, 30, 31, 32].map(renderTooth2)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        {/* end of row for tooth chart */}
+
+                        <hr className='mt-5'/>
+                        <h4 className='text-center mt-5'>Payment Summary</h4>
+
+
+                        
+
+                        {/* receipt */}
+                        <div className=" row mt-5 mb-5">
+                            <div className="col p-0">
+                                <div className="receipt-container">
+                                    {/* receipt header */}
+                                    <div className="receipt-header">
+                                        <h6 className='m-0'>Procedure Description</h6>
+                                        <h6 className='m-0'>Cost</h6>
+                                    </div>
+                                    {/* receipt info */}
+                                    <div className="receipt-info">
+                                        {/* receipt procedure */}
+                                        <div className="receipt-procedure">
+                                            <ul>
+                                                <li>{patient.p_service}<ul>
+                                                <li>Tooth No.: <span>
+                                                    {Object.entries(patient.p_selectedTeeth)
+                                                        .filter(([toothNumber, isSelected]) => isSelected)
+                                                        .map(([toothNumber]) => toothNumber)
+                                                        .join(', ')
+                                                    }
+                                                </span></li></ul></li>
+                                            </ul>
+                                        </div>
+                                        {/* receipt cost */}
+                                        <div className="receipt-cost">
+                                            <p>₱ <span>0</span></p>
+                                        </div>
+                                    </div>
+                                    {/* total */}
+                                    <div className="receipt-total">
+                                        <div>
+
+                                        </div>
+                                        <div className="receipt-total-amount">
+                                            <h6 className='m-0'>Total Due</h6>
+                                            <p className='m-0'>₱ <span>{item.p_paidamount}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                        <h5 className='mb-4 mt-5'>Payment</h5>
+
+                        
+                        {/* row for payment */}
+                        <div className="row">
+                            <table className='table payment-table'>
+                                <tbody>
+                                    <tr>
+                                        <td className='payment-table-text'>{item.p_date}</td>
+                                        <td className='payment-table-text'>{item.p_time}</td>
+                                        <td className='payment-table-text'>{item.p_payment}</td>
+                                        <td className='payment-table-text '>₱ {item.p_paidamount}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        {/* end of payment row */}
+
+                        {/* total paid */}
+                        <div className="row text-end">
+                            <div className="col total-paid mb-2">
+                                <h5>Total Paid</h5>
+                                <h5 className='m-0'>₱ <span>{item.p_paidamount}</span></h5>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div className="row text-end">
+                            <div className="col balance mb-3">
+                                <h6 className='balance-text'>Balance</h6>
+                                <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-            </div>
-
-
-            <h5 className='mb-4 mt-5'>Payment</h5>
-
-            
-            {/* row for payment */}
-            <div className="row">
-                <table className='table payment-table'>
-                    <tbody>
-                        <tr>
-                            <td className='payment-table-text'>05/24/2024</td>
-                            <td className='payment-table-text'>10:30 AM</td>
-                            <td className='payment-table-text'>CASH</td>
-                            <td className='payment-table-text '>₱ 500</td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
-            {/* end of payment row */}
-
-            {/* total paid */}
-            <div className="row text-end">
-                <div className="col total-paid mb-2">
-                    <h5>Total Paid</h5>
-                    <h5 className='m-0'>₱ <span>0.00</span></h5>
-                </div>
-                <hr />
-            </div>
-
-            <div className="row text-end">
-                <div className="col balance mb-3">
-                    <h6 className='balance-text'>Balance</h6>
-                    <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
-                </div>
-            </div>
-        </div>
-
+        ))) : (<p>No history available.</p>)} 
       </div>
+      
     </div>
   )
 }

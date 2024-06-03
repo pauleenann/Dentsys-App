@@ -3,7 +3,7 @@ import './AddService.css'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import tooth1 from './../../Assets/Tooth/tooth1.png'
 import tooth2 from './../../Assets/Tooth/tooth2.png'
@@ -75,6 +75,9 @@ const AddService = () => {
     const [services, setServices] = useState([]);
     const [selectedTeeth, setSelectedTeeth] = useState({});
 
+    const { id } = useParams();
+    const intValue = parseInt(id, 10);
+
     useEffect(() => {
         getServices();
     }, []);
@@ -116,18 +119,19 @@ const AddService = () => {
 
 
     const [patient, setPatient] = useState({
-        action: 'addNewPatient',
+        action: 'procedureHistory',
+        p_id: intValue,
         p_date: '',
         p_time: '',
-        p_service: '',
-        p_selectedTeeth: {}, 
+       
+        p_selectedTeeth: [], 
         p_dentist: '',
         p_payment: '',
-        p_paidamount: ''
+        p_paidamount: 0
     });
 
     const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
-
+    
     const handleToothClick = (toothId) => {
         setPatient((prevState) => ({
             ...prevState,
@@ -135,6 +139,8 @@ const AddService = () => {
                 ...prevState.p_selectedTeeth,
                 [toothId]: !prevState.p_selectedTeeth[toothId],
             },
+            
+            
         }));
 
         // displays selected tooth sa tooth number input field
@@ -145,6 +151,9 @@ const AddService = () => {
 
             return updatedSelectedToothNumbers;
         });
+
+        
+        
     };
 
     const renderTooth = (toothId) => {
@@ -173,7 +182,9 @@ const AddService = () => {
                 <img src={imgSrc} className='tooth' alt="" />
             </div>
         );
+        
     };
+    
     
 
     async function getServices() {
@@ -220,16 +231,19 @@ const AddService = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
+
         try {
+          console.log("Sending patient data to server:", patient);
+          
           await axios.post("http://localhost:80/api2/user/save", patient);
-          //navigate("/appointment-request-submitted", {state: patient});
+          navigate("/appointment-request-submitted", {state: patient});
         } catch (err) {
           console.log(err);
         //   setError(true)
         }
       };
 
-    console.log(patient);
+    //console.log(patient);
 
   return (
     <div className='wrapper'>
@@ -441,7 +455,7 @@ const AddService = () => {
                 {/* paid amount */}
                 <div className="col-4">
                     <label htmlFor="" className="form-label labels" >Paid Amount</label>
-                    <input type="text" className="form-control " name='p_paidamount' id='paidamount' value={patient.p_paidamount} onChange={handleChange}/>
+                    <input type="number" className="form-control " name='p_paidamount' id='paidamount' value={patient.p_paidamount} onChange={handleChange}/>
                 </div>
             </div>
             {/* end of payment row */}

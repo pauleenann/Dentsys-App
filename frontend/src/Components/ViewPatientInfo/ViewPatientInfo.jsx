@@ -8,12 +8,14 @@ import axios from "axios";
 
 const ViewPatientInfo = () => {
     const [patient, setPatient] = useState([]);
+    const [history, setHistory] = useState([]);
     const navigate = useNavigate();
 
     const {id} = useParams();
     
     useEffect(()=>{
         getPatient();
+        getProcedureHistory();
     }, []);
 
     function getPatient() {
@@ -25,6 +27,15 @@ const ViewPatientInfo = () => {
           })
     };
     
+    function getProcedureHistory() {
+        axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory`)
+          .then(function(response) {
+            console.log(response.data); 
+              setHistory(response.data);
+          
+          })
+    };
+
     const handleClick = async (e) => {
         e.preventDefault();
         try {
@@ -37,6 +48,7 @@ const ViewPatientInfo = () => {
     };
 
     console.log(patient);
+    console.log(history)
 
   return (
     <div className='wrapper'>
@@ -135,22 +147,33 @@ const ViewPatientInfo = () => {
                                 <td className='no-bg-color dhistory-list-th'  scope="col">Procedure</td>
                                 <td className='no-bg-color '  scope="col"></td>
                                 </tr>
+                                
                             </thead>
                             <tbody>
-                                <tr className=''>
-                                <td className='no-bg-color dhistory-info pt-3'scope="row">0/0/0</td>
-                                <td className='no-bg-color dhistory-info pt-3' >Dr. </td>
-                                <td className='no-bg-color dhistory-info pt-3' >Teeth Cleaning</td>
-                                <td className='no-bg-color app-today-info' ><Link to='/dental-history'><button className='btn button-view'>View</button>
-                                </Link>
-                                    </td>
-                                </tr>
+                                    {Array.isArray(history) && history.length > 0 ? (
+                                        history.map((item, index) => (
+                                                <tr className=''>
+                                                    <td className='no-bg-color dhistory-info pt-3'scope="row">{item.p_date}</td>
+                                                    <td className='no-bg-color dhistory-info pt-3' >{item.p_dentist} </td>
+                                                    <td className='no-bg-color dhistory-info pt-3' >{item.service_}</td>
+                                                    <td className='no-bg-color app-today-info' ><Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
+                                                    </Link></td>
+                                                </tr>
+                                        ))
+                                    ) : (
+                                        <p>No history available.</p>
+                                    )}
+                                
+                                
                             </tbody>
-                            </table>
+                            
+                            
+                            
+                        </table>
                     </div>
 
                     <div className="col-12 text-center">
-                        <Link to='/add-service'>
+                        <Link to={`/add-service/${id}`}>
                             <button className='btn service-button-color'><i class="fa-regular fa-square-plus button-service-icon"></i><span className='text-light button-service'> Add another service</span></button>
                         </Link>
                     </div>

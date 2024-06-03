@@ -122,6 +122,8 @@ const AppointmentForm = () => {
                         <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} />
                     </div>
                 </div>
+                
+                {/* time form */}
                 <div className="col">
                     <label htmlFor="" className="form-label labels" >Time</label>
                     <div className="row">

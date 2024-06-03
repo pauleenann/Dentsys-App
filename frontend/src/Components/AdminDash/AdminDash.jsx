@@ -72,7 +72,7 @@ const AdminDash = () => {
       });
   };
 
-  console.log(appToday)
+  console.log(appToday[0])
   
 
   console.log(totalUpcoming)
@@ -118,75 +118,74 @@ const AdminDash = () => {
                     </div>
                 </div>
                 
-              <div className="row mt-5 row2">
-                {/* appointments today */}
-               
-                  <div className="col appointment-today-card">
-                      <div>
-                          <div className="appointments-today-header">
-                              <p className='appointments-today-p'>Appointments Today</p>
-                          </div>
-                          {appToday.map((appointment, index) => {
-                              return (
-                                  <div className="appointment-list">
-                                      <table className="table ">
-                                          <thead>
-                                              <tr>
-                                                  <td className='no-bg-color app-list-th' scope="col">Name</td>
-                                                  <td className='no-bg-color app-list-th' scope="col">Phone Number</td>
-                                                  <td className='no-bg-color app-list-th' scope="col">Service</td>
-                                                  <td className='no-bg-color app-list-th' scope="col">Time</td>
-                                              </tr>
-                                          </thead>
-                                          <tbody>
-                                              <tr>
-                                                  <td className='no-bg-color app-today-info' scope="row">{appointment.fname} {appointment.lname}</td>
-                                                  <td className='no-bg-color app-today-info'>{appointment.phone}</td>
-                                                  <td className='no-bg-color app-today-info'>{appointment.service_}</td>
-                                                  <td className='no-bg-color app-today-info'>{appointment.time_}</td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </div>
-                              );
-                          })}
-                          {/* "Nothing follows" message */}
-                          <div className="nothing text-center">
-                              {appToday.length === 0 && "-- Nothing follows --"}
-                          </div>
-                      </div>
-                  </div>
-              
-
-                    {/* upcoming appointments */}
-                    <div className="col-4 up-app">
-                        <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
-                        <div className="up-app-time ">
-                            <p className='m-0 text-light up-app-label'>Time</p>
-                            <p className='text-light up-app-info'>10:00 AM - 11:00 AM</p>
-                        </div>
-                        <div className="up-app-service">
-                            <p className='m-0 text-light up-app-label '>Service</p>
-                            <p className='text-light up-app-info'>Teeth Cleaning</p>
-                        </div>
-                        <div className="up-app-patient">
-                            <p className='m-0 text-light up-app-label'>Patient Name</p>
-                            <p className='text-light up-app-info'>Giolliana Plandez</p>
-                        </div>
-                        <div className="up-app-email">
-                            <p className='m-0 text-light up-app-label'>Patient Email</p>
-                            <p className='text-light up-app-info'>giolliana@gmail.com</p>
-                        </div>
-                        <div className="up-app-phone">
-                            <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
-                            <p className='text-light up-app-info'>09212787283</p>
-                        </div>
-                        <div className="button-link">
-                        <button type="" className="btn text-light up-app-button" >View Appointment</button>
-                        <p className='text-light up-app-info up-app-link'>View more appoinments</p>
-                        </div>
-                    </div>
+                <div className="row mt-5 row2">
+    {/* appointments today */}
+    <div className="col appointment-today-card">
+        <div>
+            <div className="appointments-today-header">
+                <p className='appointments-today-p'>Appointments Today</p>
+            </div>
+            {appToday.length != 0  ? (
+                <div className="appointment-list">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <td className='no-bg-color app-list-th' scope="col">Name</td>
+                                <td className='no-bg-color app-list-th' scope="col">Phone Number</td>
+                                <td className='no-bg-color app-list-th' scope="col">Service</td>
+                                <td className='no-bg-color app-list-th' scope="col">Time</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {appToday.map((appointment, index) => (
+                                <tr key={index}>
+                                    <td className='no-bg-color app-today-info' scope="row">{appointment.fname} {appointment.lname}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.phone}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.service_}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.time_}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
+            ) : (
+                <div className="nothing text-center">
+                    -- Nothing follows --
+                </div>
+            )}
+        </div>
+    </div>
+
+    {/* upcoming appointments */}
+    <div className="col-4 up-app">
+        <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
+        <div className="up-app-time ">
+            <p className='m-0 text-light up-app-label'>Time</p>
+            <p className='text-light up-app-info'>{appToday[0].time_}</p>
+        </div>
+        <div className="up-app-service">
+            <p className='m-0 text-light up-app-label '>Service</p>
+            <p className='text-light up-app-info'>{appToday[0].service_}</p>
+        </div>
+        <div className="up-app-patient">
+            <p className='m-0 text-light up-app-label'>Patient Name</p>
+            <p className='text-light up-app-info'>{appToday[0].fname} {appToday.lname}</p>
+        </div>
+        <div className="up-app-email">
+            <p className='m-0 text-light up-app-label'>Patient Email</p>
+            <p className='text-light up-app-info'>{appToday[0].email}</p>
+        </div>
+        <div className="up-app-phone">
+            <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
+            <p className='text-light up-app-info'>{appToday[0].phone}</p>
+        </div>
+        <div className="button-link">
+            <button type="" className="btn text-light up-app-button" >View Appointment</button>
+            <p className='text-light up-app-info up-app-link'>View more appointments</p>
+        </div>
+    </div>
+</div>
+
 
               
                 <div className="row row3">

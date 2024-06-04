@@ -32,6 +32,20 @@ if($method ==='PUT'){
                 // echo json_encode($response)
                 break;
 
+            case 'finish':
+                $user = json_decode(file_get_contents('php://input'));
+                $sql = "UPDATE appointment SET status_ = 'finished' WHERE a_id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+                if($stmt->execute()){
+                    $response = ['status' => 1, 'message' => 'Record updated successfully.'];
+                }else{
+                    $response = ['status' => 0, 'message' => 'Failed to update Record.'];
+                }
+                // echo json_encode($response)
+                break;
+
             case 'cancel':
                 $user = json_decode(file_get_contents('php://input'));
                 $sql = "UPDATE appointment SET status_ = 'cancelled' WHERE a_id = :id";
@@ -82,6 +96,8 @@ if($method ==='PUT'){
                 // echo json_encode($response)
                 break;
 
+
+
             default:
                 echo json_encode(['error' => 'Invalid action']);
                 break;
@@ -109,6 +125,74 @@ if($method ==='PUT'){
             echo json_encode($services);
             break;
 
+        case 'getPendingAppointments':
+                $sql = "SELECT COUNT(*) AS total_pending FROM appointment WHERE status_ = 'pending'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $totalPending = $result['total_pending'];
+                echo json_encode(['total_pending' => $totalPending]);
+                break;
+
+        case 'getCancelledAppointments':
+                $sql = "SELECT COUNT(*) AS total_cancelled FROM appointment WHERE status_ = 'cancelled'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $totalCancelled = $result['total_cancelled'];
+                echo json_encode(['total_cancelled' => $totalCancelled]);
+                break;
+
+        case 'getRecentAppointments':
+                $sql = "SELECT COUNT(*) AS recent_visits FROM appointment WHERE status_ = 'finished'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $recentVisits = $result['recent_visits'];
+                echo json_encode(['recent_visits' => $recentVisits]);
+                break;
+                
+        case 'getRecentAppointmentDetails':
+                date_default_timezone_set('Asia/Singapore');
+                $today = date('Y-m-d');
+                $sql = "SELECT * FROM appointment WHERE status_ = 'finished' AND date_ <= :today";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':today', $today, PDO::PARAM_STR);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $recentVisits = $result['recent_visits'];
+                echo json_encode(['recent_visits' => $recentVisits]);
+                break;
+
+        case 'getUpcomingAppointments':
+                //sets correct timezone
+                date_default_timezone_set('Asia/Singapore');
+                $today = date('Y-m-d');
+                $sql = "SELECT COUNT(*) AS total_upcoming FROM appointment WHERE date_ = :today AND status_='accepted'" ;
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':today', $today, PDO::PARAM_STR);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $totalUpcoming = $result['total_upcoming'];
+                echo json_encode(['total_upcoming' => $totalUpcoming]);
+                break;
+
+        case 'getAppointmentsToday':
+                //sets correct timezone
+                date_default_timezone_set('Asia/Singapore');
+                $today = date('Y-m-d');
+                $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
+                FROM appointment INNER JOIN temppatient
+                ON appointment.id = temppatient.id WHERE date_ = :today AND status_='accepted' AND TIME(time_) BETWEEN '09:00:00' AND '17:00:00' ORDER BY time_ DESC";
+                //change time for testing purposes
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':today', $today, PDO::PARAM_STR);
+                $stmt->execute();
+                $appToday = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($appToday);
+                break;
+
+    
         case 'getPatients':
             $sql = "SELECT * from patients";
             $stmt = $conn->prepare($sql);
@@ -316,7 +400,6 @@ if($method ==='PUT'){
 } else {
     echo json_encode(['error' => 'Invalid request method']);
 }
-
 /*
 switch($method){
     //IF POST UNG REQUEST,ETO GAGAWIN NIYA

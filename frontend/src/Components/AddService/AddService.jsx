@@ -74,12 +74,14 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 const AddService = () => {
     const [services, setServices] = useState([]);
     const [selectedTeeth, setSelectedTeeth] = useState({});
+    const [servicesDetails, setServicesDetails] = useState([]);
 
     const { id } = useParams();
     const intValue = parseInt(id, 10);
 
     useEffect(() => {
         getServices();
+        getServicesDetails();
     }, []);
     
     const toothImages = {
@@ -123,12 +125,17 @@ const AddService = () => {
         p_id: intValue,
         p_date: '',
         p_time: '',
-       
         p_selectedTeeth: [], 
         p_dentist: '',
-        p_payment: '',
-        p_paidamount: 0
+        p_service: '',
+        p_severity_material: ''
     });
+
+    function computePrice(){
+        if(patient.p_service === servicesDetails.service_name ){
+            
+        }
+    }
 
     const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
     
@@ -153,12 +160,12 @@ const AddService = () => {
         });
 
         
-        
     };
 
     const renderTooth = (toothId) => {
         const isSelected = patient.p_selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        
 
         return (
             <div className="col tooth-container" key={toothId}>
@@ -173,6 +180,7 @@ const AddService = () => {
     const renderTooth2 = (toothId) => {
         const isSelected = patient.p_selectedTeeth[toothId];
         const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        
 
         return (
             <div className="col tooth-container" key={toothId}>
@@ -186,7 +194,7 @@ const AddService = () => {
     };
     
     
-
+    //fetch services table
     async function getServices() {
         try {
             const response = await axios.get('http://localhost:80/api2/?action=getServices');
@@ -204,6 +212,26 @@ const AddService = () => {
             setServices([]);
         }
     }
+    //fetch servicesdetails table
+    async function getServicesDetails() {
+        try {
+            const response = await axios.get('http://localhost:80/api2/?action=getServicesDetails');
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setServicesDetails(response.data);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setServicesDetails([]);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setServicesDetails([]);
+        }
+    }
+
+
 
     const dentist = [
         { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
@@ -242,7 +270,13 @@ const AddService = () => {
         }
       };
 
-    //console.log(patient);
+    console.log(patient);
+    //console.log(totalTooth);
+    //console.log(servicesDetails);
+
+    const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;//calculate selected tooth that are true
+
+    console.log(totalTooth); // This will print the number of true values in the object
 
   return (
     <div className='wrapper'>
@@ -334,17 +368,35 @@ const AddService = () => {
                 </div>
                 
         
-
-                    {/* services */}
-                    <div className="col-4 mb-5">
-                        <label htmlFor="" className="form-lavel labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={patient.p_service} onChange={handleChange}>
+                    <div className="row">
+                        {/* services */}
+                    <div className="col-4 mb-3">
+                        <label htmlFor="" className="form-label labels mb-2">Type of Service</label>
+                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange}>
                             <option value="" labels>Select a Service</option>
                                     {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
                     </div>
+
+                    {/* service severity/material*/}
+                    <div className="col-4">
+                        <label htmlFor="" className="form-label labels mb-2">Level of Severity/Type of Material</label>
+                        <select class="form-select" aria-label="Default select example" id="p_severity_material" name="p_severity_material" value={patient.p_severity_material} onChange={handleChange}>
+                            <option value="" labels>Select a Severity/Material</option>
+                            {servicesDetails.map((service,key)=>{
+                                if(service.service_name === patient.p_service){
+                                    return(
+                                        <option key={service.sd_id} value={service.sd_description}>{service.sd_description}</option>
+                                    );
+                                }
+                            })}
+                                    
+                        </select>
+                    </div>
+                    </div>
+                    
 
                     {/* tooth num */}
                     <div className="col-4 mb-5">
@@ -417,7 +469,17 @@ const AddService = () => {
                             </div>
                             {/* receipt cost */}
                             <div className="receipt-cost">
-                                <p>₱ <span>0</span></p>
+                                <p>₱ 
+                                    {servicesDetails.map((service,key)=>{
+                                        if(patient.p_service === service.service_name && patient.p_severity_material === service.sd_description){
+                                            const totalPrice=service.sd_price*totalTooth;
+                                            return(
+                                                <span>{totalPrice}</span>
+                                            );
+                                        }
+                                    })}</p>
+                                    
+                                    
                             </div>
                         </div>
                         {/* total */}
@@ -427,7 +489,7 @@ const AddService = () => {
                             </div>
                             <div className="receipt-total-amount">
                                 <h6 className='m-0'>Total Due</h6>
-                                <p className='m-0'>₱ <span>0.00</span></p>
+                                <p className='m-0'>₱ <span></span></p>
                             </div>
                         </div>
                     </div>
@@ -435,14 +497,14 @@ const AddService = () => {
                 </div>
             </div>
 
-
-            <h5 className='mb-4 mt-5'>Payment</h5>
+            {/*  
+            <h5 className='mb-4 mt-5'>Payment</h5>*/}
 
             
             {/* row for payment */}
-            <div className="row">
+            {/* <div className="row"> */}
                 {/* payement method */}
-                <div className="col-4">
+                {/* <div className="col-4">
                     <label htmlFor="" className="form-lavel labels mb-2">Payment Method</label>
                     <select class="form-select" aria-label="Default select example" id="p_payment" name="p_payment" value={patient.p_payment} onChange={handleChange}>
                         <option value="" labels disabled>Select Payment Method</option>
@@ -450,30 +512,30 @@ const AddService = () => {
                                         <option key={payment.value} value={payment.value}>{payment.label}</option>
                                     ))}
                     </select>
-                </div>
+                </div> */}
                 {/* paid amount */}
-                <div className="col-4">
+                {/* <div className="col-4">
                     <label htmlFor="" className="form-label labels" >Paid Amount</label>
                     <input type="number" className="form-control " name='p_paidamount' id='paidamount' value={patient.p_paidamount} onChange={handleChange}/>
                 </div>
-            </div>
+            </div> */}
             {/* end of payment row */}
 
             {/* total paid */}
-            <div className="row text-end">
+            {/* <div className="row text-end">
                 <div className="col total-paid mb-2">
                     <h6>Total Paid</h6>
                     <p className='m-0'>₱ <span>0.00</span></p>
                 </div>
                 <hr />
-            </div>
+            </div> */}
 
-            <div className="row text-end">
+            {/* <div className="row text-end">
                 <div className="col balance mb-3">
                     <h6 className='balance-text'>Balance</h6>
                     <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
                 </div>
-            </div>
+            </div> */}
 
             {/* button */}
             <div className="text-center">

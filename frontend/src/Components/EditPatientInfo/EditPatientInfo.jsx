@@ -143,36 +143,6 @@ const EditPatientInfo = () => {
                         </div>
                     </form>
 
-                    <hr className='my-5'/>
-
-                    {/* dental history text header */}
-                    <div className="col ">
-                        <h5 className='text-center mb-5 my-4'>Dental History</h5>
-                    </div>
-
-                    {/* table */}
-                    <div className="col">
-                    <table class="table ">
-                            <thead>
-                                <tr>
-                                <td className='no-bg-color dhistory-list-th' scope="col">Date of Service</td>
-                                <td className='no-bg-color dhistory-list-th'  scope="col">Dentist</td>
-                                <td className='no-bg-color dhistory-list-th'  scope="col">Procedure</td>
-                                <td className='no-bg-color '  scope="col"></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className=''>
-                                <td className='no-bg-color dhistory-info pt-3'scope="row">0/0/0</td>
-                                <td className='no-bg-color dhistory-info pt-3' >Dr. </td>
-                                <td className='no-bg-color dhistory-info pt-3' >Teeth Cleaning</td>
-                                <td className='no-bg-color app-today-info' ><Link to='/dental-history'>
-                                <button className='btn button-view'>View</button></Link></td>
-                                </tr>
-                            </tbody>
-                            </table>
-                    </div>
-
                 </div>
             </div>
         </div>

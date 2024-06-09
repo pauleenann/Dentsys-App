@@ -206,7 +206,7 @@ const AddAppointment = () => {
             </div>
         </div>
         </form>
-    </div>
+        </div>
 
         </div>
         {loading && (

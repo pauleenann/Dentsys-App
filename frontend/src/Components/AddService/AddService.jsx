@@ -75,6 +75,8 @@ const AddService = () => {
     const [services, setServices] = useState([]);
     const [selectedTeeth, setSelectedTeeth] = useState({});
     const [servicesDetails, setServicesDetails] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const { id } = useParams();
     const intValue = parseInt(id, 10);
@@ -130,12 +132,6 @@ const AddService = () => {
         p_service: '',
         p_severity_material: ''
     });
-
-    function computePrice(){
-        if(patient.p_service === servicesDetails.service_name ){
-            
-        }
-    }
 
     const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
     
@@ -259,24 +255,45 @@ const AddService = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
           console.log("Sending patient data to server:", patient);
-          await axios.post("http://localhost:80/api2/user/save", patient);
-          //navigate("/appointment-request-submitted", {state: patient});
+          await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
+          navigate(`/view-patient-info/${id}`);
         } catch (err) {
           console.log(err);
         //   setError(true)
         }
       };
 
+    //useEffect hook is used to compute the total price whenever any of the
+    //dependencies (patient.p_service, patient.p_severity_material, patient
+    //p_selectedTeeth, servicesDetails) change.
+      useEffect(() => {
+        //function to compute total price
+        const computeTotalPrice = () => {
+            let price = 0; //initialize price to 0
+            servicesDetails.forEach(service => {
+                if (patient.p_service === service.service_name && patient.p_severity_material === service.sd_description) {
+                    price = service.sd_price * totalTooth;
+                }
+            });
+            setTotalPrice(price);
+        };
+        // Compute the total number of selected teeth
+        const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
+         // Call the computeTotalPrice function to update the totalPrice state
+        computeTotalPrice();
+    }, [patient.p_service, patient.p_severity_material, patient.p_selectedTeeth, servicesDetails]);
+
+
     console.log(patient);
     //console.log(totalTooth);
     //console.log(servicesDetails);
 
-    const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;//calculate selected tooth that are true
+    // const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;//calculate selected tooth that are true
 
-    console.log(totalTooth); // This will print the number of true values in the object
+    // console.log(totalTooth); // This will print the number of true values in the object
 
   return (
     <div className='wrapper'>
@@ -470,16 +487,18 @@ const AddService = () => {
                             {/* receipt cost */}
                             <div className="receipt-cost">
                                 <p>₱ 
-                                    {servicesDetails.map((service,key)=>{
-                                        if(patient.p_service === service.service_name && patient.p_severity_material === service.sd_description){
-                                            const totalPrice=service.sd_price*totalTooth;
-                                            return(
-                                                <span>{totalPrice}</span>
+                                {servicesDetails.map((service, key) => {
+                                        if (patient.p_service === service.service_name && patient.p_severity_material === service.sd_description) {
+                                            //binibilang kung ilang tooth yung may value na true sa json
+                                            const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
+                                            //calculates total cost
+                                            const cost = service.sd_price * totalTooth;
+                                            return (
+                                                <span key={key}>{cost}</span>
                                             );
                                         }
+                                        return null;
                                     })}</p>
-                                    
-                                    
                             </div>
                         </div>
                         {/* total */}
@@ -489,7 +508,7 @@ const AddService = () => {
                             </div>
                             <div className="receipt-total-amount">
                                 <h6 className='m-0'>Total Due</h6>
-                                <p className='m-0'>₱ <span></span></p>
+                                <p className='m-0'>₱ <span>{totalPrice}</span></p>
                             </div>
                         </div>
                     </div>
@@ -542,8 +561,15 @@ const AddService = () => {
                 <button className='btn save-patient-button' onClick={handleClick}>Save</button>
             </div>
         </div>
-
       </div>
+      {loading && (
+          <div className="spinner-overlay">
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          
+        )}
     </div>
   )
 }

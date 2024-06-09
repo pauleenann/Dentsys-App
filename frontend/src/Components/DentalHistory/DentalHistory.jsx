@@ -79,10 +79,11 @@ const DentalHistory = () => {
     useEffect(()=>{
         getProcedureHistory1();
     }, []);
+
     function getProcedureHistory1() {
         axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`)
           .then(function(response) {
-            console.log(response.data); 
+            //console.log(response.data); 
               setHistory(response.data);
           
           })
@@ -190,42 +191,8 @@ const DentalHistory = () => {
             </div>
         );
     };
-    
 
-    const services = [
-        { value: 'Oral prophylaxis (Teeth Cleaning)', label: 'Oral prophylaxis (Teeth Cleaning)' },
-        { value: 'Composite Restoration', label: 'Composite Restoration' },
-        { value: 'Teeth Whitening', label: 'Teeth Whitening' },
-        { value: 'Veneers', label: 'Veneers' },
-        { value: 'Dental Crowns', label: 'Dental Crowns' },
-        { value: 'Dental Bridges', label: 'Dental Bridges' },
-        { value: 'Dental Implants', label: 'Dental Implants' },
-        { value: 'Orthodontic Treatment (Braces)', label: 'Dental Implants' },
-        { value: 'Oral Surgeries', label: 'Oral Surgeries' },
-        { value: 'Root Canal Treats', label: 'Root Canal Treats' }
-    ];
 
-    const dentist = [
-        { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-        { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    ];
-
-    const payment = [
-        { value: 'CASH', label: 'CASH' },
-        { value: 'GCASH', label: 'GCASH' },
-    ];
-
-    const gender = [
-        { value: 'Male', label: 'Male' },
-        { value: 'Female', label: 'Female' },
-        { value: 'Non-binary', label: 'Non-binary' },
-        { value: 'Prefer not to say', label: 'Prefer not to say' },
-    ];
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPatient({...patient,[name]: value});
-    }
 
     const navigate = useNavigate();
 
@@ -240,7 +207,9 @@ const DentalHistory = () => {
         }
       };
 
-    console.log(patient);
+    //console.log(patient);
+    // const selectedTooth = JSON.parse(history.p_selectedTeeth);
+    
 
   return (
     <div className='wrapper'>
@@ -280,14 +249,17 @@ const DentalHistory = () => {
                                     Procedure:
                                 </div>
                                 <div className="col-10 fw-semibold mt-3">
-                                    {item.service_}
+                                    {item.p_service}
                                 </div>
                                 {/* Tooth no */}
                                 <div className="col-2 text mt-3">
                                     Tooth no.:
                                 </div>
                                 <div className="col-10 fw-semibold mt-3">
-                                    {item.p_selectedTeeth}
+                                {Object.keys(JSON.parse(item.p_selectedTeeth))
+                                .filter(key => JSON.parse(item.p_selectedTeeth)[key])
+                                .join(', ')
+                                }
                                 </div>
                                 {/* dentist */}
                                 <div className="col-2 text mt-3">

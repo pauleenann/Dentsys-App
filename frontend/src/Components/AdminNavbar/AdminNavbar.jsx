@@ -39,6 +39,16 @@ const AdminNavbar = () => {
                     </div>
                     
                 </div></Link>
+                <Link className='adminnav-link' to='/invoice-list'>
+                <div className="admin-nav-patients row">
+                    <div className="col-2 p-0">
+                    <i class="fa-solid fa-receipt adminnav-menu"></i>
+                    </div>
+                    <div className="col-10 p-0">
+                    <p className="admin-patients-text m-0 adminnav-menu">Invoices</p> 
+                    </div>
+                    
+                </div></Link>
                 </div>
             </div>
             </div>

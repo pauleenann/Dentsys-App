@@ -24,6 +24,7 @@ import DentalHistory from "./Components/DentalHistory/DentalHistory";
 import Services from "./Components/Services/Services";
 import ServicesOffered from "./Pages/ServicesOffered";
 import AddAppointment from "./Components/AddAppointment/AddAppointment";
+import Invoice from "./Components/Invoice/Invoice";
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/add-service/:id" element={<AddService/>} />
         <Route path="/dental-history/:id" element={<DentalHistory/>} />
         <Route path="/add-appointment" element={<AddAppointment/>} />
+        <Route path="/invoice-list" element={<Invoice/>} />
 
 
         

@@ -273,7 +273,7 @@ const DentalHistory = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left"></i> <Link to={`/view-info-patient/`}><span>Go back</span></Link></p>
+                <p><i class="fa-solid fa-chevron-left"></i> <Link><span>Go back</span></Link></p>
             </div>
             </Link>
         </div>

@@ -132,7 +132,10 @@ const AddService = () => {
         p_selectedTeeth: [], 
         p_dentist: '',
         p_service: '',
-        p_severity_material: ''
+        p_severity_material: '',
+        inv_totalamount: totalPrice,
+        inv_status: 'pending'
+        
     });
 
     const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
@@ -287,6 +290,7 @@ const AddService = () => {
         }
       };
 
+
     //useEffect hook is used to compute the total price whenever any of the
     //dependencies (patient.p_service, patient.p_severity_material, patient
     //p_selectedTeeth, servicesDetails) change.
@@ -300,15 +304,21 @@ const AddService = () => {
                 }
             });
             setTotalPrice(price);
+            //set totalAmount to totalPrice useState
+            setPatient(prevState => ({
+                ...prevState,
+                inv_totalamount: price
+            }));
         };
         // Compute the total number of selected teeth
         const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
          // Call the computeTotalPrice function to update the totalPrice state
         computeTotalPrice();
+        
     }, [patient.p_service, patient.p_severity_material, patient.p_selectedTeeth, servicesDetails]);
-
-
+ 
     console.log(patient);
+    console.log(totalPrice)
     //console.log(totalTooth);
     //console.log(servicesDetails);
 
@@ -515,6 +525,7 @@ const AddService = () => {
                                             //calculates total cost
                                             const cost = service.sd_price * totalTooth;
                                             return (
+                                                
                                                 <span key={key}>{cost}</span>
                                             );
                                         }

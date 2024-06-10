@@ -159,7 +159,7 @@ const ViewPatientInfo = () => {
                                                     <td className='no-bg-color dhistory-info pt-3' >Dr. {item.p_dentist} </td>
                                                     <td className='no-bg-color dhistory-info pt-3' >{item.p_service}</td>
                                                     <td className='no-bg-color app-today-info' >
-                                                    <Link to={`/dental-history/${item.id}`} ><button className='btn button-view'>View</button>
+                                                        <Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
                                                     </Link></td>
                                                 </tr>
                                         ))

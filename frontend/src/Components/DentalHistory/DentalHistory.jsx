@@ -79,29 +79,25 @@ const DentalHistory = () => {
     const {id} = useParams();
 
 
-    useEffect(()=>{
-        getProcedureHistory1();
-        getInvoice();
-    }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [historyResponse, invoiceResponse] = await Promise.all([
+                    axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
+                    axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`)
+                ]);
 
-    function getProcedureHistory1() {
-        axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`)
-          .then(function(response) {
-            //console.log(response.data); 
-              setHistory(response.data);
-          
-          })
-    };
-    //fetch invoice table
-    function getInvoice() {
-        axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`)
-          .then(function(response) {
-            //console.log(response.data); 
-              setInvoice(response.data);
-          })
-    };
+                setHistory(historyResponse.data);
+                setInvoice(invoiceResponse.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-    //console.log(invoice.inv_totalamount)
+        fetchData();
+    }, [id]);
+
+    console.log(invoice.inv_totalamount)
 
 
     const toothImages = {

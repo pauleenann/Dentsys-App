@@ -84,10 +84,10 @@ const AdminPatients = () => {
                         {patient.p_fname} {patient.p_lname}
                       </div>
                       <div className="col patient-service">
-                        Teeth Cleaning
+                        {/* Teeth Cleaning */}
                       </div>
                       <div className="col patient-data">
-                        10/21/23
+                        {/* 10/21/23 */}
                       </div>
                       <div className="col">
                         <Link to={`/view-patient-info/${patient.id}`}><button className='btn button-view'>View</button></Link>

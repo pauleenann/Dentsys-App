@@ -137,7 +137,6 @@ const DentalHistory = () => {
 
 
     const renderTooth = (toothId) => {
-
         var imgSrc = toothImages[toothId].default;
 
         function historyTooth(element){
@@ -391,9 +390,7 @@ const DentalHistory = () => {
                             }
                         })}
                         
-                        
-
-                        
+        
                     </div>
         ))) : (<p>No history available.</p>)} 
       </div>

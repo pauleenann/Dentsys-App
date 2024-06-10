@@ -73,12 +73,15 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 
 const DentalHistory = () => {
     const [history, setHistory] = useState([]);
+    const [invoice, setInvoice] = useState([]);
+
 
     const {id} = useParams();
 
 
     useEffect(()=>{
         getProcedureHistory1();
+        getInvoice();
     }, []);
 
     function getProcedureHistory1() {
@@ -89,6 +92,17 @@ const DentalHistory = () => {
           
           })
     };
+    //fetch invoice table
+    function getInvoice() {
+        axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`)
+          .then(function(response) {
+            //console.log(response.data); 
+              setInvoice(response.data);
+          
+          })
+    };
+
+    console.log(invoice.inv_totalamount)
 
 
     const toothImages = {
@@ -356,7 +370,8 @@ const DentalHistory = () => {
                         {/* receipt */}
                         <div className=" row mt-5 mb-5">
                             <div className="col p-0">
-                                <div className="receipt-container">
+                                {history.map((item, key)=>(
+                                    <div className="receipt-container">
                                     {/* receipt header */}
                                     <div className="receipt-header">
                                         <h6 className='m-0'>Procedure Description</h6>
@@ -367,19 +382,18 @@ const DentalHistory = () => {
                                         {/* receipt procedure */}
                                         <div className="receipt-procedure">
                                             <ul>
-                                                <li>{patient.p_service}<ul>
+                                                <li>{item.p_service}<ul>
                                                 <li>Tooth No.: <span>
-                                                    {Object.entries(patient.p_selectedTeeth)
-                                                        .filter(([toothNumber, isSelected]) => isSelected)
-                                                        .map(([toothNumber]) => toothNumber)
-                                                        .join(', ')
+                                                    {Object.keys(JSON.parse(item.p_selectedTeeth))
+                                                    .filter(key => JSON.parse(item.p_selectedTeeth)[key])
+                                                    .join(', ')
                                                     }
                                                 </span></li></ul></li>
                                             </ul>
                                         </div>
                                         {/* receipt cost */}
                                         <div className="receipt-cost">
-                                            <p>₱ <span>0</span></p>
+                                            <p>₱ <span>{invoice[0].inv_totalamount}</span></p>
                                         </div>
                                     </div>
                                     {/* total */}
@@ -389,10 +403,12 @@ const DentalHistory = () => {
                                         </div>
                                         <div className="receipt-total-amount">
                                             <h6 className='m-0'>Total Due</h6>
-                                            <p className='m-0'>₱ <span>{item.p_paidamount}</span></p>
+                                            <p className='m-0'>₱ <span>{invoice[0].inv_totalamount}</span></p>
                                         </div>
                                     </div>
                                 </div>
+                                ))}
+                                
                                 
                             </div>
                         </div>
@@ -402,6 +418,7 @@ const DentalHistory = () => {
 
                         
                         {/* row for payment */}
+                        
                         <div className="row">
                             <table className='table payment-table'>
                                 <tbody>

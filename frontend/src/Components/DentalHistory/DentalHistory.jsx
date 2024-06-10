@@ -74,6 +74,7 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 const DentalHistory = () => {
     const [history, setHistory] = useState([]);
     const [invoice, setInvoice] = useState([]);
+    const [patientId, setPatientId] = useState(0);
 
 
     const {id} = useParams();
@@ -89,6 +90,7 @@ const DentalHistory = () => {
 
                 setHistory(historyResponse.data);
                 setInvoice(invoiceResponse.data);
+                setPatientId(historyResponse.data[0].p_id);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -97,7 +99,7 @@ const DentalHistory = () => {
         fetchData();
     }, [id]);
 
-    console.log(invoice.inv_totalamount)
+    console.log(patientId)
 
 
     const toothImages = {
@@ -282,7 +284,7 @@ const DentalHistory = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left"></i> <Link><span>Go back</span></Link></p>
+                <p><i class="fa-solid fa-chevron-left"></i> <Link to={`/view-patient-info/${patientId}`}><span>Go back</span></Link></p>
             </div>
             </Link>
         </div>

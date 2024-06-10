@@ -76,9 +76,7 @@ const DentalHistory = () => {
     const [invoice, setInvoice] = useState([]);
     const [patientId, setPatientId] = useState(0);
 
-
     const {id} = useParams();
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +88,7 @@ const DentalHistory = () => {
 
                 setHistory(historyResponse.data);
                 setInvoice(invoiceResponse.data);
+                //stores patient id to patientId for go back button
                 setPatientId(historyResponse.data[0].p_id);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -100,7 +99,6 @@ const DentalHistory = () => {
     }, [id]);
 
     console.log(patientId)
-
 
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
@@ -137,47 +135,6 @@ const DentalHistory = () => {
         32: { default: tooth32, selected: selected32 },
     };
 
-    const [selectedTeeth, setSelectedTeeth] = useState({});
-
-    const [patient, setPatient] = useState({
-        action: 'addNewPatient',
-        p_fname: '',
-        p_lname: '',
-        p_mname: '',
-        p_ename: '',
-        p_age: '',
-        p_gender: '',
-        p_email: '',
-        p_phone: '',
-        p_date: '',
-        p_time: '',
-        p_service: '',
-        p_selectedTeeth: {}, 
-        p_dentist: '',
-        p_payment: '',
-        p_paidamount: ''
-    });
-
-    const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
-
-    const handleToothClick = (toothId) => {
-        setPatient((prevState) => ({
-            ...prevState,
-            p_selectedTeeth: {
-                ...prevState.p_selectedTeeth,
-                [toothId]: !prevState.p_selectedTeeth[toothId],
-            },
-        }));
-
-        // displays selected tooth sa tooth number input field
-        setSelectedToothNumbers(prevSelectedToothNumbers => {
-            const updatedSelectedToothNumbers = prevSelectedToothNumbers.includes(toothId) ?
-                prevSelectedToothNumbers.filter(id => id !== toothId) :
-                [...prevSelectedToothNumbers, toothId];
-
-            return updatedSelectedToothNumbers;
-        });
-    };
 
     const renderTooth = (toothId) => {
 
@@ -192,12 +149,6 @@ const DentalHistory = () => {
         history.map((tooth,key)=>{
             toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
                 .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
-            // toothHistory.forEach(element => {
-            //     //console.log(element)
-            //     imgSrc = element ==  toothId ? toothImages[element].selected : toothImages[toothId].default;
-
-            // });
-            //console.log(toothHistory)
         })
 
         toothHistory.forEach(element => {
@@ -230,12 +181,6 @@ const DentalHistory = () => {
         history.map((tooth,key)=>{
             toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
                 .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
-            // toothHistory.forEach(element => {
-            //     //console.log(element)
-            //     imgSrc = element ==  toothId ? toothImages[element].selected : toothImages[toothId].default;
-
-            // });
-            //console.log(toothHistory)
         })
 
         toothHistory.forEach(element => {
@@ -254,24 +199,6 @@ const DentalHistory = () => {
             </div>
         );
     };
-
-
-
-    const navigate = useNavigate();
-
-    const handleClick = async (e) => {
-        e.preventDefault();
-        try {
-          await axios.post("http://localhost:80/api2/user/save", patient);
-          //navigate("/appointment-request-submitted", {state: patient});
-        } catch (err) {
-          console.log(err);
-        //   setError(true)
-        }
-      };
-
-    //console.log(patient);
-    // const selectedTooth = JSON.parse(history.p_selectedTeeth);
     
 
   return (

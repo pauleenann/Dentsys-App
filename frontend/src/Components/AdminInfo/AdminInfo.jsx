@@ -53,7 +53,7 @@ const AdminInfo = () => {
                     <div className="admin-info-user">
                     <div className="dropdown">
                         <button className="btn dropdown-toggle admin-info-user-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <p className='p-0 m-0 admin-hello'>Hello,  <span className='admin-info-name'>Giolliana</span></p>
+                            <p className='p-0 m-0 admin-hello'>Hello,  <span className='admin-info-name'>Admin</span></p>
                         </button>
                         <ul className="dropdown-menu">
                             <li><a className="dropdown-item" href="/admin" onClick={logout}>Log out</a></li>

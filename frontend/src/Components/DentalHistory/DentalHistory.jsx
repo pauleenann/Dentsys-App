@@ -98,11 +98,10 @@ const DentalHistory = () => {
           .then(function(response) {
             //console.log(response.data); 
               setInvoice(response.data);
-          
           })
     };
 
-    console.log(invoice.inv_totalamount)
+    //console.log(invoice.inv_totalamount)
 
 
     const toothImages = {
@@ -418,37 +417,58 @@ const DentalHistory = () => {
 
                         
                         {/* row for payment */}
+                        {invoice.map((item,key)=>{
+                            if(item.inv_status == 'paid'){
+                                return(
+                                    <div><div className="row">
+                                        <table className='table payment-table'>
+                                            <tbody>
+                                                <tr>
+                                                    <td className='payment-table-text'>{item.p_date}</td>
+                                                    <td className='payment-table-text'>{item.p_time}</td>
+                                                    <td className='payment-table-text'>{item.p_payment}</td>
+                                                    <td className='payment-table-text '>₱ {item.p_paidamount}</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    {/* total paid */}
+                                    <div className="row text-end">
+                                        <div className="col total-paid mb-2">
+                                            <h5>Total Paid</h5>
+                                            <h5 className='m-0'>₱ <span>{item.p_paidamount}</span></h5>
+                                        </div>
+                                        <hr />
+                                    </div>
+
+                                    <div className="row text-end">
+                                        <div className="col balance mb-3">
+                                            <h6 className='balance-text'>Balance</h6>
+                                            <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                );
+                            }else if(item.inv_status == 'pending'){
+                                return(
+                                  <div className="row text-center">
+                                    <p>Not paid yet. Go to Invoices tab to settle their accounts.</p>
+                                </div>  
+                                );  
+                            }else if(item.inv_status == 'overdue'){
+                                return(
+                                  <div className="row text-center">
+                                    <p>Overdue. Go to Invoices tab to settle their accounts.</p>
+                                </div>  
+                                );  
+                            }
+                        })}
                         
-                        <div className="row">
-                            <table className='table payment-table'>
-                                <tbody>
-                                    <tr>
-                                        <td className='payment-table-text'>{item.p_date}</td>
-                                        <td className='payment-table-text'>{item.p_time}</td>
-                                        <td className='payment-table-text'>{item.p_payment}</td>
-                                        <td className='payment-table-text '>₱ {item.p_paidamount}</td>
-                                    </tr>
-                                </tbody>
+                        
 
-                            </table>
-                        </div>
-                        {/* end of payment row */}
-
-                        {/* total paid */}
-                        <div className="row text-end">
-                            <div className="col total-paid mb-2">
-                                <h5>Total Paid</h5>
-                                <h5 className='m-0'>₱ <span>{item.p_paidamount}</span></h5>
-                            </div>
-                            <hr />
-                        </div>
-
-                        <div className="row text-end">
-                            <div className="col balance mb-3">
-                                <h6 className='balance-text'>Balance</h6>
-                                <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
-                            </div>
-                        </div>
+                        
                     </div>
         ))) : (<p>No history available.</p>)} 
       </div>

@@ -75,6 +75,7 @@ const AddService = () => {
     const [services, setServices] = useState([]);
     const [selectedTeeth, setSelectedTeeth] = useState({});
     const [servicesDetails, setServicesDetails] = useState([]);
+    const [dentists, setDentists] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -84,6 +85,7 @@ const AddService = () => {
     useEffect(() => {
         getServices();
         getServicesDetails();
+        getDentist();
     }, []);
     
     const toothImages = {
@@ -175,7 +177,8 @@ const AddService = () => {
 
     const renderTooth2 = (toothId) => {
         const isSelected = patient.p_selectedTeeth[toothId];
-        const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        const imgSrc = isSelected ? toothImages[1].selected : toothImages[toothId].default;
+
         
 
         return (
@@ -226,13 +229,31 @@ const AddService = () => {
             setServicesDetails([]);
         }
     }
+    //fetch dentist table
+    async function getDentist() {
+        try {
+            const response = await axios.get('http://localhost:80/api2/?action=getDentist');
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setDentists(response.data);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setDentists([]);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setDentists([]);
+        }
+    }
 
 
 
-    const dentist = [
-        { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-        { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    ];
+    // const dentist = [
+    //     { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
+    //     { value: 'Dr. Bernal', label: 'Dr. Bernal' },
+    // ];
 
     const payment = [
         { value: 'CASH', label: 'CASH' },
@@ -453,8 +474,8 @@ const AddService = () => {
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
                     <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" value={patient.p_dentist} onChange={handleChange}>
                         <option value="" labels disabled>Select Dentist</option>
-                                {dentist.map((dentist) => (
-                                            <option key={dentist.value} value={dentist.value}>{dentist.label}</option>
+                                {dentists.map((dentist,key) => (
+                                            <option key={dentist.d_id} value={dentist.d_lname}>Dr. {dentist.d_lname}</option>
                                         ))}
                     </select>
                 </div>

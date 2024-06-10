@@ -194,7 +194,7 @@ const AdminDash = () => {
             <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].phone}</p>
         </div>
         <div className="button-link">
-            <button type="" className="btn text-light up-app-button" >View Appointment</button>
+            {/* <button type="" className="btn text-light up-app-button" >View Appointment</button> */}
             <Link to='/appointment-list'><p className='text-light up-app-info up-app-link'>View more appointments</p></Link>
             
         </div>

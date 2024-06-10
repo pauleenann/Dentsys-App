@@ -5,6 +5,7 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import DentalHistory from '../DentalHistory/DentalHistory';
 
 const ViewPatientInfo = () => {
     const [patient, setPatient] = useState([]);
@@ -12,6 +13,7 @@ const ViewPatientInfo = () => {
     const navigate = useNavigate();
 
     const {id} = useParams();
+    
     
     useEffect(()=>{
         getPatient();
@@ -154,7 +156,7 @@ const ViewPatientInfo = () => {
                                         history.map((item, index) => (
                                                 <tr className=''>
                                                     <td className='no-bg-color dhistory-info pt-3'scope="row">{item.p_date}</td>
-                                                    <td className='no-bg-color dhistory-info pt-3' >{item.p_dentist} </td>
+                                                    <td className='no-bg-color dhistory-info pt-3' >Dr. {item.p_dentist} </td>
                                                     <td className='no-bg-color dhistory-info pt-3' >{item.p_service}</td>
                                                     <td className='no-bg-color app-today-info' ><Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
                                                     </Link></td>

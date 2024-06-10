@@ -76,6 +76,7 @@ const DentalHistory = () => {
 
     const {id} = useParams();
 
+
     useEffect(()=>{
         getProcedureHistory1();
     }, []);
@@ -168,12 +169,38 @@ const DentalHistory = () => {
     };
 
     const renderTooth = (toothId) => {
-        const isSelected = patient.p_selectedTeeth[toothId];
-        const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+
+        var imgSrc = toothImages[toothId].default;
+
+        function historyTooth(element){
+            imgSrc = toothImages[element].selected;
+        }
+    
+        var toothHistory=[];
+        
+        history.map((tooth,key)=>{
+            toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
+                .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
+            // toothHistory.forEach(element => {
+            //     //console.log(element)
+            //     imgSrc = element ==  toothId ? toothImages[element].selected : toothImages[toothId].default;
+
+            // });
+            //console.log(toothHistory)
+        })
+
+        toothHistory.forEach(element => {
+            if(toothId == element){
+                historyTooth(element);
+            }
+            
+        });
+
+        //console.log(toothHistory)
 
         return (
-            <div className="col tooth-container" key={toothId}>
-                <img src={imgSrc} className='tooth' alt="" />
+            <div className="col tooth-container d-flex flex-column align-items-center">
+                <img src={imgSrc} className='tooth' alt="" /> 
                 <p className='text-center fw-semibold mt-2 mb-0'>{toothId}</p>
                 
             </div>
@@ -181,13 +208,38 @@ const DentalHistory = () => {
     };
 
     const renderTooth2 = (toothId) => {
-        const isSelected = patient.p_selectedTeeth[toothId];
-        const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        var imgSrc = toothImages[toothId].default;
+
+        function historyTooth(element){
+            imgSrc = toothImages[element].selected;
+        }
+    
+        var toothHistory=[];
+        
+        history.map((tooth,key)=>{
+            toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
+                .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
+            // toothHistory.forEach(element => {
+            //     //console.log(element)
+            //     imgSrc = element ==  toothId ? toothImages[element].selected : toothImages[toothId].default;
+
+            // });
+            //console.log(toothHistory)
+        })
+
+        toothHistory.forEach(element => {
+            if(toothId == element){
+                historyTooth(element);
+            }
+            
+        });
+
+        //console.log(toothHistory)
 
         return (
-            <div className="col tooth-container" key={toothId}>
+            <div className="col tooth-container d-flex flex-column align-items-center" key={toothId}>
                 <p className='text-center fw-semibold mt-2 mb-2'>{toothId}</p>
-                <img src={imgSrc} className='tooth' alt="" />
+                <img src={imgSrc} className='tooth' alt="" key={toothId}/>
             </div>
         );
     };
@@ -221,7 +273,7 @@ const DentalHistory = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                <p><i class="fa-solid fa-chevron-left"></i> <Link to={`/view-info-patient/`}><span>Go back</span></Link></p>
             </div>
             </Link>
         </div>
@@ -266,7 +318,7 @@ const DentalHistory = () => {
                                     Dentist:
                                 </div>
                                 <div className="col-10 fw-semibold mt-3">
-                                    {item.p_dentist}
+                                    Dr. {item.p_dentist}
                                 </div>
 
                             </div>
@@ -276,7 +328,7 @@ const DentalHistory = () => {
                             <div className="row">
                                 <div className="col-6">
                                     <div className="row">
-                                        {[16, 15, 14, 13, 12, 11, 10, 9].map(renderTooth)}
+                                        {[16, 15, 14, 13, 12,11, 10, 9].map(renderTooth)}
                                     </div>
                                     <div className="row">
                                         {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}

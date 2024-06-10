@@ -10,9 +10,12 @@ import AdminInfo from "../AdminInfo/AdminInfo";
 const AddAppointment = () => {
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
+    
+
 
     useEffect(() => {
         getServices();
+       
     }, []);
 
 
@@ -33,6 +36,7 @@ const AddAppointment = () => {
             setServices([]);
         }
     }
+    
     
 
     const [formData, setFormData] = useState({

@@ -9,12 +9,15 @@ import DentalHistory from '../DentalHistory/DentalHistory';
 
 const InvoiceDetails = () => {
     const [invoiceDetails, setInvoiceDetails] = useState([]);
+    const [payment, setPayment] = useState([]);
+    const [totalPaid, setTotalPaid] = useState([]);
     const {id} = useParams();
 
 
     useEffect(() => {
         getInvoiceDetails();
-       
+       getPayment();
+       getTotalPaid();
     }, []);
 
 
@@ -36,7 +39,46 @@ const InvoiceDetails = () => {
         }
     }
 
+    async function getPayment() {
+        try {
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPayment`);
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setPayment(response.data);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setPayment([]);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setPayment([]);
+        }
+    }
+
+    async function getTotalPaid() {
+        try {
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setTotalPaid(response.data);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setTotalPaid([]);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setTotalPaid([]);
+        }
+    }
+
     console.log(invoiceDetails)
+    console.log(payment)
+    console.log(totalPaid)
+    
 
   return (
     <div className='wrapper'>
@@ -123,44 +165,67 @@ const InvoiceDetails = () => {
                     <div className="col-12 ">Payment</div>
                 </div>
 
-                <div className="row  d-flex justify-content-center mb-5">
-                    <div className="col-12 invoice-payment-details">
-                        <div className="row">
-                            <div className="col-1">0/0/0</div>
-                            <div className="col">1:03:00 PM</div>
-                            <div className="col-1">CASH</div>
-                            <div className="col-2">
-                                P <span>600.00</span>
+                {payment.map((item, key)=>{
+                    if(payment.length != 0){
+                        return(
+                            <div className="row  d-flex justify-content-center mb-3">
+                                <div className="col-12 invoice-payment-details">
+                                    <div className="row">
+                                        <div className="col-2">{item.pay_date}</div>
+                                        <div className="col">{item.pay_time}</div>
+                                        <div className="col-1">{item.pay_method}</div>
+                                        <div className="col-2">
+                                            ₱ <span>{item.pay_amount}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                        );
+                    }else{
+                        return(
+                            <div className="row">
+                               <div className="col">
+                                    <span>--- <i>No Payment Record Yet</i> ---</span>
+                               </div>
+                            </div>
+                        );
+                    }
+                })}
+
+                
+                    <div className="row text-center">
+                        <div className="col">
+                            <Link to={`/update-invoice/${item.inv_id}`}><button className='btn invoice-update-button'>Add Payment</button>
+                            </Link>
+                            
                         </div>
                     </div>
-
-                </div>
-
-                <div className="row text-center">
-                    <div className="col">
-                        <Link to='/update-invoice'><button className='btn invoice-update-button'>Add Payment</button>
-                        </Link>
-                        
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col"></div>
-                    <div className="col">
-                        <div className="row mt-5 mb-3">
-                            <div className="col text-end">Total Paid</div>
-                            <div className="col">P <span>600.00</span></div>
-                        </div>
-                    </div>
-                </div>
+                
+                
+                {totalPaid.map((item,key)=>{
+                    if(item.total_paid != 0){
+                        return(
+                            <div className="row">
+                                <div className="col"></div>
+                                <div className="col">
+                                    <div className="row mt-5 mb-3">
+                                        <div className="col text-end">Total Paid</div>
+                                        <div className="col">₱ <span>{item.total_paid}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                })}
+                
                 <hr />
                 <div className="row mb-5">
                     <div className="col"></div>
                     <div className="col">
                         <div className="row my-2">
                             <div className="col text-end invoice-balance">Balance</div>
-                            <div className="col invoice-balance">P <span className='invoice-balance'>600.00</span></div>
+                            <div className="col invoice-balance">₱ <span className='invoice-balance'>600.00</span></div>
                         </div>
                     </div>
                 </div>

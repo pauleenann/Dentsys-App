@@ -27,6 +27,8 @@ import AddAppointment from "./Components/AddAppointment/AddAppointment";
 import Invoice from "./Components/Invoice/Invoice";
 import InvoiceDetails from "./Components/InvoiceDetails/InvoiceDetails";
 import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
+import DentistPage from "./Components/DentistPage/DentistPage";
+
 
 const App = () => {
   return (
@@ -56,9 +58,9 @@ const App = () => {
         <Route path="/dental-history/:id" element={<DentalHistory/>} />
         <Route path="/add-appointment" element={<AddAppointment/>} />
         <Route path="/invoice-list" element={<Invoice/>} />
-        <Route path="/invoice-details" element={<InvoiceDetails/>} />
-        <Route path="/update-invoice" element={<UpdateInvoice/>} />
-        
+        <Route path="/invoice-details/:id" element={<InvoiceDetails/>} />
+        <Route path="/update-invoice" element={<UpdateInvoice/>} />     
+        <Route path="/dentist-page" element={<DentistPage/>} />
 
 
 

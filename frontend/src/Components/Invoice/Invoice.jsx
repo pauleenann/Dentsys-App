@@ -3,6 +3,7 @@ import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
 import './Invoice.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const Invoice = () => {
@@ -85,7 +86,8 @@ const Invoice = () => {
                             <div className='inv-paid text-center'>Paid</div>
                         </div>
                         <div className="col-1 d-flex justify-content-center">
-                            <button className='btn inv-view-button'>View</button>
+                            <Link to={`/invoice-details/${item.inv_id}`}><button className='btn inv-view-button'>View</button></Link>
+                            
                         </div>
                     </div>
                 );
@@ -108,8 +110,8 @@ const Invoice = () => {
                             {/* status button */}
                             <div className='inv-pending text-center'>Pending</div>
                         </div>
-                        <div className="col-1 d-flex justify-content-center">
-                        <button className='btn inv-view-button'>View</button>
+                        <div className="col-1 d-flex justify-content-center"><Link to={`/invoice-details/${item.inv_id}`}><button className='btn inv-view-button'>View</button></Link>
+                        
                         </div>
                     </div>
                 );
@@ -133,7 +135,7 @@ const Invoice = () => {
                             <div className='inv-overdue'>Overdue</div>
                         </div>
                         <div className="col-1 d-flex justify-content-center">
-                            <button className='btn inv-view-button'>View</button>
+                        <Link to={`/invoice-details/${item.inv_id}`}><button className='btn inv-view-button'>View</button></Link>
                         </div>
                     </div>
                 );

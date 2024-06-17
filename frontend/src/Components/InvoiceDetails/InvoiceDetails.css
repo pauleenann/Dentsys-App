@@ -91,3 +91,7 @@ body {
   font-weight: 500;
   font-size: 1.5rem;
 }
+
+.inv-status{
+  text-transform: capitalize;
+}

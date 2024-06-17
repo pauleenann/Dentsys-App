@@ -10,7 +10,11 @@ const Admin = () => {
 
   const [usernamelogin, setusernamelogin] = useState('');
   const [passwordlogin, setPasswordlogin] = useState('');
-  const loginData = { action: 'login', username: '', password: '' };
+  const loginData = { 
+    action: 'login', 
+    username: '', 
+    password: '' 
+  };
 
   const navigate = useNavigate();
 

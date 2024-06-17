@@ -41,6 +41,12 @@ body {
     margin-top: 10px;
 }
 
+.button-add:hover, .button-add:active{
+    background-color: #0991ac;
+    color: #fff;
+    border: none;
+}
+
 .button-border-text{
     color: #31A3B9;
     border: 1px solid #31A3B9;
@@ -247,4 +253,8 @@ body {
     background-color: #ebf9f74f;
     width: 100%;
     height: 100%;
+}
+
+.btn{
+
 }

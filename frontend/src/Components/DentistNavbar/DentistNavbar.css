@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #31A3B9;
+    color: #fff;
+    transition: all 0.3s;
+    
+}
+
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #31A3B9;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-nav-dashboard{
+    display: flex;
+    align-items: center;
+}
+
+.adminnav-menu{
+    color: #fff;
+}
+
+.admin-navbar-container{
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    
+}
+
+.admin-navbar{
+    background-color: #31A3B9;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    
+}
+
+.admin-navbar-logo{
+    width: 120px;
+    margin-bottom: 30px;
+}
+
+
+
+.admin-nav-dashboard, .admin-nav-appointments, .admin-nav-patients{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /* background-color: #36CE57; */
+    padding: 10px 37px;
+}
+
+.admin-nav-dashboard:hover, .admin-nav-appointments:hover, .admin-nav-patients:hover, .admin-nav-dashboard:active, .admin-nav-appointments:active, .admin-nav-patients:active{
+    background-color: #36CE57;
+}
+
+
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+
+.admin-dashboard-text, .admin-appointments-text,
+.admin-patients-text
+{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+
+.admin-info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: end;
+}
+
+.admin-info-user-button{
+    color: #36CE57;
+    width: 250px;
+}
+
+.admin-hello, .admin-info-name{
+    color: #36CE57;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.admin-info-dashtext{
+    padding-top: 10px;
+    font-size: 3rem;
+}
+
+.adminnav-link{
+    text-decoration: none;
+}
+
+#content {
+    width: 100%;
+    padding: 30px 50px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}

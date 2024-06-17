@@ -147,8 +147,6 @@ const AddService = () => {
                 ...prevState.p_selectedTeeth,
                 [toothId]: !prevState.p_selectedTeeth[toothId],
             },
-            
-            
         }));
 
         // displays selected tooth sa tooth number input field

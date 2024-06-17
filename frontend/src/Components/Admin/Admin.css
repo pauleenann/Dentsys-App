@@ -77,6 +77,12 @@
     padding: 8px 50px;
 }
 
+.admin-button:hover, .admin-button:active{
+    background-color: #1caf63;
+    color: #fff;
+    border: none;
+}
+
 .admin-footer{
     font-size: 0.8rem;
     z-index: 1;

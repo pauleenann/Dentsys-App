@@ -52,6 +52,12 @@
     padding: 13px 0;
 }
 
+.submit-button:active, .submit-button:hover{
+    border: none;
+    background-color: #97deec;
+    color: #fff;
+}
+
 .reminder{
     margin-top: 20px;
     font-style: italic;

@@ -76,7 +76,8 @@
     cursor: pointer;
 }
 
-.appointment-btn:hover{
+.appointment-btn:hover, .appointment-btn:active{
+    border: none;
     background-color: #97deec;
     color: #fff;
 }

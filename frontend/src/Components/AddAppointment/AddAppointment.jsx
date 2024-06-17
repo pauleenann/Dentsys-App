@@ -87,7 +87,7 @@ const AddAppointment = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/patient-list'>
+                <Link to='/appointment-list'>
                     <div className="back-to-patients">
                         <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
                     </div>

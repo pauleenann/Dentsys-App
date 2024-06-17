@@ -54,7 +54,7 @@ const ViewPatientInfo = () => {
 
   return (
     <div className='wrapper'>
-        <AdminNavbar />
+        <DentistNavbar />
         <div id="content">
             <AdminInfo />
             {/* go back button */}

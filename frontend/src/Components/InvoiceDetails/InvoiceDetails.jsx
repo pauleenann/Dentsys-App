@@ -10,7 +10,7 @@ import DentalHistory from '../DentalHistory/DentalHistory';
 const InvoiceDetails = () => {
     const [invoiceDetails, setInvoiceDetails] = useState([]);
     const [payment, setPayment] = useState([]);
-    const [totalPaid, setTotalPaid] = useState([]);
+    const [totalPaid, setTotalPaid] = useState(0);
     const {id} = useParams();
 
 
@@ -64,19 +64,19 @@ const InvoiceDetails = () => {
             console.log('API response data:', response.data);
 
             if (Array.isArray(response.data)) {
-                setTotalPaid(response.data);
+                setTotalPaid(response.data[0].total_paid);
             } else {
                 console.error('API response is not an array:', response.data);
-                setTotalPaid([]);
+                setTotalPaid(0);
             }
         } catch (error) {
             console.error('Error fetching services:', error);
-            setTotalPaid([]);
+            setTotalPaid(0);
         }
     }
 
-    console.log(invoiceDetails)
-    console.log(payment)
+    // console.log(invoiceDetails)
+    // console.log(payment)
     console.log(totalPaid)
     
 
@@ -194,30 +194,29 @@ const InvoiceDetails = () => {
                 })}
 
                 
+                
                     <div className="row text-center">
                         <div className="col">
-                            <Link to={`/update-invoice/${item.inv_id}`}><button className='btn invoice-update-button'>Add Payment</button>
-                            </Link>
+                            {item.inv_totalamount == totalPaid ? '' 
+                            : <Link to={`/update-invoice/${item.inv_id}`}><button className='btn invoice-update-button'>Add Payment</button></Link>}
+                            
                             
                         </div>
                     </div>
                 
                 
-                {totalPaid.map((item,key)=>{
-                    if(item.total_paid != 0){
-                        return(
-                            <div className="row">
-                                <div className="col"></div>
-                                <div className="col">
-                                    <div className="row mt-5 mb-3">
-                                        <div className="col text-end">Total Paid</div>
-                                        <div className="col">₱ <span>{item.total_paid}</span></div>
+                
+                    <div className="row">
+                        <div className="col"></div>
+                            <div className="col">
+                                <div className="row mt-5 mb-3">
+                                    <div className="col text-end">Total Paid</div>
+                                    <div className="col">₱ <span>{totalPaid}</span>
                                     </div>
-                                </div>
                             </div>
-                        );
-                    }
-                })}
+                        </div>
+                    </div>
+                    
                 
                 <hr />
                 <div className="row mb-5">
@@ -225,7 +224,7 @@ const InvoiceDetails = () => {
                     <div className="col">
                         <div className="row my-2">
                             <div className="col text-end invoice-balance">Balance</div>
-                            <div className="col invoice-balance">₱ <span className='invoice-balance'>600.00</span></div>
+                            <div className="col invoice-balance">₱ <span className='invoice-balance'>{item.inv_totalamount==totalPaid?0:(item.inv_totalamount-totalPaid).toFixed(2)}</span></div>
                         </div>
                     </div>
                 </div>

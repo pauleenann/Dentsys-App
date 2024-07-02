@@ -80,7 +80,7 @@ const AdminPatients = () => {
                 {patients.map((patient, index)=>{
                   return(
                     <div className="row patient-record" key={index}>
-                      <div className="col patient-name">
+                      <div className="col-8 patient-name">
                         {patient.p_fname} {patient.p_lname}
                       </div>
                       <div className="col patient-service">
@@ -91,7 +91,7 @@ const AdminPatients = () => {
                       </div>
                       <div className="col">
                         <Link to={`/view-patient-info/${patient.id}`}><button className='btn button-view'>View</button></Link>
-                        <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link>
+                        {/* <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link> */}
                       </div>
                     </div>
                   ); 

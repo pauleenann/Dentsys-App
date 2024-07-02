@@ -14,7 +14,7 @@ const ViewAppointment = ({onClose, keyOfSelectedAppointment, appointments}) => {
                 <div className="col-12 text-end"><i class="fa-solid fa-x text-light" onClick={()=>{onClose(); }}></i></div>
                 <div className="col text-center">
                     <i class="fa-regular fa-calendar-check text-light fs-1 mb-3"></i>
-                    <h5 className='text-light'>Appointment Confirmed</h5>
+                    <h5 className='text-light'>Appointment Finished</h5>
                 </div>
             </div>
         </div>

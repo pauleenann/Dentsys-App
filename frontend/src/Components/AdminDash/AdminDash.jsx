@@ -81,10 +81,17 @@ const AdminDash = () => {
   const getRecentAppointmentDetails = () => {
     axios.get('http://localhost:80/api2/?action=getRecentAppointmentDetails')
       .then(response => {
-        setRecentAppDetail(response.data.recent_visits);
+        console.log(response.data);
+        if (Array.isArray(response.data)) {
+            setRecentAppDetail(response.data);
+        } else {
+          console.error('Data is not an array:', response.data);
+          setRecentAppDetail([]);
+        }
       })
       .catch(error => {
-        console.error('Error fetching total cancelled appointments:', error);
+        console.error('Error fetching appointments:', error);
+        setRecentAppDetail([]);
       });
   };
 
@@ -221,16 +228,19 @@ const AdminDash = () => {
                                 <td className='no-bg-color'  scope="col"></td>
                                 </tr>
                             </thead>
-                            <tbody className=''>
+                            {recentAppDetail.map((item,key)=>(
+                                <tbody className=''>
                                 <tr>
-                                <td className='no-bg-color recent-visit-info'scope="row">Giolliana Plandez</td>
-                                <td className='no-bg-color recent-visit-info' >09212787283</td>
-                                <td className='no-bg-color recent-visit-info' >Teeth Cleaning</td>
-                                <td className='no-bg-color recent-visit-info' >10:00 AM - 11:00 AM</td>
-                                <td className='no-bg-color recent-visit-info' >₱ <span>600</span></td>
+                                <td className='no-bg-color recent-visit-info'scope="row">{`${item.fname} ${item.lname}`}</td>
+                                <td className='no-bg-color recent-visit-info' >{item.phone}</td>
+                                <td className='no-bg-color recent-visit-info' >{item.service_}</td>
+                                <td className='no-bg-color recent-visit-info' >{item.time_}</td>
+                                <td className='no-bg-color recent-visit-info' ></td>
                                 <td className='no-bg-color ' ><button className='btn rv-button'>View</button></td>
                                 </tr>
                             </tbody>
+                            ))}
+                            
                             </table>
                             <div className="nothing2 text-center ">
                             -- Nothing follows --
@@ -241,7 +251,7 @@ const AdminDash = () => {
                         <div className="recent-visit-total-earnings">
                             <div className="rv-total">
                                 <p className='rv-total-label'>Total earnings for today</p>
-                                <p className='rv-total-amount'>₱ <span>600</span></p>
+                                <p className='rv-total-amount'></p>
                             </div>
                         </div>
                         

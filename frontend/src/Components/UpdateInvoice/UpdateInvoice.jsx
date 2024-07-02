@@ -17,6 +17,7 @@ const UpdateInvoice = () => {
     });
     const [loading, setLoading] = useState(false);
     
+    
 
     useEffect(() => {
         getInvoiceDetails();
@@ -90,7 +91,7 @@ const UpdateInvoice = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/invoice-details'>
+                <Link to={`/invoice-details/${id}`}>
                     <div className="back-to-patients">
                         <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
                     </div>

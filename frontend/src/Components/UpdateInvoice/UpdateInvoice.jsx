@@ -13,6 +13,7 @@ const UpdateInvoice = () => {
     const [invoiceDetails, setInvoiceDetails] = useState([]);
     const [payment, setPayment] = useState({
         action: 'addPayment',
+        pay_method: 'CASH', // set CASH as default payment method
         inv_id: id
     });
     const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ const UpdateInvoice = () => {
 
     useEffect(() => {
         getInvoiceDetails();
-       getPayment();
+        getPayment();
     }, []);
 
     const handleChange = (e) => {
@@ -43,7 +44,6 @@ const UpdateInvoice = () => {
         //   setError(true)
         }
     };
-    
 
 
     async function getInvoiceDetails() {
@@ -210,7 +210,7 @@ const UpdateInvoice = () => {
                     <div className="col ">
                         <label htmlFor="pay_method">Payment Method</label><br />
                         <select name="pay_method" id="pay_method" className='inv_input' onChange={handleChange}>
-                            <option value="CASH" selected
+                            <option value="CASH"
                             >CASH</option>
                             <option value="GCASH">GCASH</option>
                         </select>

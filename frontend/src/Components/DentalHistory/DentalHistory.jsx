@@ -74,6 +74,7 @@ import selected32 from './../../Assets/Tooth Selected/selected32.png'
 const DentalHistory = () => {
     const [history, setHistory] = useState([]);
     const [invoice, setInvoice] = useState([]);
+    const [payment, setPayment] = useState([]);
     const [patientId, setPatientId] = useState(0);
 
     const {id} = useParams();
@@ -81,13 +82,15 @@ const DentalHistory = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [historyResponse, invoiceResponse] = await Promise.all([
+                const [historyResponse, invoiceResponse, paymentResponse] = await Promise.all([
                     axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
-                    axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`)
+                    axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
+                    axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`)
                 ]);
 
                 setHistory(historyResponse.data);
                 setInvoice(invoiceResponse.data);
+                setPayment(paymentResponse.data)
                 //stores patient id to patientId for go back button
                 setPatientId(historyResponse.data[0].p_id);
             } catch (error) {
@@ -199,7 +202,8 @@ const DentalHistory = () => {
         );
     };
     
-
+    console.log(payment)
+    
   return (
     <div className='wrapper'>
         <AdminNavbar></AdminNavbar>
@@ -341,39 +345,23 @@ const DentalHistory = () => {
 
                         
                         {/* row for payment */}
-                        {invoice.map((item,key)=>{
+                        {payment.map((item,key)=>{
                             if(item.inv_status == 'paid'){
                                 return(
-                                    <div><div className="row">
+                                    <div><div className="row mb-3">
                                         <table className='table payment-table'>
                                             <tbody>
                                                 <tr>
-                                                    <td className='payment-table-text'>{item.p_date}</td>
-                                                    <td className='payment-table-text'>{item.p_time}</td>
-                                                    <td className='payment-table-text'>{item.p_payment}</td>
-                                                    <td className='payment-table-text '>₱ {item.p_paidamount}</td>
+                                                    <td className='payment-table-text'>{item.pay_date}</td>
+                                                    <td className='payment-table-text'>{item.pay_time}</td>
+                                                    <td className='payment-table-text'>{item.pay_method}</td>
+                                                    <td className='payment-table-text '>₱ {item.pay_amount}</td>
                                                 </tr>
                                             </tbody>
 
                                         </table>
                                     </div>
-                                    {/* total paid */}
-                                    <div className="row text-end">
-                                        <div className="col total-paid mb-2">
-                                            <h5>Total Paid</h5>
-                                            <h5 className='m-0'>₱ <span>{item.p_paidamount}</span></h5>
-                                        </div>
-                                        <hr />
                                     </div>
-
-                                    <div className="row text-end">
-                                        <div className="col balance mb-3">
-                                            <h6 className='balance-text'>Balance</h6>
-                                            <p className='m-0 balance-text'>₱ <span className='balance-text'>0.00</span></p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    
                                 );
                             }else if(item.inv_status == 'pending'){
                                 return(
@@ -389,8 +377,6 @@ const DentalHistory = () => {
                                 );  
                             }
                         })}
-                        
-        
                     </div>
         ))) : (<p>No history available.</p>)} 
       </div>

@@ -76,21 +76,24 @@ const DentalHistory = () => {
     const [invoice, setInvoice] = useState([]);
     const [payment, setPayment] = useState([]);
     const [patientId, setPatientId] = useState(0);
+    const [totalPaid, setTotalPaid] = useState(0);
 
     const {id} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [historyResponse, invoiceResponse, paymentResponse] = await Promise.all([
+                const [historyResponse, invoiceResponse, paymentResponse, totalpaidResponse] = await Promise.all([
                     axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
                     axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
-                    axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`)
+                    axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`),
+                    await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaidDentalHistory`)
                 ]);
 
                 setHistory(historyResponse.data);
                 setInvoice(invoiceResponse.data);
                 setPayment(paymentResponse.data)
+                setTotalPaid(totalpaidResponse.data[0].total_paid);
                 //stores patient id to patientId for go back button
                 setPatientId(historyResponse.data[0].p_id);
             } catch (error) {
@@ -202,7 +205,7 @@ const DentalHistory = () => {
         );
     };
     
-    console.log(payment)
+    console.log(totalPaid)
     
   return (
     <div className='wrapper'>
@@ -336,7 +339,6 @@ const DentalHistory = () => {
                                 </div>
                                 ))}
                                 
-                                
                             </div>
                         </div>
 
@@ -346,7 +348,7 @@ const DentalHistory = () => {
                         
                         {/* row for payment */}
                         {payment.map((item,key)=>{
-                            if(item.inv_status == 'paid'){
+                            if(item.inv_status == 'paid' || item.inv_status == 'partial'){
                                 return(
                                     <div><div className="row mb-3">
                                         <table className='table payment-table'>
@@ -363,7 +365,13 @@ const DentalHistory = () => {
                                     </div>
                                     </div>
                                 );
-                            }else if(item.inv_status == 'pending'){
+                            }
+                        
+                            
+                        })}
+
+                        {invoice.map((item,key)=>{
+                            if(item.inv_status == 'pending'){
                                 return(
                                   <div className="row text-center">
                                     <p>Not paid yet. Go to Invoices tab to settle their accounts.</p>
@@ -375,8 +383,36 @@ const DentalHistory = () => {
                                     <p>Overdue. Go to Invoices tab to settle their accounts.</p>
                                 </div>  
                                 );  
+                            }else if(item.inv_status == "paid" || item.inv_status == "partial"){
+                                return(
+                                    <div>
+                                        <div className="row">
+                        <div className="col"></div>
+                            <div className="col">
+                                <div className="row mt-5 mb-3">
+                                    <div className="col text-end">Total Paid</div>
+                                    <div className="col">₱ <span>{totalPaid}</span>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+                <hr />
+                <div className="row mb-5">
+                    <div className="col"></div>
+                    <div className="col">
+                        <div className="row my-2">
+                            <div className="col text-end invoice-balance">Balance</div>
+                            <div className="col invoice-balance">₱ <span className='invoice-balance'>{item.inv_totalamount==totalPaid?0:(item.inv_totalamount-totalPaid).toFixed(2)}</span></div>
+                        </div>
+                    </div>
+                </div>
+                                    </div>
+                                )
                             }
                         })}
+                        
                     </div>
         ))) : (<p>No history available.</p>)} 
       </div>

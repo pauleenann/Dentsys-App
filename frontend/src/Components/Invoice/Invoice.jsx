@@ -91,7 +91,7 @@ const Invoice = () => {
                         </div>
                     </div>
                 );
-            }else if(item.inv_status === 'pending'){
+            }else if(item.inv_status === 'pending' || item.inv_status === 'partial'){
                 return(
                     <div className="row inv-pending-row mb-4 text-center d-flex align-items-center">
                         <div className="col">

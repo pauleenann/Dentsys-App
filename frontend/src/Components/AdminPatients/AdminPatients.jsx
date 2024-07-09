@@ -96,9 +96,6 @@ const AdminPatients = () => {
                     </div>
                   ); 
                 })}
-                
-
-
         </div>
       
     </div>

@@ -15,6 +15,7 @@ const AdminDash = () => {
     const [recentVisits, setRecentVisits] = useState(0);
     const [recentAppDetail, setRecentAppDetail] = useState([]);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
+    const [earningsToday, setEarningsToday] = useState(0);
     const [appToday, setAppToday] = useState([]);
 
 //loads when componenct renders
@@ -25,6 +26,7 @@ const AdminDash = () => {
     getUpcomingAppointments();
     getAppointmentsToday();
     getRecentAppointmentDetails();
+    getEarningsToday();
   }, []);
 
   const getTotalPendingAppointments = () => {
@@ -66,6 +68,15 @@ const AdminDash = () => {
         console.error('Error fetching total cancelled appointments:', error);
       });
   };
+  const getEarningsToday = () => {
+    axios.get('http://localhost:80/api2/?action=getEarningsToday')
+      .then(response => {
+        setEarningsToday(response.data.total_earnings);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
 
   const getAppointmentsToday = () => {
     axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
@@ -95,7 +106,9 @@ const AdminDash = () => {
       });
   };
 
-  console.log(recentAppDetail)
+  
+
+  console.log(earningsToday)
 
   
     return (
@@ -134,7 +147,7 @@ const AdminDash = () => {
                             Earnings<br/>Today
                         </p>
                         <p className='total'>
-                        ₱<span className='total-earnings-today total'>0</span>
+                        ₱<span className='total-earnings-today total'>{earningsToday}</span>
                         </p>
                     </div>
                 </div>
@@ -224,7 +237,7 @@ const AdminDash = () => {
                                 <td className='no-bg-color recent-visit-th'  scope="col">Phone Number</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Service</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Time</td>
-                                <td className='no-bg-color recent-visit-th'  scope="col">Amount Paid</td>
+                                {/* <td className='no-bg-color recent-visit-th'  scope="col">Amount Paid</td> */}
                                 <td className='no-bg-color'  scope="col"></td>
                                 </tr>
                             </thead>
@@ -236,7 +249,7 @@ const AdminDash = () => {
                                 <td className='no-bg-color recent-visit-info' >{item.service_}</td>
                                 <td className='no-bg-color recent-visit-info' >{item.time_}</td>
                                 <td className='no-bg-color recent-visit-info' ></td>
-                                <td className='no-bg-color ' ><button className='btn rv-button'>View</button></td>
+                                {/* <td className='no-bg-color ' ><button className='btn rv-button'>View</button></td> */}
                                 </tr>
                             </tbody>
                             ))}
@@ -247,13 +260,13 @@ const AdminDash = () => {
                         </div>
                         </div>
                         </div>
-                        <hr />
+                        {/* <hr />
                         <div className="recent-visit-total-earnings">
                             <div className="rv-total">
                                 <p className='rv-total-label'>Total earnings for today</p>
                                 <p className='rv-total-amount'></p>
                             </div>
-                        </div>
+                        </div> */}
                         
                     </div>
                 </div>

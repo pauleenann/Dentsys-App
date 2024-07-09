@@ -82,6 +82,12 @@ const AddService = () => {
     const { id } = useParams();
     const intValue = parseInt(id, 10);
 
+    let allToothIds = [];
+    for(let i = 0; i < 32; i++){
+        allToothIds[i] = i+1;
+    }
+    console.log(allToothIds)
+
     useEffect(() => {
         getServices();
         getServicesDetails();
@@ -162,32 +168,62 @@ const AddService = () => {
     };
 
     const renderTooth = (toothId) => {
-        const isSelected = patient.p_selectedTeeth[toothId];
-        const imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
-        
+        let isSelected;
+        let imgSrc;
+
+        if (patient.p_service === "Oral prophylaxis (Teeth Cleaning)") {
+            isSelected = true;
+            imgSrc = toothImages[toothId].selected;
+        } else {
+            isSelected = patient.p_selectedTeeth[toothId];
+            imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        }
+
 
         return (
             <div className="col tooth-container" key={toothId}>
                 <img src={imgSrc} className='tooth' alt="" />
-                <button className='btn tooth-button' onClick={() => handleToothClick(toothId)}>
+                {patient.p_service === "Oral prophylaxis (Teeth Cleaning)" ? "" : <button
+                    className='btn tooth-button'
+                    onClick={() => handleToothClick(toothId)}
+                >
                     {toothId}
-                </button>
+                </button>}
             </div>
         );
     };
 
-    const renderTooth2 = (toothId) => {
-        const isSelected = patient.p_selectedTeeth[toothId];
-        const imgSrc = isSelected ? toothImages[1].selected : toothImages[toothId].default;
+    useEffect(() => {
+        if (patient.p_service === "Oral prophylaxis (Teeth Cleaning)") {
+            allToothIds.forEach(id => handleToothClick(id));
+        }else{
+            patient.p_selectedTeeth = []
+            setSelectedToothNumbers([])
+        }
+    }, [patient.p_service]);
 
-        
+    const renderTooth2 = (toothId) => {
+        let isSelected;
+        let imgSrc;
+
+        if (patient.p_service === "Oral prophylaxis (Teeth Cleaning)") {
+            isSelected = true;
+            imgSrc = toothImages[toothId].selected;
+        } else {
+            isSelected = patient.p_selectedTeeth[toothId];
+            imgSrc = isSelected ? toothImages[toothId].selected : toothImages[toothId].default;
+        }
+
 
         return (
             <div className="col tooth-container" key={toothId}>
-                <button className='btn tooth-button' onClick={() => handleToothClick(toothId)}>
-                    {toothId}
-                </button>
                 <img src={imgSrc} className='tooth' alt="" />
+                {patient.p_service === "Oral prophylaxis (Teeth Cleaning)" ? "" : <button
+                    className='btn tooth-button'
+                    onClick={() => handleToothClick(toothId)}
+                >
+                    {toothId}
+                </button>}
             </div>
         );
         
@@ -451,27 +487,28 @@ const AddService = () => {
                     </div>
                 </div>
 
+                
                 {/* tooth chart */}
                 <div className="tooth-chart">
-                <div className="row">
-                    <div className="col-6">
-                        <div className="row">
-                            {[16, 15, 14, 13, 12, 11, 10, 9].map(renderTooth)}
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="row">
+                                {[16, 15, 14, 13, 12, 11, 10, 9].map(renderTooth)}
+                            </div>
+                            <div className="row">
+                                {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}
+                            </div>
                         </div>
-                        <div className="row">
-                            {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="row">
-                            {[8, 7, 6, 5, 4, 3, 2, 1].map(renderTooth)}
-                        </div>
-                        <div className="row">
-                            {[25, 26, 27, 28, 29, 30, 31, 32].map(renderTooth2)}
+                        <div className="col-6">
+                            <div className="row">
+                                {[8, 7, 6, 5, 4, 3, 2, 1].map(renderTooth)}
+                            </div>
+                            <div className="row">
+                                {[25, 26, 27, 28, 29, 30, 31, 32].map(renderTooth2)}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
             {/* end of row for tooth chart */}
 

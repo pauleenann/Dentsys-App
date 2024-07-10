@@ -229,7 +229,6 @@ const AddService = () => {
         
     };
     
-    
     //fetch services table
     async function getServices() {
         try {
@@ -333,9 +332,16 @@ const AddService = () => {
         const computeTotalPrice = () => {
             let price = 0; //initialize price to 0
             servicesDetails.forEach(service => {
-                if (patient.p_service === service.service_name && patient.p_severity_material === service.sd_description) {
+                if(patient.p_service != "Oral prophylaxis (Teeth Cleaning)"){
+                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
                     price = service.sd_price * totalTooth;
+                    }
+                }else{
+                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
+                        price = service.sd_price;
+                        }
                 }
+                
             });
             setTotalPrice(price);
             //set totalAmount to totalPrice useState
@@ -554,6 +560,7 @@ const AddService = () => {
                             <div className="receipt-cost">
                                 <p>₱ 
                                 {servicesDetails.map((service, key) => {
+                                    if(patient.p_service != "Oral prophylaxis (Teeth Cleaning)"){
                                         if (patient.p_service === service.service_name && patient.p_severity_material === service.sd_description) {
                                             //binibilang kung ilang tooth yung may value na true sa json
                                             const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
@@ -564,6 +571,16 @@ const AddService = () => {
                                                 <span key={key}>{cost}</span>
                                             );
                                         }
+                                    }else{
+                                        if (patient.p_service === service.service_name && patient.p_severity_material === service.sd_description) {
+                                        
+                                            const cost = service.sd_price ;
+                                            return (
+                                                
+                                                <span key={key}>{cost}</span>
+                                            );
+                                        }
+                                    }
                                         return null;
                                     })}</p>
                             </div>

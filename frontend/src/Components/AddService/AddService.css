@@ -45,7 +45,8 @@ body {
     background-color: #fff;
     display: flex;
     justify-content: space-around;
-    padding: 20px 0;
+    padding: 20px 40px;
+    
 }
 
 .receipt-total{
@@ -123,4 +124,12 @@ body {
     background-color: #ebf9f74f;
     width: 100%;
     height: 100%;
+}
+
+.tooth-no{
+    width: 150px;
+}
+
+.service-name{
+    width: 200px;
 }

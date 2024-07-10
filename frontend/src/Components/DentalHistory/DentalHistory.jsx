@@ -312,8 +312,8 @@ const DentalHistory = () => {
                                         {/* receipt procedure */}
                                         <div className="receipt-procedure">
                                             <ul>
-                                                <li>{item.p_service}<ul>
-                                                <li>Tooth No.: <span>
+                                                <li className='service-name'>{item.p_service}<ul>
+                                                <li className='tooth-no'>Tooth No.: <span>
                                                     {Object.keys(JSON.parse(item.p_selectedTeeth))
                                                     .filter(key => JSON.parse(item.p_selectedTeeth)[key])
                                                     .join(', ')

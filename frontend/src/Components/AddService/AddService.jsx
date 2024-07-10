@@ -546,8 +546,8 @@ const AddService = () => {
                             {/* receipt procedure */}
                             <div className="receipt-procedure">
                                 <ul>
-                                    <li>{patient.p_service}<ul>
-                                    <li>Tooth No.: <span>
+                                    <li className='service-name'>{patient.p_service}<ul>
+                                    <li className='tooth-no'>Tooth No.: <span>
                                         {Object.entries(patient.p_selectedTeeth)
                                             .filter(([toothNumber, isSelected]) => isSelected)
                                             .map(([toothNumber]) => toothNumber)

@@ -85,10 +85,12 @@ const AppointmentForm = () => {
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
                         <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} required/>
+                        <p className="error-message">Please input your first name</p>
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
                         <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} required/>
+                        <p className="error-message">Please input your last name</p>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Middle name </label>
@@ -101,35 +103,39 @@ const AppointmentForm = () => {
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
                         <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} required/>
+                        <p className="error-message">Please input your email</p>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Phone <span className='required-field'>*</span></label>
                         <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} required/>
+                        <p className="error-message">Please input your first name</p>
                     </div>
                     <hr className='my-5'/>
                     <h5 className='text-center mb-5 labels'>Appointment Information</h5>
                     <div className="col-12 mb-3">
-                        <label htmlFor="" className="form-lavel labels">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
+                        <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field'>*</span></label>
+                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} required>
                             <option value="" labels>Select a Service</option>
                                     {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
+                        <p className="error-message">Please select a service</p>
                     </div>
                     <div className="col-12 mb-3">
-                        <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} />
+                        <label htmlFor="" className="form-label labels" >Date <span className='required-field'>*</span></label>
+                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} required/>
+                        <p className="error-message">Please choose a date</p>
                     </div>
                 </div>
                 
                 {/* time form */}
                 <div className="col">
-                    <label htmlFor="" className="form-label labels" >Time</label>
+                    <label htmlFor="" className="form-label labels" >Time <span className='required-field'>*</span></label>
                     <div className="row">
                         <div className="col-xl-6 col-sm-12 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} required/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
@@ -179,6 +185,7 @@ const AppointmentForm = () => {
                             </label>
                             </div>
                         </div>
+                        <p className="error-message">Please choose the time</p>
                     </div>
                 </div>
                 

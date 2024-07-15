@@ -9,10 +9,18 @@ import axios from 'axios'
 const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
+  const [search, setSearch] = useState('');
   
   useEffect(() => {
     getPatients();
   }, []);
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setSearch(value.toLowerCase());
+}
+
+console.log(search)
 
   function getPatients() {
     axios.get('http://localhost:80/api2/?action=getPatients')
@@ -45,13 +53,16 @@ const AdminPatients = () => {
 
                 {/* patient search, filter, and sort */}
                 <div className="search row">
-                    <div className="col-8">
-                      <input type="text" name="" id="" placeholder='Search' className='search-bar'/>  
+                    <div className="col-12">
+                      <input type="text" name="search" id="" placeholder='Search' className='search-bar' value={search} onChange={handleChange}/>  
                     </div>
+                    {/* <div className="col-1">
+                      <button className='btn search-button'>Search</button>
+                    </div> */}
                     
 
                      {/*dropdown for filter  */}
-                    <div class="dropdown col-2">
+                    {/* <div class="dropdown col-2">
                     <button class="btn dropdown-toggle filter-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        Filter
                     </button>
@@ -60,25 +71,26 @@ const AdminPatients = () => {
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                    </div>
+                    </div> */}
 
                     {/* dropdown for order by */}
-                    <div class="dropdown col-2">
+                     {/* <div class="dropdown col-2">
                     <button class="btn orderby-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        Order by
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">Ascending Order</a></li>
+                        <li><a class="dropdown-item" href="#">Descending Order</a></li>
                     </ul>
-                    </div>
+                    </div> */}
 
 
                 </div>
-                {/* patients list */}
-                {patients.map((patient, index)=>{
-                  return(
+                
+                {/* Patients list */}
+              {patients.length > 0 ? patients.map((patient, index) => {
+                if (patient.p_fname.toLowerCase().includes(search) || patient.p_lname.toLowerCase().includes(search) || search === '') {
+                  return (
                     <div className="row patient-record" key={index}>
                       <div className="col-8 patient-name">
                         {patient.p_fname} {patient.p_lname}
@@ -90,13 +102,21 @@ const AdminPatients = () => {
                         {/* 10/21/23 */}
                       </div>
                       <div className="col">
-                        <Link to={`/view-patient-info/${patient.id}`}><button className='btn button-view'>View</button></Link>
-                        {/* <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-container'><i class="fa-solid fa-pencil button-edit-pencil"></i></button></Link> */}
+                        <Link to={`/view-patient-info/${patient.id}`}>
+                          <button className='btn button-view'>View</button>
+                        </Link>
+                        {/* <Link to={`/edit-patient-info/${patient.id}`}>
+                          <button className='btn button-edit-container'>
+                            <i className="fa-solid fa-pencil button-edit-pencil"></i>
+                          </button>
+                        </Link> */}
                       </div>
                     </div>
-                  ); 
-                })}
-        </div>
+                  );
+                }
+                return null;
+              }) : <p>No patient record found</p>}
+              </div>
       
     </div>
   )

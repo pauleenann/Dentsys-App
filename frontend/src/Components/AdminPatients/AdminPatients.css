@@ -92,12 +92,13 @@ body {
     color: #fff;
  }
 
- .button-view{
+ .button-view, .search-button{
    background-color: #31A3B9;
    color: #fff;
  }
 
- .button-view:hover{
+ .button-view:hover, .search-button:hover{
    background-color: #298b9e;
    color: #fff;
  }
+

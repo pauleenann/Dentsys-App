@@ -33,7 +33,7 @@ const Invoice = () => {
         }
     }
 
-    console.log(invoices)
+    console.log(invoices.length)
   return (
     <div className="wrapper">
       <AdminNavbar />
@@ -65,7 +65,7 @@ const Invoice = () => {
             </div>
         </div>
 
-        {invoices.map((item, key)=>{
+        {invoices.length==0?<p className='text-center'>No invoices</p>:invoices.map((item, key)=>{
             if(item.inv_status === 'paid'){
                 return(
                     <div className="row inv-paid-row mb-4 text-center d-flex align-items-center">
@@ -141,6 +141,7 @@ const Invoice = () => {
                 );
             }
         })}
+        
       </div>
     </div>
   )

@@ -115,7 +115,7 @@ console.log(search)
                   );
                 }
                 return null;
-              }) : <p>No patient record found</p>}
+              }) : <p className='text-center'>No patient record found</p>}
               </div>
       
     </div>

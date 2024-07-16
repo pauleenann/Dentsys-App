@@ -16,13 +16,20 @@ const UpdateInvoice = () => {
         pay_method: 'CASH', // set CASH as default payment method
         inv_id: id
     });
+    const [submitForm, setSubmitForm] = useState(false)
+    const [errors, setErrors] = useState({})
+    const [totalPaid, setTotalPaid] = useState(0);
+    const [invTotal, setInvTotal] = useState(0);
     const [loading, setLoading] = useState(false);
+    const balance = invTotal - totalPaid;
     
     
 
     useEffect(() => {
+        getTotalPaid();
         getInvoiceDetails();
         getPayment();
+        //getBalance();
     }, []);
 
     const handleChange = (e) => {
@@ -32,32 +39,61 @@ const UpdateInvoice = () => {
 
     const navigate = useNavigate();
 
+    async function getTotalPaid() {
+        try {
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
+            console.log('Full API response:', response);
+            console.log('API response data:', response.data);
+
+            if (Array.isArray(response.data)) {
+                setTotalPaid(response.data[0].total_paid);
+            } else {
+                console.error('API response is not an array:', response.data);
+                setTotalPaid(0);
+            }
+        } catch (error) {
+            console.error('Error fetching services:', error);
+            setTotalPaid(0);
+        }
+    }
+
+    
+    console.log(totalPaid)
+
     const handleClick = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-          console.log("Sending payment data to server:", payment);
-          await axios.post("http://localhost:80/api2/", payment).finally(() => setLoading(false));;
-          navigate(`/invoice-details/${id}`);
-        } catch (err) {
-          console.log(err);
-        //   setError(true)
+        if(submitForm === false){
+            formValidation();
+        }else{
+            setLoading(true);
+            try {
+            console.log("Sending payment data to server:", payment);
+            await axios.post("http://localhost:80/api2/", payment).finally(() => setLoading(false));;
+            navigate(`/invoice-details/${id}`);
+            } catch (err) {
+            console.log(err);
+            //   setError(true)
+            }
         }
+        
     };
+
 
 
     async function getInvoiceDetails() {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
             console.log('Full API response:', response);
-            console.log('API response data:', response.data);
+            console.log('API response data:', response.data[0].inv_totalamount);
 
             if (Array.isArray(response.data)) {
                 setInvoiceDetails(response.data);
+
             } else {
                 console.error('API response is not an array:', response.data);
                 setInvoiceDetails([]);
             }
+            setInvTotal(response.data[0].inv_totalamount)
         } catch (error) {
             console.error('Error fetching services:', error);
             setInvoiceDetails([]);
@@ -82,8 +118,33 @@ const UpdateInvoice = () => {
         }
     }
 
-    console.log(payment)
+    const formValidation = ()=>{
+        let error = {};
+        
+        if(!payment.pay_date){
+            error.pay_date = 'Enter date of payment'
+        }
+        if(!payment.pay_time){
+            error.pay_time = 'Enter time of payment'
+        }
+        if(payment.pay_amount > balance || !payment.pay_amount || payment.pay_amount<=0){
+            error.pay_amount = 'Amount must be valid nor exceed the balance'
+        }
 
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
+        
+        setErrors(error)
+
+    }
+
+
+    console.log(`balance ${balance}`)
+    console.log(`total paid ${totalPaid}`)
+    console.log(`total amount ${invTotal}`)
   return (
     <div className='wrapper'>
         <AdminNavbar />
@@ -201,11 +262,13 @@ const UpdateInvoice = () => {
                 <div className="row edit-invoice mb-5">
                     <div className="col">
                         <label htmlFor="pay_date">Date</label><br />
-                        <input type="date" id='pay_date' name='pay_date' className='inv_input' onChange={handleChange}/>
+                        <input type="date" id='pay_date' name='pay_date' className='inv_input' onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.pay_date}</p>
                     </div>
                     <div className="col">
                         <label htmlFor="pay_time">Time</label><br />
-                        <input type="time" id ='pay_time' name='pay_time' className='inv_input' onChange={handleChange}/>
+                        <input type="time" id ='pay_time' name='pay_time' className='inv_input' onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.pay_time}</p>
                     </div>
                     <div className="col ">
                         <label htmlFor="pay_method">Payment Method</label><br />
@@ -217,7 +280,8 @@ const UpdateInvoice = () => {
                     </div>
                     <div className="col">
                         <label htmlFor="pay_amount">Paid Amount</label><br />
-                        <input type='text' id='pay_amount' name='pay_amount' className='inv_input' onChange={handleChange}/>
+                        <input type='number' id='pay_amount' name='pay_amount' className='inv_input' onChange={handleChange} onBlur={formValidation} min='0' max={balance} placeholder={`Balance: ₱${balance}`}/>
+                        <p className="error-message">{errors.pay_amount}</p>
                     </div>
                 </div>
 

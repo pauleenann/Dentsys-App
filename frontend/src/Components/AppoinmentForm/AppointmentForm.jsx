@@ -8,6 +8,8 @@ import './AppointmentForm.css'
 const AppointmentForm = () => {
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
+    const [errors, setErrors] = useState({});
+    const [submitForm, setSubmitForm] = useState(false)
 
     useEffect(() => {
         getServices();
@@ -54,6 +56,7 @@ const AppointmentForm = () => {
             ...formData,
             [name]: value
         });
+        
     }
 
 
@@ -61,16 +64,57 @@ const AppointmentForm = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-          await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
-          navigate("/appointment-request-submitted", {state: formData});
-        } catch (err) {
-          console.log(err);
-        //   setError(true)
+        console.log(submitForm)
+        if(submitForm === false){
+            formValidation(formData)
+        }else if(submitForm){
+            console.log('form submitted')
+            setLoading(true);
+                    try {
+                    await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+                    navigate("/appointment-request-submitted", {state: formData});
+                    } catch (err) {
+                    console.log(err);
+                    //   setError(true)
+                    }
         }
-        
       };
+
+    const formValidation = (formValues)=>{
+        let error = {};
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(!formValues.fname){
+            error.fname = 'Please input your first name';
+        }
+        if(!formValues.lname){
+            error.lname = 'Please input your last name';
+        }
+        if(!regex.test(formValues.email)){
+            error.email = 'Please input a valid email';
+        }
+        if(!formValues.phone || formValues.phone.length !== 11){
+            error.phone = 'Please input your mobile phone number';
+        }
+        if(!formValues.service_){
+            error.service = 'Please select a service';
+        }
+        if(!formValues.date_){
+            error.date = 'Please choose a date';
+        }
+        if(!formValues.time_){
+            error.time = 'Please choose the time';
+        }
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
+
+        setErrors(error)
+
+       
+    }
 
     console.log(formData);
 
@@ -85,12 +129,12 @@ const AppointmentForm = () => {
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
                         <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} required/>
-                        <p className="error-message">Please input your first name</p>
+                        <p className="error-message">{errors.fname}</p>
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
                         <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} required/>
-                        <p className="error-message">Please input your last name</p>
+                        <p className="error-message">{errors.lname}</p>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Middle name </label>
@@ -103,29 +147,29 @@ const AppointmentForm = () => {
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
                         <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} required/>
-                        <p className="error-message">Please input your email</p>
+                        <p className="error-message">{errors.email}</p>
                     </div>
                     <div className="col-xl-6 col-sm-12 mb-3">
                         <label htmlFor="" className="form-label labels">Phone <span className='required-field'>*</span></label>
                         <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} required/>
-                        <p className="error-message">Please input your first name</p>
+                        <p className="error-message">{errors.phone}</p>
                     </div>
                     <hr className='my-5'/>
                     <h5 className='text-center mb-5 labels'>Appointment Information</h5>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field'>*</span></label>
                         <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} required>
-                            <option value="" labels>Select a Service</option>
+                            <option value="" labels disabled >Select a Service</option>
                                     {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
-                        <p className="error-message">Please select a service</p>
+                        <p className="error-message">{errors.service}</p>
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels" >Date <span className='required-field'>*</span></label>
                         <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} required/>
-                        <p className="error-message">Please choose a date</p>
+                        <p className="error-message">{errors.date}</p>
                     </div>
                 </div>
                 
@@ -185,7 +229,7 @@ const AppointmentForm = () => {
                             </label>
                             </div>
                         </div>
-                        <p className="error-message">Please choose the time</p>
+                        <p className="error-message">{errors.time}</p>
                     </div>
                 </div>
                 

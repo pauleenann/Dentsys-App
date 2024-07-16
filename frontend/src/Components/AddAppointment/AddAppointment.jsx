@@ -10,7 +10,7 @@ import AdminInfo from "../AdminInfo/AdminInfo";
 const AddAppointment = () => {
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
-    
+    const [errors, setErrors] = useState({});
 
 
     useEffect(() => {
@@ -67,16 +67,48 @@ const AddAppointment = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-          await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
-          navigate('/appointment-list');
-        } catch (err) {
-          console.log(err);
-        //   setError(true)
-        }
+        formValidation(formData);
+    
+        // setLoading(true);
+        // try {
+        //   await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+        //   navigate('/appointment-list');
+        // } catch (err) {
+        //   console.log(err);
+        // //   setError(true)
+        // }
         
       };
+
+    const formValidation=(formValues)=>{
+        const error = {};
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(!formValues.fname){
+            error.fname = 'Please input your first name';
+        }
+        if(!formValues.lname){
+            error.lname = 'Please input your last name';
+        }
+        if(!regex.test(formValues.email)){
+            error.email = 'Please input a valid email';
+        }
+        if(!formValues.phone || formValues.phone.length != 11){
+            error.phone = 'Please input your mobile phone number';
+        }
+        if(!formValues.service_){
+            error.service = 'Please select a service';
+        }
+        if(!formValues.date_){
+            error.date = 'Please choose a date';
+        }
+        if(!formValues.time_){
+            error.time = 'Please choose the time';
+        }
+
+
+        setErrors(error)
+    }
 
     console.log(formData);
 
@@ -133,7 +165,7 @@ const AddAppointment = () => {
                     <hr className='my-5'/>
                     <h5 className='text-center mb-5 labels'>Appointment Information</h5>
                     <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-lavel labels">Type of Service</label>
+                        <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field' >*</span></label>
                         <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
                             <option value="" labels>Select a Service</option>
                                     {services.map((service, key) => (
@@ -142,12 +174,12 @@ const AddAppointment = () => {
                         </select>
                     </div>
                     <div className="col-4 mb-3">
-                        <label htmlFor="" className="labels p-0" >Date</label>
+                        <label htmlFor="" className="labels p-0" >Date <span className='required-field' >*</span></label>
                         <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="col">
-                    <label htmlFor="" className="form-label labels" >Time</label>
+                    <label htmlFor="" className="form-label labels" >Time <span className='required-field' >*</span></label>
                     <div className="row">
                         <div className="col-3 mb-3">
                         <div class="form-check">

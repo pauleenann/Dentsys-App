@@ -11,6 +11,7 @@ const AddAppointment = () => {
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
     const [errors, setErrors] = useState({});
+    const [submitForm, setSubmitForm] = useState(false)
 
 
     useEffect(() => {
@@ -67,47 +68,54 @@ const AddAppointment = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        formValidation(formData);
-    
-        // setLoading(true);
-        // try {
-        //   await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
-        //   navigate('/appointment-list');
-        // } catch (err) {
-        //   console.log(err);
-        // //   setError(true)
-        // }
-        
+        if(submitForm==false){
+            formValidation();
+        }else if(submitForm){
+            setLoading(true);
+            try {
+            await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+            navigate('/appointment-list');
+            } catch (err) {
+            console.log(err);
+            //   setError(true)
+            }
+        }
       };
 
-    const formValidation=(formValues)=>{
-        const error = {};
+      const formValidation = ()=>{
+        let error = {};
         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-        if(!formValues.fname){
+        if(!formData.fname){
             error.fname = 'Please input your first name';
         }
-        if(!formValues.lname){
+        if(!formData.lname){
             error.lname = 'Please input your last name';
         }
-        if(!regex.test(formValues.email)){
+        if(!regex.test(formData.email)){
             error.email = 'Please input a valid email';
         }
-        if(!formValues.phone || formValues.phone.length != 11){
+        if(!formData.phone || formData.phone.length !== 11){
             error.phone = 'Please input your mobile phone number';
         }
-        if(!formValues.service_){
+        if(!formData.service_){
             error.service = 'Please select a service';
         }
-        if(!formValues.date_){
+        if(!formData.date_){
             error.date = 'Please choose a date';
         }
-        if(!formValues.time_){
+        if(!formData.time_){
             error.time = 'Please choose the time';
         }
-
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
 
         setErrors(error)
+
+       
     }
 
     console.log(formData);
@@ -140,11 +148,13 @@ const AddAppointment = () => {
                 <div className="row">
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} required/>
+                        <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.fname}</p>
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} required/>
+                        <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.lname}</p>
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels">Middle name </label>
@@ -156,26 +166,30 @@ const AddAppointment = () => {
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} required/>
+                        <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.email}</p>
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels">Phone <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} required/>
+                        <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.phone}</p>
                     </div>
                     <hr className='my-5'/>
                     <h5 className='text-center mb-5 labels'>Appointment Information</h5>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field' >*</span></label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange}>
-                            <option value="" labels>Select a Service</option>
+                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} onBlur={formValidation}>
+                            <option value="" labels disabled>Select a Service</option>
                                     {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
+                        <p className="error-message">{errors.service}</p>
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="labels p-0" >Date <span className='required-field' >*</span></label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} />
+                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.date}</p>
                     </div>
                 </div>
                 <div className="col">
@@ -183,25 +197,25 @@ const AddAppointment = () => {
                     <div className="row">
                         <div className="col-3 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation} />
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             10:00 AM - 11:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             11:00 AM - 12:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             12:00 PM - 1:00 PM
                             </label>
@@ -209,30 +223,31 @@ const AddAppointment = () => {
                         </div>
                         <div className="col-3 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             1:00 PM - 2:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             2:00 PM - 3:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             3:00 PM - 4:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             4:00 PM - 5:00 PM
                             </label>
                             </div>
                         </div>
+                        <p className="error-message">{errors.time}</p>
                     </div>
                 </div>
                 <div className="col text-center">

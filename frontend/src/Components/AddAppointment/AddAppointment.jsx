@@ -87,16 +87,16 @@ const AddAppointment = () => {
         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if(!formData.fname){
-            error.fname = 'Please input your first name';
+            error.fname = 'Please input the first name';
         }
         if(!formData.lname){
-            error.lname = 'Please input your last name';
+            error.lname = 'Please input the last name';
         }
         if(!regex.test(formData.email)){
             error.email = 'Please input a valid email';
         }
         if(!formData.phone || formData.phone.length !== 11){
-            error.phone = 'Please input your mobile phone number';
+            error.phone = 'Please input a valid mobile phone number';
         }
         if(!formData.service_){
             error.service = 'Please select a service';

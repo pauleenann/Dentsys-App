@@ -22,8 +22,6 @@ const UpdateInvoice = () => {
     const [invTotal, setInvTotal] = useState(0);
     const [loading, setLoading] = useState(false);
     const balance = invTotal - totalPaid;
-    
-    
 
     useEffect(() => {
         getTotalPaid();
@@ -75,10 +73,7 @@ const UpdateInvoice = () => {
             //   setError(true)
             }
         }
-        
     };
-
-
 
     async function getInvoiceDetails() {
         try {

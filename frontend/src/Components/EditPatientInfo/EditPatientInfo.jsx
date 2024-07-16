@@ -9,6 +9,8 @@ import axios from "axios";
 
 const EditPatientInfo = () => {
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [submitForm, setSubmitForm] = useState(false)
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
         p_fname: '',
@@ -52,17 +54,52 @@ const EditPatientInfo = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-          await axios.put(`http://localhost:80/api2/${id}/?action=editPatient`, patient).finally(() => setLoading(false));
-          // Uncomment the next line if you want to navigate after submission
-          navigate(`/view-patient-info/${patient.id}`);
-        } catch (err) {
-          console.log(err);
+        if(submitForm===false){
+            formValidation()
+        }else{
+            setLoading(true);
+            try {
+            await axios.put(`http://localhost:80/api2/${id}/?action=editPatient`, patient).finally(() => setLoading(false));
+            // Uncomment the next line if you want to navigate after submission
+            navigate(`/view-patient-info/${patient.id}`);
+            } catch (err) {
+            console.log(err);
+            }
         }
     };
 
     console.log(patient);
+
+    const formValidation = ()=>{
+        let error = {};
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(!patient.p_fname){
+            error.fname = 'Please input the first name';
+        }
+        if(!patient.p_lname){
+            error.lname = 'Please input the last name';
+        }
+        if(!patient.p_age){
+            error.age = 'Please input the age';
+        }
+        if(!regex.test(patient.p_email)){
+            error.email = 'Please input a valid email';
+        }
+        if(!patient.p_phone || patient.p_phone.length !== 11){
+            error.phone = 'Please input a valid mobile phone number';
+        }
+        
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
+
+        setErrors(error)
+
+       
+    }
 
   return (
     <div className='wrapper'>
@@ -92,13 +129,15 @@ const EditPatientInfo = () => {
                             {/* fname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >First name </label>
-                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient.p_fname} onChange={handleChange} onBlur={formValidation} />
+                                <p className="error-message">{errors.fname}</p>
                             </div>
 
                             {/* lname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Last name </label>
-                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient.p_lname} onChange={handleChange} onBlur={formValidation} />
+                                <p className="error-message">{errors.lname}</p>
                             </div>
 
                             {/* mname */}
@@ -116,7 +155,8 @@ const EditPatientInfo = () => {
                             {/* age */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Age </label>
-                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient.p_age} onChange={handleChange} onBlur={formValidation} />
+                                <p className="error-message">{errors.age}</p>
                             </div>
 
                             {/* gender */}
@@ -128,13 +168,15 @@ const EditPatientInfo = () => {
                             {/* email */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Email</label>
-                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email} onChange={handleChange} />
+                                <input type="email" className="form-control" name='p_email' id='p_email' value={patient.p_email} onChange={handleChange} onBlur={formValidation} />
+                                <p className="error-message">{errors.email}</p>
                             </div>
 
                             {/* phone */}
                             <div className="col-4 mb-3">
                                 <label htmlFor="" className="form-label labels" >Phone number </label>
-                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} />
+                                <input type="text" className="form-control" name='p_phone' id='p_phone' value={patient.p_phone} onChange={handleChange} onBlur={formValidation} />
+                                <p className="error-message">{errors.phone}</p>
                             </div>
 
                             <div className="col-12 text-center mt-3">

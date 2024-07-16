@@ -7,6 +7,8 @@ import axios from 'axios';
 const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
     const [input, setInput] = useState({});
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [submitForm, setSubmitForm] = useState(false)
     console.log(keyOfSelectedAppointment, appointments);
 
     const handleChange = (event)=>{
@@ -18,19 +20,38 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
 
     const rescheduleAppointment = (event) => {
         event.preventDefault();
-        if (!input.date_ || !input.time_) {
-            console.log('Date and time must be set.');
-            return;
+        if (submitForm==false) {
+            formValidation();
+        }else if(submitForm){
+            setLoading(true);
+            axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=reschedule`, input)
+                .then(function (response) {
+                    console.log("response")
+                    console.log(response.data);
+                    window.location.reload();
+                })
+                .finally(() => setLoading(false)); 
+            console.log(input); 
         }
-        setLoading(true);
-        axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=reschedule`, input)
-            .then(function (response) {
-                console.log("response")
-                console.log(response.data);
-                window.location.reload();
-            })
-            .finally(() => setLoading(false)); 
-        console.log(input); 
+        
+    }
+
+    const formValidation = ()=>{
+        let error = {};
+
+        if(!input.date_){
+            error.date = 'Please choose a date';
+        }
+        if(!input.time_){
+            error.time = 'Please choose the time';
+        }
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
+
+        setErrors(error)
     }
     
 
@@ -101,7 +122,8 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                 {/* date */}
                 <div className="col-4">
                         <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" onChange={handleChange}/>
+                        <input  type="date" id="date" name="date_" className="form-control labels" onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.date}</p>
                 </div>
 
 
@@ -111,28 +133,28 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                         <div className="col-12">Time</div>
                         <div className="col-6">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             10:00 AM - 11:00 AM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             11:00 AM - 12:00 PM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             12:00 PM - 1:00 PM
                             </label>
@@ -140,30 +162,31 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                         </div>
                         <div className="col-6">
                     <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             1:00 PM - 2:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             2:00 PM - 3:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             3:00 PM - 4:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             4:00 PM - 5:00 PM
                             </label>
                         </div>
                     </div>
+                    <p className="error-message">{errors.time}</p>
                     </div>
                 </div>
                 <div className="mt-5 resched-button-container">

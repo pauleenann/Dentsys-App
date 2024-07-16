@@ -133,3 +133,12 @@ body {
 .service-name{
     width: 200px;
 }
+
+.error-message{
+    color: #ff0000;
+    font-size: 12px;
+    font-style: italic;
+    margin: 0;
+    margin-top: 3px;
+    /* display: none; */
+}

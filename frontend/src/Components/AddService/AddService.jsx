@@ -78,6 +78,8 @@ const AddService = () => {
     const [dentists, setDentists] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [submitForm, setSubmitForm] = useState(false)
 
     const { id } = useParams();
     const intValue = parseInt(id, 10);
@@ -184,7 +186,7 @@ const AddService = () => {
             <div className="col tooth-container" key={toothId}>
                 <img src={imgSrc} className='tooth' alt="" />
                 {patient.p_service === "Oral prophylaxis (Teeth Cleaning)" ? "" : <button
-                    className='btn tooth-button'
+                    className='btn tooth-button' onBlur={formValidation}
                     onClick={() => handleToothClick(toothId)}
                 >
                     {toothId}
@@ -219,7 +221,7 @@ const AddService = () => {
             <div className="col tooth-container" key={toothId}>
                 <img src={imgSrc} className='tooth' alt="" />
                 {patient.p_service === "Oral prophylaxis (Teeth Cleaning)" ? "" : <button
-                    className='btn tooth-button'
+                    className='btn tooth-button' onBlur={formValidation}
                     onClick={() => handleToothClick(toothId)}
                 >
                     {toothId}
@@ -312,14 +314,18 @@ const AddService = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-          console.log("Sending patient data to server:", patient);
-          await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
-          navigate(`/view-patient-info/${id}`);
-        } catch (err) {
-          console.log(err);
-        //   setError(true)
+        if(submitForm == false){
+            formValidation();
+        }else if(submitForm){
+            setLoading(true);
+            try {
+            console.log("Sending patient data to server:", patient);
+            await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
+            navigate(`/view-patient-info/${id}`);
+            } catch (err) {
+            console.log(err);
+            //   setError(true)
+            }
         }
       };
 
@@ -365,6 +371,41 @@ const AddService = () => {
     // const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;//calculate selected tooth that are true
 
     // console.log(totalTooth); // This will print the number of true values in the object
+    const formValidation = ()=>{
+        let error = {};
+        
+
+        if(!patient.p_date){
+            error.date = 'Please choose a date'
+        }
+        if(!patient.p_time){
+            error.time = 'Please choose a time'
+        }
+        if(Object.values(patient.p_selectedTeeth).every(value=>value ===false)){
+            error.selectedTeeth = 'Please choose a particular tooth'
+        }
+        if(!patient.p_dentist){
+            error.dentist = 'Please choose a dentist'
+        }
+        if(!patient.p_service){
+            error.service = 'Please choose a service'
+        }
+        if(!patient.p_severity_material){
+            error.severity_material = 'Please choose the severity/material'
+        }
+        
+
+        if(Object.keys(error).length == 0){
+            setSubmitForm(true)
+        }else{
+            setSubmitForm(false)
+        }
+
+        setErrors(error)
+
+    }
+
+    console.log(Object.values(patient.p_selectedTeeth).every(value=>value ===false))
 
   return (
     <div className='wrapper'>
@@ -393,7 +434,8 @@ const AddService = () => {
                     {/* date */}
                     <div className="col-4 mb-5 mt-5 ">
                         <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="p_date" name="p_date" className="form-control labels" value={patient.p_date} onChange={handleChange}/>
+                        <input  type="date" id="p_date" name="p_date" className="form-control labels" value={patient.p_date} onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{errors.date}</p>
                     </div>
 
                     {/* time */}
@@ -402,25 +444,25 @@ const AddService = () => {
                     <div className="row">
                         <div className="col-xl-6 col-sm-12 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             10:00 AM - 11:00 AM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             11:00 AM - 12:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             12:00 PM - 1:00 PM
                             </label>
@@ -428,30 +470,31 @@ const AddService = () => {
                         </div>
                         <div className="col-xl-6 col-sm-12 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             1:00 PM - 2:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             2:00 PM - 3:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}  onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             3:00 PM - 4:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange}/>
+                            <input class="form-check-input" type="radio" name="p_time" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             4:00 PM - 5:00 PM
                             </label>
                             </div>
                         </div>
+                        <p className="error-message">{errors.time}</p>
                     </div>
                 </div>
                 
@@ -460,19 +503,20 @@ const AddService = () => {
                         {/* services */}
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange}>
-                            <option value="" labels>Select a Service</option>
+                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange} onBlur={formValidation}>
+                            <option value="" labels disabled>Select a Service</option>
                                     {services.map((service, key) => (
                                         <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
                                     ))}
                         </select>
+                        <p className="error-message">{errors.service}</p>
                     </div>
 
                     {/* service severity/material*/}
                     <div className="col-4">
                         <label htmlFor="" className="form-label labels mb-2">Level of Severity/Type of Material</label>
-                        <select class="form-select" aria-label="Default select example" id="p_severity_material" name="p_severity_material" value={patient.p_severity_material} onChange={handleChange}>
-                            <option value="" labels>Select a Severity/Material</option>
+                        <select class="form-select" aria-label="Default select example" id="p_severity_material" name="p_severity_material" value={patient.p_severity_material} onChange={handleChange} onBlur={formValidation}>
+                            <option value="" labels disabled>Select a Severity/Material</option>
                             {servicesDetails.map((service,key)=>{
                                 if(service.service_name === patient.p_service){
                                     return(
@@ -482,6 +526,7 @@ const AddService = () => {
                             })}
                                     
                         </select>
+                        <p className="error-message">{errors.severity_material}</p>
                     </div>
                     </div>
                     
@@ -515,6 +560,7 @@ const AddService = () => {
                         </div>
                     </div>
                 </div>
+                <p className="error-message">{errors.selectedTeeth}</p>
             </div>
             {/* end of row for tooth chart */}
 
@@ -523,12 +569,13 @@ const AddService = () => {
             <div className="row mt-5">
                 <div className="col-6">
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" value={patient.p_dentist} onChange={handleChange}>
+                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" value={patient.p_dentist} onChange={handleChange} onBlur={formValidation}>
                         <option value="" labels disabled>Select Dentist</option>
                                 {dentists.map((dentist,key) => (
                                             <option key={dentist.d_id} value={dentist.d_lname}>Dr. {dentist.d_lname}</option>
                                         ))}
                     </select>
+                    <p className="error-message">{errors.dentist}</p>
                 </div>
             </div>
 

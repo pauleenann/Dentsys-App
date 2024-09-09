@@ -5,6 +5,7 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import isAuthenticated from '../Auth';
 
 const AddPatientInfo = () => {
     const [loading, setLoading] = useState(false);
@@ -189,4 +190,4 @@ const AddPatientInfo = () => {
   )
 }
 
-export default AddPatientInfo;
+export default isAuthenticated(AddPatientInfo);

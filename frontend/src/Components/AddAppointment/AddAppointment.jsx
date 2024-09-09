@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import './AddAppointment.css'
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import AdminInfo from "../AdminInfo/AdminInfo";
+import isAuthenticated from "../Auth";
 
 
 const AddAppointment = () => {
@@ -272,4 +273,4 @@ const AddAppointment = () => {
   )
 }
 
-export default AddAppointment
+export default isAuthenticated(AddAppointment);

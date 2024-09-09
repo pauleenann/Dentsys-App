@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DentalHistory from '../DentalHistory/DentalHistory';
 import DentistNavbar from '../DentistNavbar/DentistNavbar'
+import isAuthenticated from '../Auth';
 
 const DentistPage = () => {
   const [patients, setPatients] = useState([]);
@@ -109,4 +110,4 @@ const DentistPage = () => {
   )
 }
 
-export default DentistPage;
+export default isAuthenticated(DentistPage);

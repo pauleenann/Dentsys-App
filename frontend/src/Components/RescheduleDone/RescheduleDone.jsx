@@ -1,5 +1,6 @@
 import React from 'react'
 import './RescheduleDone.css'
+import isAuthenticated from '../Auth'
 
 const RescheduleDone = () => {
   return (
@@ -42,4 +43,4 @@ const RescheduleDone = () => {
   )
 }
 
-export default RescheduleDone
+export default isAuthenticated(RescheduleDone);

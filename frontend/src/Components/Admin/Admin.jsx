@@ -3,7 +3,7 @@ import axios from "axios";
 import logowhite from  './../../Assets/logowhite.png'
 import './Admin.css'
 import { Link, useNavigate } from "react-router-dom";
-import { isAuthenticated } from '../Auth';
+import isAuthenticated from '../Auth';
 import Dashboard from '../../Pages/Dashboard';
 
 const Admin = () => {
@@ -15,18 +15,14 @@ const Admin = () => {
     username: '', 
     password: '' 
   };
-
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (!isAuthenticated()) {
-    // Redirect to login if not authenticat
-    navigate('/admin');
+    const username = localStorage.getItem('username');
+    if (username) {
+      navigate('/dashboard');
     }
-    else{
-        navigate("/dashboard")
-    }
-}, [navigate]);
+  }, [navigate]);
+
 
   const handleLogin = async () => {
     loginData.username = usernamelogin;
@@ -44,13 +40,12 @@ const Admin = () => {
       });
       const data = await response.json();
             if (data.status === 1) {
-                localStorage.setItem('username', loginData.username);
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('account_type', data.account_type);
                 window.location.href = '/dashboard'; 
             } else {
                 console.error(data.message);
             }
-  
-        localStorage.setItem('username', loginData.username);
 
     } catch (error) {
         console.error('Login failed:', error.message);
@@ -85,4 +80,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default isAuthenticated(Admin);

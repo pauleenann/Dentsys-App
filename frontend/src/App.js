@@ -28,6 +28,7 @@ import Invoice from "./Components/Invoice/Invoice";
 import InvoiceDetails from "./Components/InvoiceDetails/InvoiceDetails";
 import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
 import DentistPage from "./Components/DentistPage/DentistPage";
+import Protected from "./Components/Protected";
 
 
 const App = () => {
@@ -43,24 +44,24 @@ const App = () => {
         <Route path="/appointment-request-submitted" element={<AppointmentSubmittedPage/>} />
         <Route path="/services-page" element={<ServicesOffered/>} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/appointment-list" element={<AdminAppointmentList/>} />
-        <Route path="/patient-list" element={<AdminPatients/>} />
-        <Route path="/add-new-patient" element={<AddNewPatient/>} />
-        <Route path="/reschedule" element={<Reschedule></Reschedule>} />
-        <Route path="/rescheduled" element={<RescheduleDone></RescheduleDone>} />
-        <Route path="/appointment-details" element={<AppointmentDetails/>} />
-        <Route path="/appointment-confirmed" element={<AppointmentConfirmed/>} />
-        <Route path="/cancel-appointment" element={<CancelAppointment/>} />
-        <Route path="/view-patient-info/:id" element={<ViewPatientInfo/>} />
-        <Route path="/edit-patient-info/:id" element={<EditPatientInfo/>} />
-        <Route path="/add-service/:id" element={<AddService/>} />
-        <Route path="/dental-history/:id" element={<DentalHistory/>} />
-        <Route path="/add-appointment" element={<AddAppointment/>} />
-        <Route path="/invoice-list" element={<Invoice/>} />
-        <Route path="/invoice-details/:id" element={<InvoiceDetails/>} />
-        <Route path="/update-invoice/:id" element={<UpdateInvoice/>} />     
-        <Route path="/dentist-page" element={<DentistPage/>} />
+        <Route path="/dashboard" element={<Protected allowedRoles={['admin']}><Dashboard /></Protected>} />
+        <Route path="/appointment-list" element={<Protected allowedRoles={['admin']}><AdminAppointmentList/></Protected>} />
+        <Route path="/patient-list" element={<Protected allowedRoles={['admin', 'dentist']}><AdminPatients/></Protected>} />
+        <Route path="/add-new-patient" element={<Protected allowedRoles={['admin', 'dentist']}><AddNewPatient/></Protected>} />
+        <Route path="/reschedule" element={<Protected allowedRoles={['admin']}><Reschedule></Reschedule></Protected>} />
+        <Route path="/rescheduled" element={<Protected allowedRoles={['admin']}><RescheduleDone></RescheduleDone></Protected>} />
+        <Route path="/appointment-details" element={<Protected allowedRoles={['admin']}><AppointmentDetails/></Protected>} />
+        <Route path="/appointment-confirmed" element={<Protected allowedRoles={['admin']}><AppointmentConfirmed/></Protected>} />
+        <Route path="/cancel-appointment" element={<Protected allowedRoles={['admin']}><CancelAppointment/></Protected>} />
+        <Route path="/view-patient-info/:id" element={<Protected allowedRoles={['admin']}><ViewPatientInfo/></Protected>} />
+        <Route path="/edit-patient-info/:id" element={<Protected allowedRoles={['admin']}><EditPatientInfo/></Protected>} />
+        <Route path="/add-service/:id" element={<Protected allowedRoles={['admin']}><AddService/></Protected>} />
+        <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin']}><DentalHistory/></Protected>} />
+        <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
+        <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />
+        <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin']}><InvoiceDetails/></Protected>} />
+        <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />     
+        <Route path="/dentist-page" element={<Protected allowedRoles={['admin', 'dentist']}><DentistPage/></Protected>} />
 
 
 

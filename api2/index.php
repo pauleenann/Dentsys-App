@@ -591,9 +591,10 @@ if($method ==='PUT'){
                 $stmt->bindParam(':password', $user->password); 
                 $stmt->execute();
 
+                $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     
                 if ($stmt->rowCount() > 0) {
-                    $response = ['status' => 1, 'message' => 'Login success.', 'success' => true];
+                    $response = ['status' => 1, 'message' => 'Login success.', 'success' => true,'username' => $userData['username'], 'account_type' => $userData['account_type']];
                 }else{
                     $response = ['status' => 0, 'message' => 'Invalid credentials / user does not exist', 'success' => false];
                 }

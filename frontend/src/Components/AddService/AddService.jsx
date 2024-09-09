@@ -69,6 +69,7 @@ import selected29 from './../../Assets/Tooth Selected/selected29.png'
 import selected30 from './../../Assets/Tooth Selected/selected30.png'
 import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
+import isAuthenticated from '../Auth';
 
 
 const AddService = () => {
@@ -705,4 +706,4 @@ const AddService = () => {
   )
 }
 
-export default AddService
+export default isAuthenticated(AddService);

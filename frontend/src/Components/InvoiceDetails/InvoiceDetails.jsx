@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DentalHistory from '../DentalHistory/DentalHistory';
+import isAuthenticated from '../Auth';
 
 const InvoiceDetails = () => {
     const [invoiceDetails, setInvoiceDetails] = useState([]);
@@ -238,4 +239,4 @@ const InvoiceDetails = () => {
   )
 }
 
-export default InvoiceDetails;
+export default isAuthenticated(InvoiceDetails);

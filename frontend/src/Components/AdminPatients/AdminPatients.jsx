@@ -4,12 +4,14 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminPatients.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import DentistNavbar from '../DentistNavbar/DentistNavbar'
 
 
 const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [search, setSearch] = useState('');
+  const account_type = localStorage.getItem('account_type');
   
   useEffect(() => {
     getPatients();
@@ -41,7 +43,7 @@ console.log(search)
 
   return (
     <div className='wrapper'>
-        <AdminNavbar></AdminNavbar>
+        {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}    
         <div id="content">
             <AdminInfo></AdminInfo>
             <div className="patient-header">

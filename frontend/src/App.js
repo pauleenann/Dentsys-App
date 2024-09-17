@@ -27,7 +27,7 @@ import AddAppointment from "./Components/AddAppointment/AddAppointment";
 import Invoice from "./Components/Invoice/Invoice";
 import InvoiceDetails from "./Components/InvoiceDetails/InvoiceDetails";
 import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
-import DentistPage from "./Components/DentistPage/DentistPage";
+
 import Protected from "./Components/Protected";
 
 
@@ -46,7 +46,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Protected allowedRoles={['admin']}><Dashboard /></Protected>} />
         <Route path="/appointment-list" element={<Protected allowedRoles={['admin']}><AdminAppointmentList/></Protected>} />
-        <Route path="/patient-list" element={<Protected allowedRoles={['admin']}><AdminPatients/></Protected>} />
+        <Route path="/patient-list" element={<Protected allowedRoles={['admin','dentist']}><AdminPatients/></Protected>} />
         <Route path="/add-new-patient" element={<Protected allowedRoles={['admin', 'dentist']}><AddNewPatient/></Protected>} />
         <Route path="/reschedule" element={<Protected allowedRoles={['admin']}><Reschedule></Reschedule></Protected>} />
         <Route path="/rescheduled" element={<Protected allowedRoles={['admin']}><RescheduleDone></RescheduleDone></Protected>} />
@@ -60,8 +60,7 @@ const App = () => {
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />
         <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin']}><InvoiceDetails/></Protected>} />
-        <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />     
-        <Route path="/dentist-page" element={<Protected allowedRoles={['admin', 'dentist']}><DentistPage/></Protected>} />        
+        <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />        
       </Routes>
       
       </BrowserRouter>

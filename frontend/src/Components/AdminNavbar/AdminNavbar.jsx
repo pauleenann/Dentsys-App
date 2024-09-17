@@ -6,7 +6,8 @@ import './AdminNavbar.css'
 const AdminNavbar = () => {
     const [accountType,setAccountType]=useState('')
     useEffect(()=>{
-        localStorage.getItem('account_type');
+        
+        setAccountType(localStorage.getItem('account_type'));
     },[])
 
   return (
@@ -15,7 +16,7 @@ const AdminNavbar = () => {
                 <div className='admin-navbar-container'>
                 <div className="admin-navbar">
                 <img src={logowhite} alt="" className='admin-navbar-logo'/>
-                {accountType==='dentist'?<div className="admin-menu">
+                {accountType==='admin'?<div className="admin-menu">
                     <Link className='adminnav-link' to='/dashboard'>
                         <div className="admin-nav-dashboard row">
                             <div className="col-2 p-0">
@@ -56,7 +57,8 @@ const AdminNavbar = () => {
                         </div>
                     </div>
                 </Link>
-                </div>:<div className="admin-menu"><Link className='adminnav-link' to='/patient-list'>
+                </div>:<div className="admin-menu">
+                <Link className='adminnav-link' to='/patient-list'>
                     <div className="admin-nav-patients row">
                         <div className="col-2 p-0">
                         <i className="fa-solid fa-hospital-user adminnav-menu"></i>   

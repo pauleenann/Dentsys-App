@@ -53,20 +53,15 @@ const App = () => {
         <Route path="/appointment-details" element={<Protected allowedRoles={['admin']}><AppointmentDetails/></Protected>} />
         <Route path="/appointment-confirmed" element={<Protected allowedRoles={['admin']}><AppointmentConfirmed/></Protected>} />
         <Route path="/cancel-appointment" element={<Protected allowedRoles={['admin']}><CancelAppointment/></Protected>} />
-        <Route path="/view-patient-info/:id" element={<Protected allowedRoles={['admin']}><ViewPatientInfo/></Protected>} />
+        <Route path="/view-patient-info/:id" element={<Protected allowedRoles={['admin', 'dentist']}><ViewPatientInfo/></Protected>} />
         <Route path="/edit-patient-info/:id" element={<Protected allowedRoles={['admin', 'dentist']}><EditPatientInfo/></Protected>} />
-        <Route path="/add-service/:id" element={<Protected allowedRoles={['admin']}><AddService/></Protected>} />
-        <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin']}><DentalHistory/></Protected>} />
+        <Route path="/add-service/:id" element={<Protected allowedRoles={['admin','dentist']}><AddService/></Protected>} />
+        <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin','dentist']}><DentalHistory/></Protected>} />
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />
         <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin']}><InvoiceDetails/></Protected>} />
         <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />     
-        <Route path="/dentist-page" element={<Protected allowedRoles={['admin', 'dentist']}><DentistPage/></Protected>} />
-
-
-
-        
-        
+        <Route path="/dentist-page" element={<Protected allowedRoles={['admin', 'dentist']}><DentistPage/></Protected>} />        
       </Routes>
       
       </BrowserRouter>

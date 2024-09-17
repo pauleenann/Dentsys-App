@@ -70,6 +70,7 @@ import selected30 from './../../Assets/Tooth Selected/selected30.png'
 import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
 import isAuthenticated from '../Auth';
+import DentistNavbar from '../DentistNavbar/DentistNavbar';
 
 
 const DentalHistory = () => {
@@ -78,6 +79,7 @@ const DentalHistory = () => {
     const [payment, setPayment] = useState([]);
     const [patientId, setPatientId] = useState(0);
     const [totalPaid, setTotalPaid] = useState(0);
+    const account_type = localStorage.getItem('account_type');
 
     const {id} = useParams();
 
@@ -210,7 +212,7 @@ const DentalHistory = () => {
     
   return (
     <div className='wrapper'>
-        <AdminNavbar></AdminNavbar>
+        {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}        
       <div id="content">
         <AdminInfo></AdminInfo>
 

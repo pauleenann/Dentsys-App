@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import isAuthenticated from '../Auth';
+import DentistNavbar from '../DentistNavbar/DentistNavbar';
+
 
 
 const EditPatientInfo = () => {
@@ -23,6 +25,7 @@ const EditPatientInfo = () => {
         p_email: '',
         p_phone: '',
     });
+    const account_type = localStorage.getItem('account_type');
 
     const {id} = useParams();
     
@@ -104,7 +107,7 @@ const EditPatientInfo = () => {
 
   return (
     <div className='wrapper'>
-        <AdminNavbar />
+        {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}   
         <div id="content">
             <AdminInfo />
             {/* go back button */}

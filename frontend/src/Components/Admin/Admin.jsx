@@ -29,16 +29,8 @@ const Admin = () => {
     loginData.password = passwordlogin;
     console.info(loginData)
     try {
-        const response = await fetch('http://localhost:80/api2/user/save', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-              loginData
-          )
-      });
-      const data = await response.json();
+        const response = await axios.post('http://localhost:80/api2/user/save', loginData);
+      const data = response.data;
             if (data.status === 1) {
                 localStorage.setItem('username', data.username);
                 localStorage.setItem('account_type', data.account_type);

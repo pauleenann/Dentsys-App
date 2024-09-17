@@ -70,6 +70,8 @@ import selected30 from './../../Assets/Tooth Selected/selected30.png'
 import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
 import isAuthenticated from '../Auth';
+import DentistNavbar from '../DentistNavbar/DentistNavbar';
+
 
 
 const AddService = () => {
@@ -81,6 +83,7 @@ const AddService = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
+    const account_type = localStorage.getItem('account_type');
 
     const { id } = useParams();
     const intValue = parseInt(id, 10);
@@ -410,7 +413,7 @@ const AddService = () => {
 
   return (
     <div className='wrapper'>
-        <AdminNavbar></AdminNavbar>
+       {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}    
       <div id="content">
         <AdminInfo></AdminInfo>
 

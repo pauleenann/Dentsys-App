@@ -12,6 +12,7 @@ const Protected = ({ children, allowedRoles }) => {
     return <Navigate to="/admin" replace />;
   }
 
+  console.log(allowedRoles)
   // Check if the user's account type is allowed for this route
   if (allowedRoles && !allowedRoles.includes(account_type)) {
     // Redirect based on account type
@@ -19,6 +20,7 @@ const Protected = ({ children, allowedRoles }) => {
       case 'admin':
         return <Navigate to="/dashboard" replace />;
       case 'dentist':
+        
         return <Navigate to="/dentist-page" replace />;
       default:
         return <Navigate to="/unauthorized" replace />;

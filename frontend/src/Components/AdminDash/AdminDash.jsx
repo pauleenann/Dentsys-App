@@ -4,7 +4,8 @@ import logowhite from './../../Assets/logowhite.png';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import isAuthenticated from '../Auth';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const AdminDash = () => {
@@ -17,6 +18,7 @@ const AdminDash = () => {
     const [totalUpcoming, setTotalUpcoming] = useState(0);
     const [earningsToday, setEarningsToday] = useState(0);
     const [appToday, setAppToday] = useState([]);
+    const navigate = useNavigate();
 
 //loads when componenct renders
   useEffect(() => {
@@ -27,7 +29,7 @@ const AdminDash = () => {
     getAppointmentsToday();
     getRecentAppointmentDetails();
     getEarningsToday();
-  }, []);
+  },);
 
   const getTotalPendingAppointments = () => {
     axios.get('http://localhost:80/api2/?action=getPendingAppointments')
@@ -105,8 +107,6 @@ const AdminDash = () => {
         setRecentAppDetail([]);
       });
   };
-
-  
 
   console.log(earningsToday)
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import AddPatientInfo from '../Components/AddPatientInfo/AddPatientInfo'
+import isAuthenticated from '../Components/Auth'
 
 const AddNewPatient = () => {
   return (
@@ -9,4 +10,4 @@ const AddNewPatient = () => {
   )
 }
 
-export default AddNewPatient
+export default isAuthenticated(AddNewPatient);

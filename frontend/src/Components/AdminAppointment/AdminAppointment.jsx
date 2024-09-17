@@ -8,6 +8,7 @@ import axios from 'axios';
 import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed';
 import CancelAppointment from '../CancelAppointment/CancelAppointment';
 import ViewAppointment from '../ViewAppointment/ViewAppointment';
+import isAuthenticated from '../Auth';
 
 const AdminAppointment = () => {
   const [showReschedule, setShowReschedule] = useState(false);
@@ -249,4 +250,4 @@ const AdminAppointment = () => {
   );
 }
 
-export default AdminAppointment;
+export default isAuthenticated(AdminAppointment);

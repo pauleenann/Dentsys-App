@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './CancelAppointment.css'
 import axios from 'axios'
-
+import isAuthenticated from '../Auth'
 
 const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) => {
   const [appointment, setAppointment] = useState([]);
@@ -96,4 +96,4 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
   )
 }
 
-export default CancelAppointment
+export default isAuthenticated(CancelAppointment);

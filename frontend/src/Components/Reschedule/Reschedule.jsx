@@ -2,7 +2,7 @@ import React from 'react'
 import './Reschedule.css'
 import { useState } from 'react';
 import axios from 'axios';
-
+import isAuthenticated from '../Auth';
 
 const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
     const [input, setInput] = useState({});
@@ -208,5 +208,5 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
   )
 }
 
-export default Reschedule
+export default isAuthenticated(Reschedule);
 

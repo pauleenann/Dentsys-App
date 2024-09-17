@@ -4,6 +4,7 @@ import AdminInfo from '../AdminInfo/AdminInfo';
 import './Invoice.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import isAuthenticated from '../Auth';
 
 
 const Invoice = () => {
@@ -147,4 +148,4 @@ const Invoice = () => {
   )
 }
 
-export default Invoice
+export default isAuthenticated(Invoice);

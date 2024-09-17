@@ -5,6 +5,7 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import isAuthenticated from '../Auth';
 
 
 const EditPatientInfo = () => {
@@ -200,4 +201,4 @@ const EditPatientInfo = () => {
   )
 }
 
-export default EditPatientInfo;
+export default isAuthenticated(EditPatientInfo);

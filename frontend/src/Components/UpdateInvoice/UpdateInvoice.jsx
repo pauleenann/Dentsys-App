@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DentalHistory from '../DentalHistory/DentalHistory';
+import isAuthenticated from '../Auth';
 
 const UpdateInvoice = () => {
     const {id} = useParams();
@@ -325,4 +326,4 @@ const UpdateInvoice = () => {
   )
 }
 
-export default UpdateInvoice;
+export default isAuthenticated(UpdateInvoice);

@@ -1,5 +1,6 @@
 import React from 'react'
 import AdminAppointment from '../Components/AdminAppointment/AdminAppointment'
+import isAuthenticated from '../Components/Auth'
 
 const AdminAppointmentList = () => {
   return (
@@ -9,4 +10,4 @@ const AdminAppointmentList = () => {
   )
 }
 
-export default AdminAppointmentList
+export default isAuthenticated(AdminAppointmentList);

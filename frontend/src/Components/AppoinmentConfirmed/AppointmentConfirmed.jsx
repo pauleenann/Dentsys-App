@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './AppointmentConfirmed.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import isAuthenticated from '../Auth'
 
 const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments}) => {
   const reloadPage = () => {
@@ -60,4 +61,4 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments})
   )
 }
 
-export default AppointmentConfirmed
+export default isAuthenticated(AppointmentConfirmed);

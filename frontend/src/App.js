@@ -46,7 +46,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Protected allowedRoles={['admin']}><Dashboard /></Protected>} />
         <Route path="/appointment-list" element={<Protected allowedRoles={['admin']}><AdminAppointmentList/></Protected>} />
-        <Route path="/patient-list" element={<Protected allowedRoles={['admin', 'dentist']}><AdminPatients/></Protected>} />
+        <Route path="/patient-list" element={<Protected allowedRoles={['admin']}><AdminPatients/></Protected>} />
         <Route path="/add-new-patient" element={<Protected allowedRoles={['admin', 'dentist']}><AddNewPatient/></Protected>} />
         <Route path="/reschedule" element={<Protected allowedRoles={['admin']}><Reschedule></Reschedule></Protected>} />
         <Route path="/rescheduled" element={<Protected allowedRoles={['admin']}><RescheduleDone></RescheduleDone></Protected>} />
@@ -54,7 +54,7 @@ const App = () => {
         <Route path="/appointment-confirmed" element={<Protected allowedRoles={['admin']}><AppointmentConfirmed/></Protected>} />
         <Route path="/cancel-appointment" element={<Protected allowedRoles={['admin']}><CancelAppointment/></Protected>} />
         <Route path="/view-patient-info/:id" element={<Protected allowedRoles={['admin']}><ViewPatientInfo/></Protected>} />
-        <Route path="/edit-patient-info/:id" element={<Protected allowedRoles={['admin']}><EditPatientInfo/></Protected>} />
+        <Route path="/edit-patient-info/:id" element={<Protected allowedRoles={['admin', 'dentist']}><EditPatientInfo/></Protected>} />
         <Route path="/add-service/:id" element={<Protected allowedRoles={['admin']}><AddService/></Protected>} />
         <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin']}><DentalHistory/></Protected>} />
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />

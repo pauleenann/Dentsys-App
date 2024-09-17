@@ -6,14 +6,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import isAuthenticated from '../Auth';
-import DentistNavbar from '../DentistNavbar/DentistNavbar';
+
 
 const AddPatientInfo = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
     const navigate = useNavigate();
-    const account_type = localStorage.getItem('account_type');
 
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
@@ -93,7 +92,7 @@ const AddPatientInfo = () => {
 
   return (
     <div className='wrapper'>
-        {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}        
+        <AdminNavbar/>        
         <div id="content">
             <AdminInfo />
             {/* go back button */}

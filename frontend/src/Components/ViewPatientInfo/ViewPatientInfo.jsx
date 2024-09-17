@@ -7,13 +7,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DentalHistory from '../DentalHistory/DentalHistory';
 import isAuthenticated from '../Auth';
-import DentistNavbar from '../DentistNavbar/DentistNavbar';
 
 const ViewPatientInfo = () => {
     const [patient, setPatient] = useState([]);
     const [history, setHistory] = useState([]);
     const navigate = useNavigate();
-    const account_type = localStorage.getItem('account_type');
 
     const {id} = useParams();
     
@@ -54,11 +52,10 @@ const ViewPatientInfo = () => {
 
     console.log(patient);
     console.log(history)
-    
 
   return (
     <div className='wrapper'>
-        {account_type==='dentist'?<DentistNavbar/>:<AdminNavbar />}       
+        <AdminNavbar />
         <div id="content">
             <AdminInfo />
             {/* go back button */}

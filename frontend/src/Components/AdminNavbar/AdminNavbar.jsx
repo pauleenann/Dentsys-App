@@ -57,17 +57,17 @@ const AdminNavbar = () => {
                         </div>
                     </div>
                 </Link>
-                </div>:<div className="admin-menu">
-                <Link className='adminnav-link' to='/patient-list'>
+                </div>:
+                <Link className='adminnav-link-patient' to='/patient-list'>
                     <div className="admin-nav-patients row">
                         <div className="col-2 p-0">
                         <i className="fa-solid fa-hospital-user adminnav-menu"></i>   
                         </div>
                         <div className="col-10 p-0">
-                        <p className="admin-patients-text m-0 adminnav-menu">Patients</p> 
+                        <span className="admin-patients-text m-0 adminnav-menu">Patients</span> 
                         </div>
                     </div>
-                </Link></div>}
+                </Link>}
                 
             </div>
             </div>

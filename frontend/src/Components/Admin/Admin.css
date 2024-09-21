@@ -87,3 +87,9 @@
     font-size: 0.8rem;
     z-index: 1;
 }
+
+.login-error{
+    color: #fff;
+    font-style: italic;
+    font-size: 0.8rem;
+}

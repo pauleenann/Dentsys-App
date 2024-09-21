@@ -117,7 +117,6 @@ const AppointmentForm = () => {
     }
 
     console.log(formData);
-
   return (
     <div className='appoinment-container container'>
         <h1 className='pt-5'>Appoinment Booking</h1>

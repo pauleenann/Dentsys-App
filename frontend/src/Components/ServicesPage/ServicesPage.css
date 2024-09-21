@@ -1,11 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --light-blue: #EBF9F7;
+    --red: #ff0000;
+}
+
 body {
     font-family: "Inter", sans-serif;
 }
-
+.services-page-container h1{
+    color: var(--blue);
+}
 
 .service-title{
-    color: #31A3B9;
+    color: var(--blue);
     font-size: 1.5rem;
+}
+
+.card-text{
+    color: var(--blue);
 }

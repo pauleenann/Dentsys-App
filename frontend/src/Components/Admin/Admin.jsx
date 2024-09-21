@@ -12,6 +12,7 @@ const Admin = () => {
     username: '', 
     password: '' 
   })
+  const [error,setError]=useState("")
 
   const navigate = useNavigate();
 
@@ -40,11 +41,12 @@ const Admin = () => {
                 localStorage.setItem('account_type', data.account_type);
                 window.location.href = '/dashboard'; 
             } else {
-                console.error(data.message);
+              setError("Invalid credentials! Please try again.")
+              console.error(data.message);
             }
     } catch (error) {
         console.error('Login failed:', error.message);
-        alert("Invalid Credentials / User does not exist")
+        
     }
   };
 
@@ -65,15 +67,16 @@ const Admin = () => {
             <form action="">
                 <div className="col-12 mb-3">
                 <label htmlFor="" className="form-label admin-username" >Username</label>
-                <input type="text" className="form-control " name='username' id='username' onChange={handleChange} required />
+                <input type="text" className="form-control " name='username' id='username' onChange={handleChange} onKeyDown={handleKeyDown} required />
                 </div>
                 <div className="col-12 mb-3">
                 <label htmlFor="" className="form-label admin-pass" >Password</label>
-                <input type="password" className="form-control " name='password' id='password' onChange={handleChange} required/>
+                <input type="password" className="form-control " name='password' id='password' onChange={handleChange} onKeyDown={handleKeyDown} required/>
                 </div>
+                <p className='login-error'>{error}</p>
                 
             </form>
-            <button type="submit" className="btn admin-button d-flex justify-content-center" id="submit" onClick={handleLogin} value="try" onKeyDown={handleKeyDown}>Login</button>
+            <button type="submit" className="btn admin-button d-flex justify-content-center" id="submit" onClick={handleLogin} value="try">Login</button>
         </div>
       </div>
       <div className='admin-footer d-flex justify-content-center align-items-center '>

@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Homepage from './Pages/Homepage'
 import Appointment from './Pages/Appointment';
 import NavBar from './Components/NavBar/NavBar'
-import Footer from "./Components/Footer/Footer";
 import AppointmentSubmitted from "./Components/AppointmentSubmitted/AppointmentSubmitted";
 import ServicesPage from "./Components/ServicesPage/ServicesPage";
 import Admin from "./Components/Admin/Admin";
@@ -21,7 +19,6 @@ import ViewPatientInfo from "./Components/ViewPatientInfo/ViewPatientInfo";
 import EditPatientInfo from "./Components/EditPatientInfo/EditPatientInfo";
 import AddService from "./Components/AddService/AddService";
 import DentalHistory from "./Components/DentalHistory/DentalHistory";
-import Services from "./Components/Services/Services";
 import ServicesOffered from "./Pages/ServicesOffered";
 import AddAppointment from "./Components/AddAppointment/AddAppointment";
 import Invoice from "./Components/Invoice/Invoice";
@@ -29,6 +26,7 @@ import InvoiceDetails from "./Components/InvoiceDetails/InvoiceDetails";
 import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
 
 import Protected from "./Components/Protected";
+import Home from "./Pages/Home";
 
 
 const App = () => {
@@ -38,7 +36,7 @@ const App = () => {
       {/* <AdminNavbar></AdminNavbar> */}
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage/>}></Route>
+        <Route path="/" element={<Home/>}></Route>
         <Route></Route>
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/appointment-request-submitted" element={<AppointmentSubmittedPage/>} />

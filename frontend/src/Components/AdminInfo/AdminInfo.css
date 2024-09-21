@@ -1,26 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --yellow: #B99331;
+    --red:#B93131;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .admin-info{
     display: flex;
     align-items: center;
-    gap: 20px;
-    justify-content: end;
-    
+    gap: 12px;
+    justify-content: end;    
 }
 
 .admin-info-user-button{
-    color: #36CE57;
+    color: var(--green);
     width: 250px;
 }
 
 .admin-hello, .admin-info-name{
-    color: #36CE57;
+    color: var(--green);
     font-size: 1.5rem;
     font-weight: 500;
 }
 
+.admin-info-clock, .admin-info-day,.admin-info-date{
+    color: var(--blue) !important;
+}
+btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active{
+    border: none !important;
+    outline: none !important;
+}
+.btn-check:not(:checked) + .btn, 
+.btn:not(.active), 
+.btn:not(.show), 
+.btn:first-child:not(:active), 
+:not(.btn-check) + .btn:not(:active) {
+    border: none !important;
+    outline: none !important;
+}

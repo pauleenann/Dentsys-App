@@ -43,11 +43,11 @@ const AdminInfo = () => {
                     <div className="admin-info-clock">
                         {currentTime.toLocaleTimeString()}
                     </div>
-                    <div>|</div>
+                    <div className="admin-info-clock">|</div>
                     <div className="admin-info-day">
                         {getDayName()}
                     </div>
-                    <div>|</div>
+                    <div className="admin-info-clock">|</div>
                     <div className="admin-info-date">
                         {getFormattedDate()}
                     </div>

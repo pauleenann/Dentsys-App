@@ -1,8 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --yellow: #B99331;
+    --red:#B93131;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .wrapper {
@@ -34,40 +50,49 @@ body {
     align-items: center;
 }
 
+.admin-info-dashtext{
+    color: var(--blue);
+    font-weight: 600;
+    margin: 25px 0;
+}
+
 .dashcard-p{
-    color: #fff;
+    color: var(--white);
     font-size: 1.2rem;
 }
 
 .total{
     font-size: 4rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--white);
 }
 
 .patients-today{
-    background-color: #36CE57;
+    background-color: var(--green);
 }
 
 .pending-appointments{
-    background-color: #B99331;
+    background-color: var(--yellow);
 }
 
 .cancelled-appointments{
-    background-color: #B93131;
+    background-color: var(--red);
 }
 
 .recent-visits{
-    background-color: #87D99E;
+    background-color: var(--light-green);
+}
+.recent-visit-header{
+    color: var(--blue);
 }
 
 .earnings-today{
-    background-color: #3180B9;
+    background-color: var(--blue);
 }
 
 .appointment-today-card{ 
     border-radius: 10px;
-    background-color: #EBF9F7;
+    background-color: var(--lighter-green);
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -83,7 +108,7 @@ body {
 
 .appointments-today-p{
     font-size: 1.3rem;
-    color: #36CE56;
+    color: var(--green);
     font-weight: 500;
 }
 
@@ -93,7 +118,7 @@ body {
 
 .up-app{
     padding: 30px 30px;
-    background-color: #31B957;
+    background-color: var(--green2);
     border-radius: 10px;
 
 }
@@ -106,13 +131,13 @@ body {
 }
 
 .up-app-button{
-    background-color: #87D99E;
+    background-color: var(--light-green);
     padding: 10px 30px;
     margin-top: 50px;
 }
 
 .up-app-button:hover{
-    background-color: #3bff72;
+    background-color: var(--green-hover);
 }
 
 
@@ -133,7 +158,7 @@ body {
 
 .app-today-info{
     font-weight: 500;
-    color: #36CE56 !important;
+    color: var(--green) !important;
 }
 
 .up-app-link{
@@ -144,7 +169,7 @@ body {
 
 .nothing{
     font-style: italic;
-    color: #36CE56;
+    color: var(--green);
     font-weight: 500;
     font-size: 0.8rem;
 }
@@ -154,30 +179,30 @@ body {
 }
 
 .recent-visits-card{
-    background-color: #62d3ea14;
+    background-color: var(--lighter-blue);
     padding: 30px 50px;
     border-radius: 10px;
 }
 
 .nothing2{
     font-style: italic;
-    color: #31A3B9;
+    color: var(--blue);
     font-weight: 500;
     font-size: 0.8rem;
 }
 
 .recent-visit-info{
     padding-top: 15px !important; 
-    color: #31A3B9 !important;
+    color: var(--blue) !important;
     font-weight: 500;
 }
 
 .recent-visit-th{
-    color: #31A3B9 !important;
+    color: var(--blue) !important;
 }
 
 .app-list-th{
-    color: #36CE56 !important;
+    color: var(--green) !important;
 }
 
 .recent-visit-total-earnings{
@@ -206,12 +231,12 @@ body {
 }
 
 .rv-button{
-    background-color: #31A3B9;
+    background-color: var(--blue);
     padding: 5px 30px;
-    color: #fff;
+    color: var(--white);
 }
 
 .rv-button:hover{
-    background-color: #39c4e0;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
 }

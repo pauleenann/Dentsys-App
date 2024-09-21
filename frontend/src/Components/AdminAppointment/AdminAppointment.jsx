@@ -21,7 +21,6 @@ const AdminAppointment = () => {
   const [filter, setFilter] = useState('all');
 
 
-
   useEffect(() => {
     getAppointment();
   }, []);
@@ -48,7 +47,7 @@ const AdminAppointment = () => {
     setLoading(true); // Set loading to true when the request is sent
     axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=accept`, appointment)
       .then(function (response) {
-        console.log("response")
+        console.log(response)
         console.log(response.data);
         if(response.data !== null){
           setShowConfirm(true);
@@ -230,7 +229,8 @@ const AdminAppointment = () => {
       {/* Show confirmation dialog */}
       {showConfirm && (
         <div key={keyOfSelectedAppointment} className="confirmpage-overlay">
-          <AppointmentConfirmed onClose={() => setShowConfirm(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
+          <AppointmentConfirmed onClose={() => { window.location.reload();;
+            setShowConfirm(false)}} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
         </div>
       )}
 

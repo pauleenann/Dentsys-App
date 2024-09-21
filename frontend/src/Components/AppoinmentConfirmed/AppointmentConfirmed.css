@@ -1,8 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .app-confirmed{
@@ -11,30 +34,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--blue);
 }
 
 .app-confirmed-card{
     width: 500px;
     height: 600px;
     box-shadow: 1px 1px 5px #0000003d;
-    background-color: #fff;
+    background-color: var(--white);
     
 }
 
 .app-confirmed-header{
-    background-color: #31A3B9;
+    background-color: var(--blue);
 }
 
 
 .okay-button{
-    background-color: #31A3B9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
     padding: 8px 30px;
     cursor: pointer;
 }
 .okay-button:hover{
-    background-color: #0098b6;
-    color: #fff;
+    background-color: var(--blue-hover);
+    color: var(--white);
 }
 
 .resched-link{
@@ -44,6 +68,10 @@ body {
 
 .cancel-link{
     cursor: pointer;
-    color: #B93131;
+    color: var(--red);
     text-decoration: underline;
+}
+
+.fa-x{
+    cursor: pointer;
 }

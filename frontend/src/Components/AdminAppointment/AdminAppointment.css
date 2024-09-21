@@ -1,8 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .wrapper {
@@ -26,12 +49,18 @@ body {
    margin-top: 25px;
 }
 
+.appoint-header h1{
+    color: var(--blue);
+    font-weight: 600;
+    margin: 25px 0;
+}
+
 .app-button-color{
-    background-color: #31A3B9;
+    background-color: var(--blue);
 }
 
 .button-text{
-    color: #fff;
+    color: var(--white);
     padding: 10px;
 }
 
@@ -42,25 +71,25 @@ body {
 }
 
 .button-add:hover, .button-add:active{
-    background-color: #0991ac;
-    color: #fff;
+    background-color: var(--blue-hover);
+    color: var(--white);
     border: none;
 }
 
 .button-border-text{
-    color: #31A3B9;
-    border: 1px solid #31A3B9;
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
 .button-border-text:hover, .button-border-text:active{
-    background-color: #31A3B9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
 }
 
 
 
 .app-button-color:hover{
-    background-color: #008ca9;
+    background-color: var(--blue-hover);
 }
 
 .button-radius{
@@ -69,7 +98,7 @@ body {
 }
 
 .upcoming-row{
-    background-color: #EBF9F7;
+    background-color: var(--lighter-green);
     padding: 20px;
     margin-top: 25px;
     border-radius: 10px;
@@ -80,42 +109,42 @@ body {
 .app-patient-label{
     font-size: 1.5rem;
     font-weight: 500;
-    color: #36CE57;
+    color: var(--green);
 }
 
 .app-patient-info{
-    color: #36CE57;
+    color: var(--green);
 }
 
 .button-resched{
-    color: #31A3B9;
-    border: 1px solid #31A3B9;
-    background-color: #fff;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background-color: var(--white);
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-resched:hover, .button-resched:hover{
-    background-color: #31A3B9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
 }
 
 .button-delete{
-    color: #B93131;
-    border: 1px solid #B93131;
+    color: var(--red);
+    border: 1px solid var(--red);
     padding: 10px;
     border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    background-color: var(--white);
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-delete:hover, .button-delete:active{
-    color: #fff;
-    background-color: #B93131;
+    color: var(--white);
+    background-color: var(--red);
 }
 
 
 .pending-row{
-    background-color: #ffeec4;
+    background-color: var(--light-yellow);
     padding: 20px;
     margin-top: 25px;
     border-radius: 10px;
@@ -127,41 +156,41 @@ body {
     text-transform: capitalize;
     font-size: 1.5rem;
     font-weight: 500;
-    color: #B99331;
+    color: var(--yellow);
 }
 
 .app-patient-info-pending{
-    color: #B99331;
+    color: var(--yellow);
 }
 
 .button-accept{
-    color: #36CE57;
-    border: 1px solid #36CE57;
-    background-color: #fff;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    color: var(--green);
+    border: 1px solid --green;
+    background-color: var(--white);
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-accept:hover, .button-accept:active{
-    color: #fff;
-    background-color: #36CE57;
+    color: var(--white);
+    background-color: var(--green);
 }
 
 .button-calendar{
-    color: #31A3B9;
-    border: 1px solid #31A3B9;
-    background-color: #fff;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background-color: var(--white);
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-calendar:hover{
-    color: #fff;
-    background-color: #31A3B9;
+    color: var(--white);
+    background-color: var(--blue);
 }
 
 .finished-row{
-    background-color: #31a2b918;
+    background-color: var(--lightest-blue);
     padding: 20px;
     margin-top: 25px;
     border-radius: 10px;
@@ -172,15 +201,15 @@ body {
 .app-patient-label-finished{
     font-size: 1.5rem;
     font-weight: 500;
-    color: #31A3B9;
+    color: var(--blue);
 }
 
 .app-patient-info-finished{
-    color: #31A3B9;
+    color: var(--blue);
 }
 
 .cancelled-row{
-    background-color: #da454518;
+    background-color: var(--light-red);
     padding: 20px;
     margin-top: 25px;
     border-radius: 10px;
@@ -191,40 +220,40 @@ body {
 .app-patient-label-cancelled{
     font-size: 1.5rem;
     font-weight: 500;
-    color: #da4545fb;
+    color: var(--tomato-red);
 }
 
 .app-patient-info-cancelled{
-    color: #da4545fb;
+    color: var(--tomato-red);
 }
 .button-view-finished{
-    background-color: #31A3B9;
-    color: #fff;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    background-color: var(--blue);
+    color: var(--white);
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-view-finished:hover{
-    background-color: #00849f;
-    color: #fff;
+    background-color: var(--blue-hover);
+    color: var(--white);
 }
 .button-view-cancelled{
-    background-color: #da4545fb;
-    color: #fff;
-    box-shadow: 1px 1px 2px #a9a9a989;
+    background-color: var(--tomato-red);
+    color: var(--white);
+    box-shadow: 1px 1px 2px var(--shadow);
 }
 
 .button-view-cancelled:hover{
-    background-color: #bd0202fb;
-    color: #fff;
+    background-color: var(--tomato-hover);
+    color: var(--white);
 }
 
 .button-finish{
-    color: #66ff00;
-    border: 1px solid #66ff00;
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
     padding: 10px;
     margin: 0;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 1px 1px 2px #a9a9a989;
 }
 
@@ -250,7 +279,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ebf9f74f;
+    background-color: var(--overlay);
     width: 100%;
     height: 100%;
 }

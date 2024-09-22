@@ -29,7 +29,7 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments})
             return(
                 <div className="row p-5 " key={appointment.a_id}>
                 <div className="col-5 mb-2">Client Name:</div>
-                <div className="col-7 mb-2 fw-bold">{appointment.fname} {appointment.lname}</div>
+                <div className="col-7 mb-2 fw-bold app-confirmed-name">{appointment.p_fname} {appointment.p_lname}</div>
                 <div className="col-5 mb-2">Service Acquired:</div>
                 <div className="col-7 mb-2 fw-bold">{appointment.service_}</div>
                 <div className="col-5 mb-2">Date:</div>

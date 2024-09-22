@@ -115,7 +115,6 @@ const AddAppointment = () => {
         }
 
         setErrors(error)
-
        
     }
 
@@ -130,14 +129,14 @@ const AddAppointment = () => {
             <div className="row">
                 <Link to='/appointment-list'>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
 
             {/* Header */}
-            <div className="rol">
-                <h1>Add an Appointment</h1>
+            <div className="row">
+                <h1 className="appointment2-title">Add an Appointment</h1>
             </div>
 
             {/* form */}

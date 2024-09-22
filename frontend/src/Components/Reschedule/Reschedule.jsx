@@ -78,12 +78,12 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
             {appointments.map((appointment, index) => {
             if (appointment.a_id === keyOfSelectedAppointment) {
                 return (
-                <div key={index} className='row p-0'>
+                <div key={index} className='row p-0 resched-info'>
                     {/* col for client name */}
                     <div className="col-6">
                     <div className="row mb-2">
                         <div className="col-6">Client Name: </div>
-                        <div className="col-6 fw-bold">{appointment.fname} {appointment.lname}</div>
+                        <div className="col-6 fw-bold resched-name">{appointment.p_fname} {appointment.p_lname}</div>
                     </div>
                     </div>
                     {/* col for date */}
@@ -117,7 +117,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
 
                 <hr className='my-4'/>
 
-                <h5 className='text-center mt-2 mb-4'>Choose a new date & time</h5>
+                <h5 className='text-center mt-2 mb-4 resched-info'>Choose a new date & time</h5>
 
                 {/* date */}
                 <div className="col-4">
@@ -130,7 +130,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                 {/* time */}
                 <div className="col-8">
                     <div className="row">
-                        <div className="col-12">Time</div>
+                        <label htmlFor="" className="form-label labels" >Time</label>
                         <div className="col-6">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation}/>

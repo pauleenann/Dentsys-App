@@ -60,17 +60,17 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
         {appointments.map((appointment, index) => {
             if (appointment.a_id === keyOfSelectedAppointment) {
                 return (
-                <div className="row p-5 " key={index}>
-                  <div className="col-3 mb-2 black-color">Client Name:</div>
-                  <div className="col-3 mb-2 fw-bold  black-color text-capitalize">{appointment.fname} {appointment.lname}</div>
+                <div className="row p-5 cancel-info" key={index}>
+                  <div className="col-2 mb-2 black-color">Client Name:</div>
+                  <div className="col-3 mb-2 fw-bold  black-color text-capitalize">{appointment.p_fname} {appointment.p_lname}</div>
                   <div className="col-3 mb-2 black-color">Service Acquired:</div>
                   <div className="col-3 mb-2 black-color fw-bold  ">{appointment.service_}</div>
-                  <div className="col-3 mb-2 black-color">Date:</div>
+                  <div className="col-2 mb-2 black-color">Date:</div>
                   <div className="col-3 mb-2 black-color fw-bold  ">{appointment.date_}</div>
                   <div className="col-3 mb-2 black-color">Time:</div>
                   <div className="col-3 mb-2 black-color fw-bold  ">{appointment.time_}</div>
-                  <div className="button-container text-center mt-4 mb-5">
-                      <button className='btn discard-button'>Discard</button>
+                  <div className="button-container text-center mt-5">
+                      <button className='btn cancel-discard-button'>Discard</button>
                       <button className='btn cancel-button' onClick={cancelAppointment}>Cancel Appointment</button>
                   </div>
               </div>

@@ -23,10 +23,10 @@ const ViewAppointment = ({onClose, keyOfSelectedAppointment, appointments}) => {
         {appointments.map((appointment,key)=>{
           if(appointment.a_id === keyOfSelectedAppointment){
             return(
-                <div className="row p-5 " key={appointment.a_id}>
+                <div className="row p-5 app-view-info" key={appointment.a_id}>
                 <div className="col-5 mb-2">Client Name:</div>
                 <div className="col-7 mb-2 fw-bold
-                text-capitalize">{appointment.fname} {appointment.lname}</div>
+                text-capitalize">{appointment.p_fname} {appointment.p_lname}</div>
                 <div className="col-5 mb-2">Service Acquired:</div>
                 <div className="col-7 mb-2 fw-bold
                 text-capitalize">{appointment.service_}</div>

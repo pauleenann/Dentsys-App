@@ -40,7 +40,7 @@ body {
 .app-confirmed-card{
     width: 500px;
     height: 600px;
-    box-shadow: 1px 1px 5px #0000003d;
+    box-shadow: 1px 1px 5px var(--shadow);
     background-color: var(--white);
     
 }
@@ -74,4 +74,8 @@ body {
 
 .fa-x{
     cursor: pointer;
+}
+
+.app-confirmed-name{
+    text-transform: capitalize;
 }

@@ -1,8 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .app-view{
@@ -16,11 +39,15 @@ body {
 .app-view-card{
     width: 500px;
     height: 400px;
-    box-shadow: 1px 1px 5px #0000003d;
-    background-color: #fff;
+    box-shadow: 1px 1px 5px var(--shadow);
+    background-color: var(--white);
     
 }
 
 .app-view-header{
-    background-color: #31A3B9;
+    background-color: var(--blue);
+}
+
+.app-view-info{
+    color: var(--blue);
 }

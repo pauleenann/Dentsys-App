@@ -1,8 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .cancel-app{
@@ -14,19 +37,23 @@ body {
 }
 
 .cancel-app-card{
-    width: 850px;
-    height: 300px;
-    box-shadow: 1px 1px 5px #0000003d;
-    background-color: #fff;
+    width: 60%;
+    box-shadow: 1px 1px 5px var(--shadow);
+    background-color: var(--white);
     
 }
 
+.cancel-info{
+    display: flex;
+    justify-content: center;
+}
+
 .cancel-app-header{
-    background-color: #B93131;
+    background-color: var(--red);
 }
 
 .black-color{
-    color: #000;
+    color: var(--black);
 }
 
 .button-container{
@@ -35,28 +62,29 @@ body {
     gap: 20px;
 }
 
-.discard-button{
-    border: 2px solid #B93131;
-    color: #B93131;
+.cancel-discard-button{
+    border: 2px solid var(--red);
+    color: var(--red);
     font-weight: 600;
     width: 200px;
 }
 
 .discard-button:hover{
-    border: 2px solid #B93131;
-    color: #B93131;
+    border: 2px solid var(--tomato-hover);
+    color: var(--tomato-hover);
 }
 
 .cancel-button{
-    background-color: #B93131;
-    color: #fff;
+    background-color: var(--tomato-hover);
+    color: var(--white);
     font-weight: 600;
     width: 200px;
+    transition: all 0.2s linear;
 }
 
 .cancel-button:hover{
-    background-color: #990000;
-    color: #fff;
+    background-color: var(--red);
+    color: var(--white);
 }
 
 .spinner-overlay{
@@ -67,7 +95,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ebf9f74f;
+    background-color: var(--overlay);
     width: 100%;
     height: 100%;
 }

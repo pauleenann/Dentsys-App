@@ -223,9 +223,9 @@ if($method ==='PUT'){
                 //sets correct timezone
                 date_default_timezone_set('Asia/Singapore');
                 $today = date('Y-m-d');
-                $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
-                FROM appointment INNER JOIN temppatient
-                ON appointment.id = temppatient.id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
+                $sql = "SELECT a_id, p_fname, p_lname, p_email, p_phone, service_, date_, time_, status_
+                FROM appointment INNER JOIN patients
+                ON appointment.id = patients.id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
                 //change time for testing purposes
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':today', $today, PDO::PARAM_STR);

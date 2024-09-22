@@ -112,8 +112,9 @@ body {
 .service-see-more{
     font-size: 1.3rem !important;
     text-decoration: none;
-    border-bottom: 1px solid var(--blue);
+    border-bottom: 2px solid var(--blue);
     transition: all 0.2s linear ;
+    color: var(--blue);
 }
 .service-see-more:hover{
     color: var(--black);

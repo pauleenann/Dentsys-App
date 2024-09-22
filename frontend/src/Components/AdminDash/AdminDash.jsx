@@ -118,38 +118,50 @@ const AdminDash = () => {
                 <AdminInfo></AdminInfo>
                 <h2 className='admin-info-dashtext'>Dashboard</h2>
                 <div className="row admin-dash-cards">
-                    <div className="col patients-today text-center dashboard-card">
-                        <p className='m-0 dashcard-p'>
-                            Patients<br/>today
-                        </p>
-                        <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
+                  <Link to='/appointment-list' className='col patients-today text-center dashboard-card'>
+                    <div className="">
+                          <p className='m-0 dashcard-p'>
+                              Patients<br/>today
+                          </p>
+                          <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
                     </div>
-                    <div className="col pending-appointments text-center dashboard-card">
-                        <p className='m-0 dashcard-p'>
-                            Pending<br/>Appointments
-                        </p>
-                        <span className='total-pending-appoint total'>{totalPending}</span>
+                  </Link>
+                  <Link to='/appointment-list' className="col pending-appointments text-center dashboard-card">
+                    <div >
+                          <p className='m-0 dashcard-p'>
+                              Pending<br/>Appointments
+                          </p>
+                          <span className='total-pending-appoint total'>{totalPending}</span>
                     </div>
-                    <div className="col cancelled-appointments text-center dashboard-card">
+                  </Link>
+                  <Link to='/appointment-list' className="col cancelled-appointments text-center dashboard-card">
+                    <div >
                         <p className='m-0 dashcard-p'>
                             Cancelled<br/>Appointments
                         </p>
                         <span className='total-cancelled-appoint total'>{totalCancelled}</span>
                     </div>
-                    <div className="col recent-visits text-center dashboard-card">
-                        <p className='m-0 dashcard-p'>
-                            Recent<br/>Visits
-                        </p>
-                        <span className='total-recent-visits total'>{recentVisits}</span>
-                    </div>
-                    <div className="col earnings-today text-center dashboard-card">
-                        <p className='m-0 dashcard-p'> 
-                            Earnings<br/>Today
-                        </p>
-                        <p className='total'>
-                        ₱<span className='total-earnings-today total'>{earningsToday}</span>
-                        </p>
-                    </div>
+                  </Link>
+                  <Link to='/appointment-list' className="col recent-visits text-center dashboard-card">
+                    <div >
+                          <p className='m-0 dashcard-p'>
+                              Recent<br/>Visits
+                          </p>
+                          <span className='total-recent-visits total'>{recentVisits}</span>
+                      </div>
+                  </Link>
+                  <Link to='/invoice-list' className="col earnings-today text-center dashboard-card">
+                    <div >
+                          <p className='m-0 dashcard-p'> 
+                              Earnings<br/>Today
+                          </p>
+                          <p className='total'>
+                          ₱<span className='total-earnings-today total'>{earningsToday}</span>
+                          </p>
+                      </div>
+                  </Link>
+                    
+                    
                 </div>
                 
                 <div className="row mt-5 row2">
@@ -173,8 +185,8 @@ const AdminDash = () => {
                         <tbody>
                             {appToday.map((appointment, index) => (
                                 <tr key={index}>
-                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.phone}</td>
+                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.p_fname} {appointment.p_lname}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.p_phone}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.service_}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.time_}</td>
                                 </tr>

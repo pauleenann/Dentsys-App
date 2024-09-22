@@ -81,9 +81,8 @@ body {
 }
 
 .button-border-text:hover, .button-border-text:active{
-        color: var(--white);
+    color: var(--white);
 }
-
 
 
 .app-button-color:hover{
@@ -108,6 +107,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--green);
+    text-transform: capitalize;
 }
 
 .app-patient-info{
@@ -155,6 +155,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--yellow);
+    text-transform: capitalize;
 }
 
 .app-patient-info-pending{
@@ -200,6 +201,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--blue);
+    text-transform: capitalize;
 }
 
 .app-patient-info-finished{
@@ -219,6 +221,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--tomato-red);
+    text-transform: capitalize;
 }
 
 .app-patient-info-cancelled{
@@ -280,4 +283,8 @@ body {
     background-color: var(--overlay);
     width: 100%;
     height: 100%;
+}
+
+.buttons button:hover{
+    background-color: var(--blue);
 }

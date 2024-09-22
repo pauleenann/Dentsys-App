@@ -111,18 +111,18 @@ const EditPatientInfo = () => {
             <div className="row">
                 <Link to={`/view-patient-info/${patient.id}`}>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
 
             {/* Header */}
             <div className="rol">
-                <h1>Edit Patient Record</h1>
+                <h1 className='edit-patient-title'>Edit Patient Record</h1>
             </div>
 
             {/* form */}
-            <div className="rol add-patient-container mt-4">
+            <div className="rol add-patient-container mt-3">
                 <div className="col">
                     <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
                     <form onSubmit={handleClick}>

@@ -40,7 +40,7 @@ const Invoice = () => {
       <AdminNavbar />
       <div id="content">
         <AdminInfo />
-        <div className="inv-header">
+        <div className="inv-header mt-5">
           <h1>Invoices</h1>
         </div>
 
@@ -66,7 +66,7 @@ const Invoice = () => {
             </div>
         </div>
 
-        {invoices.length==0?<p className='text-center'>No invoices</p>:invoices.map((item, key)=>{
+        {invoices.length==0?<p className='text-center mt-5'>No invoices</p>:invoices.map((item, key)=>{
             if(item.inv_status === 'paid'){
                 return(
                     <div className="row inv-paid-row mb-4 text-center d-flex align-items-center">

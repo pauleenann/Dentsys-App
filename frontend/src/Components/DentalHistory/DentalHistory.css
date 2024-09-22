@@ -1,8 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --lightest-blue2:#b5f3ff73;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+  }
+
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .wrapper {
@@ -22,19 +47,20 @@ body {
 
 
 .add-patient-container{
-    background-color: #EBF9F7;
+    background-color: var(--light-green);
     padding: 50px 80px;
     border-radius: 15px;
+    color: var(--blue);
 }
 
 .receipt-container{
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 10px;
 }
 
 .receipt-header{
-    background-color: #31A3B9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
     display: flex;
     justify-content: space-around;
     padding: 20px 0;
@@ -42,14 +68,14 @@ body {
 }
 
 .receipt-info{
-    background-color: #fff;
+    background-color: var(--white);
     display: flex;
     justify-content: space-around;
     padding: 20px 0;
 }
 
 .receipt-total{
-    background-color: #b5f3ff73;
+    background-color: var(--lightest-blue2);
     display: flex;
     justify-content: space-around;
     border-radius: 0 0 10px  10px;
@@ -77,7 +103,7 @@ body {
 .balance-text{
     font-size: 1.3rem;
     font-weight: 500;
-    color: #36CE57;
+    color: var(--green);
 }
 
 
@@ -87,7 +113,7 @@ body {
 }
 
 .payment-table-text{
-    color: #31A3B9 !important;
+    color: var(--blue) !important;
 }
 
 .payment-table{
@@ -106,3 +132,9 @@ body {
 .service-name{
     width: 200px;
 }
+
+.dental-history-title{
+    color: var(--blue);
+    font-weight: 600;
+}
+

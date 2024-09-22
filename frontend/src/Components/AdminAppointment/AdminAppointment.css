@@ -73,7 +73,6 @@ body {
 .button-add:hover, .button-add:active{
     background-color: var(--blue-hover);
     color: var(--white);
-    border: none;
 }
 
 .button-border-text{
@@ -82,8 +81,7 @@ body {
 }
 
 .button-border-text:hover, .button-border-text:active{
-    background-color: var(--blue);
-    color: var(--white);
+        color: var(--white);
 }
 
 
@@ -282,8 +280,4 @@ body {
     background-color: var(--overlay);
     width: 100%;
     height: 100%;
-}
-
-.btn{
-
 }

@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import isAuthenticated from '../Auth';
 
-
 const AddPatientInfo = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -99,20 +98,20 @@ const AddPatientInfo = () => {
             <div className="row">
                 <Link to='/patient-list'>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
 
             {/* Header */}
-            <div className="rol">
-                <h1>Add a New Patient</h1>
+            <div className="row">
+                <h1 className='add-patient-title'>Add a New Patient</h1>
             </div>
 
             {/* form */}
-            <div className="rol add-patient-container mt-4">
+            <div className="row add-patient-container mt-3">
                 <div className="col">
-                    <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
+                    <h5 className='text-center mb-5 mt-4 add-patient-form-title'>Patient Information</h5>
                     <form onSubmit={handleClick}>
                         <div className="row">
                             {/* fname */}

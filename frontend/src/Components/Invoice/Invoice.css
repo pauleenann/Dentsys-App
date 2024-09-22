@@ -1,8 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    background: var(--white);
 }
 
 .wrapper {
@@ -10,7 +33,6 @@ body {
     width: 100%;
     align-items: stretch;
 }
-
 
 #content {
     width: 100%;
@@ -20,64 +42,76 @@ body {
 }
 
 .invoice-table-header{
-    background-color: #31A3B9;
+    background-color: var(--blue);
     padding: 20px;
     border-radius: 6px;
 }
 
 .inv-header-text{
-    color: #fff;
+    color: var(--white);
 }
 
 .inv-paid-row{
-    background-color: #EBF9F7;
+    background-color: var(--lightest-blue);
     padding: 20px;
     border-radius: 6px;
+    color: var(--blue);
 }
 
 .inv-pending-row{
-    background-color: #fcf2da;
+    background-color: var(--light-yellow);
     padding: 20px;
     border-radius: 6px;
+    color: var(--blue);
 }
 
 .inv-overdue-row{
-    background-color: #ffe9e9;
+    background-color: var(--light-red);
     padding: 20px;
     border-radius: 6px;
+    color: var(--blue);
 }
 
 .inv-paid{
-    background-color: #36CE57;
-    color: #fff;
+    background-color: var(--green);
+    color: var(--white);
     border-radius: 25px;
     width: 100px;
     padding: 10px;
 }
 
 .inv-pending{
-    background-color: #B99331;
-    color: #fff;
+    background-color: var(--yellow);
+    color: var(--white);
     width: 100px;
     padding: 10px;
     border-radius: 25px;
 }
 
 .inv-overdue{
-    background-color: #B93131;
-    color: #fff;
+    background-color: var(--red);
+    color: var(--white);
     width: 100px;
     padding: 10px;
     border-radius: 25px;
 }
 
 .inv-view-button{
-    background-color: #fff;
-    color: #31A3B9;
-    border: 1px solid #31A3B9;
+    background-color: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--blue);
 }
+
 .inv-view-button:hover{
-    background-color: #31A3B9;
-    color: #ffffff;
-    border: none;
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.inv-header{
+    color: var(--blue);
+    margin-top: 25px;
+}
+
+.inv-header h1{
+    font-weight: 600;
 }

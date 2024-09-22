@@ -129,7 +129,7 @@ const AddAppointment = () => {
             <div className="row">
                 <Link to='/appointment-list'>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span className="go-back">Go back</span></p>
                     </div>
                 </Link>
             </div>

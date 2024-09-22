@@ -5,7 +5,6 @@ import './AdminPatients.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-
 const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
@@ -115,7 +114,7 @@ console.log(search)
                   );
                 }
                 return null;
-              }) : <p className='text-center'>No patient record found</p>}
+              }) : <p className='text-center mt-5'>No patient record found</p>}
               </div>
       
     </div>

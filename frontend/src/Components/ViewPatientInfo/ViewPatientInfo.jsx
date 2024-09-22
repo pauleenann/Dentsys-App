@@ -62,20 +62,20 @@ const ViewPatientInfo = () => {
             <div className="row">
                 <Link to='/patient-list'>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
 
             {/* Header */}
-            <div className="rol">
-                <h1>Patient Record</h1>
+            <div className="row">
+                <h1 className='view-patient-title'>Patient Record</h1>
             </div>
 
             {/* form */}
-            <div className="rol add-patient-container mt-4">
+            <div className="row add-patient-container mt-3">
                 <div className="col">
-                    <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
+                    <h5 className='text-center mb-5 mt-4 view-patient-form-title'>Patient Information</h5>
                     <form onSubmit={handleClick}>
                         <div className="row">
                             {/* fname */}
@@ -133,11 +133,11 @@ const ViewPatientInfo = () => {
                         </div>
                     </form>
 
-                    <hr className='my-5'/>
+                    <hr className='my-5 view-patient-form-hr'/>
 
                     {/* dental history text header */}
                     <div className="col ">
-                        <h5 className='text-center mb-5 my-4'>Dental History</h5>
+                        <h5 className='text-center mb-5 my-4 view-patient-form-title'>Dental History</h5>
                     </div>
 
                     {/* table */}
@@ -166,7 +166,7 @@ const ViewPatientInfo = () => {
                                         ))
                                     ) : (
                                         
-                                            <p className='my-3'>No history available.</p>
+                                        <p className='my-3'>No history available.</p>
                                         
                                         
                                     )}

@@ -287,13 +287,6 @@ const AddService = () => {
         }
     }
 
-
-
-    // const dentist = [
-    //     { value: 'Dr. Dingcong', label: 'Dr. Dingcong' },
-    //     { value: 'Dr. Bernal', label: 'Dr. Bernal' },
-    // ];
-
     const payment = [
         { value: 'CASH', label: 'CASH' },
         { value: 'GCASH', label: 'GCASH' },
@@ -418,18 +411,18 @@ const AddService = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                <p><i class="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
             </div>
             </Link>
         </div>
 
         {/* Header */}
-        <div className="rol">
-            <h1>Add a new service</h1>
+        <div className="row">
+            <h1 className='add-service-title'>Add a new service</h1>
         </div>
 
         {/* form */}
-        <div className="rol add-patient-container mt-4">
+        <div className="row add-patient-container mt-3">
             <div className="col">                
                 <div className="row">
                     {/* date */}

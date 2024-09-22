@@ -24,13 +24,17 @@ body {
 .admin-info{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
     justify-content: end;    
 }
 
 .admin-info-user-button{
     color: var(--green);
-    width: 250px;
+    padding: 0 20px;
+}
+
+.admin-info-user-button:active,.admin-info-user-button:focus{
+    border-color: var(--white) !important;
 }
 
 .admin-hello, .admin-info-name{
@@ -41,16 +45,4 @@ body {
 
 .admin-info-clock, .admin-info-day,.admin-info-date{
     color: var(--blue) !important;
-}
-btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active{
-    border: none !important;
-    outline: none !important;
-}
-.btn-check:not(:checked) + .btn, 
-.btn:not(.active), 
-.btn:not(.show), 
-.btn:first-child:not(:active), 
-:not(.btn-check) + .btn:not(:active) {
-    border: none !important;
-    outline: none !important;
 }

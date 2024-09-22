@@ -29,6 +29,10 @@
     font-family: "Inter", sans-serif;
 }
 
+a{
+    text-decoration: none;
+}
+
 .appointment2-container{
     padding: 0;    
 }
@@ -43,6 +47,7 @@
 
 .appointment2-title{
     color: var(--blue);
+    margin: 0;
 }
 .input-form{
     text-transform: capitalize;
@@ -80,7 +85,7 @@
     padding: 13px 15px;
 }
 
-.add-app-button:hover{
+.add-app-button:hover, .add-app-button:active, .add-app-button:focus{
     background-color: var(--blue-hover);
 }
 
@@ -119,5 +124,13 @@
     background-color: var(--overlay);
     width: 100%;
     height: 100%;
+}
+
+.back-to-patients{
+    color: var(--blue);
+}
+
+.back-to-patients span{
+    border-bottom: 1px solid var(--blue);
 }
 

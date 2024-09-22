@@ -150,7 +150,7 @@ const UpdateInvoice = () => {
             <div className="row">
                 <Link to={`/invoice-details/${id}`}>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
@@ -170,7 +170,7 @@ const UpdateInvoice = () => {
                                 </div>
                                 <div className="row">Due Date:</div>
                             </div>
-                            <div className="col">
+                            <div className="col update-inv-info">
                                 <div className="row">{item.p_fname} {item.p_lname}</div>
                                 <div className="row">{item.inv_issuedate}</div>
                                 <div className="row">{item.inv_duedate}</div>
@@ -183,7 +183,7 @@ const UpdateInvoice = () => {
                                 <div className="row">Status:</div>
                             </div>
                             <div className="col">
-                                <div className="row">{item.inv_status}</div>
+                                <div className="row update-status">{item.inv_status}</div>
                             </div>
                         </div>
                     </div>
@@ -199,13 +199,13 @@ const UpdateInvoice = () => {
                             <li>{item.p_service}</li>
                         </ul>
                     </div>
-                    <div className="col text-center">
+                    <div className="col text-center total-amount-paid">
                         ₱ <span>{item.inv_totalamount}</span>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col text-center my-3">
-                         <span>--- <i>Nothing Follows</i> ---</span>
+                         <span className='update-nothing-follows'>--- <i>Nothing Follows</i> ---</span>
                     </div>
                 </div>
                 <div className="row invoice-total-price">
@@ -255,7 +255,7 @@ const UpdateInvoice = () => {
                 })}
 
                 {/* edit invoice */}
-                <div className="row edit-invoice mb-5">
+                <div className="row edit-invoice my-5">
                     <div className="col">
                         <label htmlFor="pay_date">Date</label><br />
                         <input type="date" id='pay_date' name='pay_date' className='inv_input' onChange={handleChange} onBlur={formValidation}/>

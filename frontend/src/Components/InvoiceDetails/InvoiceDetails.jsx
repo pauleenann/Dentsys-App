@@ -90,7 +90,7 @@ const InvoiceDetails = () => {
             <div className="row">
                 <Link to='/invoice-list'>
                     <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left"></i> <span>Go back</span></p>
+                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
                     </div>
                 </Link>
             </div>
@@ -110,7 +110,7 @@ const InvoiceDetails = () => {
                                 </div>
                                 <div className="row">Due Date:</div>
                             </div>
-                            <div className="col">
+                            <div className="col inv-details-name inv-details-patient">
                                 <div className="row">{item.p_fname} {item.p_lname}</div>
                                 <div className="row">{item.inv_issuedate}</div>
                                 <div className="row">{item.inv_duedate}</div>
@@ -128,7 +128,7 @@ const InvoiceDetails = () => {
                         </div>
                     </div>
                 </div>
-                <hr />
+                <hr className='inv-details-hr'/>
                 <div className="row cost-header">
                     <div className="col">Procedure Description</div>
                     <div className="col text-center">Cost</div>
@@ -140,12 +140,12 @@ const InvoiceDetails = () => {
                         </ul>
                     </div>
                     <div className="col text-center">
-                        ₱ <span>{item.inv_totalamount}</span>
+                        ₱ <span className='invoice-total'>{item.inv_totalamount}</span>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col text-center my-3">
-                         <span>--- <i>Nothing Follows</i> ---</span>
+                    <div className="col text-center my-3 nothing-follows">
+                         <span>--- <i className=''>Nothing Follows</i> ---</span>
                     </div>
                 </div>
                 <div className="row invoice-total-price">
@@ -210,16 +210,16 @@ const InvoiceDetails = () => {
                     <div className="row">
                         <div className="col"></div>
                             <div className="col">
-                                <div className="row mt-5 mb-3">
+                                <div className="row mt-5 mb-3 inv-details-total">
                                     <div className="col text-end">Total Paid</div>
-                                    <div className="col">₱ <span>{totalPaid}</span>
+                                    <div className="col total-amount-paid">₱ <span>{totalPaid}</span>
                                     </div>
                             </div>
                         </div>
                     </div>
                     
                 
-                <hr />
+                <hr className='inv-details-hr'/>
                 <div className="row mb-5">
                     <div className="col"></div>
                     <div className="col">

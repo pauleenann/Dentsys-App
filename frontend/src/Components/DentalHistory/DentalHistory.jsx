@@ -71,7 +71,6 @@ import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
 import isAuthenticated from '../Auth';
 
-
 const DentalHistory = () => {
     const [history, setHistory] = useState([]);
     const [invoice, setInvoice] = useState([]);
@@ -218,20 +217,20 @@ const DentalHistory = () => {
         <div className="row">
             <Link to='/patient-list'>
             <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left"></i> <Link to={`/view-patient-info/${patientId}`}><span>Go back</span></Link></p>
+                <p><i class="fa-solid fa-chevron-left mt-4"></i> <Link to={`/view-patient-info/${patientId}`}><span>Go back</span></Link></p>
             </div>
             </Link>
         </div>
 
         {/* Header */}
-        <div className="rol">
-            <h1>Dental History</h1>
+        <div className="row">
+            <h1 className='dental-history-title'>Dental History</h1>
         </div>
 
         {/* form */}
         {Array.isArray(history) && history.length > 0 ? (
          history.map((item, index) => (
-                    <div className="rol add-patient-container mt-4">
+                    <div className="rol add-patient-container mt-3">
                         <div className="col">                
                             <div className="row">
                                 {/* date of service */}

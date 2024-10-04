@@ -236,7 +236,7 @@ const AppointmentForm = () => {
             <div className="col-xl-6 col-sm-12 p-0">
                 <div className="summary appointment-summary">
                     <h3 className='text-center mb-4 labels'>Appointment Summary</h3>
-                    <div className="row">
+                    <div className="row appointment-summary-details">
                         <div className="col-4 mb-3 d-flex align-items-center labels">
                             Client name:
                         </div>

@@ -35,10 +35,12 @@ const Admin = () => {
     try {
         const response = await axios.post('http://localhost:80/api2/user/save', loginData);
       
+        console.log(response)
         const data = response.data;
+        
             if (data.status === 1) {
                 localStorage.setItem('username', data.username);
-                localStorage.setItem('account_type', data.account_type);
+                localStorage.setItem('accou                                                nt_type', data.account_type);
                 window.location.href = '/dashboard'; 
             } else {
               setError("Invalid credentials! Please try again.")

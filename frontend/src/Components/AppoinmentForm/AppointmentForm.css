@@ -59,6 +59,10 @@
     margin: 0 30px; 
 }
 
+.appointment-summary .client{
+    word-wrap: break-word;
+}
+
 .submit-button{
     background-color: var(--blue);
     color: var(--white);

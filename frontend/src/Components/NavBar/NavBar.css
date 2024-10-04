@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+}
+
 *{
     font-family: "Inter", sans-serif;
     margin: 0;
@@ -13,8 +21,8 @@
 
 .navigation-box{
     padding: 15px 150px;
-    background-color: #31a2b9b0;
-    color: #ffffff;
+    background-color: var(--blue);
+    color: var(--white);
 }
 
 .logo{
@@ -28,16 +36,16 @@
 }
 
 .menu li a{
-    color: #fff;
+    color: var(--white);
     font-size: 1rem;
     font-weight: 500;
 }
 .menu li a:hover{
-    color: #ffffff;
+    color: var(--white);
 }
 
 .menu li a:focus{
-    color: #fff;
+    color: var(--white);
 }
 
 /* NavBar.css */
@@ -51,11 +59,11 @@
   }
   
   
-
-
-
 @media screen and (max-width: 1200px) {
     .navigation-box{
-        padding: 12px 50px;
+        padding: 12px 20px;
     }   
+    .navbar-nav{
+        gap: 0px;
+    }
 }

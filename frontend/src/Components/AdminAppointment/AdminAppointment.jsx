@@ -91,7 +91,7 @@ const AdminAppointment = () => {
     return true;
   });
   
-  console.log(appointment)
+
 
   return (
     <div className="wrapper">
@@ -114,13 +114,13 @@ const AdminAppointment = () => {
         </div>
 
 
-        {/* appointment list - pending*/}
+        {/* appointment list - upcoming*/}
         {filteredAppointments.map((appointment, index) => {
           if (appointment.status_ === 'accepted') {
             return (
               <div className="row upcoming-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label'>{appointment.p_fname} {appointment.p_lname}</p>
+                  <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
                   <p className='m-0 app-patient-info'>{appointment.service_}</p>
                 </div>
                 <div className="col app-patient-info">
@@ -143,7 +143,7 @@ const AdminAppointment = () => {
             return (
               <div className="row finished-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-finished'>{appointment.p_fname} {appointment.p_lname}</p>
+                  <p className='m-0 app-patient-label-finished'>{appointment.fname} {appointment.lname}</p>
                   <p className='m-0 app-patient-info-finished'>{appointment.service_}</p>
                 </div>
                 <div className="col app-patient-info-finished">
@@ -161,7 +161,7 @@ const AdminAppointment = () => {
             return (
               <div className="row pending-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-pending'>{appointment.p_fname} {appointment.p_lname}</p>
+                  <p className='m-0 app-patient-label-pending'>{appointment.fname} {appointment.lname}</p>
                   <p className='m-0 app-patient-info-pending'>{appointment.service_}</p>
                 </div>
                 <div className="col app-patient-info-pending">
@@ -189,7 +189,7 @@ const AdminAppointment = () => {
             return (
               <div className="row cancelled-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-cancelled'>{appointment.p_fname} {appointment.p_lname}</p>
+                  <p className='m-0 app-patient-label-cancelled'>{appointment.fname} {appointment.lname}</p>
                   <p className='m-0 app-patient-info-cancelled'>{appointment.service_}</p>
                 </div>
                 <div className="col app-patient-info-cancelled">

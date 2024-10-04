@@ -83,7 +83,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                     <div className="col-6">
                     <div className="row mb-2">
                         <div className="col-6">Client Name: </div>
-                        <div className="col-6 fw-bold resched-name">{appointment.p_fname} {appointment.p_lname}</div>
+                        <div className="col-6 fw-bold resched-name">{appointment.fname} {appointment.lname}</div>
                     </div>
                     </div>
                     {/* col for date */}

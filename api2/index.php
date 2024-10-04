@@ -144,9 +144,9 @@ if($method ==='PUT'){
             break;
 
         case 'getAppointments':
-            $sql = "SELECT a_id, p_fname, p_lname, p_email, p_phone, service_, date_, time_, status_
-            FROM appointment INNER JOIN patients
-            ON appointment.id = patients.id";
+            $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
+            FROM appointment INNER JOIN temppatient
+            ON appointment.id = temppatient.id";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $appt = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -464,32 +464,30 @@ if($method ==='PUT'){
         switch ($user->action) {
             case 'addAppointment':
                 // Check if the patient already exists
-                $sqlCheck = "SELECT id FROM patients WHERE p_fname = :p_fname AND p_lname = :p_lname AND p_mname = :p_mname AND p_ename = :p_ename AND p_email = :p_email AND p_phone = :p_phone";
+                // $sqlCheck = "SELECT id FROM patients WHERE p_fname = :p_fname AND p_lname = :p_lname AND p_mname = :p_mname AND p_ename = :p_ename AND p_email = :p_email AND p_phone = :p_phone";
+                $sqlCheck = "SELECT id FROM temppatient WHERE fname = :fname AND lname = :lname AND email = :email AND phone = :phone";
                 $stmtCheck = $conn->prepare($sqlCheck);
-                $stmtCheck->bindParam(':p_fname', $user->fname);
-                $stmtCheck->bindParam(':p_lname', $user->lname);
-                $stmtCheck->bindParam(':p_mname', $user->mname);
-                $stmtCheck->bindParam(':p_ename', $user->ename);
-                $stmtCheck->bindParam(':p_email', $user->email);
-                $stmtCheck->bindParam(':p_phone', $user->phone);
+                $stmtCheck->bindParam(':fname', $user->fname);
+                $stmtCheck->bindParam(':lname', $user->lname);
+                $stmtCheck->bindParam(':email', $user->email);
+                $stmtCheck->bindParam(':phone', $user->phone);
                 $stmtCheck->execute();
             
-                $patient_id = $stmtCheck->fetchColumn();
+                $temppatient_id = $stmtCheck->fetchColumn();
             
                 // Insert the patient if they don't exist
-                if (!$patient_id) {
-                    $sqlInsert = "INSERT INTO patients (id, p_fname, p_lname, p_mname, p_ename, p_age, p_gender, p_email, p_phone)
-                                  VALUES (NULL, :p_fname, :p_lname, :p_mname, :p_ename, NULL, NULL, :p_email, :p_phone)";
+                if (!$temppatient_id) {
+                    $sqlInsert = "INSERT INTO temppatient (id, fname, lname, mname, ename, email, phone) VALUES (NULL, :fname, :lname, :mname, :ename, :email, :phone)";
                     $stmtInsert = $conn->prepare($sqlInsert);
-                    $stmtInsert->bindParam(':p_fname', $user->fname);  // Ensure consistent parameter names
-                    $stmtInsert->bindParam(':p_lname', $user->lname);
-                    $stmtInsert->bindParam(':p_mname', $user->mname);
-                    $stmtInsert->bindParam(':p_ename', $user->ename);
-                    $stmtInsert->bindParam(':p_email', $user->email);
-                    $stmtInsert->bindParam(':p_phone', $user->phone);
+                    $stmtInsert->bindParam(':fname', $user->fname);  // Ensure consistent parameter names
+                    $stmtInsert->bindParam(':lname', $user->lname);
+                    $stmtInsert->bindParam(':mname', $user->mname);
+                    $stmtInsert->bindParam(':ename', $user->ename);
+                    $stmtInsert->bindParam(':email', $user->email);
+                    $stmtInsert->bindParam(':phone', $user->phone);
             
                     if ($stmtInsert->execute()) {
-                        $patient_id = $conn->lastInsertId();
+                        $temppatient_id = $conn->lastInsertId();
                     } else {
                         $response = ['status' => 0, 'message' => 'Failed to create patient record.'];
                         echo json_encode($response);
@@ -501,7 +499,7 @@ if($method ==='PUT'){
                 $sqlAppointment = "INSERT INTO appointment (a_id, id, service_, date_, time_, status_) 
                                    VALUES (NULL, :id, :service_, :date_, :time_, :status_)";
                 $stmtAppointment = $conn->prepare($sqlAppointment);
-                $stmtAppointment->bindParam(':id', $patient_id); // Ensure patient_id is correctly passed
+                $stmtAppointment->bindParam(':id', $temppatient_id); // Ensure patient_id is correctly passed
                 $stmtAppointment->bindParam(':service_', $user->service_);
                 $stmtAppointment->bindParam(':date_', $user->date_);
                 $stmtAppointment->bindParam(':time_', $user->time_);
@@ -596,6 +594,12 @@ if($method ==='PUT'){
                 $stmt->bindParam(':username', $user->username);
                 $stmt->bindParam(':password', $user->password); 
                 $stmt->execute();
+
+                // it might return something like this: $userData = [
+                //     "id" => 1,
+                //     "name" => "John",
+                //     "email" => "john@example.com"
+                // ];
 
                 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
                     

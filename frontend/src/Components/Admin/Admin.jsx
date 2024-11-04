@@ -5,6 +5,7 @@ import './Admin.css'
 import { Link, useNavigate } from "react-router-dom";
 import isAuthenticated from '../Auth';
 import Dashboard from '../../Pages/Dashboard';
+import LogSession from '../LogSession';
 
 const Admin = () => {
   const [loginData, setLoginData] = useState({
@@ -13,14 +14,17 @@ const Admin = () => {
     password: '' 
   })
   const [error,setError]=useState("")
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const username = localStorage.getItem('username');
     if (username) {
       navigate('/dashboard');
+      
     }
+    
+
   }, [navigate]);
   
   // kapag pinindot ung enter key sa keyboard
@@ -39,9 +43,13 @@ const Admin = () => {
         const data = response.data;
         
             if (data.status === 1) {
+                setIsLoggedIn(true);
                 localStorage.setItem('username', data.username);
-                localStorage.setItem('accou                                                nt_type', data.account_type);
-                window.location.href = '/dashboard'; 
+                localStorage.setItem('account_type', data.account_type);
+                
+                console.log('Login successful!');
+                //navigate('/dashboard');
+                
             } else {
               setError("Invalid credentials! Please try again.")
               console.error(data.message);
@@ -79,7 +87,11 @@ const Admin = () => {
                 
             </form>
             <button type="submit" className="btn admin-button d-flex justify-content-center" id="submit" onClick={handleLogin} value="try">Login</button>
+            {isLoggedIn && (
+              <LogSession/>
+            )}
         </div>
+        
       </div>
       <div className='admin-footer d-flex justify-content-center align-items-center '>
         <p className='copyright-p'>&copy; 2024 TOOTHIE CUTIE DENTAL CLINIC</p>

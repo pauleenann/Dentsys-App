@@ -84,7 +84,6 @@ const AdminDash = () => {
     axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
       .then(response => {
         setAppToday(response.data);
-        console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching total cancelled appointments:', error);
@@ -108,7 +107,7 @@ const AdminDash = () => {
       });
   };
 
-  console.log(earningsToday)
+
 
   
     return (
@@ -185,8 +184,8 @@ const AdminDash = () => {
                         <tbody>
                             {appToday.map((appointment, index) => (
                                 <tr key={index}>
-                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.p_fname} {appointment.p_lname}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.p_phone}</td>
+                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.phone}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.service_}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.time_}</td>
                                 </tr>

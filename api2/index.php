@@ -223,9 +223,9 @@ if($method ==='PUT'){
                 //sets correct timezone
                 date_default_timezone_set('Asia/Singapore');
                 $today = date('Y-m-d');
-                $sql = "SELECT a_id, p_fname, p_lname, p_email, p_phone, service_, date_, time_, status_
-                FROM appointment INNER JOIN patients
-                ON appointment.id = patients.id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
+                $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
+                FROM appointment INNER JOIN temppatient
+                ON appointment.id = temppatient.id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
                 //change time for testing purposes
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':today', $today, PDO::PARAM_STR);
@@ -462,6 +462,36 @@ if($method ==='PUT'){
     // Check the action type
     if (isset($user->action)) {
         switch ($user->action) {
+            case 'logSession':
+                
+                $session_id = $user->session_id;
+                $user_agent = $user->user_agent;
+                $ip_address = $user->ip_address;
+                $username = $user->username;
+
+                try {
+                    // Prepare the SQL statement to insert the session data
+                    $stmt = $conn->prepare("INSERT INTO user_sessions (session_id, user_agent, ip_address, username) VALUES (:session_id, :user_agent, :ip_address, :username)");
+        
+                    // Bind the parameters using bindParam()
+                    $stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
+                    $stmt->bindParam(':user_agent', $user_agent, PDO::PARAM_STR);
+                    $stmt->bindParam(':ip_address', $ip_address, PDO::PARAM_STR);
+                    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        
+                    // Execute the statement
+                    if ($stmt->execute()) {
+                        echo json_encode(["status" => "success", "message" => "Login session logged successfully"]);
+                    } else {
+                        echo json_encode(["status" => "error", "message" => "Failed to log session"]);
+                    }
+                } catch (PDOException $e) {
+                    echo json_encode(["status" => "error", "message" => "Error: " . $e->getMessage()]);
+                }
+        
+                break;
+
+
             case 'addAppointment':
                 // Check if the patient already exists
                 // $sqlCheck = "SELECT id FROM patients WHERE p_fname = :p_fname AND p_lname = :p_lname AND p_mname = :p_mname AND p_ename = :p_ename AND p_email = :p_email AND p_phone = :p_phone";

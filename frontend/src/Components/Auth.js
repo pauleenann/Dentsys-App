@@ -7,13 +7,19 @@ const isAuthenticated = (Component) => {
 
     useEffect(() => {
       const username = localStorage.getItem('username');
+      
+      
       if (!username) {
         navigate('/admin');
       }
+      
     }, [navigate]);
 
     return <Component {...props} />;
+  
+    
   };
 };
+
 
 export default isAuthenticated;

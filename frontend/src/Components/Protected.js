@@ -20,7 +20,6 @@ const Protected = ({ children, allowedRoles }) => {
       case 'admin':
         return <Navigate to="/dashboard" replace />;
       case 'dentist':
-        
         return <Navigate to="/patient-list" replace />;
       default:
         return <Navigate to="/unauthorized" replace />;

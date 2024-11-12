@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL); //Sets PHP to report all errors, warnings, and notices.
 ini_set('display_errors',1);//display errors directly on the web page for debugging purposes.
-header("Access-Control-Allow-Origin: *");//Sets CORS policy to allow access to this API from any domain.
+header("Access-Control-Allow-Origin: *");header("Access-Control-Allow-Origin: http://localhost:3001");//Sets CORS policy to allow access to this API from any domain.
 header("Access-Control-Allow-Headers: *");// Allows any headers to be sent in the request.
 header("Access-Control-Allow-Methods: *");// Allows any HTTP methods (GET, POST, PUT, DELETE, etc.) to be used in requests.
 
@@ -35,18 +35,100 @@ if($method ==='PUT'){
                 break;
 
             case 'finish':
-                $user = json_decode(file_get_contents('php://input'));
-                $sql = "UPDATE appointment SET status_ = 'finished' WHERE a_id = :id";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    // id is appointment id
+                    // Update the appointment status to 'finished'
+                    $sql = "UPDATE appointment SET status_ = 'finished' WHERE a_id = :id";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':id', $id);
+                
+                    // Execute the appointment status update
+                    if ($stmt->execute()) {
+                        // Get patient id from appointments table
+                        $sqlApp = "SELECT id FROM appointment WHERE a_id = :id";
+                        $stmtApp = $conn->prepare($sqlApp);
+                        $stmtApp->bindParam(':id', $id);
+                
+                        if ($stmtApp->execute()) {
+                            $patientId = $stmtApp->fetch(PDO::FETCH_ASSOC);  // Fetch the patient ID from appointment
+                            var_dump($patientId);
+                
+                            // Check if the patient ID exists
+                            if ($patientId) {
+                                // Get patient info from temppatient
+                                $sqlTempPatient = "SELECT * FROM temppatient WHERE id = :id";
+                                $stmtTemp = $conn->prepare($sqlTempPatient);
+                                $stmtTemp->bindParam(':id', $patientId['id']);  // Correctly pass the id from the previous query
+                
+                                if ($stmtTemp->execute()) {
+                                    $patient = $stmtTemp->fetchAll(PDO::FETCH_ASSOC);
+                                    var_dump($patient);
+                
+                                    // Check if the patient already exists in the patients table
+                                    $checkPatient = "SELECT * FROM patients WHERE p_fname = :p_fname AND p_lname = :p_lname AND p_email = :p_email AND p_phone = :p_phone";
+                                    $stmtCheckPatient = $conn->prepare($checkPatient);
+                                    $stmtCheckPatient->bindParam(':p_fname', $patient[0]['fname']);
+                                    $stmtCheckPatient->bindParam(':p_lname', $patient[0]['lname']);
+                                    $stmtCheckPatient->bindParam(':p_email', $patient[0]['email']);
+                                    $stmtCheckPatient->bindParam(':p_phone', $patient[0]['phone']);
+                
+                                    if ($stmtCheckPatient->execute()) {
+                                        $patientFound = $stmtCheckPatient->fetch(PDO::FETCH_ASSOC);
+                
+                                        if ($patientFound) {
+                                            // Patient already exists, do not insert again
+                                            $response = ['status' => 0, 'message' => 'Patient already exists.'];
+                                        } else {
+                                            // Insert data into patients table since the patient does not exist
+                                            $sqlPatient = "INSERT INTO patients (id, p_fname, p_lname, p_mname, p_ename, p_age, p_gender, p_email, p_phone)
+                                                           VALUES (null, :p_fname, :p_lname, :p_mname, :p_ename, null, null, :p_email, :p_phone)";
+                                            $stmtPatient = $conn->prepare($sqlPatient);
+                                            $stmtPatient->bindParam(':p_fname', $patient[0]['fname']);
+                                            $stmtPatient->bindParam(':p_lname', $patient[0]['lname']);
+                                            $stmtPatient->bindParam(':p_mname', $patient[0]['mname']);
+                                            $stmtPatient->bindParam(':p_ename', $patient[0]['ename']);
+                                            $stmtPatient->bindParam(':p_email', $patient[0]['email']);
+                                            $stmtPatient->bindParam(':p_phone', $patient[0]['phone']);
+                                            
+                                            if ($stmtPatient->execute()) {
+                                                $response = ['status' => 1, 'message' => 'Patient added successfully'];
+                                            } else {
+                                                $response = ['status' => 0, 'message' => 'Failed to add patient to the patients table.'];
+                                            }
+                                        }
 
-                if($stmt->execute()){
-                    $response = ['status' => 1, 'message' => 'Record updated successfully.'];
-                }else{
-                    $response = ['status' => 0, 'message' => 'Failed to update Record.'];
-                }
-                // echo json_encode($response)
-                break;
+                                        // // If patient is added, delete the patient from temppatient table
+                                        // $deleteTemp = "DELETE FROM temppatient WHERE id = :id";
+                                        // $stmtDeleteTemp = $conn->prepare($deleteTemp);
+                                        // $stmtDeleteTemp->bindParam(':id', $patientId['id']);
+        
+                                        // if ($stmtDeleteTemp->execute()) {
+                                        //     $response = ['status' => 1, 'message' => 'Patient deleted from temppatient.'];
+                                        // } else {
+                                        //     $response = ['status' => 0, 'message' => 'Failed to delete patient from temppatient.'];
+                                        // }
+                                    } else {
+                                        $response = ['status' => 0, 'message' => 'Error checking patient existence.'];
+                                    }
+                                } else {
+                                    $response = ['status' => 0, 'message' => 'Failed to fetch patient information from temppatient.'];
+                                }
+                            } else {
+                                $response = ['status' => 0, 'message' => 'Patient ID not found in appointment record.'];
+                            }
+                        } else {
+                            $response = ['status' => 0, 'message' => 'Failed to fetch appointment details.'];
+                        }
+                    } else {
+                        // Respond with failure if update failed
+                        $response = ['status' => 0, 'message' => 'Failed to update appointment record.'];
+                    }
+                
+                    // Respond with JSON
+                    echo json_encode($response);
+            break;
+                
+                
+                
 
             case 'cancel':
                 $user = json_decode(file_get_contents('php://input'));

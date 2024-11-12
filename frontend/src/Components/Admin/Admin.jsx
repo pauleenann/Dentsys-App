@@ -18,6 +18,7 @@ const Admin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('Admin mounted')
     const username = localStorage.getItem('username');
     if (username) {
       navigate('/dashboard');

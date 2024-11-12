@@ -18,6 +18,8 @@ const AdminDash = () => {
     const [totalUpcoming, setTotalUpcoming] = useState(0);
     const [earningsToday, setEarningsToday] = useState(0);
     const [appToday, setAppToday] = useState([]);
+    const [appointment, setAppointment] = useState([]);
+
     const navigate = useNavigate();
 
 //loads when componenct renders
@@ -29,7 +31,19 @@ const AdminDash = () => {
     getAppointmentsToday();
     getRecentAppointmentDetails();
     getEarningsToday();
-  },);
+    getUnavailableTime()
+  },[]);
+
+  const getUnavailableTime = () => {
+    axios.get('http://localhost:80/api2/?action=getUnavailableTime')
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching total pending appointments:', error);
+      });
+  };
+
 
   const getTotalPendingAppointments = () => {
     axios.get('http://localhost:80/api2/?action=getPendingAppointments')

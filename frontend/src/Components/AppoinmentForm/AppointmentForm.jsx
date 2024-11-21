@@ -11,15 +11,19 @@ const AppointmentForm = () => {
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
     const [unavailableTime, setUnavailableTime] = useState([])
+    const [minDate, setMinDate] = useState("");
 
     useEffect(() => {
         getServices();
-        getUnavailableTime();
+
+        // Calculate today's date in YYYY-MM-DD format
+        const today = new Date().toISOString().split("T")[0];
+        setMinDate(today); // Set the state for the minimum date
     }, []);
 
-    const getUnavailableTime = () => {
+    const getUnavailableTime = (date) => {
         const times = []
-        axios.get('http://localhost:80/api2/?action=getUnavailableTime')
+        axios.get(`http://localhost:80/api2/${date}/?action=getUnavailableTime`)
           .then(response => {
             console.log(response.data)
             const results = response.data;
@@ -69,6 +73,13 @@ const AppointmentForm = () => {
         time_: '',
         status_: 'pending'
     });
+
+     //this useEffect runs for the first render, and everytime formdate.date_ changes
+     useEffect(()=>{
+        if(formData.date_.length!=0){
+            getUnavailableTime(formData.date_)
+        }
+    },[formData.date_])
 
 
     const handleChange = (e) => {
@@ -188,7 +199,7 @@ const AppointmentForm = () => {
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="" className="form-label labels" >Date <span className='required-field'>*</span></label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation}/>
+                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation} min={minDate}/>
                         <p className="error-message">{errors.date}</p>
                     </div>
                 </div>

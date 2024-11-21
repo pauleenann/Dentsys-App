@@ -19,20 +19,56 @@ if($method ==='PUT'){
         //print_r($request);
         switch($action){
             case 'accept':
-                $user = json_decode(file_get_contents('php://input'));
+                // Update appointment to accepted
                 $sql = "UPDATE appointment SET status_ = 'accepted' WHERE a_id = :id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->bindParam(':id', $id);
+    
+                if ($stmt->execute()) {
+                    // Get info from appointment table
+                    $sqlAppt = "SELECT * FROM appointment WHERE a_id = :id";
+                    $stmtAppt = $conn->prepare($sqlAppt);
+                    $stmtAppt->bindParam(':id', $id);
+    
+                    if ($stmtAppt->execute()) {
+                        $Appt = $stmtAppt->fetchAll(PDO::FETCH_ASSOC);
+                        $patientId = $Appt[0]['id'];
+                        $apptTime = $Appt[0]['time_'];
+                        $apptDate = $Appt[0]['date_'];
+                        $apptId = $Appt[0]['a_id'];
 
-                if($stmt->execute()){
-                    $response = ['status' => 1, 'message' => 'Record updated successfully.'];
-                }else{
-                    $response = ['status' => 0, 'message' => 'Failed to update Record.'];
+                        if ($patientId) {
+                            // Get patient info from temppatient
+                            $sqlTempPatient = "SELECT * FROM temppatient WHERE id = :id";
+                            $stmtTemp = $conn->prepare($sqlTempPatient);
+                            $stmtTemp->bindParam(':id', $patientId);
+    
+                            if ($stmtTemp->execute()) {
+                                $patient = $stmtTemp->fetch(PDO::FETCH_ASSOC); // Change to fetch as we expect one row
+    
+                                // Store patient info in variable
+                                $recipientEmail = $patient['email'];
+                                $recipientFname = $patient['fname'];
+                                $recipientLname = $patient['lname'];
+                                $recipientAppointmentId = $id;
+    
+                                // Execute send-email.php
+                                require 'send-email.php';
+    
+                                echo json_encode(['status' => 1, 'message' => 'Appointment accepted and email sent.']);
+                            } else {
+                                echo json_encode(['status' => 0, 'message' => 'Failed to fetch patient information.']);
+                            }
+                        } else {
+                            echo json_encode(['status' => 0, 'message' => 'Patient ID not found.']);
+                        }
+                    } else {
+                        echo json_encode(['status' => 0, 'message' => 'Failed to fetch patient ID.']);
+                    }
+                } else {
+                    echo json_encode(['status' => 0, 'message' => 'Failed to update appointment status.']);
                 }
-
-                
-                // echo json_encode($response)
-                break;
+            break;
 
             case 'finish':
                     // id is appointment id
@@ -189,6 +225,9 @@ if($method ==='PUT'){
         }
 }elseif ($method ==='GET'){
     $action = isset($_GET['action']) ? $_GET['action'] : '';
+    $request = explode('/', $_SERVER['REQUEST_URI']);
+    //for retrieving unaivalable appointment dates
+    $date = $request[2];
 
     switch ($action) {
         case 'getServices':
@@ -242,7 +281,7 @@ if($method ==='PUT'){
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 $totalPending = $result['total_pending'];
                 echo json_encode(['total_pending' => $totalPending]);
-                break;
+        break;
 
         case 'getCancelledAppointments':
                 $sql = "SELECT COUNT(*) AS total_cancelled FROM appointment WHERE status_ = 'cancelled'";
@@ -286,7 +325,16 @@ if($method ==='PUT'){
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 $totalUpcoming = $result['total_upcoming'];
                 echo json_encode(['total_upcoming' => $totalUpcoming]);
-                break;
+        break;
+
+        case 'getUnavailableTime':
+            $sql = "SELECT * FROM appointment WHERE date_ = :date_ AND status_='accepted'" ;
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':date_', $date);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($result);
+        break;
                 
         case 'getEarningsToday':
                 //sets correct timezone

@@ -13,16 +13,23 @@ const AddAppointment = () => {
     const [services, setServices] = useState([]);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
-    const [unavailableTime, setUnavailableTime] = useState([])
+    const [unavailableTime, setUnavailableTime] = useState([]);
+    const [minDate, setMinDate] = useState("");
+
+    useEffect(() => {
+        // Calculate today's date in YYYY-MM-DD format
+        const today = new Date().toISOString().split("T")[0];
+        setMinDate(today); // Set the state for the minimum date
+    }, []);
 
     useEffect(() => {
         getServices();
         getUnavailableTime();
     }, []);
 
-    const getUnavailableTime = () => {
+    const getUnavailableTime = (date) => {
         const times = []
-        axios.get('http://localhost:80/api2/?action=getUnavailableTime')
+        axios.get(`http://localhost:80/api2/${date}/?action=getUnavailableTime`)
           .then(response => {
             console.log(response.data)
             const results = response.data;
@@ -72,6 +79,13 @@ const AddAppointment = () => {
         time_: '',
         status_: 'pending'
     });
+
+     //this useEffect runs for the first render, and everytime formdate.date_ changes
+     useEffect(()=>{
+        if(formData.date_.length!=0){
+            getUnavailableTime(formData.date_)
+        }
+    },[formData.date_])
 
 
     const handleChange = (e) => {
@@ -206,7 +220,7 @@ const AddAppointment = () => {
                     </div>
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="labels p-0" >Date <span className='required-field' >*</span></label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation}/>
+                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation} min={minDate}/>
                         <p className="error-message">{errors.date}</p>
                     </div>
                 </div>

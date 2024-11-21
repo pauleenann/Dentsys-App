@@ -50,6 +50,7 @@ const AdminAppointment = () => {
     try{
       axios.put(`http://localhost:80/api2/${id}/?action=accept`, appointment)
       .then(function (response) {
+        console.log(response)
         if(response.data !== null){
           setShowConfirm(true);
         }else{
@@ -177,8 +178,11 @@ const AdminAppointment = () => {
                   PENDING
                 </div>
                 <div className="col">
-                  <button className='btn button-accept' onClick={() => {setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(appointment.a_id); }}>Accept</button>
+                  {/* accept button */}
+                  <button className='btn button-accept' onClick={() => {setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(appointment.a_id);}}>Accept</button>
+                  {/* reschedule button */}
                   <button className='btn p-0 mx-2' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button>
+                  {/* cancel button */}
                   <button className='btn p-0' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>

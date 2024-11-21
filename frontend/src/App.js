@@ -27,6 +27,7 @@ import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
 
 import Protected from "./Components/Protected";
 import Home from "./Pages/Home";
+import AppointmentCancelledConfirm from "./Components/AppointmentCancelledConfirm/AppointmentCancelledConfirm";
 
 
 const App = () => {
@@ -58,7 +59,8 @@ const App = () => {
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />
         <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin']}><InvoiceDetails/></Protected>} />
-        <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />        
+        <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />     
+        <Route path="/appointment-cancelled/:id" element={<AppointmentCancelledConfirm/>} />      
       </Routes>
       
       </BrowserRouter>

@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Reschedule.css'
 import { useState } from 'react';
 import axios from 'axios';
 import isAuthenticated from '../Auth';
+
 
 const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
     const [input, setInput] = useState({});
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
+    const [unavailableTime, setUnavailableTime] = useState([]);
+    const [minDate, setMinDate] = useState("");
     console.log(keyOfSelectedAppointment, appointments);
+
+    useEffect(() => {
+        // Calculate today's date in YYYY-MM-DD format
+        const today = new Date().toISOString().split("T")[0];
+        setMinDate(today); // Set the state for the minimum date
+    }, []);
+
+    console.log(input.date_)
+
+     //this useEffect runs for the first render, and everytime formdate.date_ changes
+     useEffect(()=>{
+        if(input.date_){
+            getUnavailableTime(input.date_)
+        }
+    },[input.date_])
 
     const handleChange = (event)=>{
         const name = event.target.name;
         const value = event.target.value;
         setInput(values => ({...values, [name]:value}));
-        
     }
 
     const rescheduleAppointment = (event) => {
@@ -35,6 +52,24 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
         }
         
     }
+
+    const getUnavailableTime = (date) => {
+        const times = []
+        axios.get(`http://localhost:80/api2/${date}/?action=getUnavailableTime`)
+          .then(response => {
+            console.log(response.data)
+            const results = response.data;
+            if(results.length>0){
+                results.forEach(result=>{
+                    times.push(result.time_)
+                })
+            }
+            setUnavailableTime(times)
+          })
+          .catch(error => {
+            console.error('Error fetching total pending appointments:', error);
+          });
+    };
 
     const formValidation = ()=>{
         let error = {};
@@ -122,7 +157,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                 {/* date */}
                 <div className="col-4">
                         <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" onChange={handleChange} onBlur={formValidation}/>
+                        <input  type="date" id="date" name="date_" className="form-control labels" min={minDate} onChange={handleChange} onBlur={formValidation}/>
                         <p className="error-message">{errors.date}</p>
                 </div>
 
@@ -133,28 +168,28 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                         <label htmlFor="" className="form-label labels" >Time</label>
                         <div className="col-6">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('9:00 AM - 10:00 AM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             9:00 AM - 10:00 AM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('10:00 AM - 11:00 AM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             10:00 AM - 11:00 AM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('11:00 AM - 12:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             11:00 AM - 12:00 PM
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('12:00 PM - 1:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             12:00 PM - 1:00 PM
                             </label>
@@ -162,25 +197,25 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
                         </div>
                         <div className="col-6">
                     <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('1:00 PM - 2:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault1">
                             1:00 PM - 2:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('2:00 PM - 3:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             2:00 PM - 3:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('3:00 PM - 4:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             3:00 PM - 4:00 PM
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation}/>
+                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('4:00 PM - 5:00 PM')}/>
                             <label class="form-check-label time-text" for="flexRadioDefault2">
                             4:00 PM - 5:00 PM
                             </label>

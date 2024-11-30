@@ -82,8 +82,6 @@ console.log(search)
                         <li><a class="dropdown-item" href="#">Descending Order</a></li>
                     </ul>
                     </div> */}
-
-
                 </div>
                 
                 {/* Patients list */}

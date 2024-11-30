@@ -74,14 +74,13 @@ body {
     align-items: center;
  }
 
-
  .search-bar{
     width: 100%;
     padding: 10px 20px;
     border: none;
     background-color: var(--search-bar);
     color: var(--blue);
-    border-radius: 25px;
+    border-radius: 15px;
     color: var(--black);
  }
 

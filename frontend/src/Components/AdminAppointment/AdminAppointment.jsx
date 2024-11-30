@@ -113,9 +113,9 @@ const AdminAppointment = () => {
         {/* buttons */}
         <div className="buttons">
           <button className='btn button-border-text button-radius filter-btn' onClick={() => setFilter('all')}>All</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('today')}>Appointments Today</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('pending')}>Pending Appointments</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('cancelled')}>Cancelled Appointments</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('today')}>Today</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('pending')}>Pending</button>
+          <button className='btn button-border-text button-radius' onClick={() => setFilter('cancelled')}>Cancelled</button>
           <button className='btn button-border-text button-radius' onClick={() => setFilter('recent')}>Recent Visits</button>
         </div>
 

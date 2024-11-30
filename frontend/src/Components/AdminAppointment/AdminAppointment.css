@@ -59,6 +59,8 @@ body {
     background-color: var(--blue);
 }
 
+.app-button-color
+
 .button-text{
     color: var(--white);
     padding: 10px;
@@ -66,7 +68,7 @@ body {
 
 .buttons{
     display: flex;
-    gap: 25px;
+    gap: 10px;
     margin-top: 10px;
 }
 

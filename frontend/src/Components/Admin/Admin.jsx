@@ -24,8 +24,6 @@ const Admin = () => {
       navigate('/dashboard');
       
     }
-    
-
   }, [navigate]);
   
   // kapag pinindot ung enter key sa keyboard
@@ -39,10 +37,8 @@ const Admin = () => {
   const handleLogin = async () => {
     try {
         const response = await axios.post('http://localhost:80/api2/user/save', loginData);
-      
         console.log(response)
         const data = response.data;
-        
             if (data.status === 1) {
                 setIsLoggedIn(true);
                 localStorage.setItem('username', data.username);

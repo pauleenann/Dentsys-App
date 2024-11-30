@@ -77,7 +77,7 @@
     padding: 8px 50px;
 }
 
-.admin-button:hover, .admin-button:active{
+.admin-button:hover, .admin-button:active,.admin-button:focus{
     background-color: #1caf63;
     color: #fff;
     border: none;

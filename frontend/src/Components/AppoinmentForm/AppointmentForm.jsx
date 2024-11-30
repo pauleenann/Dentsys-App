@@ -79,7 +79,7 @@ const AppointmentForm = () => {
         const chosenDate = formData.date_?formData.date_:'';
 
         //set time today as the hour in 24 hour format
-        const timeToday = 16;
+        const timeToday = new Date().getHours();
         console.log('hour today: ', timeToday)
 
         //get each hour sa options

@@ -79,7 +79,7 @@ const AppointmentForm = () => {
         const chosenDate = formData.date_?formData.date_:'';
 
         //set time today as the hour in 24 hour format
-        const timeToday = new Date().getHours();
+        const timeToday = 16;
         console.log('hour today: ', timeToday)
 
         //get each hour sa options
@@ -91,9 +91,7 @@ const AppointmentForm = () => {
         console.log('hour ',hour24Format);
       
         //logic: if hour24format (hour sa options) ay less than or equal doon sa current time AND yung piniling date ng user ay same sa date ngayon, return TRUE (ibig sabihin, disabled yung radio button na un)
-        //OR kapag yung current time is 16 or 4PM, hindi na dapat makakapag-appoint yung patient. Bali next day na sila
-        return (hour24Format<=timeToday&&chosenDate==minDate)||(timeToday===16&&chosenDate==minDate);
-        
+        return hour24Format<=timeToday&&chosenDate==minDate;
     }
 
     async function getServices() {

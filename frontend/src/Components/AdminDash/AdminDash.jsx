@@ -6,6 +6,9 @@ import AdminInfo from '../AdminInfo/AdminInfo';
 import axios from 'axios';
 import isAuthenticated from '../Auth';
 import { Link, useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 
 const AdminDash = () => {
@@ -22,7 +25,7 @@ const AdminDash = () => {
 
     const navigate = useNavigate();
 
-//loads when componenct renders
+  //loads when component renders
   useEffect(() => {
     getTotalPendingAppointments();
     getCancelledAppointments();
@@ -32,6 +35,23 @@ const AdminDash = () => {
     getRecentAppointmentDetails();
     getEarningsToday();
     getUnavailableTime()
+
+    //Listen for the 'updateData' event from the server
+   socket.on('updatedData', ()=>{
+    getTotalPendingAppointments();
+    getCancelledAppointments();
+    getRecentAppointments();
+    getUpcomingAppointments();
+    getAppointmentsToday();
+    getRecentAppointmentDetails();
+    getEarningsToday();
+    getUnavailableTime()
+    console.log('updated data');}); // Fetch updated appointments when event is emitted
+
+   // Cleanup the event listener when the component unmounts
+   return () => {
+     socket.off('updatedData');
+   };
   },[]);
 
   const getUnavailableTime = () => {

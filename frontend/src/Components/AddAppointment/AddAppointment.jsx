@@ -6,25 +6,60 @@ import './AddAppointment.css'
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import AdminInfo from "../AdminInfo/AdminInfo";
 import isAuthenticated from "../Auth";
+import io from 'socket.io-client';
 
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AddAppointment = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
-    const [unavailableTime, setUnavailableTime] = useState([]);
+    const [occupiedTime, setOccupiedTime] = useState([])
     const [minDate, setMinDate] = useState("");
+    const [formData, setFormData] = useState({
+        action: 'addAppointment',
+        fname: '',
+        lname: '',
+        mname: '',
+        ename: '',
+        email: '',
+        phone: '',
+        service_: '',
+        date_: '',
+        time_: '',
+        status_: 'pending'
+    });
+
+    const appointmentTime = [
+        "9:00 AM - 10:00 AM",
+        "10:00 AM - 11:00 AM",
+        "11:00 AM - 12:00 PM",
+        "12:00 PM - 1:00 PM",
+        "1:00 PM - 2:00 PM",
+        "2:00 PM - 3:00 PM",
+        "3:00 PM - 4:00 PM",
+        "4:00 PM - 5:00 PM"
+    ]
+
+    //everytime the chosen date changes, we need to reset the time
+    useEffect(()=>{
+        if(formData.date_.length!=0){
+            getUnavailableTime(formData.date_)
+        }
+
+        setFormData((prevData)=>({
+            ...prevData,
+            time_:''
+        }))
+    },[formData.date_])
 
     useEffect(() => {
         // Calculate today's date in YYYY-MM-DD format
         const today = new Date().toISOString().split("T")[0];
         setMinDate(today); // Set the state for the minimum date
-    }, []);
-
-    useEffect(() => {
         getServices();
-        getUnavailableTime();
     }, []);
 
     const getUnavailableTime = (date) => {
@@ -38,12 +73,33 @@ const AddAppointment = () => {
                     times.push(result.time_)
                 })
             }
-            setUnavailableTime(times)
+            setOccupiedTime(times);
           })
           .catch(error => {
             console.error('Error fetching total pending appointments:', error);
           });
-      };
+    };
+
+    const unavailableTime = (time)=>{
+
+        //set inputted date as chosen date
+        const chosenDate = formData.date_?formData.date_:'';
+
+        //set time today as the hour in 24 hour format
+        const timeToday = new Date().getHours();
+        console.log('hour today: ', timeToday)
+
+        //get each hour sa options
+        const splitTime = time.split(' ');
+        const hour = parseInt(splitTime[0].split(':')[0]);//get the hour
+
+        //if hour is greater than 12, add 12 to convert to 24 hour format
+        const hour24Format = hour<5?hour+12:hour;
+        console.log('hour ',hour24Format);
+      
+        //logic: if hour24format (hour sa options) ay less than or equal doon sa current time AND yung piniling date ng user ay same sa date ngayon, return TRUE (ibig sabihin, disabled yung radio button na un)
+        return hour24Format<=timeToday&&chosenDate==minDate;
+    }
 
 
     async function getServices() {
@@ -63,30 +119,6 @@ const AddAppointment = () => {
             setServices([]);
         }
     }
-    
-    
-
-    const [formData, setFormData] = useState({
-        action: 'addAppointment',
-        fname: '',
-        lname: '',
-        mname: '',
-        ename: '',
-        email: '',
-        phone: '',
-        service_: '',
-        date_: '',
-        time_: '',
-        status_: 'pending'
-    });
-
-     //this useEffect runs for the first render, and everytime formdate.date_ changes
-     useEffect(()=>{
-        if(formData.date_.length!=0){
-            getUnavailableTime(formData.date_)
-        }
-    },[formData.date_])
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -96,22 +128,24 @@ const AddAppointment = () => {
         });
     }
 
-
-    const navigate = useNavigate();
-
-    const handleClick = async (e) => {
-        e.preventDefault();
-        if(submitForm==false){
+    const handleClick = async () => {
+        if(submitForm == false){
             formValidation();
         }else if(submitForm){
+            console.log('form submitted')
             setLoading(true);
-            try {
-            await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
-            navigate('/appointment-list');
-            } catch (err) {
-            console.log(err);
-            //   setError(true)
-            }
+                    try {
+                        const response = await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+                        console.log(response.data.status)
+                        //if may nainsert na data, send event sa server (node)
+                        if(response.data.status==1){
+                            socket.emit('newData');
+                        }
+                        navigate("/appointment-list");
+                    } catch (err) {
+                        console.log(err);
+                    //   setError(true)
+                    }
         }
       };
 
@@ -149,8 +183,6 @@ const AddAppointment = () => {
         setErrors(error)
        
     }
-
-    console.log(formData);
 
   return (
     <div className='wrapper'>
@@ -224,61 +256,41 @@ const AddAppointment = () => {
                         <p className="error-message">{errors.date}</p>
                     </div>
                 </div>
+
                 {/* time form */}
                 <div className="col">
                     <label htmlFor="" className="form-label labels" >Time <span className='required-field'>*</span></label>
                     <div className="row">
-                        <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('9:00 AM - 10:00 AM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            9:00 AM - 10:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('10:00 AM - 11:00 AM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            10:00 AM - 11:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('11:00 AM - 12:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            11:00 AM - 12:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('12:00 PM - 1:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            12:00 PM - 1:00 PM
-                            </label>
-                            </div>
+                        <div className="col-xl-3 col-sm-12 mb-3">
+                            {/* iterate appointment time array */}
+                            {appointmentTime.map((time,index)=>{
+                                // if yung index ay di pa umaaabot ng 4, display first 4 time in the first column
+                                if(index<=3){
+                                    return <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={
+                                        // occupiedTime.includes(time);
+                                        unavailableTime(time)
+                                    } checked={formData.time_===time}/>
+                                    <label class="form-check-label time-text" for="flexRadioDefault1">
+                                    {time}
+                                    </label>
+                                </div>
+                                }
+                           })}
                         </div>
-                        <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('1:00 PM - 2:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            1:00 PM - 2:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('2:00 PM - 3:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            2:00 PM - 3:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('3:00 PM - 4:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            3:00 PM - 4:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="time_" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation} disabled={unavailableTime.includes('3:00 PM - 4:00 PM 4:00 PM - 5:00 PM')}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            4:00 PM - 5:00 PM
-                            </label>
-                            </div>
+                        <div className="col-xl-3 col-sm-12 mb-3">
+                            {/* iterate appointment time array */}
+                            {appointmentTime.map((time,index)=>{
+                                // if yung index ay greater than 3, display ung natitirang time
+                                if(index>3){
+                                    return <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={unavailableTime(time)} checked={formData.time_===time}/>
+                                    <label class="form-check-label time-text" for="flexRadioDefault1">
+                                    {time}
+                                    </label>
+                                </div>
+                                }
+                           })}
                         </div>
                         <p className="error-message">{errors.time}</p>
                     </div>

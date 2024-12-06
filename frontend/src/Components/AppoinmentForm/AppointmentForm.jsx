@@ -3,9 +3,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './AppointmentForm.css'
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 
 const AppointmentForm = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
     const [errors, setErrors] = useState({});
@@ -39,8 +43,13 @@ const AppointmentForm = () => {
         "4:00 PM - 5:00 PM"
     ]
 
+
     //everytime the chosen date changes, we need to reset the time
     useEffect(()=>{
+        if(formData.date_.length!=0){
+            getUnavailableTime(formData.date_)
+        }
+
         setFormData((prevData)=>({
             ...prevData,
             time_:''
@@ -112,14 +121,6 @@ const AppointmentForm = () => {
         }
     }
     
-
-     //this useEffect runs for the first render, and everytime formdate.date_ changes
-     useEffect(()=>{
-        if(formData.date_.length!=0){
-            getUnavailableTime(formData.date_)
-        }
-    },[formData.date_])
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -127,8 +128,6 @@ const AppointmentForm = () => {
             [name]: value
         });
     }
-
-    const navigate = useNavigate();
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -139,8 +138,13 @@ const AppointmentForm = () => {
             console.log('form submitted')
             setLoading(true);
                     try {
-                    await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
-                    navigate("/appointment-request-submitted", {state: formData});
+                        const response = await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+                        console.log(response.data.status)
+                        //if may nainsert na data, send event sa server (node)
+                        if(response.data.status==1){
+                            socket.emit('newData');
+                        }
+                        navigate("appointment-request-submitted");
                     } catch (err) {
                     console.log(err);
                     //   setError(true)
@@ -184,7 +188,7 @@ const AppointmentForm = () => {
        
     }
 
-    console.log(formData);
+
   return (
     <div className='appoinment-container container'>
         <h1 className='pt-5'>Appoinment Booking</h1>

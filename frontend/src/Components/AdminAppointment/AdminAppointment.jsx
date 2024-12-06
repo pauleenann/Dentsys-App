@@ -9,6 +9,9 @@ import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed';
 import CancelAppointment from '../CancelAppointment/CancelAppointment';
 import ViewAppointment from '../ViewAppointment/ViewAppointment';
 import isAuthenticated from '../Auth';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AdminAppointment = () => {
   const [showReschedule, setShowReschedule] = useState(false);
@@ -22,81 +25,72 @@ const AdminAppointment = () => {
 
 
   useEffect(() => {
+   // Fetch appointments when the component is mounted
+   getAppointment();
+
+   //Listen for the 'updateData' event from the server
+   socket.on('updatedData', ()=>{
     getAppointment();
+    console.log('updated data');}); // Fetch updated appointments when event is emitted
+
+   // Cleanup the event listener when the component unmounts
+   return () => {
+     socket.off('updatedData');
+   };
   }, []);
 
-  function getAppointment() {
-    axios.get('http://localhost:80/api2/?action=getAppointments')
-      .then(response => {
-        console.log(response.data);
-        if (response.data) {
-          console.log(response.data)
-          setAppointment(response.data);
-        } else {
-          console.error('Data is not an array:', response.data);
-          setAppointment([]);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching appointments:', error);
-        setAppointment([]);
-      });
-  }
+  const getAppointment = async () => {
+    try {
+      const response = await axios.get("http://localhost:80/api2/?action=getAppointments");
+      setAppointment(response.data); // Update state with fetched data
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const acceptAppointment = (id) => {
+  const acceptAppointment = async (id) => {
     console.log('accept appointment')
     console.log(keyOfSelectedAppointment)
     setLoading(true); // Set loading to true when the request is sent
     try{
-      axios.put(`http://localhost:80/api2/${id}/?action=accept`, appointment)
-      .then(function (response) {
-        console.log(response)
-        if(response.data !== null){
-          setShowConfirm(true);
-        }else{
-          console.log("Please try again");
-        }
-      })
-      .finally(() => setLoading(false)); // Set loading to false when the request is completed
+      const response = await axios.put(`http://localhost:80/api2/${id}/?action=accept`, appointment)
+      console.log(response)
+      if(response.status==200){
+        setShowConfirm(true);
+        socket.emit('newData');
+        setLoading(false);
+      }
     }catch(err){
       console.log("An error occurred: ", err.message)
     }
-    
     console.log(appointment)
   }
   
-
-  const finishAppointment = (id) => {
+  const finishAppointment = async (id) => {
     console.log(id)
     setLoading(true); // Set loading to true when the request is sent
-    axios.put(`http://localhost:80/api2/${id}/?action=finish`,appointment)
-      .then(function (response) {
-        console.log("response")
-        console.log(response.data);
-        // if(response.data !== null){
-        //   window.location.reload();
-        // }else{
-        //   console.log("Please try again");
-        // }
-        
-      })
-      .finally(() => setLoading(false)); // Set loading to false when the request is completed
+    const response = await axios.put(`http://localhost:80/api2/${id}/?action=finish`,appointment)
+    if(response.status==200){
+      socket.emit('newData');
+      setLoading(false);
+    }
     console.log(appointment)
   }
 
-  const filteredAppointments = appointment.filter(appt => {
+  console.log(appointment.length)
+
+  const filteredAppointments = appointment.length!=0?appointment.filter(appt => {
     if (filter === 'all') return true;
     if (filter === 'today') {
-      // const today = new Date().toISOString().split('T')[0];
-      // return appt.date_ === today;
       return appt.status_ === 'accepted';
     }
     if (filter === 'pending') return appt.status_ === 'pending';
     if (filter === 'cancelled') return appt.status_ === 'cancelled';
     if (filter === 'recent') return appt.status_ === 'finished'; // Assuming recent visits are finished appointments
     return true;
-  });
-  
+  }):[];
+
+  console.log(appointment)
 
   console.log(appointment)
   return (
@@ -118,7 +112,6 @@ const AdminAppointment = () => {
           <button className='btn button-border-text button-radius' onClick={() => setFilter('cancelled')}>Cancelled</button>
           <button className='btn button-border-text button-radius' onClick={() => setFilter('recent')}>Recent Visits</button>
         </div>
-
 
         {/* appointment list - upcoming */}
         {filteredAppointments.map((appointment, index) => {
@@ -218,6 +211,7 @@ const AdminAppointment = () => {
             return null; 
           }
         })}
+
 
         {/* Loading screen */}
         {loading && (

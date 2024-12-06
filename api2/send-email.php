@@ -22,7 +22,7 @@ try {
     $mail->Password   = 'kwhfngmmwkfudzzz'; // Use an App Password, not your Gmail password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
-
+    
     // Email settings
     $mail->setFrom('pndingcong.stjames@gmail.com', 'Toothie Cutie Dental Clinic');
     $mail->addAddress($recipientEmail); // Recipient's email address

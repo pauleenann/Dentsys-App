@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './CancelAppointment.css'
 import axios from 'axios'
 import isAuthenticated from '../Auth'
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) => {
   const [appointment, setAppointment] = useState([]);
@@ -28,18 +31,19 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
       });
   }
 
-  const cancelAppointment = (event) => {
-    event.preventDefault();
+  const cancelAppointment = async (e) => {
+    e.preventDefault();
     setLoading(true); // Set loading to true when the request is sent
-    axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=cancel`, appointment)
-      .then(function (response) {
-        console.log("response")
-        console.log(response.data);
-        window.location.reload();
-      })
-      .finally(() => setLoading(false)); // Set loading to false when the request is completed
+    const response = await axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=cancel`, appointment);
+    if(response.status==200){
+      socket.emit('newData');
+      window.location.reload();
+      setLoading(false)
+    }
     console.log(appointment)
   }
+
+
   return (
     <div className='cancel-app'>
       <div className="cancel-app-card">

@@ -41,21 +41,12 @@ const AppointmentConfirmed = ({onClose, keyOfSelectedAppointment, appointments})
                 </div>
                 <div className="button-okay text-center mt-5 mb-5">
                   <button className='btn okay-button' onClick={reloadPage}>Okay</button>
-                  
-                  
-                    
                 </div>
-                
-
-            </div>
-            )
-            
+           </div>
+            )        
           }
-        }
-            
-        )}
-        
-        
+        }          
+        )}     
       </div>
     </div>
   )

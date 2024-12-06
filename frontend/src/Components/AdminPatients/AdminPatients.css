@@ -145,7 +145,6 @@ body {
    margin: 5px;
    padding: 8px 12px;
    font-size: 14px;
-   background-color: #f0f0f0;
    border: 1px solid #ccc;
    cursor: pointer;
    transition: background-color 0.3s;
@@ -160,3 +159,21 @@ body {
    color: #fff;
    border-color: #0056b3;
  }
+
+.pagination-buttons {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-buttons .btn {
+  margin: 0 10px;
+  background-color: #31A3B9;
+  color: #fff;
+
+}
+
+.pagination-buttons span {
+  font-size: 16px;
+}

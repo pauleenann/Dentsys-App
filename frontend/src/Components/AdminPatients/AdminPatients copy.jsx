@@ -15,12 +15,8 @@ const AdminPatients = () => {
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [search, setSearch] = useState('');
   const [selectedLetter, setSelectedLetter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPatients, setTotalPatients] = useState(0);
 
-  const LIMIT = 5;
-
-  /* const fetchPatients = async (letter) => {
+  const fetchPatients = async (letter) => {
     setSelectedLetter(letter);
     try {
       const response = await axios.get(`http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}`);
@@ -29,24 +25,7 @@ const AdminPatients = () => {
       console.error("Error fetching patient data:", error);
       setPatients([]);
     }
-  }; */
-
-  const fetchPatientsByLetter = async (letter, page = 1) => {
-    const offset = (page - 1) * LIMIT;
-    setSelectedLetter(letter);
-
-    try {
-      const response = await axios.get(
-        `http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`
-      );
-      setPatients(response.data.patients);
-      setTotalPatients(response.data.total);
-      setCurrentPage(page);
-    } catch (error) {
-      console.error("Error fetching patient data by letter:", error);
-    }
   };
-
 
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   
@@ -70,15 +49,15 @@ const AdminPatients = () => {
     setSearch(value.toLowerCase());
 }
 
-/* const handleReset = () => {
+const handleReset = () => {
   fetchPatients("", 1); // Reset to the first page with no letter filter
   getPatients();
-}; */
+};
 
 console.log(search)
 console.log(selectedLetter)
 
-  /* function getPatients() {
+  function getPatients() {
     axios.get('http://localhost:80/api2/?action=getPatients')
       .then(response => {
         console.log(response.data);
@@ -93,56 +72,13 @@ console.log(selectedLetter)
         console.error('Error fetching appointments:', error);
         setPatients([]);
       });
-  } */
-      const getPatients = async (page = 1) => {
-        const offset = (page - 1) * LIMIT;
-    
-        try {
-          const response = await axios.get(
-            `http://localhost:80/api2/?action=getPatients&limit=${LIMIT}&offset=${offset}`
-          );
-          setPatients(response.data.patients);
-          setTotalPatients(response.data.total);
-          setCurrentPage(page);
-        } catch (error) {
-          console.error("Error fetching patient data:", error);
-          setPatients([]);
-        }
-      };
-
-      const handleNextPage = () => {
-        if (currentPage * LIMIT < totalPatients) {
-          if (selectedLetter) {
-            fetchPatientsByLetter(selectedLetter, currentPage + 1);
-          } else {
-            getPatients(currentPage + 1);
-          }
-        }
-      };
-    
-      const handlePreviousPage = () => {
-        if (currentPage > 1) {
-          if (selectedLetter) {
-            fetchPatientsByLetter(selectedLetter, currentPage - 1);
-          } else {
-            getPatients(currentPage - 1);
-          }
-        }
-      };
-    
-      const handleReset = () => {
-        setSelectedLetter("");
-        getPatients(1);
-      };
-    
-
+  }
 
   return (
     <div className='wrapper'>
         <AdminNavbar/>
         <div id="content">
             <AdminInfo></AdminInfo>
-            
             <div className="patient-header">
                   <h1>Patients</h1>
                   <Link to='/add-new-patient'>
@@ -189,7 +125,7 @@ console.log(selectedLetter)
                     <button
                       key={letter}
                       className={`btn ${letter === selectedLetter ? "btn-selected" : ""}`}
-                      onClick={() => fetchPatientsByLetter(letter)}
+                      onClick={() => fetchPatients(letter)}
                     >
                       {letter}
                     </button>
@@ -199,7 +135,7 @@ console.log(selectedLetter)
                     Reset
                   </button>
                 </div>
-                
+                          
                 {/* Patients list */}
 
               {patients.length > 0 ? patients.map((patient, index) => {
@@ -245,32 +181,9 @@ console.log(selectedLetter)
                 }
                  //return null;
               }) : <p className='text-center mt-5'>No patient record found</p>}
-
-              {/* Pagination Buttons */}
-              
-              <div className="pagination-buttons">
-                  <button
-                    className="btn"
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </button>
-                  <span>
-                    Page {currentPage} of {Math.ceil(totalPatients / LIMIT)}
-                  </span>
-                  <button
-                    className="btn"
-                    onClick={handleNextPage}
-                    disabled={currentPage * LIMIT >= totalPatients}
-                  >
-                    Next
-                  </button>
-                </div>
               </div>
       
     </div>
-    
   )
 }
 

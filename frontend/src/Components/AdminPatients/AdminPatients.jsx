@@ -4,6 +4,10 @@ import AdminInfo from '../AdminInfo/AdminInfo'
 import './AdminPatients.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
+
 
 const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
@@ -12,6 +16,17 @@ const AdminPatients = () => {
   
   useEffect(() => {
     getPatients();
+
+    //Listen for the 'updateData' event from the server
+    socket.on('updatedData', ()=>{
+      getPatients();
+      console.log('updated data');
+    }); // Fetch updated appointments when event is emitted
+
+   // Cleanup the event listener when the component unmounts
+   return () => {
+     socket.off('updatedData');
+   };
   }, []);
 
   const handleChange = (e) => {

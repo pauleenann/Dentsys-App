@@ -31,7 +31,8 @@ const AdminAppointment = () => {
    //Listen for the 'updateData' event from the server
    socket.on('updatedData', ()=>{
     getAppointment();
-    console.log('updated data');}); // Fetch updated appointments when event is emitted
+    console.log('updated data');
+  }); // Fetch updated appointments when event is emitted
 
    // Cleanup the event listener when the component unmounts
    return () => {

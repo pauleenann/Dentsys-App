@@ -70,9 +70,15 @@ import selected30 from './../../Assets/Tooth Selected/selected30.png'
 import selected31 from './../../Assets/Tooth Selected/selected31.png'
 import selected32 from './../../Assets/Tooth Selected/selected32.png'
 import isAuthenticated from '../Auth';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 
 const AddService = () => {
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const intValue = parseInt(id, 10);
     const [services, setServices] = useState([]);
     const [selectedTeeth, setSelectedTeeth] = useState({});
     const [servicesDetails, setServicesDetails] = useState([]);
@@ -80,23 +86,21 @@ const AddService = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
-    const [submitForm, setSubmitForm] = useState(false)
-
-    const { id } = useParams();
-    const intValue = parseInt(id, 10);
-
-    let allToothIds = [];
-    for(let i = 0; i < 32; i++){
-        allToothIds[i] = i+1;
-    }
-    console.log(allToothIds)
-
-    useEffect(() => {
-        getServices();
-        getServicesDetails();
-        getDentist();
-    }, []);
-    
+    const [submitForm, setSubmitForm] = useState(false);
+    const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
+    const [patient, setPatient] = useState({
+        action: 'procedureHistory',
+        p_id: intValue,
+        p_date: '',
+        p_time: '',
+        p_selectedTeeth: [], 
+        p_dentist: '',
+        p_service: '',
+        p_severity_material: '',
+        inv_totalamount: totalPrice,
+        inv_status: 'pending'
+        
+    });
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
         2: { default: tooth2, selected: selected2 },
@@ -132,22 +136,60 @@ const AddService = () => {
         32: { default: tooth32, selected: selected32 },
     };
 
-
-    const [patient, setPatient] = useState({
-        action: 'procedureHistory',
-        p_id: intValue,
-        p_date: '',
-        p_time: '',
-        p_selectedTeeth: [], 
-        p_dentist: '',
-        p_service: '',
-        p_severity_material: '',
-        inv_totalamount: totalPrice,
-        inv_status: 'pending'
+    //useEffect hook is used to compute the total price whenever any of the
+    //dependencies (patient.p_service, patient.p_severity_material, patient
+    //p_selectedTeeth, servicesDetails) change.
+    useEffect(() => {
+        //function to compute total price
+        const computeTotalPrice = () => {
+            let price = 0; //initialize price to 0
+            servicesDetails.forEach(service => {
+                if(patient.p_service != "Oral prophylaxis (Teeth Cleaning)"){
+                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
+                    price = service.sd_price * totalTooth;
+                    }
+                }else{
+                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
+                        price = service.sd_price;
+                        }
+                }
+                
+            });
+            setTotalPrice(price);
+            //set totalAmount to totalPrice useState
+            setPatient(prevState => ({
+                ...prevState,
+                inv_totalamount: price
+            }));
+        };
+        // Compute the total number of selected teeth
+        const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
+         // Call the computeTotalPrice function to update the totalPrice state
+        computeTotalPrice();
         
-    });
+    }, [patient.p_service, patient.p_severity_material, patient.p_selectedTeeth, servicesDetails]);
 
-    const [selectedToothNumbers, setSelectedToothNumbers] = useState([]);  // State for selected tooth number
+    let allToothIds = [];
+    for(let i = 0; i < 32; i++){
+        allToothIds[i] = i+1;
+    }
+    console.log(allToothIds)
+
+    useEffect(() => {
+        getServices();
+        getServicesDetails();
+        getDentist();
+    }, []);
+
+    useEffect(() => {
+        if (patient.p_service === "Oral prophylaxis (Teeth Cleaning)") {
+            allToothIds.forEach(id => handleToothClick(id));
+        }else{
+            patient.p_selectedTeeth = []
+            setSelectedToothNumbers([])
+        }
+    }, [patient.p_service]);
+    
     
     const handleToothClick = (toothId) => {
         setPatient((prevState) => ({
@@ -196,14 +238,6 @@ const AddService = () => {
         );
     };
 
-    useEffect(() => {
-        if (patient.p_service === "Oral prophylaxis (Teeth Cleaning)") {
-            allToothIds.forEach(id => handleToothClick(id));
-        }else{
-            patient.p_selectedTeeth = []
-            setSelectedToothNumbers([])
-        }
-    }, [patient.p_service]);
 
     const renderTooth2 = (toothId) => {
         let isSelected;
@@ -287,88 +321,34 @@ const AddService = () => {
         }
     }
 
-    const payment = [
-        { value: 'CASH', label: 'CASH' },
-        { value: 'GCASH', label: 'GCASH' },
-    ];
-
-    const gender = [
-        { value: 'Male', label: 'Male' },
-        { value: 'Female', label: 'Female' },
-        { value: 'Non-binary', label: 'Non-binary' },
-        { value: 'Prefer not to say', label: 'Prefer not to say' },
-    ];
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setPatient({...patient,[name]: value});
     }
 
-    const navigate = useNavigate();
 
-    const handleClick = async (e) => {
-        e.preventDefault();
+    const handleClick = async () => {
         if(submitForm == false){
             formValidation();
         }else if(submitForm){
             setLoading(true);
             try {
-            console.log("Sending patient data to server:", patient);
-            await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));;
-            navigate(`/view-patient-info/${id}`);
+                const response = await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));
+                console.log(response)
+                if(response.status==200){
+                    socket.emit('newData');
+                }
+                navigate(`/view-patient-info/${id}`);
             } catch (err) {
-            console.log(err);
-            //   setError(true)
+                console.log(err);
+                //   setError(true)
             }
         }
       };
 
-
-    //useEffect hook is used to compute the total price whenever any of the
-    //dependencies (patient.p_service, patient.p_severity_material, patient
-    //p_selectedTeeth, servicesDetails) change.
-      useEffect(() => {
-        //function to compute total price
-        const computeTotalPrice = () => {
-            let price = 0; //initialize price to 0
-            servicesDetails.forEach(service => {
-                if(patient.p_service != "Oral prophylaxis (Teeth Cleaning)"){
-                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
-                    price = service.sd_price * totalTooth;
-                    }
-                }else{
-                    if (patient.p_service == service.service_name && patient.p_severity_material === service.sd_description) {
-                        price = service.sd_price;
-                        }
-                }
-                
-            });
-            setTotalPrice(price);
-            //set totalAmount to totalPrice useState
-            setPatient(prevState => ({
-                ...prevState,
-                inv_totalamount: price
-            }));
-        };
-        // Compute the total number of selected teeth
-        const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;
-         // Call the computeTotalPrice function to update the totalPrice state
-        computeTotalPrice();
-        
-    }, [patient.p_service, patient.p_severity_material, patient.p_selectedTeeth, servicesDetails]);
- 
-    console.log(patient);
-    console.log(totalPrice)
-    //console.log(totalTooth);
-    //console.log(servicesDetails);
-
-    // const totalTooth = Object.values(patient.p_selectedTeeth).filter(value => value === true).length;//calculate selected tooth that are true
-
-    // console.log(totalTooth); // This will print the number of true values in the object
     const formValidation = ()=>{
         let error = {};
         
-
         if(!patient.p_date){
             error.date = 'Please choose a date'
         }
@@ -387,19 +367,13 @@ const AddService = () => {
         if(!patient.p_severity_material){
             error.severity_material = 'Please choose the severity/material'
         }
-        
-
         if(Object.keys(error).length == 0){
             setSubmitForm(true)
         }else{
             setSubmitForm(false)
         }
-
         setErrors(error)
-
     }
-
-    console.log(Object.values(patient.p_selectedTeeth).every(value=>value ===false))
 
   return (
     <div className='wrapper'>

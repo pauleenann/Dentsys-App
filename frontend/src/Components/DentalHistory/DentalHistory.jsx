@@ -81,30 +81,28 @@ const DentalHistory = () => {
     const {id} = useParams();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [historyResponse, invoiceResponse, paymentResponse, totalpaidResponse] = await Promise.all([
-                    axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
-                    axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
-                    axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`),
-                    await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaidDentalHistory`)
-                ]);
-
-                setHistory(historyResponse.data);
-                setInvoice(invoiceResponse.data);
-                setPayment(paymentResponse.data)
-                setTotalPaid(totalpaidResponse.data[0].total_paid);
-                //stores patient id to patientId for go back button
-                setPatientId(historyResponse.data[0].p_id);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
         fetchData();
-    }, [id]);
+    }, []);
 
-    console.log(patientId)
+    const fetchData = async () => {
+        try {
+            const [historyResponse, invoiceResponse, paymentResponse, totalpaidResponse] = await Promise.all([
+                axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
+                axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
+                axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`),
+                await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaidDentalHistory`)
+            ]);
+
+            setHistory(historyResponse.data);
+            setInvoice(invoiceResponse.data);
+            setPayment(paymentResponse.data)
+            setTotalPaid(totalpaidResponse.data[0].total_paid);
+            //stores patient id to patientId for go back button
+            setPatientId(historyResponse.data[0].p_id);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const toothImages = {
         1: { default: tooth1, selected: selected1 },
@@ -205,7 +203,6 @@ const DentalHistory = () => {
         );
     };
     
-    console.log(totalPaid)
     
   return (
     <div className='wrapper'>
@@ -294,9 +291,6 @@ const DentalHistory = () => {
                         <hr className='mt-5'/>
                         <h4 className='text-center mt-5'>Payment Summary</h4>
 
-
-                        
-
                         {/* receipt */}
                         <div className=" row mt-5 mb-5">
                             <div className="col p-0">
@@ -342,10 +336,8 @@ const DentalHistory = () => {
                             </div>
                         </div>
 
-
                         <h5 className='mb-4 mt-5'>Payment</h5>
 
-                        
                         {/* row for payment */}
                         {payment.map((item,key)=>{
                             if(item.inv_status == 'paid' || item.inv_status == 'partial'){
@@ -366,8 +358,6 @@ const DentalHistory = () => {
                                     </div>
                                 );
                             }
-                        
-                            
                         })}
 
                         {invoice.map((item,key)=>{
@@ -408,12 +398,7 @@ const DentalHistory = () => {
                         </div>
                     </div>
                 </div>
-                                    </div>
-                                )
-                            }
-                        })}
-                        
-                    </div>
+            </div>)}})}</div>
         ))) : (<p>No history available.</p>)} 
       </div>
       

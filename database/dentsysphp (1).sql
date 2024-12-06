@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 05:53 AM
+-- Generation Time: Dec 06, 2024 at 02:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,9 +41,8 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`a_id`, `id`, `service_`, `date_`, `time_`, `status_`) VALUES
-(84, 61, 'Oral prophylaxis (Teeth Cleaning)', '2024-10-04', '11:00 AM - 12:00 PM', 'finished'),
-(85, 62, 'Composite Restoration', '2024-10-04', '12:00 PM - 1:00 PM', 'finished'),
-(86, 63, 'Oral prophylaxis (Teeth Cleaning)', '2024-11-04', '3:00 PM - 4:00 PM', 'finished');
+(155, 91, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-06', '4:00 PM - 5:00 PM', 'cancelled'),
+(156, 92, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-06', '4:00 PM - 5:00 PM', 'finished');
 
 -- --------------------------------------------------------
 
@@ -87,9 +86,11 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`inv_id`, `ph_id`, `inv_issuedate`, `inv_duedate`, `inv_totalamount`, `inv_status`) VALUES
-(25, '49', '2024-10-04', '2024-10-04', 1500.00, 'partial'),
-(26, '50', '2024-10-04', '2024-10-04', 12000.00, 'paid'),
-(27, '51', '2024-10-04', '2024-10-04', 1000.00, 'pending');
+(30, '54', '2024-12-06', '2024-12-06', 1000.00, 'pending'),
+(31, '55', '2024-12-06', '2024-12-06', 10000.00, 'pending'),
+(32, '56', '2024-12-06', '2024-12-06', 1000.00, 'pending'),
+(33, '57', '2024-12-06', '2024-12-06', 3000.00, 'pending'),
+(34, '58', '2024-12-06', '2024-12-06', 3000.00, 'pending');
 
 -- --------------------------------------------------------
 
@@ -113,9 +114,11 @@ CREATE TABLE `patienthistory` (
 --
 
 INSERT INTO `patienthistory` (`id`, `p_id`, `p_date`, `p_time`, `p_service`, `p_selectedTeeth`, `p_dentist`, `p_severity_material`) VALUES
-(49, 14, '2024-10-05', '9:00 AM - 10:00 AM', 'Radiograph', '{\"14\":true,\"21\":true,\"23\":true}', 'Dingcong', 'periapical x-ray'),
-(50, 14, '2024-10-04', '10:00 AM - 11:00 AM', 'Teeth Whitening', '{\"11\":true,\"13\":true}', 'Dingcong', 'Standard'),
-(51, 14, '2024-10-05', '9:00 AM - 10:00 AM', 'Radiograph', '{\"11\":true,\"13\":true}', 'Dingcong', 'periapical x-ray');
+(54, 38, '2024-12-06', '9:00 AM - 10:00 AM', 'Oral prophylaxis (Teeth Cleaning)', '{\"1\":true,\"2\":true,\"3\":true,\"4\":true,\"5\":true,\"6\":true,\"7\":true,\"8\":true,\"9\":true,\"10\":true,\"11\":true,\"12\":true,\"13\":true,\"14\":true,\"15\":true,\"16\":true,\"17\":true,\"18\":true,\"19\":true,\"20\":true,\"21\":true,\"22\":true,\"23\":true,\"24\":true,\"25\":true,\"26\":true,\"27\":true,\"28\":true,\"29\":true,\"30\":true,\"31\":true,\"32\":true}', 'Dingcong', 'Mild'),
+(55, 38, '2024-12-07', '11:00 AM - 12:00 PM', 'Wisdowm Tooth Removal', '{\"6\":true,\"13\":true}', 'Dingcong', 'Upper'),
+(56, 38, '2024-12-06', '9:00 AM - 10:00 AM', 'Oral prophylaxis (Teeth Cleaning)', '{\"1\":true,\"2\":true,\"3\":true,\"4\":true,\"5\":true,\"6\":true,\"7\":true,\"8\":true,\"9\":true,\"10\":true,\"11\":true,\"12\":true,\"13\":true,\"14\":true,\"15\":true,\"16\":true,\"17\":true,\"18\":true,\"19\":true,\"20\":true,\"21\":true,\"22\":true,\"23\":true,\"24\":true,\"25\":true,\"26\":true,\"27\":true,\"28\":true,\"29\":true,\"30\":true,\"31\":true,\"32\":true}', 'Dingcong', 'Mild'),
+(57, 38, '2024-12-10', '11:00 AM - 12:00 PM', 'Oral Surgery', '{\"11\":true,\"13\":true,\"16\":true}', 'Dingcong', 'gingivectomy (per gums)'),
+(58, 38, '2024-12-07', '10:00 AM - 11:00 AM', 'Oral Surgery', '{\"12\":true,\"13\":true,\"14\":true}', 'Dingcong', 'gingivectomy (per gums)');
 
 -- --------------------------------------------------------
 
@@ -125,14 +128,14 @@ INSERT INTO `patienthistory` (`id`, `p_id`, `p_date`, `p_time`, `p_service`, `p_
 
 CREATE TABLE `patients` (
   `id` int(11) NOT NULL,
-  `p_fname` varchar(45) NOT NULL,
-  `p_lname` varchar(45) NOT NULL,
-  `p_mname` varchar(45) NOT NULL,
-  `p_ename` varchar(45) NOT NULL,
-  `p_age` int(11) NOT NULL,
-  `p_gender` varchar(45) NOT NULL,
-  `p_email` varchar(45) NOT NULL,
-  `p_phone` varchar(45) NOT NULL
+  `p_fname` varchar(45) DEFAULT NULL,
+  `p_lname` varchar(45) DEFAULT NULL,
+  `p_mname` varchar(45) DEFAULT NULL,
+  `p_ename` varchar(45) DEFAULT NULL,
+  `p_age` int(11) DEFAULT NULL,
+  `p_gender` varchar(45) DEFAULT NULL,
+  `p_email` varchar(45) DEFAULT NULL,
+  `p_phone` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -140,8 +143,7 @@ CREATE TABLE `patients` (
 --
 
 INSERT INTO `patients` (`id`, `p_fname`, `p_lname`, `p_mname`, `p_ename`, `p_age`, `p_gender`, `p_email`, `p_phone`) VALUES
-(13, 'lance', 'lance', 'RABANDABAN', '', 20, '', 'lancewrt@gmail.com', '09162121212'),
-(14, 'NEMIA', 'BERNAL', 'RABANDABAN', '', 20, '', 'lancewrt@gmail.com', '09162121212');
+(38, 'Jeonghan', 'Yoon', '', '', NULL, NULL, 'tontonwinstonnn@gmail.com', '09270477362');
 
 -- --------------------------------------------------------
 
@@ -157,14 +159,6 @@ CREATE TABLE `payment` (
   `pay_method` varchar(45) DEFAULT NULL,
   `pay_amount` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`pay_id`, `inv_id`, `pay_date`, `pay_time`, `pay_method`, `pay_amount`) VALUES
-(38, 25, '2024-10-18', '10:40:00', 'CASH', 200.00),
-(39, 26, '2024-10-04', '13:02:00', 'CASH', 12000.00);
 
 -- --------------------------------------------------------
 
@@ -263,10 +257,8 @@ CREATE TABLE `temppatient` (
 --
 
 INSERT INTO `temppatient` (`id`, `fname`, `lname`, `mname`, `ename`, `email`, `phone`) VALUES
-(60, 'lance', 'lance', 'RABANDABAN', '', 'lancewrt@gmail.com', '09695295926'),
-(61, 'NEMIA', 'BERNAL', 'RABANDABAN', '', 'lancewrt@gmail.com', '09695295926'),
-(62, 'Edward', 'Cruz', '', '', 'edward@gmail.com', '09219161482'),
-(63, 'jojo', 'Siwa', 'Marie', '', 'jojosiwa@gmail.com', '09999999999');
+(91, 'Jenwell', 'Dingcong', 'Nasorrada', '', 'tontonwinstonnn@gmail.com', '09270477362'),
+(92, 'Jeonghan', 'Yoon', '', '', 'tontonwinstonnn@gmail.com', '09270477362');
 
 -- --------------------------------------------------------
 
@@ -286,31 +278,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `account_type`) VALUES
-(1, 'admin', 'admin_123', 'admin'),
-(2, 'lance', 'llllllll', 'admin'),
-(3, 'gio', 'llllllll', 'dentist');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_sessions`
---
-
-CREATE TABLE `user_sessions` (
-  `s_id` int(11) NOT NULL,
-  `session_id` varchar(255) NOT NULL,
-  `user_agent` varchar(255) DEFAULT NULL,
-  `ip_address` varchar(255) DEFAULT NULL,
-  `username` varchar(255) NOT NULL,
-  `login_time` varchar(255) NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_sessions`
---
-
-INSERT INTO `user_sessions` (`s_id`, `session_id`, `user_agent`, `ip_address`, `username`, `login_time`) VALUES
-(55, 'ijx85bt40', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', '222.127.152.44', 'lance', '2024-11-04 12:17:54');
+(1, 'admin', 'admin_123', 'dentist'),
+(2, 'admin2', 'admin_123', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -379,12 +348,6 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_sessions`
---
-ALTER TABLE `user_sessions`
-  ADD PRIMARY KEY (`s_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -392,7 +355,7 @@ ALTER TABLE `user_sessions`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT for table `dentist`
@@ -404,19 +367,19 @@ ALTER TABLE `dentist`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `inv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `inv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `patienthistory`
 --
 ALTER TABLE `patienthistory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -440,19 +403,13 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `temppatient`
 --
 ALTER TABLE `temppatient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `user_sessions`
---
-ALTER TABLE `user_sessions`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

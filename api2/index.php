@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL); //Sets PHP to report all errors, warnings, and notices.
 ini_set('display_errors',1);//display errors directly on the web page for debugging purposes.
-header("Access-Control-Allow-Origin: *");header("Access-Control-Allow-Origin: http://localhost:3001");//Sets CORS policy to allow access to this API from any domain.
+header("Access-Control-Allow-Origin: http://localhost:3000");//Sets CORS policy to allow access to this API from any domain.
 header("Access-Control-Allow-Headers: *");// Allows any headers to be sent in the request.
 header("Access-Control-Allow-Methods: *");// Allows any HTTP methods (GET, POST, PUT, DELETE, etc.) to be used in requests.
 
@@ -163,12 +163,9 @@ if($method ==='PUT'){
                     echo json_encode($response);
             break;
                 
-                
-                
-
             case 'cancel':
                 $user = json_decode(file_get_contents('php://input'));
-                $sql = "UPDATE appointment SET status_ = 'cancelled' WHERE a_id = :id";
+                $sql = "UPDATE appointment SET status_ = 'cancelled' WHERE a_id = :id AND status_ != 'cancelled'";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 

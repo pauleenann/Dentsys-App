@@ -7,6 +7,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DentalHistory from '../DentalHistory/DentalHistory';
 import isAuthenticated from '../Auth';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const ViewPatientInfo = () => {
     const [patient, setPatient] = useState([]);
@@ -19,6 +22,17 @@ const ViewPatientInfo = () => {
     useEffect(()=>{
         getPatient();
         getProcedureHistory();
+
+         //Listen for the 'updateData' event from the server
+         socket.on('updatedData', ()=>{
+            getProcedureHistory();
+            console.log('updated data');
+        }); // Fetch updated appointments when event is emitted
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            socket.off('updatedData');
+        };
     }, []);
 
     function getPatient() {

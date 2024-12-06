@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 import AdminInfo from '../AdminInfo/AdminInfo'
+
 import './AdminPatients.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -13,6 +14,20 @@ const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [search, setSearch] = useState('');
+  const [selectedLetter, setSelectedLetter] = useState("");
+
+  const fetchPatients = async (letter) => {
+    setSelectedLetter(letter);
+    try {
+      const response = await axios.get(`http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}`);
+      setPatients(response.data);
+    } catch (error) {
+      console.error("Error fetching patient data:", error);
+      setPatients([]);
+    }
+  };
+
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   
   useEffect(() => {
     getPatients();
@@ -34,7 +49,13 @@ const AdminPatients = () => {
     setSearch(value.toLowerCase());
 }
 
+const handleReset = () => {
+  fetchPatients("", 1); // Reset to the first page with no letter filter
+  getPatients();
+};
+
 console.log(search)
+console.log(selectedLetter)
 
   function getPatients() {
     axios.get('http://localhost:80/api2/?action=getPatients')
@@ -98,9 +119,41 @@ console.log(search)
                     </ul>
                     </div> */}
                 </div>
-                
+
+                <div className="button-group">
+                  {letters.map((letter) => (
+                    <button
+                      key={letter}
+                      className={`btn ${letter === selectedLetter ? "btn-selected" : ""}`}
+                      onClick={() => fetchPatients(letter)}
+                    >
+                      {letter}
+                    </button>
+                    
+                  ))}
+                  <button className="btn reset-button" onClick={handleReset}>
+                    Reset
+                  </button>
+                </div>
+                          
                 {/* Patients list */}
+
               {patients.length > 0 ? patients.map((patient, index) => {
+                <div className="list">
+                  {patients.length > 0 ? (
+                    patients.map((name, index) => (
+                      <div className="list-item" key={index}>
+                        {name}
+                        
+                      </div>
+                    ))
+                  ) : (
+                    <div className="list-item">
+                      {selectedLetter ? `No patients found for "${selectedLetter}"` : "Select a letter to view patients"}
+                    </div>
+                  )}
+                </div>
+           
                 if (patient.p_fname.toLowerCase().includes(search) || patient.p_lname.toLowerCase().includes(search) || search === '') {
                   return (
                     <div className="row patient-record" key={index}>
@@ -124,9 +177,9 @@ console.log(search)
                         </Link> */}
                       </div>
                     </div>
-                  );
+                  ) 
                 }
-                return null;
+                 //return null;
               }) : <p className='text-center mt-5'>No patient record found</p>}
               </div>
       

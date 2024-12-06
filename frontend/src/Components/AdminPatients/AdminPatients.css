@@ -133,3 +133,30 @@ body {
    color: var(--blue);
    text-transform: capitalize;
 }
+
+.button-group {
+   margin-top: 20px;
+   display: flex;
+   flex-wrap: wrap;
+   margin-bottom: 20px;
+ }
+ 
+ .btn {
+   margin: 5px;
+   padding: 8px 12px;
+   font-size: 14px;
+   background-color: #f0f0f0;
+   border: 1px solid #ccc;
+   cursor: pointer;
+   transition: background-color 0.3s;
+ }
+ 
+ .btn:hover {
+   background-color: #ddd;
+ }
+ 
+ .btn-selected {
+   background-color: #31A3B9;
+   color: #fff;
+   border-color: #0056b3;
+ }

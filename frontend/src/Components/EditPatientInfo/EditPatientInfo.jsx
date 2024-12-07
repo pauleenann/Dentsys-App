@@ -12,6 +12,7 @@ const EditPatientInfo = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
+    const gender = ['male','female','non-binary','prefer not to say'];
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
         p_fname: '',
@@ -30,7 +31,7 @@ const EditPatientInfo = () => {
         getPatient();
     }, []);
 
-    function getPatient() {
+    const getPatient = ()=> {
         axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
           .then(function(response) {
             console.log(response.data); 
@@ -38,13 +39,6 @@ const EditPatientInfo = () => {
           
           })
     };
-
-    const gender = [
-        { value: 'Male', label: 'Male' },
-        { value: 'Female', label: 'Female' },
-        { value: 'Non-binary', label: 'Non-binary' },
-        { value: 'Prefer not to say', label: 'Prefer not to say' },
-    ];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -163,7 +157,11 @@ const EditPatientInfo = () => {
                             {/* gender */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels">Gender</label>
-                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient.p_gender} onChange={handleChange}/>
+                                <select name="p_gender" className="form-control" id="" onChange={handleChange}>
+                                    {gender.map(item=>{
+                                        return <option value={item} selected={item==patient.p_gender}>{item}</option>
+                                    })}
+                                </select>
                             </div>
 
                             {/* email */}

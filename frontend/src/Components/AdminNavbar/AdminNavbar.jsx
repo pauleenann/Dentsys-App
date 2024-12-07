@@ -71,8 +71,6 @@ const AdminNavbar = () => {
                 
             </div>
             </div>
-
-                
             </nav>
     </div>
   )

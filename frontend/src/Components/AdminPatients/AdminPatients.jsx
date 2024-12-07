@@ -47,7 +47,6 @@ const AdminPatients = () => {
     }
   };
 
-
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   
   useEffect(() => {
@@ -101,6 +100,7 @@ console.log(selectedLetter)
           const response = await axios.get(
             `http://localhost:80/api2/?action=getPatients&limit=${LIMIT}&offset=${offset}`
           );
+          console.log(response.data)
           setPatients(response.data.patients);
           setTotalPatients(response.data.total);
           setCurrentPage(page);
@@ -134,8 +134,6 @@ console.log(selectedLetter)
         setSelectedLetter("");
         getPatients(1);
       };
-    
-
 
   return (
     <div className='wrapper'>
@@ -188,7 +186,7 @@ console.log(selectedLetter)
                   {letters.map((letter) => (
                     <button
                       key={letter}
-                      className={`btn ${letter === selectedLetter ? "btn-selected" : ""}`}
+                      className={`btn btn-alphabet ${letter === selectedLetter ? "btn-selected" : ""}`}
                       onClick={() => fetchPatientsByLetter(letter)}
                     >
                       {letter}
@@ -202,7 +200,7 @@ console.log(selectedLetter)
                 
                 {/* Patients list */}
 
-              {patients.length > 0 ? patients.map((patient, index) => {
+              {patients ? patients.map((patient, index) => {
                 <div className="list">
                   {patients.length > 0 ? (
                     patients.map((name, index) => (

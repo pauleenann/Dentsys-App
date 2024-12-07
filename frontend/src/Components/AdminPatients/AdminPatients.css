@@ -101,7 +101,6 @@ body {
     border-radius: 10px;
     display: flex;
     align-items: center;
-
  }
 
  .button-edit-container{
@@ -141,7 +140,7 @@ body {
    margin-bottom: 20px;
  }
  
- .btn {
+ .btn-alphabet {
    margin: 5px;
    padding: 8px 12px;
    font-size: 14px;

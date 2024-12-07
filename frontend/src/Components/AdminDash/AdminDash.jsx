@@ -140,9 +140,6 @@ const AdminDash = () => {
         setRecentAppDetail([]);
       });
   };
-
-
-
   
     return (
         <div className="wrapper">

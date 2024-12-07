@@ -10,32 +10,33 @@ $objDb = new DbConnect;
 $conn = $objDb->connect();
 
 // Query pending appointments past their time
-$sql = "SELECT a.id, a.user_id, u.email, u.name 
-        FROM appointments a
-        JOIN users u ON a.user_id = u.id
-        WHERE a.appointment_time < NOW() AND a.status = 'pending'";
+$sql = "SELECT inv_id, inv_duedate, inv_status 
+        FROM invoices
+        WHERE inv_duedate < DATE(NOW()) AND inv_status = 'pending'";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute();
-$appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$overdues = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($appointments) {
-    foreach ($appointments as $row) {
-        $appointment_id = $row['id'];
-        $user_email = $row['email'];
-        $user_name = $row['name'];
+if ($overdues) {
+    echo json_encode($overdues);
+    //checks if $appointmnets has elements
+    if(count($overdues)>0){
+        foreach($overdues as $overdue){
+            $invoiceId = $overdue['inv_id'];
+            echo $invoiceId;
+            $sql = "UPDATE invoices 
+                    SET inv_status = 'overdue'
+                    WHERE inv_id = :id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':id',$invoiceId);
 
-        // Update appointment status to 'cancelled'
-        $update_sql = "UPDATE appointments SET status = 'cancelled' WHERE id = :id";
-        $update_stmt = $conn->prepare($update_sql);
-        $update_stmt->bindParam(':id', $appointment_id, PDO::PARAM_INT);
-
-        if ($update_stmt->execute()) {
-            // Send cancellation email
-            echo "overdue invoices checked"
-        } else {
-            echo "Error updating record for appointment ID";
+            if($stmt->execute()){
+                echo "Overdue invoices checked and updated";
+            }else{
+                echo "Error updating record for appointment ID";
+            }
         }
     }
 }
-
+?>

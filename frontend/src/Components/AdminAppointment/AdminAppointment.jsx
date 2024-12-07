@@ -14,7 +14,7 @@ import io from 'socket.io-client';
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AdminAppointment = () => {
-  const [showReschedule, setShowReschedule] = useState(false);
+  // const [showReschedule, setShowReschedule] = useState(false);
   const [showView, setShowView] = useState(false);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -77,9 +77,7 @@ const AdminAppointment = () => {
     }
     console.log(appointment)
   }
-
-  console.log(appointment.length)
-
+  
   const filteredAppointments = appointment.length!=0?appointment.filter(appt => {
     if (filter === 'all') return true;
     if (filter === 'today') {
@@ -90,8 +88,6 @@ const AdminAppointment = () => {
     if (filter === 'recent') return appt.status_ === 'finished'; // Assuming recent visits are finished appointments
     return true;
   }):[];
-
-  console.log(appointment)
 
   console.log(appointment)
   return (
@@ -129,8 +125,8 @@ const AdminAppointment = () => {
                 <div className="col app-patient-info">
                   UPCOMING
                 </div>
-                <div className="col">
-                  <button className='btn button-resched ' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button>
+                <div className="col text-end">
+                  {/* <button className='btn button-resched ' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button> */}
                   <button className='btn p-0 mx-2' onClick={()=>{
                     setKeyOfSelectedAppointment(appointment.a_id); finishAppointment(appointment.a_id);
                   }}><i class="fa-solid fa-check button-finish"></i></button>
@@ -153,7 +149,7 @@ const AdminAppointment = () => {
                 <div className="col app-patient-info-finished">
                   FINISHED
                 </div>
-                <div className="col">
+                <div className="col text-end">
                   <button className='btn button-view-finished' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowView(true);}}>View</button>
                 </div>
               </div>
@@ -171,11 +167,11 @@ const AdminAppointment = () => {
                 <div className="col app-patient-info-pending">
                   PENDING
                 </div>
-                <div className="col">
+                <div className="col text-end">
                   {/* accept button */}
                   <button className='btn button-accept' onClick={() => {setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(appointment.a_id);}}>Accept</button>
                   {/* reschedule button */}
-                  <button className='btn p-0 mx-2' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button>
+                  {/* <button className='btn p-0 mx-2' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button> */}
                   {/* cancel button */}
                   <button className='btn p-0' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
@@ -227,11 +223,11 @@ const AdminAppointment = () => {
       </div>
 
       {/* shows reschedule component pag clinick resched button */}
-      {showReschedule && (
+      {/* {showReschedule && (
         <div className="reschedule-overlay">
           <Reschedule onClose={() => setShowReschedule(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}/>
         </div>
-      )}
+      )} */}
 
       {/* Show confirmation dialog */}
       {showConfirm && (

@@ -86,7 +86,6 @@ body {
     color: var(--white);
 }
 
-
 .app-button-color:hover{
     background-color: var(--blue-hover);
 }

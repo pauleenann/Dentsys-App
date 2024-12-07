@@ -29,8 +29,6 @@ const AppointmentForm = () => {
         status_: 'pending'
     });
 
-    console.log(formData.time_.length)
-
     const appointmentTime = [
         "9:00 AM - 10:00 AM",
         "10:00 AM - 11:00 AM",
@@ -60,7 +58,6 @@ const AppointmentForm = () => {
         const today = new Date().toISOString().split("T")[0];
         setMinDate(today); // Set the state for the minimum date
     }, []);
-
 
     const getUnavailableTime = (date) => {
         const times = []
@@ -184,7 +181,6 @@ const AppointmentForm = () => {
 
        
     }
-
 
   return (
     <div className='appoinment-container container'>

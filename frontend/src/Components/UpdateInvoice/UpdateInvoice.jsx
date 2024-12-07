@@ -268,11 +268,7 @@ const UpdateInvoice = () => {
                     </div>
                     <div className="col ">
                         <label htmlFor="pay_method">Payment Method</label><br />
-                        <select name="pay_method" id="pay_method" className='inv_input' onChange={handleChange}>
-                            <option value="CASH"
-                            >CASH</option>
-                            <option value="GCASH">GCASH</option>
-                        </select>
+                        <input type="text" className='inv_input' value={payment.pay_method}/>
                     </div>
                     <div className="col">
                         <label htmlFor="pay_amount">Paid Amount</label><br />

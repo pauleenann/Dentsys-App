@@ -7,7 +7,6 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
-
 const AppointmentForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -42,7 +41,6 @@ const AppointmentForm = () => {
         "3:00 PM - 4:00 PM",
         "4:00 PM - 5:00 PM"
     ]
-
 
     //everytime the chosen date changes, we need to reset the time
     useEffect(()=>{
@@ -83,7 +81,6 @@ const AppointmentForm = () => {
       };
 
     const unavailableTime = (time)=>{
-
         //set inputted date as chosen date
         const chosenDate = formData.date_?formData.date_:'';
 
@@ -103,7 +100,7 @@ const AppointmentForm = () => {
         return hour24Format<=timeToday&&chosenDate==minDate;
     }
 
-    async function getServices() {
+    const getServices = async ()=> {
         try {
             const response = await axios.get('http://localhost:80/api2/?action=getServices');
             console.log('Full API response:', response);

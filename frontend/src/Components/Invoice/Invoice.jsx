@@ -16,7 +16,7 @@ const Invoice = () => {
     }, []);
 
 
-    async function getInvoices() {
+    const getInvoices = async ()=> {
         try {
             const response = await axios.get('http://localhost:80/api2/?action=getInvoices');
             console.log('Full API response:', response);

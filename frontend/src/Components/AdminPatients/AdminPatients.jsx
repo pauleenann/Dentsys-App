@@ -9,7 +9,6 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
-
 const AdminPatients = () => {
   const [patients, setPatients] = useState([]);
   const [keyOfSelectedAppointment, setKeyOfSelectedAppointment] = useState(null);
@@ -17,6 +16,7 @@ const AdminPatients = () => {
   const [selectedLetter, setSelectedLetter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPatients, setTotalPatients] = useState(0);
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const LIMIT = 5;
 
@@ -31,24 +31,6 @@ const AdminPatients = () => {
     }
   }; */
 
-  const fetchPatientsByLetter = async (letter, page = 1) => {
-    const offset = (page - 1) * LIMIT;
-    setSelectedLetter(letter);
-
-    try {
-      const response = await axios.get(
-        `http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`
-      );
-      setPatients(response.data.patients);
-      setTotalPatients(response.data.total);
-      setCurrentPage(page);
-    } catch (error) {
-      console.error("Error fetching patient data by letter:", error);
-    }
-  };
-
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  
   useEffect(() => {
     getPatients();
 
@@ -64,18 +46,31 @@ const AdminPatients = () => {
    };
   }, []);
 
+  const fetchPatientsByLetter = async (letter, page = 1) => {
+    const offset = (page - 1) * LIMIT;
+    setSelectedLetter(letter);
+    try {
+      const response = await axios.get(`http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`);
+      setPatients(response.data.patients);
+      setTotalPatients(response.data.total);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Error fetching patient data by letter:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { value } = e.target;
     setSearch(value.toLowerCase());
-}
+  }
 
-/* const handleReset = () => {
-  fetchPatients("", 1); // Reset to the first page with no letter filter
-  getPatients();
-}; */
+  /* const handleReset = () => {
+    fetchPatients("", 1); // Reset to the first page with no letter filter
+    getPatients();
+  }; */
 
-console.log(search)
-console.log(selectedLetter)
+  console.log(search)
+  console.log(selectedLetter)
 
   /* function getPatients() {
     axios.get('http://localhost:80/api2/?action=getPatients')

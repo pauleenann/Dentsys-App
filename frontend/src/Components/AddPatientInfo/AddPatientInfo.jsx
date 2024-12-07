@@ -6,13 +6,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import isAuthenticated from '../Auth';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AddPatientInfo = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitForm, setSubmitForm] = useState(false)
     const navigate = useNavigate();
-
     const [patient, setPatient] = useState({
         action: 'addNewPatient',
         p_fname: '',
@@ -24,36 +26,31 @@ const AddPatientInfo = () => {
         p_email: '',
         p_phone: ''
     });
-
-    const gender = [
-        { value: 'Male', label: 'Male' },
-        { value: 'Female', label: 'Female' },
-        { value: 'Non-binary', label: 'Non-binary' },
-        { value: 'Prefer not to say', label: 'Prefer not to say' },
-    ];
+    const gender = ['male','female','non-binary','prefer not to say'];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setPatient({...patient,[name]: value});
     }
 
-    
-
     const handleClick = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         if(submitForm === false){
             formValidation();
         }else{
             setLoading(true);
             try {
-            await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));
-            // Uncomment the next line if you want to navigate after submission
-            navigate("/patient-list");
+                const response = await axios.post("http://localhost:80/api2/user/save", patient).finally(() => setLoading(false));
+                // Uncomment the next line if you want to navigate after submission
+                console.log(response)
+                if(response.status==200){
+                    socket.emit('newData');
+                }
+                navigate("/patient-list");
             } catch (err) {
-            console.log(err);
+                console.log('An error occurred: ',err.message);
             }
         }
-        
     };
 
     const formValidation = ()=>{
@@ -152,8 +149,8 @@ const AddPatientInfo = () => {
                                 <label htmlFor="" className="form-label labels">Gender</label>
                                 <select className="form-select" aria-label="Default select example" id="p_gender" name="p_gender" value={patient.p_gender} onChange={handleChange} >
                                     <option value="" disabled>Select Gender</option>
-                                    {gender.map((gender) => (
-                                        <option key={gender.value} value={gender.value}>{gender.label}</option>
+                                    {gender.map((item) => (
+                                        <option value={item}>{item}</option>
                                     ))}
                                 </select>
                             </div>
@@ -173,7 +170,6 @@ const AddPatientInfo = () => {
                             </div>
                         </div>
                         <div className="col-12 text-center"><button type="submit" className="btn button-save" onClick={handleClick}>Save</button></div>
-                        
                     </form>
                 </div>
             </div>

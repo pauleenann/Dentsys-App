@@ -286,6 +286,14 @@ if($method ==='PUT'){
             $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($services);
             break;
+        
+        case 'getOptions':
+                $sql = "SELECT * FROM options";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($services);
+                break;
 
         case 'getAppointments':
             $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 04:23 PM
+-- Generation Time: Dec 08, 2024 at 04:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,6 +92,66 @@ INSERT INTO `invoices` (`inv_id`, `ph_id`, `inv_issuedate`, `inv_duedate`, `inv_
 (32, '56', '2024-12-06', '2024-12-06', 1000.00, 'pending'),
 (33, '57', '2024-12-06', '2024-12-06', 3000.00, 'pending'),
 (34, '58', '2024-12-06', '2024-12-06', 3000.00, 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `options`
+--
+
+CREATE TABLE `options` (
+  `option_id` int(11) NOT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `option_name` varchar(45) DEFAULT NULL,
+  `option_price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `options`
+--
+
+INSERT INTO `options` (`option_id`, `service_id`, `option_name`, `option_price`) VALUES
+(1, 1, 'mild (upper and lower teeth)', 1000.00),
+(2, 1, 'moderate (upper and lower teeth)', 1500.00),
+(3, 1, 'severe (upper and lower teeth)', 2000.00),
+(4, 2, 'mild (per tooth)', 1000.00),
+(5, 2, 'moderate (per tooth)', 1500.00),
+(6, 2, 'severe (per tooth)', 2000.00),
+(7, 3, 'teeth whitening (upper and lower teeth)', 6000.00),
+(8, 4, 'direct (per tooth)', 5000.00),
+(9, 4, 'indirect (per tooth)', 25000.00),
+(10, 5, 'plastic (per tooth)', 3500.00),
+(11, 5, 'porcelain (per tooth)', 7000.00),
+(12, 5, 'zirconia (per tooth)', 20000.00),
+(13, 6, 'plastic (per tooth)', 3500.00),
+(14, 6, 'porcelain (per tooth)', 7000.00),
+(15, 6, 'zirconia (per tooth)', 20000.00),
+(16, 7, 'mild (upper and lower teeth)', 30000.00),
+(17, 7, 'moderate (upper and lower teeth)', 35000.00),
+(18, 7, 'severe (upper and lower teeth)', 40000.00),
+(19, 7, 'mild (upper teeth)', 20000.00),
+(20, 7, 'moderate (upper teeth)', 25000.00),
+(21, 7, 'severe (upper teeth)', 30000.00),
+(22, 8, 'per tooth', 500.00),
+(23, 9, 'per tooth', 250.00),
+(24, 10, 'upper and lower braces', 3000.00),
+(25, 11, 'ordinary (upper and lower teeth)', 7000.00),
+(26, 11, 'invisible(upper and lower teeth)', 8000.00),
+(27, 12, 'per tooth', 500.00),
+(28, 13, 'starting fee for 1 tooth', 3500.00),
+(30, 14, 'mild (per tooth)', 3000.00),
+(31, 14, 'moderate (per tooth)', 4000.00),
+(32, 14, 'severe (per tooth)', 5000.00),
+(33, 15, 'impacted wisdom tooth (per tooth)', NULL),
+(34, 15, 'gingivectomy (per gums)', NULL),
+(35, 15, 'mucocele removal', 3000.00),
+(36, 16, 'per canal', 7000.00),
+(37, 16, 'fiber post', 2000.00),
+(38, 17, 'periapical x-ray', 500.00),
+(39, 17, 'panoramic x-ray', 850.00),
+(49, 7, 'mild (lower teeth)', 20000.00),
+(50, 7, 'moderate (lower teeth)', 25000.00),
+(51, 7, 'severe (lower teeth)', 30000.00);
 
 -- --------------------------------------------------------
 
@@ -224,18 +284,23 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`service_id`, `service_name`) VALUES
-(1, 'Oral prophylaxis (Teeth Cleaning)'),
-(2, 'Composite Restoration'),
-(3, 'Teeth Whitening'),
-(4, 'Veneers'),
-(5, 'Dental Crowns'),
-(6, 'Dental Bridges'),
-(7, 'Orthodontic Treatment (Braces)'),
-(14, 'Dentures'),
-(15, 'Wisdowm Tooth Removal'),
-(16, 'Oral Surgery'),
-(17, 'Root Canal Treatment'),
-(18, 'Radiograph');
+(1, 'oral prophylaxis (teeth cleaning)'),
+(2, 'composite restoration'),
+(3, 'teeth whitening'),
+(4, 'veneers'),
+(5, 'dental crowns'),
+(6, 'dental bridges'),
+(7, 'orthodontic treatment (braces)'),
+(8, 'replacement of bracket'),
+(9, 'recement of bracket'),
+(10, 'removal of braces'),
+(11, 'retainer'),
+(12, 'false tooth'),
+(13, 'dentures'),
+(14, 'wisdom tooth removal'),
+(15, 'oral surgeries'),
+(16, 'root canal treatment'),
+(17, 'radiograph');
 
 -- --------------------------------------------------------
 
@@ -282,7 +347,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `account_type`, `u_fname`, `u_lname`) VALUES
-(1, 'admin', 'admin_123', 'staff', 'Giolliana', 'Plandez'),
+(1, 'admin', 'admin_123', 'staff', 'Giolliana2', 'Plandez'),
 (2, 'admin2', 'admin_123', 'admin', 'Pauleen', 'Dingcong'),
 (3, 'lance', 'llllllll', 'admin', 'Lance', 'Bernal');
 
@@ -291,140 +356,21 @@ INSERT INTO `users` (`id`, `username`, `password`, `account_type`, `u_fname`, `u
 --
 
 --
--- Indexes for table `appointment`
+-- Indexes for table `options`
 --
-ALTER TABLE `appointment`
-  ADD PRIMARY KEY (`a_id`),
-  ADD KEY `fk_id_idx` (`id`);
-
---
--- Indexes for table `dentist`
---
-ALTER TABLE `dentist`
-  ADD PRIMARY KEY (`d_id`);
-
---
--- Indexes for table `invoices`
---
-ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`inv_id`);
-
---
--- Indexes for table `patienthistory`
---
-ALTER TABLE `patienthistory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `patients`
---
-ALTER TABLE `patients`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`pay_id`);
-
---
--- Indexes for table `servicedetails`
---
-ALTER TABLE `servicedetails`
-  ADD PRIMARY KEY (`sd_id`),
-  ADD KEY `service_id_idx` (`s_id`);
-
---
--- Indexes for table `services`
---
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`service_id`);
-
---
--- Indexes for table `temppatient`
---
-ALTER TABLE `temppatient`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD KEY `opt_service_id_idx` (`service_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `appointment`
+-- AUTO_INCREMENT for table `options`
 --
-ALTER TABLE `appointment`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
-
---
--- AUTO_INCREMENT for table `dentist`
---
-ALTER TABLE `dentist`
-  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `invoices`
---
-ALTER TABLE `invoices`
-  MODIFY `inv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT for table `patienthistory`
---
-ALTER TABLE `patienthistory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-
---
--- AUTO_INCREMENT for table `patients`
---
-ALTER TABLE `patients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- AUTO_INCREMENT for table `servicedetails`
---
-ALTER TABLE `servicedetails`
-  MODIFY `sd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-
---
--- AUTO_INCREMENT for table `services`
---
-ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `temppatient`
---
-ALTER TABLE `temppatient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `servicedetails`
---
-ALTER TABLE `servicedetails`
-  ADD CONSTRAINT `fk_service_id` FOREIGN KEY (`s_id`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `options`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

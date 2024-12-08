@@ -142,6 +142,7 @@ const AddService = () => {
             case '3':
             case '10':
             case '11':
+            case '17':
                 setDentalHistory((prevdata)=>({
                     ...prevdata,
                     selectedTooth: Array.from({ length: 32 }, (_, i) => i + 1)

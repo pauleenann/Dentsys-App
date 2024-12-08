@@ -105,8 +105,6 @@ const Accounts = () => {
     getUsers(); // Refresh user data
 };
 
-
-
   return (
     <div className="accounts-container">
       <AdminNavbar />

@@ -5,133 +5,59 @@ body {
     background: #fafafa;
 }
 
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+    --search-bar: #00000005;
+ }
 
-
-.wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-}
-
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #31A3B9;
-    color: #fff;
-    transition: all 0.3s;
-    
-}
-
-
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #31A3B9;
-    display: flex;
-    justify-content: center;
-}
-
-.admin-nav-dashboard{
-    display: flex;
-    align-items: center;
-}
-
-.adminnav-menu{
-    color: #fff;
-}
-
-.admin-navbar-container{
+.sidebar {
+    background-color: var(--blue);
     width: 250px;
-    height: 100vh;
-    position: fixed;
-    
-}
-
-.admin-navbar{
-    background-color: #31A3B9;
-    height: 100%;
+    padding-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+}
+
+.sidebar-logo{
+    width: 100px;
+}
+
+.sidebar-menu-container{
+    margin-top: 30px;
+    width: 100%;
     overflow: hidden;
+}
+
+.sidebar-menu{
+    color: var(--white);
+    font-size: 1.1rem;
     
-}
-
-.admin-navbar-logo{
-    width: 120px;
-    margin-bottom: 30px;
-}
-
-
-
-.admin-nav-dashboard, .admin-nav-appointments, .admin-nav-patients{
     display: flex;
     align-items: center;
-    cursor: pointer;
-    /* background-color: #36CE57; */
-    padding: 10px 37px;
+    padding: 10px 25px;
 }
 
-.admin-nav-dashboard:hover, .admin-nav-appointments:hover, .admin-nav-patients:hover, .admin-nav-dashboard:active, .admin-nav-appointments:active, .admin-nav-patients:active{
-    background-color: #36CE57;
+.sidebar-menu:hover{
+    background-color: var(--green);
 }
 
-
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-
-.admin-dashboard-text, .admin-appointments-text,
-.admin-patients-text
-{
-    font-size: 1.5rem;
-    font-weight: 500;
-}
-
-
-.admin-info{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: end;
-}
-
-.admin-info-user-button{
-    color: #36CE57;
-    width: 250px;
-}
-
-.admin-hello, .admin-info-name{
-    color: #36CE57;
-    font-size: 1.5rem;
-    font-weight: 500;
-}
-
-.admin-info-dashtext{
-    padding-top: 10px;
-    font-size: 3rem;
-}
-
-.adminnav-link{
-    text-decoration: none;
-}
-
-.adminnav-link-patient{
-    padding: 0;
-    width: 100%;
-    margin: 0;
-    text-decoration: none;
-}
-
-#content {
-    width: 100%;
-    padding: 30px 50px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}

@@ -101,6 +101,10 @@ const Accounts = () => {
     getUsers(1);
   };
 
+  const handleUserUpdated = () => {
+    getUsers(); // Refresh user data
+};
+
 
 
   return (
@@ -221,7 +225,7 @@ const Accounts = () => {
              
         
       </div>
-      <EditUserModal open={editUser} close={()=>setEditUser(false)} user={selectedUser}></EditUserModal>
+      <EditUserModal open={editUser} close={()=>setEditUser(false)} user={selectedUser} onUserUpdated={handleUserUpdated}></EditUserModal>
       <SetInactiveModal open={removeUser} close={()=>setRemoveUser(false)}></SetInactiveModal>
       <AddUserModal open={addUser} close={()=>setAddUser(false)}></AddUserModal>
     </div>

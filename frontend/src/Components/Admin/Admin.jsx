@@ -4,7 +4,6 @@ import logowhite from  './../../Assets/logowhite.png'
 import './Admin.css'
 import { Link, useNavigate } from "react-router-dom";
 import isAuthenticated from '../Auth';
-import Dashboard from '../../Pages/Dashboard';
 import LogSession from '../LogSession';
 
 const Admin = () => {

@@ -28,17 +28,16 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.invoice-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-#content {
+.invoice-container .content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0;
+    margin-left: 15%;
 }
 
 .invoice-table-header{

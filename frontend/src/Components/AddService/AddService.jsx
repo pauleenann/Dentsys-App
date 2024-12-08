@@ -135,6 +135,18 @@ const AddService = () => {
         31: { default: tooth31, selected: selected31 },
         32: { default: tooth32, selected: selected32 },
     };
+    const appointmentTime = [
+        "9:00 AM - 10:00 AM",
+        "10:00 AM - 11:00 AM",
+        "11:00 AM - 12:00 PM",
+        "12:00 PM - 1:00 PM",
+        "1:00 PM - 2:00 PM",
+        "2:00 PM - 3:00 PM",
+        "3:00 PM - 4:00 PM",
+        "4:00 PM - 5:00 PM"
+    ]
+    
+    console.log(patient)
 
     //useEffect hook is used to compute the total price whenever any of the
     //dependencies (patient.p_service, patient.p_severity_material, patient
@@ -173,7 +185,6 @@ const AddService = () => {
     for(let i = 0; i < 32; i++){
         allToothIds[i] = i+1;
     }
-    console.log(allToothIds)
 
     useEffect(() => {
         getServices();
@@ -284,6 +295,7 @@ const AddService = () => {
             setServices([]);
         }
     }
+
     //fetch servicesdetails table
     async function getServicesDetails() {
         try {
@@ -325,7 +337,6 @@ const AddService = () => {
         const { name, value } = e.target;
         setPatient({...patient,[name]: value});
     }
-
 
     const handleClick = async () => {
         if(submitForm == false){
@@ -408,67 +419,36 @@ const AddService = () => {
 
                     {/* time */}
                     <div className="col-6 mt-5 mb-3">
-                    <label htmlFor="" className="form-label labels" >Time</label>
-                    <div className="row">
-                        <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="9-10am" value="9:00 AM - 10:00 AM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            9:00 AM - 10:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="10-11am" value="10:00 AM - 11:00 AM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            10:00 AM - 11:00 AM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="11-12am" value="11:00 AM - 12:00 PM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            11:00 AM - 12:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="12-1pm" value="12:00 PM - 1:00 PM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            12:00 PM - 1:00 PM
-                            </label>
-                            </div>
+                        <label htmlFor="" className="form-label labels" >Time</label>
+                        <div className="row">
+                            <div className="col-xl-6 col-sm-12 mb-3">
+                                {appointmentTime.map((time,index)=>{
+                                    if(index<=3){
+                                        return <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="p_time" id="9-10am" value={time} onChange={handleChange} onBlur={formValidation}/>
+                                        <label class="form-check-label time-text" for="flexRadioDefault1">
+                                        {time}
+                                        </label>
+                                    </div>
+                                    }
+                                })}
                         </div>
                         <div className="col-xl-6 col-sm-12 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="1-2pm" value="1:00 PM - 2:00 PM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault1">
-                            1:00 PM - 2:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="2-3pm" value="2:00 PM - 3:00 PM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            2:00 PM - 3:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="3-4pm" value="3:00 PM - 4:00 PM" onChange={handleChange}  onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            3:00 PM - 4:00 PM
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="p_time" id="4-5pm" value="4:00 PM - 5:00 PM" onChange={handleChange} onBlur={formValidation}/>
-                            <label class="form-check-label time-text" for="flexRadioDefault2">
-                            4:00 PM - 5:00 PM
-                            </label>
-                            </div>
+                            {appointmentTime.map((time,index)=>{
+                                if(index>3){
+                                    return <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="p_time" id="9-10am" value={time} onChange={handleChange} onBlur={formValidation}/>
+                                        <label class="form-check-label time-text" for="flexRadioDefault1">{time}</label>
+                                    </div>
+                                }
+                            })}
                         </div>
                         <p className="error-message">{errors.time}</p>
                     </div>
                 </div>
                 
-        
-                    <div className="row">
-                        {/* services */}
+                <div className="row">
+                    {/* services */}
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels mb-2">Type of Service</label>
                         <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" value={patient.p_service} onChange={handleChange} onBlur={formValidation}>

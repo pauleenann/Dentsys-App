@@ -1,15 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-body {
-    font-family: "Inter", sans-serif;
-    background: #fafafa;
-}
-
 :root{
     --blue:#31A3B9;
     --blue-hover:#2c95aa;
     --lighter-blue: #62d3ea14;
     --lightest-blue:#31a2b918;
+    --lightest-blue2:#b5f3ff73;
     --white:#fff;
     --overlay: #fafafa56;
     --black:#000;
@@ -26,42 +22,22 @@ body {
     --light-green:#87D99E;
     --lighter-green: #EBF9F7;
     --shadow: #a9a9a989;
-    --search-bar: #00000005;
- }
+  }
 
-.sidebar {
-    background-color: var(--blue);
-    width: 15%;
-    padding-top: 40px;
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--white);
+}
+
+.add-dental-history-container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    min-height: 100vh;
+    justify-content: space-between;
+    width: 85%;
+
 }
 
-.sidebar-logo{
-    width: 150px;
-}
-
-.sidebar-menu-container{
-    margin-top: 30px;
+.add-dental-history-container .content{
     width: 100%;
-    overflow: hidden;
-}
-
-.sidebar-menu{
-    color: var(--white);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    padding: 7px 25px;
-}
-
-.sidebar-menu:hover{
-    background-color: var(--green);
-}
-
-.hide-menu{
-    display: none;
+    padding: 30px 50px;
+    min-height: 100vh;
 }

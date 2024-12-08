@@ -142,9 +142,9 @@ const AdminDash = () => {
   };
   
     return (
-        <div className="wrapper">
+        <div className="admindash-container">
             <AdminNavbar></AdminNavbar>
-            <div id="content">
+            <div className="content">
                 <AdminInfo></AdminInfo>
                 <h2 className='admin-info-dashtext'>Dashboard</h2>
                 <div className="row admin-dash-cards">

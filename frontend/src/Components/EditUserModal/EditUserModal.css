@@ -52,6 +52,59 @@ body {
     height: 100%;
     
 }
+/* .edit-user-modal-button{
+    margin-top: 10px;
+   padding: 8px 15px;
+   background-color: var(--blue);
+   border: none;
+   color: var(--white);
+   border-radius: 5px;
+
+}
+.remove-user-button{
+    margin-top: 10px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    background-color: var(--red);
+    color: var(--white);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    
+} */
+
+.edit-user-modal-button-container {
+    display: flex;
+    justify-content: center; /* Center aligns the buttons horizontally */
+    align-items: center; /* Aligns buttons vertically */
+    gap: 10px; /* Adds space between the buttons */
+    margin-top: 10px; /* Optional spacing from other elements */
+}
+
+.edit-user-modal-button {
+    padding: 8px 15px;
+    background-color: var(--blue);
+    border: none;
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-user-button {
+    display: flex;
+    align-items: center; /* Ensures icon and text are vertically aligned */
+    padding: 8px 15px; /* Ensure consistent padding */
+    background-color: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-user-modal-button-container button:hover {
+    opacity: 0.7; /* Adds a hover effect */
+}
 
 .edit-user-modal-box{
     background-color: var(--white);
@@ -105,11 +158,3 @@ body {
    text-align: center;
 }
 
-.edit-user-modal-button{
-    margin-top: 10px;
-   padding: 8px 15px;
-   background-color: var(--blue);
-   border: none;
-   color: var(--white);
-   border-radius: 5px;
-}

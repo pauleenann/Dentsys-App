@@ -61,6 +61,10 @@ body {
     border-radius: 8px;
 }
 
+.user-name{
+    justify-content: left;
+}
+
 .user-accounts{
     background-color: var(--lightest-blue);
     padding: 15px;

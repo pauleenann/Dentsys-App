@@ -28,6 +28,7 @@ import UpdateInvoice from "./Components/UpdateInvoice/UpdateInvoice";
 import Protected from "./Components/Protected";
 import Home from "./Pages/Home";
 import AppointmentCancelledConfirm from "./Components/AppointmentCancelledConfirm/AppointmentCancelledConfirm";
+import Accounts from "./Components/Accounts/Accounts";
 
 
 const App = () => {
@@ -58,6 +59,7 @@ const App = () => {
         <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin','dentist']}><DentalHistory/></Protected>} />
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />
+        <Route path="/accounts" element={<Protected allowedRoles={['admin']}><Accounts/></Protected>} />
         <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin']}><InvoiceDetails/></Protected>} />
         <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin']}><UpdateInvoice/></Protected>} />     
         <Route path="/appointment-cancelled/:id" element={<AppointmentCancelledConfirm/>} />      

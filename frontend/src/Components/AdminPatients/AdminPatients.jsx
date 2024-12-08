@@ -131,9 +131,9 @@ const AdminPatients = () => {
       };
 
   return (
-    <div className='wrapper'>
+    <div className='patients-container'>
         <AdminNavbar/>
-        <div id="content">
+        <div className="content">
             <AdminInfo></AdminInfo>
             
             <div className="patient-header">

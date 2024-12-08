@@ -5,7 +5,6 @@ import AppointmentSubmitted from "./Components/AppointmentSubmitted/AppointmentS
 import ServicesPage from "./Components/ServicesPage/ServicesPage";
 import Admin from "./Components/Admin/Admin";
 import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
-import Dashboard from "./Pages/Dashboard";
 import AdminAppointmentList from "./Pages/AdminAppointmentList";
 import AdminPatients from "./Components/AdminPatients/AdminPatients";
 import AddNewPatient from "./Pages/AddNewPatient";
@@ -31,6 +30,9 @@ import AppointmentCancelledConfirm from "./Components/AppointmentCancelledConfir
 import Accounts from "./Components/Accounts/Accounts";
 import AuditLogs from "./Components/AuditLogs/AuditLogs";
 import Reports from "./Components/Reports/Reports";
+import AddServiceCopy from "./Components/AddService/AddDentalHistory";
+import AddDentalHistory from "./Components/AddService/AddDentalHistory";
+import AdminDash from "./Components/AdminDash/AdminDash";
 
 
 const App = () => {
@@ -46,7 +48,7 @@ const App = () => {
         <Route path="/appointment-request-submitted" element={<AppointmentSubmittedPage/>} />
         <Route path="/services-page" element={<ServicesOffered/>} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/dashboard" element={<Protected allowedRoles={['admin']}><Dashboard /></Protected>} />
+        <Route path="/dashboard" element={<Protected allowedRoles={['admin']}><AdminDash /></Protected>} />
         <Route path="/appointment-list" element={<Protected allowedRoles={['admin']}><AdminAppointmentList/></Protected>} />
         <Route path="/patient-list" element={<Protected allowedRoles={['admin','dentist']}><AdminPatients/></Protected>} />
         <Route path="/add-new-patient" element={<Protected allowedRoles={['admin', 'dentist']}><AddNewPatient/></Protected>} />
@@ -57,7 +59,7 @@ const App = () => {
         <Route path="/cancel-appointment" element={<Protected allowedRoles={['admin']}><CancelAppointment/></Protected>} />
         <Route path="/view-patient-info/:id" element={<Protected allowedRoles={['admin', 'dentist']}><ViewPatientInfo/></Protected>} />
         <Route path="/edit-patient-info/:id" element={<Protected allowedRoles={['admin', 'dentist']}><EditPatientInfo/></Protected>} />
-        <Route path="/add-service/:id" element={<Protected allowedRoles={['admin','dentist']}><AddService/></Protected>} />
+        <Route path="/add-service/:id" element={<Protected allowedRoles={['admin','dentist']}><AddDentalHistory/></Protected>} />
         <Route path="/dental-history/:id" element={<Protected allowedRoles={['admin','dentist']}><DentalHistory/></Protected>} />
         <Route path="/add-appointment" element={<Protected allowedRoles={['admin']}><AddAppointment/></Protected>} />
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin']}><Invoice/></Protected>} />

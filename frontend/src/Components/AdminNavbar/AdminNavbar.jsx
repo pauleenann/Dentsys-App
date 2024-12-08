@@ -11,8 +11,6 @@ const AdminNavbar = () => {
         setAccountType(localStorage.getItem('account_type'));
     },[])
 
-    console.log(accountType)
-
   return (
     <div className='sidebar'>
         <img src={logowhite} alt="" className='sidebar-logo'/>

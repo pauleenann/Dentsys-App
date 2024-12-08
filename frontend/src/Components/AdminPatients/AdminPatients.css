@@ -29,17 +29,16 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.patients-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-#content {
-    width: 100%;
-    padding: 30px 50px;
-    min-height: 100vh;
-    transition: all 0;
+.patients-container .content {
+   width: 100%;
+   padding: 30px 50px;
+   min-height: 100vh;
+   margin-left: 15%;
 }
 
 .patient-header{

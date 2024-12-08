@@ -36,9 +36,9 @@ const Invoice = () => {
 
     console.log(invoices.length)
   return (
-    <div className="wrapper">
+    <div className="invoice-container">
       <AdminNavbar />
-      <div id="content">
+      <div className="content">
         <AdminInfo />
         <div className="inv-header mt-5">
           <h1>Invoices</h1>

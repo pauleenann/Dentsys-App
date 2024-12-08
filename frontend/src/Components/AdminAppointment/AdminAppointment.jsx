@@ -91,9 +91,9 @@ const AdminAppointment = () => {
 
   console.log(appointment)
   return (
-    <div className="wrapper">
+    <div className="admin-appointment-container">
       <AdminNavbar />
-      <div id="content">
+      <div className="content">
         <AdminInfo />
         <div className="appoint-header">
           <h1>Appointments</h1>

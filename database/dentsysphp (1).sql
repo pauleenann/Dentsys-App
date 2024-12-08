@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 02:12 PM
+-- Generation Time: Dec 08, 2024 at 04:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ CREATE TABLE `appointment` (
 
 INSERT INTO `appointment` (`a_id`, `id`, `service_`, `date_`, `time_`, `status_`) VALUES
 (155, 91, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-06', '4:00 PM - 5:00 PM', 'cancelled'),
-(156, 92, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-06', '4:00 PM - 5:00 PM', 'finished');
+(156, 92, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-06', '4:00 PM - 5:00 PM', 'finished'),
+(157, 93, 'Oral prophylaxis (Teeth Cleaning)', '2024-12-08', '4:00 PM - 5:00 PM', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -258,7 +259,8 @@ CREATE TABLE `temppatient` (
 
 INSERT INTO `temppatient` (`id`, `fname`, `lname`, `mname`, `ename`, `email`, `phone`) VALUES
 (91, 'Jenwell', 'Dingcong', 'Nasorrada', '', 'tontonwinstonnn@gmail.com', '09270477362'),
-(92, 'Jeonghan', 'Yoon', '', '', 'tontonwinstonnn@gmail.com', '09270477362');
+(92, 'Jeonghan', 'Yoon', '', '', 'tontonwinstonnn@gmail.com', '09270477362'),
+(93, 'lance', 'BERNAL', 'RABANDABAN', '', 'lancewrt@gmail.com', '09695295926');
 
 -- --------------------------------------------------------
 
@@ -270,16 +272,19 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `account_type` text NOT NULL
+  `account_type` text NOT NULL,
+  `u_fname` varchar(20) NOT NULL,
+  `u_lname` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `account_type`) VALUES
-(1, 'admin', 'admin_123', 'dentist'),
-(2, 'admin2', 'admin_123', 'admin');
+INSERT INTO `users` (`id`, `username`, `password`, `account_type`, `u_fname`, `u_lname`) VALUES
+(1, 'admin', 'admin_123', 'staff', 'Giolliana', 'Plandez'),
+(2, 'admin2', 'admin_123', 'admin', 'Pauleen', 'Dingcong'),
+(3, 'lance', 'llllllll', 'admin', 'Lance', 'Bernal');
 
 --
 -- Indexes for dumped tables
@@ -355,7 +360,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `dentist`
@@ -403,13 +408,13 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `temppatient`
 --
 ALTER TABLE `temppatient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

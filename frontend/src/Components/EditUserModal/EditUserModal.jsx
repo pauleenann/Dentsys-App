@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import ReactDom from 'react-dom'
+import {useNavigate } from "react-router-dom";
 import axios from "axios";
 import './EditUserModal.css'
 import SetInactiveModal from '../SetInactiveModal/SetInactiveModal';
 
 
-const EditUserModal = ({open,close, user}) => {
+const EditUserModal = ({open,close, user, onUserUpdated}) => {
     const [removeUser, setRemoveUser] = useState(false)
     const [userData, setUserData] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,8 @@ const EditUserModal = ({open,close, user}) => {
         }
     }, [open, user]);
 
+    const navigate = useNavigate();
+
     const handleSave = () => {
         if (!userData) return;
 
@@ -36,7 +39,9 @@ const EditUserModal = ({open,close, user}) => {
             .then((response) => {
                 console.log('User data updated successfully:', response.data);
                 //alert('User data updated successfully');
+                if (onUserUpdated) onUserUpdated();
                 close(); // Close the modal after saving
+                
             })
             .catch((error) => {
                 console.error('Error updating user data:', error);
@@ -65,7 +70,7 @@ const EditUserModal = ({open,close, user}) => {
         <div className="edit-user-modal-box">
             {/* header */}
             <div className="edit-user-modal-header row">
-                <span className='col-8 '><b> {userData.u_fname} {userData.u_lname}</b> Information</span>
+                <span className='col-8 '> Edit User Information</span>
                 {/* close button */}
                 <div className='col-4 text-end'>
                     <button className='edit-user-close' onClick={close}>
@@ -106,6 +111,7 @@ const EditUserModal = ({open,close, user}) => {
                         
                         <option value="dentist">Dentist</option>
                         <option value="staff">Staff</option>
+                        <option value="admin">Admin</option>
                     </select>
                 </div>
                 {/* username */}

@@ -83,12 +83,13 @@ body {
 }
 
 .edit-user-modal-button {
-    padding: 8px 15px;
+    padding: 8px 70px;
     background-color: var(--blue);
     border: none;
     color: var(--white);
     border-radius: 5px;
     cursor: pointer;
+    
 }
 
 .remove-user-button {
@@ -100,6 +101,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    
 }
 
 .edit-user-modal-button-container button:hover {

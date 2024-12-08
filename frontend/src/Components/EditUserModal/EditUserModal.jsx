@@ -14,7 +14,7 @@ const EditUserModal = ({open,close}) => {
     <div className='edit-user-modal-container'>
         {/* overlay */}
         <div className='edit-user-modal-overlay'></div>
-        {/* modal */}
+        {/* box */}
         <div className="edit-user-modal-box">
             {/* header */}
             <div className="edit-user-modal-header row">

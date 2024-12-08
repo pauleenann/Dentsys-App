@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+    --search-bar: #00000005;
+ }
+
+ .remove-user-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+ }
+
+ .remove-user-modal-overlay{
+    background-color: var(--shadow);
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.remove-user-modal-box{
+    background-color: var(--white);
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 450px;
+    overflow: hidden;
+    border-radius: 5px;
+    padding-bottom: 30px;
+}
+
+.remove-user-modal-header{
+    background-color: var(--red);
+    padding: 20px;
+    color: var(--white);
+    font-size: 1.1rem;
+}
+
+.remove-user-modal-content{
+    box-sizing: border-box;
+    padding: 30px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.remove-user-modal-button{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.remove-user-modal-button button{
+    width: 100px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.no-remove-user{
+    color: var(--red);
+    border: 1px solid var(--red);
+    background-color: transparent;
+}
+
+.yes-remove-user{
+    color: var(--white);
+    background-color: var(--red);
+    border: 1px solid var(--red);
+}

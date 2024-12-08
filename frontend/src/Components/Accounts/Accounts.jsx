@@ -6,10 +6,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import isAuthenticated from '../Auth';
 import EditUserModal from '../EditUserModal/EditUserModal';
+import RemoveUserModal from '../RemoveUserModal/RemoveUserModal';
 
 
 const Accounts = () => {
     const [editUser, setEditUser] = useState(false)
+    const [removeUser, setRemoveUser] = useState(false)
   return (
     <div className="accounts-container">
       <AdminNavbar />
@@ -46,7 +48,7 @@ const Accounts = () => {
                     <span>Edit User</span>
                 </button>
                 {/* remove user */}
-                <button className='remove-user-button'>
+                <button className='remove-user-button' onClick={()=>setRemoveUser(true)}>
                     <i class="fa-solid fa-trash"></i>
                     <span>Remove User</span>
                 </button>
@@ -54,6 +56,7 @@ const Accounts = () => {
         </div>
       </div>
       <EditUserModal open={editUser} close={()=>setEditUser(false)}></EditUserModal>
+      <RemoveUserModal open={removeUser} close={()=>setRemoveUser(false)}></RemoveUserModal>
     </div>
   )
 }

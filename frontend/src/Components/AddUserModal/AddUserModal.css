@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+    --search-bar: #00000005;
+ }
+
+ .add-user-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+ }
+
+ .add-user-modal-overlay{
+    background-color: var(--shadow);
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.add-user-modal-box{
+    background-color: var(--white);
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 650px;
+    overflow: hidden;
+    border-radius: 5px;
+    padding-bottom: 30px;
+}
+
+.add-user-modal-header{
+    background-color: var(--blue);
+    padding: 20px;
+    color: var(--white);
+    font-size: 1.1rem;
+}
+
+.add-user-close{
+    background-color: transparent;
+    border: none;
+    color: var(--white);
+}
+
+.add-user-modal-inputs{
+    padding: 20px 50px;
+}
+
+.add-user-modal-input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.add-user-modal-input label{
+    color: var(--blue);
+}
+
+.add-user-modal-input input,.add-user-modal-input select{
+    outline: none;
+   border: 1px solid var(--shadow);
+   height: 35px;
+   padding: 5px;
+   border-radius: 5px;
+}
+
+.add-user-modal-button-container{
+   text-align: center;
+}
+
+.add-user-modal-button{
+    margin-top: 10px;
+   padding: 8px 15px;
+   background-color: var(--blue);
+   border: none;
+   color: var(--white);
+   border-radius: 5px;
+}

@@ -7,11 +7,14 @@ import { Link } from 'react-router-dom';
 import isAuthenticated from '../Auth';
 import EditUserModal from '../EditUserModal/EditUserModal';
 import RemoveUserModal from '../RemoveUserModal/RemoveUserModal';
+import AddUserModal from '../AddUserModal/AddUserModal';
 
 
 const Accounts = () => {
     const [editUser, setEditUser] = useState(false)
     const [removeUser, setRemoveUser] = useState(false)
+    const [addUser, setAddUser] = useState(false)
+
   return (
     <div className="accounts-container">
       <AdminNavbar />
@@ -21,7 +24,7 @@ const Accounts = () => {
         <div className="accounts-header mt-5">
             <h1>Accounts</h1>
             {/* add account button */}
-            <button className='btn add-account'>
+            <button className='btn add-account' onClick={()=>setAddUser(true)}>
                 <i class="fa-regular fa-square-plus button-text text-light"></i>
                 <span className='text-light button-add'> Add account</span>
             </button>
@@ -57,6 +60,7 @@ const Accounts = () => {
       </div>
       <EditUserModal open={editUser} close={()=>setEditUser(false)}></EditUserModal>
       <RemoveUserModal open={removeUser} close={()=>setRemoveUser(false)}></RemoveUserModal>
+      <AddUserModal open={addUser} close={()=>setAddUser(false)}></AddUserModal>
     </div>
   )
 }

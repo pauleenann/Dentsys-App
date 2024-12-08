@@ -213,32 +213,6 @@ if($method ==='PUT'){
                 // echo json_encode($response)
                 break;
 
-                case 'updateUserData':
-                    $path = explode('/', $_SERVER['REQUEST_URI']);
-                    if (isset($path[2]) && is_numeric($path[2])) {
-                        $id = $path[2];
-                        $input = json_decode(file_get_contents('php://input'), true);
-                
-                        $sql = "UPDATE users SET u_fname = :u_fname, u_lname = :u_lname, account_type = :account_type, username = :username, password = :password WHERE id = :id";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bindParam(':u_fname', $input['u_fname']);
-                        $stmt->bindParam(':u_lname', $input['u_lname']);
-                        $stmt->bindParam(':account_type', $input['account_type']);
-                        $stmt->bindParam(':username', $input['username']);
-                        $stmt->bindParam(':password', $input['password']); // Consider hashing the password
-                        $stmt->bindParam(':id', $id);
-                
-                        if ($stmt->execute()) {
-                            echo json_encode(['message' => 'User updated successfully']);
-                        } else {
-                            http_response_code(500);
-                            echo json_encode(['message' => 'Failed to update user']);
-                        }
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(['message' => 'Invalid user ID']);
-                    }
-                    break;
 
 
             default:
@@ -615,109 +589,75 @@ if($method ==='PUT'){
                     echo json_encode($users);
                     break;
 
-       
         case 'getPatientsByLetter':
+
+            case 'getPatientsByLetter':
+                if (isset($_GET['letter']) && !empty($_GET['letter'])) {
+                    $letter = $_GET['letter'] . '%';
+                    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+                    $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+    
+                    $sql = "SELECT * FROM patients WHERE p_fname LIKE :letter LIMIT :limit OFFSET :offset";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':letter', $letter, PDO::PARAM_STR);
+                    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $patients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+                    $countSql = "SELECT COUNT(*) as total FROM patients WHERE p_fname LIKE :letter";
+                    $countStmt = $conn->prepare($countSql);
+                    $countStmt->bindParam(':letter', $letter, PDO::PARAM_STR);
+                    $countStmt->execute();
+                    $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
+    
+                    echo json_encode([
+                        "patients" => $patients,
+                        "total" => $total
+                    ]);
+                } else {
+                    echo json_encode(["error" => "No letter provided"]);
+                }
+                
+
+           /*  $sql = "SELECT * FROM patients WHERE p_fname LIKE :letter";
             if (isset($_GET['letter']) && !empty($_GET['letter'])) {
                 $letter = $_GET['letter'] . '%';
-                $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
-                $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
-
-                $sql = "SELECT * FROM patients WHERE p_fname LIKE :letter LIMIT :limit OFFSET :offset";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':letter', $letter, PDO::PARAM_STR);
-                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
                 $stmt->execute();
-                $patients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                $countSql = "SELECT COUNT(*) as total FROM patients WHERE p_fname LIKE :letter";
-                $countStmt = $conn->prepare($countSql);
-                $countStmt->bindParam(':letter', $letter, PDO::PARAM_STR);
-                $countStmt->execute();
-                $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
-
+                $names = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $names = ["error" => "No letter provided"];
+            }
+            echo json_encode($names); */
+            break;
+        
+            case "getPatientsByLetter1":
+                $letter = $conn->real_escape_string($_GET['letter'] ?? '');
+                $limit = intval($_GET['limit'] ?? 10);
+                $offset = intval($_GET['offset'] ?? 0);
+        
+                $query = "SELECT * FROM patients WHERE p_fname LIKE '$letter%' LIMIT $limit OFFSET $offset";
+                $result = $conn->query($query);
+        
+                $patients = [];
+                while ($row = $result->fetch_assoc()) {
+                    $patients[] = $row;
+                }
+        
+                // Get total number of patients for this letter
+                $countQuery = "SELECT COUNT(*) as total FROM patients WHERE p_fname LIKE '$letter%'";
+                $countResult = $conn->query($countQuery);
+                $total = $countResult->fetch_assoc()['total'];
+        
                 echo json_encode([
                     "patients" => $patients,
                     "total" => $total
                 ]);
-            } else {
-                echo json_encode(["error" => "No letter provided"]);
-            }
-            
-            break;
-        
-            
-            case 'getUsers':
-                $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10; // Default limit to 10
-                $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0; // Default offset to 0
-            
-                $sql = "SELECT * FROM users LIMIT :limit OFFSET :offset";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-                $stmt->execute();
-                $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-                // Get total count of patients for pagination
-                $countSql = "SELECT COUNT(*) as total FROM users";
-                $countStmt = $conn->prepare($countSql);
-                $countStmt->execute();
-                $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
-            
-                echo json_encode([
-                    "users" => $users,
-                    "total" => $total
-                ]);
                 break;
             
-                case 'getUsersByLetter':
-                    if (isset($_GET['letter']) && !empty($_GET['letter'])) {
-                        $letter = $_GET['letter'] . '%';
-                        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
-                        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
-        
-                        $sql = "SELECT * FROM users WHERE u_fname LIKE :letter LIMIT :limit OFFSET :offset";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bindParam(':letter', $letter, PDO::PARAM_STR);
-                        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-                        $stmt->execute();
-                        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-                        $countSql = "SELECT COUNT(*) as total FROM users WHERE u_fname LIKE :letter";
-                        $countStmt = $conn->prepare($countSql);
-                        $countStmt->bindParam(':letter', $letter, PDO::PARAM_STR);
-                        $countStmt->execute();
-                        $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
-        
-                        echo json_encode([
-                            "users" => $users,
-                            "total" => $total
-                        ]);
-                    } else {
-                        echo json_encode(["error" => "No letter provided"]);
-                    }
-                    
-                    break;
 
-                    case 'getUserData':
-                        $sql = "SELECT * from users";
-                        $path = explode('/',$_SERVER['REQUEST_URI']);
-                        // print_r($path);
-                        if(isset($path[2]) && is_numeric($path[2])){
-                            $sql .= " WHERE id = :id";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':id', $path[2]);
-                            $stmt->execute();
-                            $users = $stmt->fetch(PDO::FETCH_ASSOC);
-                        }else{
-                            $stmt = $conn->prepare($sql);
-                            $stmt->execute();
-                            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        }
-                        header('Content-Type: application/json');
-                        echo json_encode($users);
-                    break;
 
         default:
             echo json_encode(['error' => 'Invalid action']);
@@ -966,10 +906,6 @@ if($method ==='PUT'){
                     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
                 }
                 break;
-
-
-            
-           
 
             default:
                 echo json_encode(['error' => 'Invalid action']);

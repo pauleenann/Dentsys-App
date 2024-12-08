@@ -31,8 +31,7 @@ body {
 
 .add-dental-history-container{
     display: flex;
-    justify-content: space-between;
-    width: 85%;
+    width: 100%;
 
 }
 
@@ -40,4 +39,58 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
+    margin-left: 15%;
+}
+
+.add-dental-history-header h1{
+    color: var(--blue);
+}
+
+.add-dental-history-form{
+    background-color: var(--lightest-blue);
+    padding: 30px 50px;
+    border-radius: 10px;
+
+}
+
+.add-dental-history-form .tooth-chart{
+    /* background-color: #31B957; */
+    padding: 20px 0;
+    display: flex;
+    gap: 50px;
+}
+
+.add-dental-history-form .tooth-chart div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-dental-history-form .tooth{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-dental-history-form .tooth img{
+    width: 50px;
+}
+
+.add-dental-history-form .tooth button{
+    background-color: transparent;
+    border: none;
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.hide-tooth-chart{
+    display: none;
+    margin: 0;
+}
+
+.unhide-tooth-chart{
+    display: block;
+}
+
+.add-dental-history-form select{
+    text-transform: capitalize;
 }

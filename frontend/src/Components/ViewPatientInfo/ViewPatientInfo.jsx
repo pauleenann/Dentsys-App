@@ -68,9 +68,9 @@ const ViewPatientInfo = () => {
     console.log(history)
 
   return (
-    <div className='wrapper'>
+    <div className='view-patient-container'>
         <AdminNavbar />
-        <div id="content">
+        <div className="content">
             <AdminInfo />
             {/* go back button */}
             <div className="row">

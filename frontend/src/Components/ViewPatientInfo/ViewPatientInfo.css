@@ -28,17 +28,16 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.view-patient-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-#content {
+.view-patient-container .content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0.3s;
+    margin-left: 15%;
 }
 
 .no-bg-color{

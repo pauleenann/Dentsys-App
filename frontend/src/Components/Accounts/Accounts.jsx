@@ -5,9 +5,11 @@ import './Accounts.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import isAuthenticated from '../Auth';
+import EditUserModal from '../EditUserModal/EditUserModal';
 
 
 const Accounts = () => {
+    const [editUser, setEditUser] = useState(false)
   return (
     <div className="accounts-container">
       <AdminNavbar />
@@ -39,7 +41,7 @@ const Accounts = () => {
             </div>
             <div className="col">
                 {/* edit account*/}
-                <button className='edit-user-button'>
+                <button className='edit-user-button' onClick={()=>setEditUser(true)}>
                     <i class="fa-solid fa-pen"></i>
                     <span>Edit User</span>
                 </button>
@@ -50,10 +52,8 @@ const Accounts = () => {
                 </button>
             </div>
         </div>
-
-     
-       
       </div>
+      <EditUserModal open={editUser} close={()=>setEditUser(false)}></EditUserModal>
     </div>
   )
 }

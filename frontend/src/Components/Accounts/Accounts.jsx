@@ -6,8 +6,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import isAuthenticated from '../Auth';
 import EditUserModal from '../EditUserModal/EditUserModal';
-import RemoveUserModal from '../RemoveUserModal/RemoveUserModal';
+import RemoveUserModal from '../SetInactiveModal/SetInactiveModal';
 import AddUserModal from '../AddUserModal/AddUserModal';
+import SetInactiveModal from '../SetInactiveModal/SetInactiveModal';
 
 
 const Accounts = () => {
@@ -52,14 +53,14 @@ const Accounts = () => {
                 </button>
                 {/* remove user */}
                 <button className='remove-user-button' onClick={()=>setRemoveUser(true)}>
-                    <i class="fa-solid fa-trash"></i>
-                    <span>Remove User</span>
+                    <i class="fa-solid fa-person-arrow-down-to-line"></i>
+                    <span>Set as Inactive</span>
                 </button>
             </div>
         </div>
       </div>
       <EditUserModal open={editUser} close={()=>setEditUser(false)}></EditUserModal>
-      <RemoveUserModal open={removeUser} close={()=>setRemoveUser(false)}></RemoveUserModal>
+      <SetInactiveModal open={removeUser} close={()=>setRemoveUser(false)}></SetInactiveModal>
       <AddUserModal open={addUser} close={()=>setAddUser(false)}></AddUserModal>
     </div>
   )

@@ -35,7 +35,7 @@ body {
     --search-bar: #00000005;
  }
 
- .remove-user-modal-container{
+ .set-inactive-modal-container{
     position: fixed;
     top: 0;
     left: 0;
@@ -44,7 +44,7 @@ body {
     
  }
 
- .remove-user-modal-overlay{
+ .set-inactive-modal-overlay{
     background-color: var(--shadow);
     position: absolute;
     z-index: 1000;
@@ -53,7 +53,7 @@ body {
     
 }
 
-.remove-user-modal-box{
+.set-inactive-modal-box{
     background-color: var(--white);
     position: absolute;
     z-index: 1000;
@@ -66,14 +66,20 @@ body {
     padding-bottom: 30px;
 }
 
-.remove-user-modal-header{
+.set-inactive-modal-header{
     background-color: var(--red);
     padding: 20px;
     color: var(--white);
     font-size: 1.1rem;
 }
 
-.remove-user-modal-content{
+.set-inactive-close{
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+}
+
+.set-inactive-modal-content{
     box-sizing: border-box;
     padding: 30px;
     text-align: center;
@@ -81,25 +87,25 @@ body {
     font-size: 1.2rem;
 }
 
-.remove-user-modal-button{
+.set-inactive-modal-button{
     display: flex;
     justify-content: center;
     gap: 5px;
 }
 
-.remove-user-modal-button button{
+.set-inactive-modal-button button{
     width: 100px;
     padding: 5px;
     border-radius: 5px;
 }
 
-.no-remove-user{
+.no-set-inactive{
     color: var(--red);
     border: 1px solid var(--red);
     background-color: transparent;
 }
 
-.yes-remove-user{
+.yes-set-inactive{
     color: var(--white);
     background-color: var(--red);
     border: 1px solid var(--red);

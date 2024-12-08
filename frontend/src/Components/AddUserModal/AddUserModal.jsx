@@ -67,7 +67,6 @@ const AddUserModal = ({open,close}) => {
             <div className='add-user-modal-button-container'>
                 <button className='add-user-modal-button'>Add user</button>
             </div>
-            
         </div>
       
     </div>,

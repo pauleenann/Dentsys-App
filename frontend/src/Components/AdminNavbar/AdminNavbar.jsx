@@ -41,7 +41,7 @@ const AdminNavbar = () => {
                 <p className="col-10 m-0">Accounts</p>     
             </Link>
             {/* audit logs */}
-            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/patient-list'>
+            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/audit'>
                 <i className="fa-solid fa-file col-2"></i> 
                 <p className="col-10 m-0">Audit Logs</p>     
             </Link>

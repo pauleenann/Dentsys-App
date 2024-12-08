@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root{
+    --blue:#31A3B9;
+    --blue-hover:#2c95aa;
+    --lighter-blue: #62d3ea14;
+    --lightest-blue:#31a2b918;
+    --white:#fff;
+    --overlay: #fafafa56;
+    --black:#000;
+    --green: #36CE57;
+    --green2: #31B957;
+    --green-hover: #3bff72;
+    --neon-green:#66ff00;
+    --light-yellow: #ffeec4;
+    --yellow: #B99331;
+    --light-red:#da454518;
+    --red:#B93131;
+    --tomato-hover:#bd0202fb;
+    --tomato-red:#da4545fb;
+    --light-green:#87D99E;
+    --lighter-green: #EBF9F7;
+    --shadow: #a9a9a989;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--white);
+}
+
+.audit-container{
+    display: flex;
+}
+
+.audit-container .content{
+    width: 100%;
+    padding: 30px 50px;
+    min-height: 100vh;
+}
+
+.audit-header{
+
+}
+
+.audit-header h1{
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.audit-filter-dropdown{
+    display: flex;
+    gap: 10px;
+}
+
+.audit-filter-dropdown select{
+    cursor: pointer;
+    border: 1px solid var(--shadow);
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.audit-filter-date{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.audit-filter-date input{
+    cursor: pointer;
+    border: 1px solid var(--shadow);
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.audit-filter-reset{
+    height: 40px;
+    width: 100px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    transition: all  0.3s;
+}
+
+.audit-filter-reset:hover{
+    background-color: var(--blue-hover);
+}
+
+.audit-container .table{
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.audit-thead tr th{
+    background-color: var(--blue) !important;
+    padding: 10px;
+    color: var(--white);
+}
+
+.audit-tbody tr td{
+    background-color: var(--lightest-blue);
+    padding: 10px;
+}
+
+.audit-pagination{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.audit-pagination div{
+    display: flex;
+    gap: 10px;
+}
+
+.audit-pagination button{
+    height: 40px;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.audit-prev:disabled{
+    background-color: var(--shadow);
+}
+
+.audit-next{
+    
+}

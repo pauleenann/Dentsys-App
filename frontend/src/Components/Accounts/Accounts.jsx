@@ -19,7 +19,7 @@ const Accounts = () => {
   return (
     <div className="accounts-container">
       <AdminNavbar />
-      <div id="content">
+      <div className="content">
         <AdminInfo />
         {/* accounts header */}
         <div className="accounts-header mt-5">

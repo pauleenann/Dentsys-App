@@ -31,24 +31,23 @@ body {
 
 .sidebar {
     background-color: var(--blue);
-    width: 300px;
+    width: 15%;
     padding-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    position: fixed;
+    min-height: 100vh;
 }
 
 .sidebar-logo{
     width: 150px;
-   
 }
 
 .sidebar-menu-container{
     margin-top: 30px;
     width: 100%;
     overflow: hidden;
-    
 }
 
 .sidebar-menu{

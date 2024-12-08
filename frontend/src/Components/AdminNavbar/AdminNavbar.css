@@ -60,3 +60,6 @@ body {
     background-color: var(--green);
 }
 
+.hide-menu{
+    display: none;
+}

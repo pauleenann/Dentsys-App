@@ -11,6 +11,8 @@ const AdminNavbar = () => {
         setAccountType(localStorage.getItem('account_type'));
     },[])
 
+    console.log(accountType)
+
   return (
     <div className='sidebar'>
         <img src={logowhite} alt="" className='sidebar-logo'/>
@@ -31,7 +33,7 @@ const AdminNavbar = () => {
                 <p className="col-10 m-0">Invoices</p>     
             </Link>
             {/* patients */}
-            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/patient-list'>
+            <Link className={`sidebar-menu row`} to='/patient-list'>
                 <i className="fa-solid fa-hospital-user col-2"></i> 
                 <p className="col-10 m-0">Patients</p>     
             </Link>

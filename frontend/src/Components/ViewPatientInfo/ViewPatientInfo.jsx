@@ -64,9 +64,6 @@ const ViewPatientInfo = () => {
         }
     };
 
-    console.log(patient);
-    console.log(history)
-
   return (
     <div className='view-patient-container'>
         <AdminNavbar />
@@ -142,7 +139,6 @@ const ViewPatientInfo = () => {
 
                             <div className="col-12 text-end">
                                 <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-record'> Edit</button></Link>
-                                
                             </div>
                         </div>
                     </form>
@@ -172,7 +168,7 @@ const ViewPatientInfo = () => {
                                                 <tr className=''>
                                                     <td className='no-bg-color dhistory-info pt-3'scope="row">{item.p_date}</td>
                                                     <td className='no-bg-color dhistory-info pt-3' >Dr. {item.p_dentist} </td>
-                                                    <td className='no-bg-color dhistory-info pt-3' >{item.p_service}</td>
+                                                    <td className='no-bg-color dhistory-info pt-3' >{item.service_name}</td>
                                                     <td className='no-bg-color app-today-info' >
                                                         <Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
                                                     </Link></td>

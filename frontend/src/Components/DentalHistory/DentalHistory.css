@@ -30,24 +30,50 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.dental-history-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-
-
-#content {
+.dental-history-container .content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0;
+    margin-left: 15%;
 }
 
+.dental-history-container .tooth-chart{
+    /* background-color: #31B957; */
+    padding: 20px 0;
+    display: flex;
+    gap: 50px;
+}
 
-.add-patient-container{
-    background-color: var(--light-green);
+.dental-history-container .tooth-chart div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.dental-history-container .tooth{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dental-history-container .tooth img{
+    width: 50px;
+}
+
+.dental-history-container .tooth button{
+    background-color: transparent;
+    border: none;
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.dental-history-info{
+    text-transform: capitalize;
+    background-color: var(--lighter-green);
     padding: 50px 80px;
     border-radius: 15px;
     color: var(--blue);
@@ -72,6 +98,7 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 20px 0;
+    text-transform: capitalize;
 }
 
 .receipt-total{

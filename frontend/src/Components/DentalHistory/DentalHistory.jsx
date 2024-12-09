@@ -77,6 +77,7 @@ const DentalHistory = () => {
     const [payment, setPayment] = useState([]);
     const [patientId, setPatientId] = useState(0);
     const [totalPaid, setTotalPaid] = useState(0);
+    const [selectedTeeth, setSelectedTeeth] = useState([])
 
     const {id} = useParams();
 
@@ -87,13 +88,14 @@ const DentalHistory = () => {
     const fetchData = async () => {
         try {
             const [historyResponse, invoiceResponse, paymentResponse, totalpaidResponse] = await Promise.all([
-                axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory1`),
+                axios.get(`http://localhost:80/api2/${id}/?action=dentalRecord`),
                 axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
                 axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`),
                 await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaidDentalHistory`)
             ]);
 
             setHistory(historyResponse.data);
+            setSelectedTeeth(JSON.parse(historyResponse.data[0].p_selectedTeeth))
             setInvoice(invoiceResponse.data);
             setPayment(paymentResponse.data)
             setTotalPaid(totalpaidResponse.data[0].total_paid);
@@ -139,75 +141,21 @@ const DentalHistory = () => {
         32: { default: tooth32, selected: selected32 },
     };
 
-
-    const renderTooth = (toothId) => {
-        var imgSrc = toothImages[toothId].default;
-
-        function historyTooth(element){
-            imgSrc = toothImages[element].selected;
-        }
-    
-        var toothHistory=[];
-        
-        history.map((tooth,key)=>{
-            toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
-                .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
-        })
-
-        toothHistory.forEach(element => {
-            if(toothId == element){
-                historyTooth(element);
-            }
-            
-        });
-
-        //console.log(toothHistory)
+    const renderTooth = (toothNum)=>{
+        let toothImage = selectedTeeth.includes(toothNum)?toothImages[toothNum].selected:toothImages[toothNum].default;
 
         return (
-            <div className="col tooth-container d-flex flex-column align-items-center">
-                <img src={imgSrc} className='tooth' alt="" /> 
-                <p className='text-center fw-semibold mt-2 mb-0'>{toothId}</p>
-                
+            <div className='tooth'>
+                <img src={toothImage} alt="" />
+                <button>{toothNum}</button>
             </div>
-        );
-    };
+        )
+    }
 
-    const renderTooth2 = (toothId) => {
-        var imgSrc = toothImages[toothId].default;
-
-        function historyTooth(element){
-            imgSrc = toothImages[element].selected;
-        }
-    
-        var toothHistory=[];
-        
-        history.map((tooth,key)=>{
-            toothHistory =  Object.keys(JSON.parse(tooth.p_selectedTeeth))
-                .filter(key => JSON.parse(tooth.p_selectedTeeth)[key]);
-        })
-
-        toothHistory.forEach(element => {
-            if(toothId == element){
-                historyTooth(element);
-            }
-            
-        });
-
-        //console.log(toothHistory)
-
-        return (
-            <div className="col tooth-container d-flex flex-column align-items-center" key={toothId}>
-                <p className='text-center fw-semibold mt-2 mb-2'>{toothId}</p>
-                <img src={imgSrc} className='tooth' alt="" key={toothId}/>
-            </div>
-        );
-    };
-    
-    
   return (
-    <div className='wrapper'>
+    <div className='dental-history-container'>
         <AdminNavbar/>
-      <div id="content">
+      <div className="content">
         <AdminInfo/>
 
         {/* go back button */}
@@ -227,7 +175,7 @@ const DentalHistory = () => {
         {/* form */}
         {Array.isArray(history) && history.length > 0 ? (
          history.map((item, index) => (
-                    <div className="rol add-patient-container mt-3">
+                    <div className="rol dental-history-info mt-3">
                         <div className="col">                
                             <div className="row">
                                 {/* date of service */}
@@ -242,17 +190,14 @@ const DentalHistory = () => {
                                     Procedure:
                                 </div>
                                 <div className="col-10 fw-semibold mt-3">
-                                    {item.p_service}
+                                    {item.service_name}
                                 </div>
                                 {/* Tooth no */}
                                 <div className="col-2 text mt-3">
                                     Tooth no.:
                                 </div>
                                 <div className="col-10 fw-semibold mt-3">
-                                {Object.keys(JSON.parse(item.p_selectedTeeth))
-                                .filter(key => JSON.parse(item.p_selectedTeeth)[key])
-                                .join(', ')
-                                }
+                                    {JSON.parse(item.p_selectedTeeth).join(', ')}
                                 </div>
                                 {/* dentist */}
                                 <div className="col-2 text mt-3">
@@ -265,26 +210,14 @@ const DentalHistory = () => {
                             </div>
 
                             {/* tooth chart */}
-                            <div className="tooth-chart mt-4">
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="row">
-                                        {[16, 15, 14, 13, 12,11, 10, 9].map(renderTooth)}
-                                    </div>
-                                    <div className="row">
-                                        {[17, 18, 19, 20, 21, 22, 23, 24].map(renderTooth2)}
-                                    </div>
+                            <div className="tooth-chart mt-4 row">
+                                <div className="col-12">
+                                    {[16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1].map(renderTooth)}        
                                 </div>
-                                <div className="col-6">
-                                    <div className="row">
-                                        {[8, 7, 6, 5, 4, 3, 2, 1].map(renderTooth)}
-                                    </div>
-                                    <div className="row">
-                                        {[25, 26, 27, 28, 29, 30, 31, 32].map(renderTooth2)}
-                                    </div>
+                                <div className="col-12">
+                                    {[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32].map(renderTooth)}
                                 </div>
                             </div>
-                        </div>
                         </div>
                         {/* end of row for tooth chart */}
 
@@ -306,12 +239,12 @@ const DentalHistory = () => {
                                         {/* receipt procedure */}
                                         <div className="receipt-procedure">
                                             <ul>
-                                                <li className='service-name'>{item.p_service}<ul>
+                                                <li className='service-name'>{item.service_name}<ul>
+                                                <li className='tooth-no'>Severity/Material: <span>
+                                                    {item.option_name}
+                                                </span></li>
                                                 <li className='tooth-no'>Tooth No.: <span>
-                                                    {Object.keys(JSON.parse(item.p_selectedTeeth))
-                                                    .filter(key => JSON.parse(item.p_selectedTeeth)[key])
-                                                    .join(', ')
-                                                    }
+                                                    {JSON.parse(item.p_selectedTeeth).join(', ')}
                                                 </span></li></ul></li>
                                             </ul>
                                         </div>

@@ -84,9 +84,18 @@ const AddService = () => {
     const [additionalFee,setAdditionalFee] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const [dentalHistory, setDentalHistory] = useState({
-        selectedTooth: [],
+        action: 'procedureHistory',
+        p_id: id,
+        p_date: '',
+        p_time: '',
+        p_selectedTeeth: [],
+        p_dentist: '',
         p_service:'',
-        p_severity_material:''
+        p_severity_material:'',
+        inv_totalamount: totalPrice,
+        inv_status: 'pending',
+        inv_due:'',
+        inv_issue:''
     })
     const appointmentTime = [
         "9:00 AM - 10:00 AM",
@@ -132,19 +141,26 @@ const AddService = () => {
         31: { default: tooth31, selected: selected31 },
         32: { default: tooth32, selected: selected32 },
     };
+    const dentist = [
+        'Dingcong',
+        'Bernal'
+    ]
 
-    console.log(dentalHistory)
+    console.log()
 
     useEffect(()=>{
         getServices()
         getOptions()
     },[])
+    
 
     useEffect(()=>{
         // reset tooth factor
         setToothFactor(0)
         // reset additional fee
         setAdditionalFee('')
+        //get issue and due dates
+        getDates()
 
         switch(dentalHistory.p_service){
             case '1':
@@ -154,7 +170,7 @@ const AddService = () => {
             case '17':
                 setDentalHistory((prevdata)=>({
                     ...prevdata,
-                    selectedTooth: Array.from({ length: 32 }, (_, i) => i + 1)
+                    p_selectedTeeth: Array.from({ length: 32 }, (_, i) => i + 1)
                 }))
                 setToothFactor(1)
                 break;
@@ -162,25 +178,25 @@ const AddService = () => {
                 if(dentalHistory.p_severity_material >=16 && dentalHistory.p_severity_material <=18){
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
-                        selectedTooth: Array.from({ length: 32 }, (_, i) => i + 1)
+                        p_selectedTeeth: Array.from({ length: 32 }, (_, i) => i + 1)
                     }))
                     setToothFactor(1)
                 }else if(dentalHistory.p_severity_material >=19 &&dentalHistory.p_severity_material <=21){
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
-                        selectedTooth: Array.from({ length: 16 }, (_, i) => i + 1)
+                        p_selectedTeeth: Array.from({ length: 16 }, (_, i) => i + 1)
                     }))
                     setToothFactor(1)
                 }else if(dentalHistory.p_severity_material >=49 &&dentalHistory.p_severity_material <=51){
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
-                        selectedTooth: Array.from({ length: 16 }, (_, i) => i + 17)
+                        p_selectedTeeth: Array.from({ length: 16 }, (_, i) => i + 17)
                     }))
                     setToothFactor(1)
                 }else{
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
-                        selectedTooth: []
+                        p_selectedTeeth: []
                     }))
                 }
                 break
@@ -190,7 +206,7 @@ const AddService = () => {
             default:
                 setDentalHistory((prevdata)=>({
                     ...prevdata,
-                    selectedTooth: [],
+                    p_selectedTeeth: [],
                 }))
                 break;
         }
@@ -223,9 +239,9 @@ const AddService = () => {
         if(dentalHistory.p_service!=13){
              setTotalPrice((startingPrice*toothFactor)+additionalFee)
         }else{
-            if(dentalHistory.selectedTooth.length==1){
+            if(dentalHistory.p_selectedTeeth.length==1){
                 setTotalPrice((startingPrice*toothFactor)+additionalFee)
-            }else if(dentalHistory.selectedTooth.length==0){
+            }else if(dentalHistory.p_selectedTeeth.length==0){
                 setTotalPrice(0)
             }else{
                 setTotalPrice(parseInt(totalPrice)+500)
@@ -234,6 +250,77 @@ const AddService = () => {
        
     },[startingPrice,toothFactor,additionalFee])
     
+    //useEffect for setting totalprice sa dentalhistory
+    useEffect(()=>{
+        setDentalHistory((prevdata)=>({
+            ...prevdata,
+            inv_totalamount: totalPrice
+        }))
+    },[totalPrice])
+
+    //get dates for due and issue date
+    const getDates = () =>{
+        const today = new Date();
+
+        // issue date
+        const year = today.getFullYear()
+        const month = today.getMonth()+1
+        const day = today.getDate()
+        const issueDate = `${year}-${month}-${day}`
+        console.log('issue date: ',issueDate)
+
+        switch(dentalHistory.p_severity_material){
+            case '16':
+                //braces, mild, 30k
+                handleDue(26);
+                break
+            case '17':
+                handleDue(31);
+                break;
+            case '18':
+                handleDue(36);
+                break;
+            case '19':
+            case '49':
+                handleDue(34)
+                break;
+            case '20':
+            case '50':
+                handleDue(44)
+                break;
+            case '21':
+            case '51':
+                handleDue(54)
+                break;
+            default:
+                handleDue(0)
+                break;
+        }
+        
+        // set issue date
+        setDentalHistory((prevdata)=>({
+            ...prevdata,
+            inv_issue: issueDate
+         }))
+    }
+
+    const handleDue = (month)=>{
+        const future = new Date();
+        future.setMonth(future.getMonth()+month)
+         // due date
+         const futureYear = future.getFullYear();
+         const futureMonth = future.getMonth()+1;
+         const futureDay = future.getDate();
+         const dueDate = `${futureYear}-${futureMonth}-${futureDay}`;
+
+         setDentalHistory((prevdata)=>({
+            ...prevdata,
+            inv_due: dueDate
+         }))
+
+         console.log('due date: ',dueDate)
+         
+    }
 
     const getServices = async ()=>{
         try{
@@ -265,13 +352,13 @@ const AddService = () => {
     const handleToothClick = (toothNum)=>{
         console.log('tooth clicked')
         //check if tooth is already selected
-        // if selected, remove to selectedTooth
-        const isSelected = dentalHistory.selectedTooth.includes(toothNum)
+        // if selected, remove to p_selectedTeeth
+        const isSelected = dentalHistory.p_selectedTeeth.includes(toothNum)
         setDentalHistory((prevdata)=>({
             ...prevdata,
-            selectedTooth: isSelected ? prevdata.selectedTooth.filter(num=>num!==toothNum):[...prevdata.selectedTooth, toothNum]
+            p_selectedTeeth: isSelected ? prevdata.p_selectedTeeth.filter(num=>num!==toothNum):[...prevdata.p_selectedTeeth, toothNum]
         }))
-        //if wala pa sa selectedtooth, add sa toothFactor, pag andon na, iminus sa toothfactor 
+        //if wala pa sa p_selectedTeeth, add sa toothFactor, pag andon na, iminus sa toothfactor 
         setToothFactor(!isSelected?toothFactor+1:toothFactor-1)
     }
 
@@ -312,11 +399,11 @@ const AddService = () => {
                 if(dentalHistory.p_severity_material=='35'){
                     return null //mucocele ay sa gilagid, hindi sa ipin kaya walang irereturn na tooth chart
                 }else{
-                    toothImage = dentalHistory.selectedTooth.includes(toothNum)?toothImages[toothNum].selected:toothImages[toothNum].default;
+                    toothImage = dentalHistory.p_selectedTeeth.includes(toothNum)?toothImages[toothNum].selected:toothImages[toothNum].default;
                 }
                 break
             default:
-                toothImage = dentalHistory.selectedTooth.includes(toothNum)?toothImages[toothNum].selected:toothImages[toothNum].default;
+                toothImage = dentalHistory.p_selectedTeeth.includes(toothNum)?toothImages[toothNum].selected:toothImages[toothNum].default;
         }
 
         return (
@@ -327,12 +414,13 @@ const AddService = () => {
         )
     }
 
-    console.log(services)
-    console.log(options)
-    console.log('starting price: ', startingPrice)
-    console.log('tooth factor:  ', toothFactor)
-    console.log('additional fee:  ', additionalFee)
-    console.log('total price:  ', totalPrice)
+    // console.log(services)
+    // console.log(options)
+    // console.log('starting price: ', startingPrice)
+    // console.log('tooth factor:  ', toothFactor)
+    // console.log('additional fee:  ', additionalFee)
+    // console.log('total price:  ', totalPrice)
+    console.log(dentalHistory)
 
   return (
     <div className='add-dental-history-container'>
@@ -430,7 +518,7 @@ const AddService = () => {
                     {/* tooth num */}
                     <div className={`col-7 mb-5 ${dentalHistory.p_severity_material=='35'?'hide-tooth-chart':'unhide-tooth-chart'}`}>
                         <label htmlFor="" className="form-label labels" >Tooth Number </label>
-                        <input type="text" className="form-control " name='toothNumber' id='toothNumber' value={dentalHistory.selectedTooth}/>
+                        <input type="text" className="form-control " name='toothNumber' id='toothNumber' value={dentalHistory.p_selectedTeeth}/>
                     </div>
                 </div>
 
@@ -452,11 +540,12 @@ const AddService = () => {
             <div className="row mt-5">
                 <div className="col-6">
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" >
-                        <option value="" labels disabled>Select Dentist</option>
-                            
+                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" onChange={handleChange} >
+                        <option value="" labels disabled selected>Select Dentist</option>
+                        {dentist.map(item=>{
+                            return <option value={item} labels>Dr. {item}</option>
+                        })}
                     </select>
-                    
                 </div>
             </div>
 
@@ -485,7 +574,7 @@ const AddService = () => {
                                             return item.option_name
                                         }
                                     }):''}</span></li>
-                                    <li className='tooth-no'>Tooth No.: <span> {dentalHistory.selectedTooth.join(', ')}
+                                    <li className='tooth-no'>Tooth No.: <span> {dentalHistory.p_selectedTeeth.join(', ')}
                                        
                                     </span></li>
                                     </ul></li>

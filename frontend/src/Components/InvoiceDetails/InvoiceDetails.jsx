@@ -22,7 +22,7 @@ const InvoiceDetails = () => {
     }, []);
 
 
-    async function getInvoiceDetails() {
+    const getInvoiceDetails = async()=>{
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
             console.log('Full API response:', response);
@@ -40,7 +40,7 @@ const InvoiceDetails = () => {
         }
     }
 
-    async function getPayment() {
+    const getPayment = async ()=> {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPayment`);
             console.log('Full API response:', response);
@@ -58,7 +58,7 @@ const InvoiceDetails = () => {
         }
     }
 
-    async function getTotalPaid() {
+    const getTotalPaid = async()=> {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
             console.log('Full API response:', response);
@@ -76,15 +76,10 @@ const InvoiceDetails = () => {
         }
     }
 
-    // console.log(invoiceDetails)
-    // console.log(payment)
-    console.log(totalPaid)
-    
-
   return (
-    <div className='wrapper'>
+    <div className='inv-details-container'>
         <AdminNavbar />
-        <div id="content">
+        <div className="content">
             <AdminInfo />
             {/* go back button */}
             <div className="row">
@@ -136,7 +131,8 @@ const InvoiceDetails = () => {
                 <div className="row price">
                     <div className="col">
                         <ul>
-                            <li>{item.p_service}</li>
+                            <li>{item.service_name}</li>
+                            <li>{item.option_name}</li>
                         </ul>
                     </div>
                     <div className="col text-center">

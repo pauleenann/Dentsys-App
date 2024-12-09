@@ -38,7 +38,7 @@ const UpdateInvoice = () => {
 
     const navigate = useNavigate();
 
-    async function getTotalPaid() {
+    const getTotalPaid = async ()=> {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
             console.log('Full API response:', response);
@@ -56,11 +56,7 @@ const UpdateInvoice = () => {
         }
     }
 
-    
-    console.log(totalPaid)
-
-    const handleClick = async (e) => {
-        e.preventDefault();
+    const handleClick = async () => {
         if(submitForm === false){
             formValidation();
         }else{
@@ -76,7 +72,7 @@ const UpdateInvoice = () => {
         }
     };
 
-    async function getInvoiceDetails() {
+    const getInvoiceDetails = async()=> {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
             console.log('Full API response:', response);
@@ -96,7 +92,7 @@ const UpdateInvoice = () => {
         }
     }
 
-    async function getPayment() {
+    const getPayment = async()=> {
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPayment`);
             console.log('Full API response:', response);
@@ -137,14 +133,12 @@ const UpdateInvoice = () => {
 
     }
 
-
-    console.log(`balance ${balance}`)
-    console.log(`total paid ${totalPaid}`)
-    console.log(`total amount ${invTotal}`)
+    console.log(payment)
+   
   return (
-    <div className='wrapper'>
+    <div className='update-invoice-container'>
         <AdminNavbar />
-        <div id="content">
+        <div className="content">
             <AdminInfo />
             {/* go back button */}
             <div className="row">
@@ -196,7 +190,8 @@ const UpdateInvoice = () => {
                 <div className="row price">
                     <div className="col">
                         <ul>
-                            <li>{item.p_service}</li>
+                            <li>{item.service_name}</li>
+                            <li>{item.option_name}</li>
                         </ul>
                     </div>
                     <div className="col text-center total-amount-paid">

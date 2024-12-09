@@ -29,17 +29,16 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.update-invoice-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-#content {
+.update-invoice-container .content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0.3s;
+    margin-left: 15%;
 }
 
 
@@ -74,8 +73,14 @@ body {
   padding: 20px 200px;
 }
 
-.price{
+.update-invoice-container .price{
   padding: 20px 150px;
+  color: var(--blue);
+}
+
+.update-invoice-container .price li,.price .invoice-total{
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .invoice-total-price{

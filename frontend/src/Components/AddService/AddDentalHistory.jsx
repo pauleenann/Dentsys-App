@@ -446,13 +446,16 @@ const AddService = () => {
             try{
                 const response = await axios.post("http://localhost:80/api2/user/save", dentalHistory).finally(() => setLoading(false));
                 console.log(response)
+                if(response.status==200){
+                    socket.emit('newData');
+                }
                 navigate(`/view-patient-info/${id}`);
             }catch(err){
                 console.log("Can't save dental history. An error occurred: ", err.message)
             }
     }
 
-    console.log(error)
+    console.log(options)
 
   return (
     <div className='add-dental-history-container'>

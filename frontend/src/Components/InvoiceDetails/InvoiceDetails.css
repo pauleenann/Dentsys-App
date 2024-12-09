@@ -29,17 +29,16 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.inv-details-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-#content {
+.inv-details-container .content {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0.3s;
+    margin-left: 15%;
 }
 
 
@@ -76,13 +75,14 @@ body {
   color: var(--blue);
 }
 
-.price{
+.inv-details-container .price{
   padding: 20px 150px;
   color: var(--blue);
 }
 
-.price li,.price .invoice-total{
+.inv-details-container .price li,.price .invoice-total{
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 .nothing-follows{

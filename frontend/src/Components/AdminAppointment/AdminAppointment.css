@@ -33,7 +33,6 @@ body {
     width: 100%;
 }
 
-
 .admin-appointment-container .content {
     width: 100%;
     padding: 30px 50px;
@@ -41,64 +40,53 @@ body {
     margin-left: 15%;
 }
 
-.appoint-header{
+.admin-appointment-container .appoint-header{
    display: flex;
    justify-content: space-between;
    align-items: center;
    margin-top: 25px;
 }
 
-.appoint-header h1{
+.admin-appointment-container .appoint-header h1{
     color: var(--blue);
     font-weight: 600;
     margin: 25px 0;
 }
 
-.app-button-color{
+.admin-appointment-container .appoint-header button{
     background-color: var(--blue);
-}
-
-.app-button-color
-
-.button-text{
+    height: 50px;
     color: var(--white);
-    padding: 10px;
+    transition: all 0.3s;
 }
 
-.buttons{
+.admin-appointment-container .appoint-header button:hover{
+    background-color: var(--blue-hover);
+}
+
+.admin-appointment-container .appoint-header button i{
+    margin-right: 5px;
+}
+
+.admin-appointment-container .buttons{
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
-.button-add:hover, .button-add:active{
-    background-color: var(--blue-hover);
-    color: var(--white);
-}
-
-.button-border-text{
-    color: var(--blue);
+.admin-appointment-container .buttons button{
     border: 1px solid var(--blue);
-}
-
-.button-border-text:hover, .button-border-text:active{
-    color: var(--white);
 }
 
 .app-button-color:hover{
     background-color: var(--blue-hover);
 }
 
-.button-radius{
-    padding: 3px 18px;
-    border-radius: 20px;
-}
-
 .upcoming-row{
     background-color: var(--lighter-green);
     padding: 20px;
     margin-top: 25px;
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
 }

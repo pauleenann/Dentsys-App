@@ -83,7 +83,7 @@ const AppointmentForm = () => {
 
         //set time today as the hour in 24 hour format
         const timeToday = new Date().getHours();
-        console.log('hour today: ', timeToday)
+        // console.log('hour today: ', timeToday)
 
         //get each hour sa options
         const splitTime = time.split(' ');
@@ -91,7 +91,7 @@ const AppointmentForm = () => {
 
         //if hour is greater than 12, add 12 to convert to 24 hour format
         const hour24Format = hour<5?hour+12:hour;
-        console.log('hour ',hour24Format);
+        // console.log('hour ',hour24Format);
       
         //logic: if hour24format (hour sa options) ay less than or equal doon sa current time AND yung piniling date ng user ay same sa date ngayon, return TRUE (ibig sabihin, disabled yung radio button na un)
         return hour24Format<=timeToday&&chosenDate==minDate;
@@ -138,7 +138,9 @@ const AppointmentForm = () => {
                         if(response.data.status==1){
                             socket.emit('newData');
                         }
-                        navigate("appointment-request-submitted");
+                        navigate("/appointment-request-submitted",{
+                            state:formData
+                        });
                     } catch (err) {
                     console.log(err);
                     //   setError(true)
@@ -178,9 +180,9 @@ const AppointmentForm = () => {
         }
 
         setErrors(error)
-
-       
     }
+
+    console.log(formData)
 
   return (
     <div className='appoinment-container container'>
@@ -225,7 +227,7 @@ const AppointmentForm = () => {
                         <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} onBlur={formValidation}>
                             <option value="" labels disabled >Select a Service</option>
                                     {services.map((service, key) => (
-                                        <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
+                                        <option key={service.service_id} value={service.service_id}>{service.service_name}</option>
                                     ))}
                         </select>
                         <p className="error-message">{errors.service}</p>
@@ -303,7 +305,9 @@ const AppointmentForm = () => {
                             Service Acquired:
                         </div>
                         <div className="col-8 mb-3 client labels">
-                            {formData.service_}
+                            {services?services.map(item=>(
+                                item.service_id==formData.service_?item.service_name:''
+                            )):''}
                         </div>
                         <div className="col-4 mb-3 d-flex align-items-center labels">
                             Date:

@@ -288,7 +288,7 @@ if($method ==='PUT'){
             break;
         
         case 'getOptions':
-                $sql = "SELECT * FROM options";
+                $sql = "SELECT * FROM servicesoptions";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -444,8 +444,9 @@ if($method ==='PUT'){
             echo json_encode($users);
             break;
 
+            //for patient record overview
             case 'getProcedureHistory':
-                $sql = "SELECT * from patienthistory WHERE p_id = :id";
+                $sql = "SELECT patienthistory.id, patienthistory.p_date, patienthistory.p_dentist,services.service_name FROM patienthistory JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
                 
                 $path = explode('/',$_SERVER['REQUEST_URI']);
                 // print_r($path);
@@ -465,9 +466,20 @@ if($method ==='PUT'){
                 echo json_encode($users);
                 break;
 
-                case 'getProcedureHistory1':
-                    $sql = "SELECT * from patienthistory WHERE id = :id";
-                    
+                //for viewing dental record
+                case 'dentalRecord':
+                    $sql = "SELECT patienthistory.p_date, 
+                                patienthistory.p_dentist, 
+                                patienthistory.p_selectedTeeth, 
+                                services.service_name, 
+                                servicesoptions.option_name, 
+                                invoices.inv_totalamount 
+                            FROM patienthistory
+                            JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service
+                            JOIN services ON services.service_id = servicesoptions.service_id
+                            JOIN invoices ON patienthistory.id = invoices.ph_id
+                            WHERE patienthistory.id = :id";
+
                     $path = explode('/',$_SERVER['REQUEST_URI']);
                     // print_r($path);
                     if(isset($path[2]) && is_numeric($path[2])){
@@ -484,7 +496,7 @@ if($method ==='PUT'){
                     }
                     
                     echo json_encode($users);
-                    break;
+                break;
 
                 case 'getInvoice':
                     $sql = "SELECT * from invoices WHERE ph_id = :id";
@@ -529,7 +541,21 @@ if($method ==='PUT'){
                     break;
 
             case 'getInvoiceDetails':
-                    $sql = "SELECT inv_id, p_fname, p_lname, inv_issuedate, inv_duedate, inv_status, p_service, inv_totalamount FROM invoices INNER JOIN patienthistory ON invoices.ph_id = patienthistory.id INNER JOIN patients ON patienthistory.p_id = patients.id WHERE inv_id=:id";
+                    $sql = "SELECT 
+                                patients.p_fname, 
+                                patients.p_lname, 
+                                invoices.inv_issuedate, 
+                                invoices.inv_duedate, 
+                                invoices.inv_status, 
+                                invoices.inv_totalamount, 
+                                invoices.inv_id,
+                                services.service_name,
+                                servicesoptions.option_name
+                            FROM patients
+                            JOIN patienthistory ON patients.id = patienthistory.p_id 
+                            JOIN invoices ON patienthistory.id = invoices.ph_id
+                            JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service
+                            JOIN services ON services.service_id = servicesoptions.service_id WHERE inv_id=:id";
                     
                     $path = explode('/',$_SERVER['REQUEST_URI']);
                     // print_r($path);
@@ -924,44 +950,79 @@ if($method ==='PUT'){
                 echo json_encode($response);
                 break;
 
+            // case 'procedureHistory':
+            //     // Add new appointment
+            //     print_r("hello");
+            //     $sql = "INSERT INTO patienthistory(id, p_id, p_date, p_time, p_service, p_selectedTeeth, p_dentist, p_severity_material) VALUES(null, :p_id, :p_date, :p_time, :p_service, :p_selectedTeeth, :p_dentist, :p_severity_material)";
+            //     $stmt = $conn->prepare($sql);
+            //     $stmt->bindParam(':p_id', $user->p_id);
+            //     $stmt->bindParam(':p_date', $user->p_date);
+            //     $stmt->bindParam(':p_time', $user->p_time);
+            //     $stmt->bindParam(':p_service', $user->p_service);
+            //     //$stmt->bindParam(':p_selectedTeeth', (string) $user->p_selectedTeeth);
+            //     $p_selectedteeth_json = json_encode($user->p_selectedTeeth);
+            //     $stmt->bindParam(':p_selectedTeeth', $p_selectedteeth_json);
+            //     //$stmt->bindParam(':p_selectedTeeth', $user->p_selectedTeeth);
+            //     $stmt->bindParam(':p_dentist', $user->p_dentist);
+            //     $stmt->bindParam(':p_severity_material', $user->p_severity_material);
+            //     // $stmt->bindParam(':p_date', $user->p_date);
+            //     // $stmt->bindParam(':p_time', $user->p_time);
+            //     // $stmt->bindParam(':p_service', $user->p_service);
+            //     // $p_selectedteeth_json = json_encode($user->p_selectedteeth);
+            //     //  $stmt->bindParam(':p_selectedteeth', $p_selectedteeth_json);
+            //     // $stmt->bindParam(':p_dentist', $user->p_dentist);
+            //     // $stmt->bindParam(':p_payment', $user->p_payment);
+            //     // $stmt->bindParam(':p_paidamount', $user->p_paidamount);
+            //     // if($stmt->execute()){
+            //     //     $response = ['status' => 1, 'message' => 'Record created successfully.'];
+            //     // }else{
+            //     //     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
+            //     // }
+            //     // echo json_encode($response);
+            //     if($stmt->execute()){
+            //         date_default_timezone_set('Asia/Singapore');
+            //         $today = date('Y-m-d');
+            //         $historyId = $conn->lastInsertId();
+            //         $sql2 = "INSERT INTO invoices(inv_id, ph_id, inv_issuedate, inv_duedate, inv_totalamount, inv_status) VALUES(null, :ph_id, :inv_issuedate, :inv_duedate, :inv_totalamount, :inv_status)";
+            //         $stmt2 = $conn->prepare($sql2);
+            //         $stmt2->bindParam(':ph_id',$historyId); 
+            //         $stmt2->bindParam(':inv_issuedate', $today);
+            //         $stmt2->bindParam(':inv_duedate', $today);
+            //         $stmt2->bindParam(':inv_totalamount', $user->inv_totalamount);
+            //         $stmt2->bindParam(':inv_status', $user->inv_status);
+            
+            //         if($stmt2->execute()){
+            //             $response = ['status' => 1, 'message' => 'Record created successfully.'];
+            //         }else{
+            //             $response = ['status' => 0, 'message' => 'Failed to create Record.'];
+            //         }
+            //     } else {
+            //         $response = ['status' => 0, 'message' => 'Failed to create Record.'];
+            //     }
+            //     break;
+
             case 'procedureHistory':
                 // Add new appointment
                 print_r("hello");
-                $sql = "INSERT INTO patienthistory(id, p_id, p_date, p_time, p_service, p_selectedTeeth, p_dentist, p_severity_material) VALUES(null, :p_id, :p_date, :p_time, :p_service, :p_selectedTeeth, :p_dentist, :p_severity_material)";
-                $stmt = $conn->prepare($sql);
+                $sql = "INSERT INTO patienthistory(id, p_id, p_date, p_time, p_service, p_selectedTeeth, p_dentist) VALUES(null, :p_id, :p_date, :p_time, :p_service, :p_selectedTeeth, :p_dentist)";
+                $stmt = $conn->prepare(query: $sql);
                 $stmt->bindParam(':p_id', $user->p_id);
                 $stmt->bindParam(':p_date', $user->p_date);
                 $stmt->bindParam(':p_time', $user->p_time);
-                $stmt->bindParam(':p_service', $user->p_service);
+                $stmt->bindParam(':p_service', $user->p_severity_material);
                 //$stmt->bindParam(':p_selectedTeeth', (string) $user->p_selectedTeeth);
                 $p_selectedteeth_json = json_encode($user->p_selectedTeeth);
                 $stmt->bindParam(':p_selectedTeeth', $p_selectedteeth_json);
                 //$stmt->bindParam(':p_selectedTeeth', $user->p_selectedTeeth);
                 $stmt->bindParam(':p_dentist', $user->p_dentist);
-                $stmt->bindParam(':p_severity_material', $user->p_severity_material);
-                // $stmt->bindParam(':p_date', $user->p_date);
-                // $stmt->bindParam(':p_time', $user->p_time);
-                // $stmt->bindParam(':p_service', $user->p_service);
-                // $p_selectedteeth_json = json_encode($user->p_selectedteeth);
-                //  $stmt->bindParam(':p_selectedteeth', $p_selectedteeth_json);
-                // $stmt->bindParam(':p_dentist', $user->p_dentist);
-                // $stmt->bindParam(':p_payment', $user->p_payment);
-                // $stmt->bindParam(':p_paidamount', $user->p_paidamount);
-                // if($stmt->execute()){
-                //     $response = ['status' => 1, 'message' => 'Record created successfully.'];
-                // }else{
-                //     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
-                // }
-                // echo json_encode($response);
+               
                 if($stmt->execute()){
-                    date_default_timezone_set('Asia/Singapore');
-                    $today = date('Y-m-d');
                     $historyId = $conn->lastInsertId();
                     $sql2 = "INSERT INTO invoices(inv_id, ph_id, inv_issuedate, inv_duedate, inv_totalamount, inv_status) VALUES(null, :ph_id, :inv_issuedate, :inv_duedate, :inv_totalamount, :inv_status)";
                     $stmt2 = $conn->prepare($sql2);
                     $stmt2->bindParam(':ph_id',$historyId); 
-                    $stmt2->bindParam(':inv_issuedate', $today);
-                    $stmt2->bindParam(':inv_duedate', $today);
+                    $stmt2->bindParam(':inv_issuedate', $user->inv_issue);
+                    $stmt2->bindParam(':inv_duedate', $user->inv_due);
                     $stmt2->bindParam(':inv_totalamount', $user->inv_totalamount);
                     $stmt2->bindParam(':inv_status', $user->inv_status);
             
@@ -974,11 +1035,7 @@ if($method ==='PUT'){
                     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
                 }
                 break;
-
-
             
-           
-
             default:
                 echo json_encode(['error' => 'Invalid action']);
                 break;

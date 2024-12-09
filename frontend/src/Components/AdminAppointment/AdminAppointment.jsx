@@ -13,6 +13,7 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
+
 const AdminAppointment = () => {
   // const [showReschedule, setShowReschedule] = useState(false);
   const [showView, setShowView] = useState(false);
@@ -89,25 +90,24 @@ const AdminAppointment = () => {
     return true;
   }):[];
 
-  console.log(appointment)
   return (
     <div className="admin-appointment-container">
       <AdminNavbar />
       <div className="content">
         <AdminInfo />
+        {/* header */}
         <div className="appoint-header">
           <h1>Appointments</h1>
-          <Link to='/add-appointment'><button className='btn app-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add an Appointment</span></button></Link>
-          
+          <Link to='/add-appointment'><button className='btn'><i class="fa-regular fa-square-plus"></i><span className='text-light'> Add an Appointment</span></button></Link>
         </div>
 
         {/* buttons */}
         <div className="buttons">
-          <button className='btn button-border-text button-radius filter-btn' onClick={() => setFilter('all')}>All</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('today')}>Today</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('pending')}>Pending</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('cancelled')}>Cancelled</button>
-          <button className='btn button-border-text button-radius' onClick={() => setFilter('recent')}>Recent Visits</button>
+          <button className='btn' onClick={() => setFilter('all')}>All</button>
+          <button className='btn' onClick={() => setFilter('today')}>Today</button>
+          <button className='btn' onClick={() => setFilter('pending')}>Pending</button>
+          <button className='btn' onClick={() => setFilter('cancelled')}>Cancelled</button>
+          <button className='btn' onClick={() => setFilter('recent')}>Recent Visits</button>
         </div>
 
         {/* appointment list - upcoming */}

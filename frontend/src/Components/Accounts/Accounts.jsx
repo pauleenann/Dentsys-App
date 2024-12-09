@@ -146,7 +146,9 @@ const Accounts = () => {
         <div className="accounts-column row mt-4">
             <div className="col">Name</div>
             <div className="col">User Role</div>
+            <div className="col">Status</div>
             <div className="col">Actions</div>
+            
         </div>
         {/* accounts */}
         
@@ -176,6 +178,9 @@ const Accounts = () => {
                             </div>
                             <div className="col">
                                 <span>{user.account_type}</span>
+                            </div>
+                            <div className="col">
+                                <span>{user.status}</span>
                             </div>
                             <div className="col">
                                 {/* edit account*/}
@@ -225,7 +230,7 @@ const Accounts = () => {
       </div>
       <EditUserModal open={editUser} close={()=>setEditUser(false)} user={selectedUser} onUserUpdated={handleUserUpdated}></EditUserModal>
       <SetInactiveModal open={removeUser} close={()=>setRemoveUser(false)}></SetInactiveModal>
-      <AddUserModal open={addUser} close={()=>setAddUser(false)}></AddUserModal>
+      <AddUserModal open={addUser} close={()=>setAddUser(false)} onSuccess={handleUserUpdated}></AddUserModal>
     </div>
   )
 }

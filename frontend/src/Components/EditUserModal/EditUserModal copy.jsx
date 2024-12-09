@@ -3,13 +3,11 @@ import ReactDom from 'react-dom';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './EditUserModal.css';
-//import SetInactiveModal from '../SetInactiveModal/SetInactiveModal';
+import SetInactiveModal from '../SetInactiveModal/SetInactiveModal';
 
 const EditUserModal = ({ open, close, user, onUserUpdated }) => {
     const [removeUser, setRemoveUser] = useState(false);
-    const [showDiscardModal, setShowDiscardModal] = useState(false); // For discard confirmation
     const [userData, setUserData] = useState([]);
-    const [originalData, setOriginalData] = useState([]); // To store initial data for comparison
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false); // For save button loading state
     const [error, setError] = useState(null);
@@ -20,7 +18,6 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                 .get(`http://localhost:80/api2/${user}/?action=getUserData`)
                 .then((response) => {
                     setUserData(response.data);
-                    setOriginalData(response.data); // Save initial data
                 })
                 .catch((error) => {
                     console.error('Error fetching user data:', error);
@@ -64,29 +61,13 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
             });
     };
 
-    const handleClose = () => {
-        // Check if data has changed
-        if (JSON.stringify(userData) !== JSON.stringify(originalData)) {
-            setShowDiscardModal(true);
-            handleStatusToggle();
-        } else {
-            close(); // Close without confirmation if no changes
-        }
-    };
-
-    const handleDiscardChanges = () => {
-        setShowDiscardModal(false); // Hide discard modal
-        setUserData(originalData); // Reset changes
-        close(); // Close main modal
-    };
+    if (!open) {
+        return null;
+    }
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
     };
-
-    if (!open) {
-        return null;
-    }
 
     return ReactDom.createPortal(
         <div className='edit-user-modal-container'>
@@ -99,7 +80,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                     <span className='col-8 text-end'>Edit User Information</span>
                     {/* close button */}
                     <div className='col-4 text-end'>
-                        <button className='edit-user-close' onClick={handleClose}>
+                        <button className='edit-user-close' onClick={close}>
                             <i className="fa-solid fa-x"></i>
                         </button>
                     </div>
@@ -185,21 +166,6 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                     </button>
                 </div>
             </div>
-
-            {/* Discard Confirmation Modal */}
-            {showDiscardModal && (
-                <div className="discard-changes-modal-container">
-                    <div className="discard-changes-modal-overlay"></div>
-                    <div className="discard-changes-modal-box">
-                        <p>Are you sure you want to discard changes?</p>
-                        <div className="discard-changes-modal-buttons">
-                        <button onClick={() => {setShowDiscardModal(false); handleStatusToggle()}} className="no-button">No</button>
-                            <button onClick={handleDiscardChanges} className="yes-button">Yes</button>
-                            
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>,
         document.getElementById('portal')
     );

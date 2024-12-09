@@ -143,13 +143,13 @@ const Accounts = () => {
                 </div>
 
         {/* accounts column */}
-        <div className="accounts-column row mt-4">
+        {/* <div className="accounts-column row mt-4">
             <div className="col">Name</div>
             <div className="col">User Role</div>
             <div className="col">Status</div>
             <div className="col">Actions</div>
             
-        </div>
+        </div> */}
         {/* accounts */}
         
         {users ? users.map((user, index) => {

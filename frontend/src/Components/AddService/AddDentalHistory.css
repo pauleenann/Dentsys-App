@@ -94,3 +94,7 @@ body {
 .add-dental-history-form select{
     text-transform: capitalize;
 }
+
+.add-dental-history-form .service-name{
+    text-transform: capitalize;
+}

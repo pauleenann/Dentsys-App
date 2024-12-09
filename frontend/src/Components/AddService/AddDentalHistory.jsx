@@ -79,6 +79,10 @@ const AddService = () => {
     const {id} = useParams();
     const [services,setServices] = useState()
     const [options,setOptions] = useState()
+    const [startingPrice,setStartingPrice] = useState(0)
+    const [toothFactor,setToothFactor] = useState(0)
+    const [additionalFee,setAdditionalFee] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0)
     const [dentalHistory, setDentalHistory] = useState({
         selectedTooth: [],
         p_service:'',
@@ -137,6 +141,11 @@ const AddService = () => {
     },[])
 
     useEffect(()=>{
+        // reset tooth factor
+        setToothFactor(0)
+        // reset additional fee
+        setAdditionalFee('')
+
         switch(dentalHistory.p_service){
             case '1':
             case '3':
@@ -147,6 +156,7 @@ const AddService = () => {
                     ...prevdata,
                     selectedTooth: Array.from({ length: 32 }, (_, i) => i + 1)
                 }))
+                setToothFactor(1)
                 break;
             case '7':
                 if(dentalHistory.p_severity_material >=16 && dentalHistory.p_severity_material <=18){
@@ -154,16 +164,19 @@ const AddService = () => {
                         ...prevdata,
                         selectedTooth: Array.from({ length: 32 }, (_, i) => i + 1)
                     }))
+                    setToothFactor(1)
                 }else if(dentalHistory.p_severity_material >=19 &&dentalHistory.p_severity_material <=21){
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
                         selectedTooth: Array.from({ length: 16 }, (_, i) => i + 1)
                     }))
+                    setToothFactor(1)
                 }else if(dentalHistory.p_severity_material >=49 &&dentalHistory.p_severity_material <=51){
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
                         selectedTooth: Array.from({ length: 16 }, (_, i) => i + 17)
                     }))
+                    setToothFactor(1)
                 }else{
                     setDentalHistory((prevdata)=>({
                         ...prevdata,
@@ -171,15 +184,19 @@ const AddService = () => {
                     }))
                 }
                 break
-                
+            case '15':
+                setToothFactor(1);
+                break;
             default:
                 setDentalHistory((prevdata)=>({
                     ...prevdata,
                     selectedTooth: [],
                 }))
+                break;
         }
+        
     },[dentalHistory.p_service,dentalHistory.p_severity_material])
-
+    
     useEffect(()=>{
         setDentalHistory((prevdata)=>({
             ...prevdata,
@@ -187,7 +204,37 @@ const AddService = () => {
         }))
     },[dentalHistory.p_service])
 
-   
+    //useeffect for setting starting price
+    useEffect(() => {
+        console.log(dentalHistory.p_severity_material);
+        let price = 0;
+        if (options) {
+            const matchingOption = options.find(
+                (opt) => opt.option_id == dentalHistory.p_severity_material
+            );
+            price = matchingOption ? matchingOption.option_price? matchingOption.option_price:0 : 0;
+        }
+        setStartingPrice(parseInt(price));
+    }, [dentalHistory.p_severity_material, options]);
+
+    // useEffect for calculating total price
+    useEffect(()=>{
+        //if hindi siya dentures
+        if(dentalHistory.p_service!=13){
+             setTotalPrice((startingPrice*toothFactor)+additionalFee)
+        }else{
+            if(dentalHistory.selectedTooth.length==1){
+                setTotalPrice((startingPrice*toothFactor)+additionalFee)
+            }else if(dentalHistory.selectedTooth.length==0){
+                setTotalPrice(0)
+            }else{
+                setTotalPrice(parseInt(totalPrice)+500)
+            }
+        }
+       
+    },[startingPrice,toothFactor,additionalFee])
+    
+
     const getServices = async ()=>{
         try{
             const response = await axios.get(`http://localhost:80/api2/?action=getServices`);
@@ -216,7 +263,7 @@ const AddService = () => {
     }
 
     const handleToothClick = (toothNum)=>{
-        console.log(toothNum)
+        console.log('tooth clicked')
         //check if tooth is already selected
         // if selected, remove to selectedTooth
         const isSelected = dentalHistory.selectedTooth.includes(toothNum)
@@ -224,8 +271,9 @@ const AddService = () => {
             ...prevdata,
             selectedTooth: isSelected ? prevdata.selectedTooth.filter(num=>num!==toothNum):[...prevdata.selectedTooth, toothNum]
         }))
+        //if wala pa sa selectedtooth, add sa toothFactor, pag andon na, iminus sa toothfactor 
+        setToothFactor(!isSelected?toothFactor+1:toothFactor-1)
     }
-
 
     const renderTooth = (toothNum)=>{
         let toothImage;
@@ -278,6 +326,13 @@ const AddService = () => {
             </div>
         )
     }
+
+    console.log(services)
+    console.log(options)
+    console.log('starting price: ', startingPrice)
+    console.log('tooth factor:  ', toothFactor)
+    console.log('additional fee:  ', additionalFee)
+    console.log('total price:  ', totalPrice)
 
   return (
     <div className='add-dental-history-container'>
@@ -364,6 +419,12 @@ const AddService = () => {
         
                         </select>
                     </div>
+
+                    {/* additional fee */}
+                    <div className="col-4">
+                        <label htmlFor="" className='form-label labels mb-2'>Additional Fee</label>
+                        <input type="number"  className="form-control" value={additionalFee} onChange={(e)=>{e.target.value==''?setAdditionalFee(''):setAdditionalFee(parseInt(e.target.value))}}/>
+                    </div>
                     </div>
                     
                     {/* tooth num */}
@@ -413,15 +474,26 @@ const AddService = () => {
                             {/* receipt procedure */}
                             <div className="receipt-procedure">
                                 <ul>
-                                    <li className='service-name'><ul>
-                                    <li className='tooth-no'>Tooth No.: <span>
+                                    <li className='service-name'> {services?services.map(item=>{
+                                        if(item.service_id==dentalHistory.p_service){
+                                            return item.service_name
+                                        }
+                                    }):''}
+                                        <ul>
+                                    <li className='tooth-severity-material'>Severity/Material: <span> {options?options.map(item=>{
+                                        if(item.option_id==dentalHistory.p_severity_material){
+                                            return item.option_name
+                                        }
+                                    }):''}</span></li>
+                                    <li className='tooth-no'>Tooth No.: <span> {dentalHistory.selectedTooth.join(', ')}
                                        
-                                    </span></li></ul></li>
+                                    </span></li>
+                                    </ul></li>
                                 </ul>
                             </div>
                             {/* receipt cost */}
                             <div className="receipt-cost">
-                                <p>₱ 
+                                <p>₱ {totalPrice}
                                 </p>
                             </div>
                         </div>
@@ -432,7 +504,7 @@ const AddService = () => {
                             </div>
                             <div className="receipt-total-amount">
                                 <h6 className='m-0'>Total Due</h6>
-                                <p className='m-0'>₱ <span></span></p>
+                                <p className='m-0'>₱ {totalPrice}<span></span></p>
                             </div>
                         </div>
                     </div>

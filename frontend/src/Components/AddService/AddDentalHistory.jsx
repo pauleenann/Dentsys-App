@@ -83,6 +83,7 @@ const AddService = () => {
     const [toothFactor,setToothFactor] = useState(0)
     const [additionalFee,setAdditionalFee] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
+    const [error, setError] = useState({})
     const [dentalHistory, setDentalHistory] = useState({
         action: 'procedureHistory',
         p_id: id,
@@ -146,13 +147,10 @@ const AddService = () => {
         'Bernal'
     ]
 
-    console.log()
-
     useEffect(()=>{
         getServices()
         getOptions()
     },[])
-    
 
     useEffect(()=>{
         // reset tooth factor
@@ -414,13 +412,32 @@ const AddService = () => {
         )
     }
 
-    // console.log(services)
-    // console.log(options)
-    // console.log('starting price: ', startingPrice)
-    // console.log('tooth factor:  ', toothFactor)
-    // console.log('additional fee:  ', additionalFee)
-    // console.log('total price:  ', totalPrice)
-    console.log(dentalHistory)
+    const formValidation = ()=>{
+        let err ={}
+
+        if(dentalHistory.p_date==''){
+            err.date = 'Please choose a date';
+        }
+        if(dentalHistory.p_time==''){
+            err.time = 'Please choose a time';
+        }
+        if(dentalHistory.p_selectedTeeth.length==0){
+            err.selectedTeeth = 'Please choose a tooth';
+        }
+        if(dentalHistory.p_dentist==''){
+            err.dentist = 'Please choose a dentist';
+        }
+        if(dentalHistory.p_service==''){
+            err.service = 'Please choose a service';
+        }
+        if(dentalHistory.p_severity_material==''){
+            err.severity_material = 'Please choose a severity/material';
+        }
+
+        setError(err)
+    }
+
+    console.log(error)
 
   return (
     <div className='add-dental-history-container'>
@@ -446,9 +463,9 @@ const AddService = () => {
                 <div className="row">
                     {/* date */}
                     <div className="col-4 mb-5 mt-5 ">
-                        <label htmlFor="" className="form-label labels" >Date</label>
-                        <input  type="date" id="p_date" name="p_date" className="form-control labels" onChange={handleChange}/>
-                        <p className="error-message"></p>
+                        <label htmlFor="" className="form-label labels">Date</label>
+                        <input  type="date" id="p_date" name="p_date" className="form-control labels" onChange={handleChange} onBlur={formValidation}/>
+                        <p className="error-message">{error.date}</p>
                     </div>
 
                     {/* time */}
@@ -459,7 +476,7 @@ const AddService = () => {
                                 {appointmentTime.map((time,index)=>{
                                     if(index<=3){
                                         return <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="p_time" value={time} onChange={handleChange}/>
+                                        <input class="form-check-input" type="radio" name="p_time" value={time} onChange={handleChange} onBlur={formValidation}/>
                                         <label class="form-check-label time-text" for="flexRadioDefault1">
                                         {time}
                                         </label>
@@ -471,32 +488,34 @@ const AddService = () => {
                             {appointmentTime.map((time,index)=>{
                                 if(index>3){
                                     return <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="p_time" value={time} onChange={handleChange}/>
+                                        <input class="form-check-input" type="radio" name="p_time" value={time} onChange={handleChange} onBlur={formValidation}/>
                                         <label class="form-check-label time-text" for="flexRadioDefault1">{time}</label>
                                     </div>
                                 }
                             })}
                         </div>
                     </div>
+                    <p className="error-message">{error.time}</p>
                 </div>
                 
                 <div className="row">
                     {/* services */}
                     <div className="col-4 mb-3">
                         <label htmlFor="" className="form-label labels mb-2">Type of Service</label>
-                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" onChange={handleChange}>
+                        <select class="form-select" aria-label="Default select example" id="p_service" name="p_service" onChange={handleChange} onBlur={formValidation}>
                             <option value="" labels disabled selected>Select a Service</option>
                             {services?services.length>0?services.map(item=>{
                                 return <option value={item.service_id}>{item.service_name}</option>
                             })
                             :'':''}       
                         </select>
+                        <p className="error-message">{error.service}</p>
                     </div>
 
                     {/* service severity/material*/}
                     <div className="col-4">
                         <label htmlFor="" className="form-label labels mb-2">Level of Severity/Type of Material</label>
-                        <select class="form-select" aria-label="Default select example" id="p_severity_material" name="p_severity_material" onChange={handleChange}>
+                        <select class="form-select" aria-label="Default select example" id="p_severity_material" name="p_severity_material" onChange={handleChange} onBlur={formValidation}>
                             <option value="" labels disabled selected={dentalHistory.p_severity_material==''}>Select a Severity/Material</option>
                             {options?options.length>0?options.map(item=>{
                                 if(item.service_id==dentalHistory.p_service){
@@ -504,14 +523,14 @@ const AddService = () => {
                                 }
                             })
                             :'':''}
-        
                         </select>
+                        <p className="error-message">{error.severity_material}</p>
                     </div>
 
                     {/* additional fee */}
                     <div className="col-4">
                         <label htmlFor="" className='form-label labels mb-2'>Additional Fee</label>
-                        <input type="number"  className="form-control" value={additionalFee} onChange={(e)=>{e.target.value==''?setAdditionalFee(''):setAdditionalFee(parseInt(e.target.value))}}/>
+                        <input type="number"  className="form-control" value={additionalFee} onChange={(e)=>{e.target.value==''?setAdditionalFee(''):setAdditionalFee(parseInt(e.target.value))}} onBlur={formValidation}/>
                     </div>
                     </div>
                     
@@ -535,17 +554,17 @@ const AddService = () => {
             </div>
             {/* end of row for tooth chart */}
 
-
             {/* dentist */}
             <div className="row mt-5">
                 <div className="col-6">
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
-                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" onChange={handleChange} >
+                    <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" onChange={handleChange} onBlur={formValidation}>
                         <option value="" labels disabled selected>Select Dentist</option>
                         {dentist.map(item=>{
                             return <option value={item} labels>Dr. {item}</option>
                         })}
                     </select>
+                    <p className="error-message">{error.dentist}</p>
                 </div>
             </div>
 

@@ -77,13 +77,17 @@ const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AddService = () => {
     const {id} = useParams();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [services,setServices] = useState()
     const [options,setOptions] = useState()
     const [startingPrice,setStartingPrice] = useState(0)
     const [toothFactor,setToothFactor] = useState(0)
     const [additionalFee,setAdditionalFee] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
-    const [error, setError] = useState({})
+    const [error, setError] = useState({
+        error:'error'
+    })
     const [dentalHistory, setDentalHistory] = useState({
         action: 'procedureHistory',
         p_id: id,
@@ -437,6 +441,17 @@ const AddService = () => {
         setError(err)
     }
 
+    const handleSave = async ()=>{
+        setLoading(true);
+            try{
+                const response = await axios.post("http://localhost:80/api2/user/save", dentalHistory).finally(() => setLoading(false));
+                console.log(response)
+                navigate(`/view-patient-info/${id}`);
+            }catch(err){
+                console.log("Can't save dental history. An error occurred: ", err.message)
+            }
+    }
+
     console.log(error)
 
   return (
@@ -622,11 +637,17 @@ const AddService = () => {
 
             {/* button */}
             <div className="text-center">
-                <button className='btn save-patient-button' onClick>Save</button>
+                <button className='btn save-patient-button' onClick={handleSave} disabled={Object.keys(error).length!=0}>Save</button>
             </div>
         </div>
       </div>
-      
+      {loading && (
+          <div className="spinner-overlay">
+            <div className="spinner-border text-info" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
     </div>
   )
 }

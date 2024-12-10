@@ -30,29 +30,29 @@ body {
 
 .reports-container{
     display: flex;
-    
-    
 }
 
 .reports-container .content{
     width: 85%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
-.reports-header{
+.reports-container  .reports-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.reports-header h1{
+.reports-container  .reports-header h1{
     color: var(--blue);
     font-weight: 600;
+    margin: 25px 0;
+    font-size: 2.7rem;
 }
 
-.reports-filter-box{
+.reports-container  .reports-filter-box{
     margin: auto;
     color: var(--blue);
     width: 40%;
@@ -65,49 +65,50 @@ body {
 }
 
 
-.reports-type{
+.reports-container  .reports-type{
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.reports-type select{
+.reports-container  .reports-type select{
     height: 40px;
     border-radius: 5px;
     border:1px solid var(--shadow);
     padding: 5px;
 }
 
-.reports-date-toggle{
+.reports-container  .reports-date-toggle{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.reports-date-toggle input{
+.reports-container .reports-date-toggle input{
     height: 20px;
 }
 
-.reports-start-date,.reports-end-date{
+.reports-container .reports-start-date,.reports-end-date{
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.reports-start-date input,.reports-end-date input{
+.reports-container .reports-start-date input,
+.reports-container .reports-end-date input{
     height: 40px;
     padding: 5px;
     border: 1px solid var(--shadow);
     border-radius: 5px;
 }
 
-.reports-buttons{
+.reports-container  .reports-buttons{
     display: flex;
     gap: 10px;
     justify-content: center;
 }
 
-.reports-buttons .clear{
+.reports-container .reports-buttons .clear{
     height: 40px;
     width: 100px;
     background-color: var(--white);
@@ -117,7 +118,7 @@ body {
     transition: all 0.3s;
 }
 
-.reports-buttons .generate{
+.reports-container  .reports-buttons .generate{
     height: 40px;
     width: 150px;
     color: var(--white);
@@ -126,7 +127,8 @@ body {
     border: 1px solid var(--blue);
 }
 
-.reports-buttons .clear:hover,.reports-buttons .generate:hover{
+.reports-container .reports-buttons .clear:hover,
+.reports-container .reports-buttons .generate:hover{
     background-color: var(--blue-hover);
     border-color: var(--blue-hover);
     color: var(--white);

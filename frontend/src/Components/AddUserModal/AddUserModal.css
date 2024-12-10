@@ -44,7 +44,7 @@ body {
     
  }
 
- .add-user-modal-overlay{
+ .add-user-modal-container .add-user-modal-overlay{
     background-color: var(--shadow);
     position: absolute;
     z-index: 1000;
@@ -53,7 +53,7 @@ body {
     
 }
 
-.add-user-modal-box{
+.add-user-modal-container .add-user-modal-box{
     background-color: var(--white);
     position: absolute;
     z-index: 1000;
@@ -66,34 +66,35 @@ body {
     padding-bottom: 30px;
 }
 
-.add-user-modal-header{
+.add-user-modal-container .add-user-modal-header{
     background-color: var(--blue);
     padding: 20px;
     color: var(--white);
     font-size: 1.1rem;
 }
 
-.add-user-close{
+.add-user-modal-container .add-user-close{
     background-color: transparent;
     border: none;
     color: var(--white);
 }
 
-.add-user-modal-inputs{
+.add-user-modal-container .add-user-modal-inputs{
     padding: 20px 50px;
 }
 
-.add-user-modal-input{
+.add-user-modal-container .add-user-modal-input{
     display: flex;
     flex-direction: column;
     margin-top: 15px;
 }
 
-.add-user-modal-input label{
+.add-user-modal-container .add-user-modal-input label{
     color: var(--blue);
 }
 
-.add-user-modal-input input,.add-user-modal-input select{
+.add-user-modal-container .add-user-modal-input input,
+.add-user-modal-container .add-user-modal-input select{
     outline: none;
    border: 1px solid var(--shadow);
    height: 35px;
@@ -101,11 +102,11 @@ body {
    border-radius: 5px;
 }
 
-.add-user-modal-button-container{
+.add-user-modal-container .add-user-modal-button-container{
    text-align: center;
 }
 
-.add-user-modal-button{
+.add-user-modal-container .add-user-modal-button{
     margin-top: 10px;
    padding: 8px 15px;
    background-color: var(--blue);

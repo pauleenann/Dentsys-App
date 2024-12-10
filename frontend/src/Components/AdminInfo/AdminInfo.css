@@ -28,21 +28,26 @@ body {
     justify-content: end;    
 }
 
-.admin-info-user-button{
+.admin-info .admin-info-user-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     color: var(--green);
-    padding: 0 20px;
+    padding:10px 50px;
+    border: none;
 }
 
-.admin-info-user-button:active,.admin-info-user-button:focus{
+.admin-info .admin-info-user-button:active,.admin-info-user-button:focus{
     border-color: var(--white) !important;
 }
 
-.admin-hello, .admin-info-name{
+.admin-info .admin-hello, .admin-info-name{
     color: var(--green);
     font-size: 1.5rem;
     font-weight: 500;
 }
 
-.admin-info-clock, .admin-info-day,.admin-info-date{
+.admin-info .admin-info-clock, .admin-info-day,.admin-info-date{
     color: var(--blue) !important;
 }

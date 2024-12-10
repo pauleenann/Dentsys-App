@@ -110,7 +110,7 @@ const Accounts = () => {
       <div className="content">
         <AdminInfo />
         {/* accounts header */}
-        <div className="accounts-header mt-5">
+        <div className="accounts-header">
             <h1>Accounts</h1>
             {/* add account button */}
             <button className='btn add-account' onClick={()=>setAddUser(true)}>
@@ -170,7 +170,7 @@ const Accounts = () => {
                 if (user.u_fname.toLowerCase().includes(search) || user.u_lname.toLowerCase().includes(search) || search === '') {
                   return (
                     <div>
-                        <div className="user-accounts row mt-3">
+                        <div className="user-accounts row mt-2">
                             <div className="col user-name">
                                 <i class="fa-regular fa-circle-user "></i>
                                     {user.u_fname} {user.u_lname}

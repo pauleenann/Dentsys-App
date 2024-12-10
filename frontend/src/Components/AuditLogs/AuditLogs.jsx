@@ -11,7 +11,7 @@ const AuditLogs = () => {
        <div className="content">
             <AdminInfo/>
             {/* audit header */}
-            <div className="audit-header mt-5">
+            <div className="audit-header">
                 <h1>Audit Logs</h1>
             </div>
             {/* audit filter */}

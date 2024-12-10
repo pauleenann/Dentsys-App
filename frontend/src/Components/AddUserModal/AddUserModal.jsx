@@ -72,7 +72,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
       <div className="add-user-modal-overlay" onClick={close}></div>
       <div className="add-user-modal-box">
         <div className="add-user-modal-header row">
-          <span className="col-7">Add User</span>
+          <span className="col-7 text-end">Add User</span>
           <div className="col-5 text-end">
             <button className="edit-user-close" onClick={close}>
               <i className="fa-solid fa-x"></i>

@@ -12,7 +12,7 @@ const Reports = () => {
         <div className="content">
             <AdminInfo />
             {/* reports header */}
-            <div className="reports-header mt-5 mb-3">
+            <div className="reports-header mb-3">
                 <h1>Reports</h1>
             </div>
             {/* reports filter box */}

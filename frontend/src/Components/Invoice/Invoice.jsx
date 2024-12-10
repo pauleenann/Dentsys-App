@@ -36,7 +36,7 @@ const Invoice = () => {
       <AdminNavbar />
       <div className="content">
         <AdminInfo />
-        <div className="inv-header mt-5">
+        <div className="inv-header">
           <h1>Invoices</h1>
         </div>
 

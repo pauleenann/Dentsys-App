@@ -40,77 +40,125 @@ body {
     margin-left: 18%;
 }
 
-.invoice-table-header{
+.invoice-container .invoice-table-header{
     background-color: var(--blue);
-    padding: 20px;
-    border-radius: 6px;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-.inv-header-text{
+.invoice-container .invoice-table-header div{
     color: var(--white);
 }
 
-.inv-paid-row{
+.invoice-container .inv-paid-row{
     background-color: var(--lightest-blue);
-    padding: 20px;
+    padding: 12px;
     border-radius: 6px;
     color: var(--blue);
+    margin-top: 10px;
 }
 
-.inv-pending-row{
+.invoice-container .inv-pending-row{
     background-color: var(--light-yellow);
-    padding: 20px;
+    padding: 12px;
     border-radius: 6px;
     color: var(--blue);
+    margin-top: 10px;
 }
 
-.inv-overdue-row{
+.invoice-container .inv-overdue-row{
     background-color: var(--light-red);
-    padding: 20px;
+    padding: 12px;
     border-radius: 6px;
     color: var(--blue);
 }
 
-.inv-paid{
+.invoice-container .inv-paid{
     background-color: var(--green);
     color: var(--white);
     border-radius: 25px;
     width: 100px;
-    padding: 10px;
+    height: 40px;    
 }
 
-.inv-pending{
+.invoice-container .inv-paid span{
+    position: relative;
+    top: 8px;
+}
+
+.invoice-container .inv-pending{
     background-color: var(--yellow);
     color: var(--white);
-    width: 100px;
-    padding: 10px;
     border-radius: 25px;
+    width: 100px;
+    height: 40px; 
 }
 
-.inv-overdue{
+.invoice-container .inv-pending span{
+    position: relative;
+    top: 8px;
+}
+
+.invoice-container .inv-overdue{
     background-color: var(--red);
     color: var(--white);
-    width: 100px;
-    padding: 10px;
     border-radius: 25px;
+    width: 100px;
+    height: 40px; 
 }
 
-.inv-view-button{
+.invoice-container .inv-pending span{
+    position: relative;
+    top: 8px;
+}
+
+.invoice-container .inv-view-button{
     background-color: var(--white);
     color: var(--blue);
     border: 1px solid var(--blue);
+    text-decoration: none;
+    height: 40px;
 }
 
-.inv-view-button:hover{
+.invoice-container .inv-view-button:hover,
+.invoice-container .inv-view-button:active,
+.invoice-container .inv-view-button:focus{
     background-color: var(--blue);
     color: var(--white);
+    border: 1px solid var(--blue);
 }
 
-.inv-header{
+.invoice-container .inv-header{
     color: var(--blue);
     margin-top: 25px;
 }
 
-.inv-header h1{
+.invoice-container .inv-header h1{
     font-weight: 600;
+}
+
+.invoice-container .inv-pagination{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.invoice-container .inv-buttons{
+    display: flex;
+    gap: 5px;
+}
+
+.invoice-container .inv-buttons button{
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.invoice-container .inv-buttons button:hover,
+.invoice-container .inv-buttons button:active,
+.invoice-container .inv-buttons button:focus{
+    background-color: var(--blue-hover);
+    border-color: var(--blue-hover);
+    color: var(--white);
 }

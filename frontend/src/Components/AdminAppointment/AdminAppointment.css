@@ -76,203 +76,105 @@ body {
 
 .admin-appointment-container .buttons button{
     border: 1px solid var(--blue);
+    color: var(--blue);
 }
 
-.app-button-color:hover{
+.admin-appointment-container .buttons button:hover{
     background-color: var(--blue-hover);
+    color: var(--white);
 }
 
-.upcoming-row{
-    background-color: var(--lighter-green);
-    padding: 20px;
-    margin-top: 25px;
+.admin-appointment-container .app-row{
+    padding:15px;
+    margin: 15px 0;
     border-radius: 5px;
-    display: flex;
-    align-items: center;
 }
 
-.app-patient-label{
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--green);
+.admin-appointment-container .app-patient-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-transform: capitalize;
 }
 
-.app-patient-info{
-    color: var(--green);
-}
-
-.button-resched{
-    color: var(--blue);
-    border: 1px solid var(--blue);
-    background-color: var(--white);
-    box-shadow: 1px 1px 2px var(--shadow);
-}
-
-.button-resched:hover, .button-resched:hover{
-    background-color: var(--blue);
-    color: var(--white);
-}
-
-.button-delete{
-    color: var(--red);
-    border: 1px solid var(--red);
-    padding: 10px;
-    border-radius: 8px;
-    background-color: var(--white);
-    box-shadow: 1px 1px 2px var(--shadow);
-}
-
-.button-delete:hover, .button-delete:active{
-    color: var(--white);
-    background-color: var(--red);
-}
-
-
-.pending-row{
+.admin-appointment-container .pending-row{
     background-color: var(--light-yellow);
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
+    color: var(--yellow);
 }
-
-.app-patient-label-pending{
+.admin-appointment-container .app-patient-label{
+    font-size: 1.2rem;
     text-transform: capitalize;
-    font-size: 1.5rem;
     font-weight: 500;
-    color: var(--yellow);
+}
+
+.admin-appointment-container .app-patient-label-sub{
     text-transform: capitalize;
 }
 
-.app-patient-info-pending{
-    color: var(--yellow);
+.admin-appointment-container .app-actions{
+    position: relative;
+    top: 6px;
 }
 
-.button-accept{
-    color: var(--green);
-    border: 1px solid --green;
+.admin-appointment-container .app-accept{
     background-color: var(--white);
-    box-shadow: 1px 1px 2px var(--shadow);
+    color: var(--green);
+    border: 1px solid var(--green);
+    margin-right: 5px;
+    height: 40px;
 }
 
-.button-accept:hover, .button-accept:active{
-    color: var(--white);
+.admin-appointment-container .app-accept:hover,.admin-appointment-container .app-accept:focus,
+.admin-appointment-container .app-accept:active{
     background-color: var(--green);
+    color: var(--white);
 }
 
-.button-calendar{
+.admin-appointment-container .app-cancel{
+    background-color: var(--white);
+    border: 1px solid var(--red);
+    height: 40px;
+    color: var(--red);
+    width: 40px;
+}
+
+.admin-appointment-container .app-cancel:hover,.admin-appointment-container .app-cancel:focus,
+.admin-appointment-container .app-cancel:active{
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.admin-appointment-container .upcoming-row{
+    background-color: var(--lighter-green);
+    color: var(--green);
+}
+
+.admin-appointment-container .app-finish{
+    background-color: var(--white);
     color: var(--blue);
     border: 1px solid var(--blue);
-    background-color: var(--white);
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 1px 1px 2px var(--shadow);
+    margin-right: 5px;
+    height: 40px;
 }
 
-.button-calendar:hover{
-    color: var(--white);
+.admin-appointment-container .app-finish:hover,.admin-appointment-container .app-finish:focus,
+.admin-appointment-container .app-finish:active{
     background-color: var(--blue);
+    color: var(--white);
 }
 
-.finished-row{
+.admin-appointment-container .finished-row{
     background-color: var(--lightest-blue);
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.app-patient-label-finished{
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--blue);
-    text-transform: capitalize;
-}
-
-.app-patient-info-finished{
     color: var(--blue);
 }
 
-.cancelled-row{
-    background-color: var(--light-red);
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.app-patient-label-cancelled{
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--tomato-red);
-    text-transform: capitalize;
-}
-
-.app-patient-info-cancelled{
-    color: var(--tomato-red);
-}
-.button-view-finished{
+.admin-appointment-container .app-finish-view{
     background-color: var(--blue);
     color: var(--white);
-    box-shadow: 1px 1px 2px var(--shadow);
 }
 
-.button-view-finished:hover{
+.admin-appointment-container .app-finish-view:hover,.admin-appointment-container .app-finish-view:focus,
+.admin-appointment-container .app-finish-view:active{
     background-color: var(--blue-hover);
     color: var(--white);
-}
-.button-view-cancelled{
-    background-color: var(--tomato-red);
-    color: var(--white);
-    box-shadow: 1px 1px 2px var(--shadow);
-}
-
-.button-view-cancelled:hover{
-    background-color: var(--tomato-hover);
-    color: var(--white);
-}
-
-.button-finish{
-    color: var(--neon-green);
-    border: 1px solid var(--neon-green);
-    padding: 10px;
-    margin: 0;
-    border-radius: 8px;
-    background-color: var(--white);
-    box-shadow: 1px 1px 2px #a9a9a989;
-}
-
-
-.reschedule-overlay, .confirmpage-overlay, .cancelpage-overlay, .viewpage-overlay {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-.spinner-overlay{
-    position: fixed; 
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--overlay);
-    width: 100%;
-    height: 100%;
-}
-
-.buttons button:hover{
-    background-color: var(--blue);
 }

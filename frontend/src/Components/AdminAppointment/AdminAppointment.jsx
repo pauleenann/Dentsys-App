@@ -90,6 +90,8 @@ const AdminAppointment = () => {
     return true;
   }):[];
 
+  console.log(appointment)
+
   return (
     <div className="admin-appointment-container">
       <AdminNavbar />
@@ -114,10 +116,10 @@ const AdminAppointment = () => {
         {filteredAppointments.map((appointment, index) => {
           if (appointment.status_ === 'accepted') {
             return (
-              <div className="row upcoming-row" key={index}>
+              <div className="row app-row upcoming-row" key={index}>
                 <div className="col">
                   <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
-                  <p className='m-0 app-patient-info'>{appointment.service_}</p>
+                  <p className='m-0 app-patient-label-sub'>{appointment.service_name}</p>
                 </div>
                 <div className="col app-patient-info">
                   {appointment.time_}
@@ -125,12 +127,12 @@ const AdminAppointment = () => {
                 <div className="col app-patient-info">
                   UPCOMING
                 </div>
-                <div className="col text-end">
+                <div className="col app-actions text-end">
                   {/* <button className='btn button-resched ' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}>Reschedule</button> */}
-                  <button className='btn p-0 mx-2' onClick={()=>{
+                  <button className='btn app-finish' onClick={()=>{
                     setKeyOfSelectedAppointment(appointment.a_id); finishAppointment(appointment.a_id);
                   }}><i class="fa-solid fa-check button-finish"></i></button>
-                  <button className='btn p-0' onClick={() => { 
+                  <button className='btn app-cancel' onClick={() => { 
                     setKeyOfSelectedAppointment(appointment.a_id); 
                     setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
@@ -138,42 +140,42 @@ const AdminAppointment = () => {
             );
           } else if (appointment.status_ === 'finished') {
             return (
-              <div className="row finished-row" key={index}>
+              <div className="row app-row finished-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-finished'>{appointment.fname} {appointment.lname}</p>
-                  <p className='m-0 app-patient-info-finished'>{appointment.service_}</p>
+                  <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
+                  <p className='m-0 app-patient-label-sub'>{appointment.service_name}</p>
                 </div>
-                <div className="col app-patient-info-finished">
+                <div className="col app-patient-info">
                   {appointment.time_}
                 </div>
-                <div className="col app-patient-info-finished">
+                <div className="col app-patient-info">
                   FINISHED
                 </div>
-                <div className="col text-end">
-                  <button className='btn button-view-finished' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowView(true);}}>View</button>
+                <div className="col app-actions text-end">
+                  <button className='btn app-finish-view' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowView(true);}}>View</button>
                 </div>
               </div>
             );
           } else if (appointment.status_ === 'pending') {
             return (
-              <div className="row pending-row" key={index}>
+              <div className="row app-row pending-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-pending'>{appointment.fname} {appointment.lname}</p>
-                  <p className='m-0 app-patient-info-pending'>{appointment.service_}</p>
+                  <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
+                  <p className='m-0 app-patient-label-sub'>{appointment.service_name}</p>
                 </div>
-                <div className="col app-patient-info-pending">
+                <div className="col app-patient-info">
                   {appointment.time_}
                 </div>
-                <div className="col app-patient-info-pending">
+                <div className="col app-patient-info">
                   PENDING
                 </div>
-                <div className="col text-end">
+                <div className="col app-actions text-end">
                   {/* accept button */}
-                  <button className='btn button-accept' onClick={() => {setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(appointment.a_id);}}>Accept</button>
+                  <button className='btn app-accept' onClick={() => {setKeyOfSelectedAppointment(appointment.a_id); acceptAppointment(appointment.a_id);}}>Accept</button>
                   {/* reschedule button */}
                   {/* <button className='btn p-0 mx-2' onClick={(event) => { setKeyOfSelectedAppointment(appointment.a_id); setShowReschedule(true);}}><i className="fa-regular fa-calendar button-calendar"></i></button> */}
                   {/* cancel button */}
-                  <button className='btn p-0' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
+                  <button className='btn app-cancel p-0' onClick={() => { setKeyOfSelectedAppointment(appointment.a_id); setShowCancel(true);}}><i className="fa-regular fa-circle-xmark button-delete"></i></button>
                 </div>
               </div>
             );
@@ -230,12 +232,13 @@ const AdminAppointment = () => {
       )} */}
 
       {/* Show confirmation dialog */}
-      {showConfirm && (
+      {/* {showConfirm && (
         <div key={keyOfSelectedAppointment} className="confirmpage-overlay">
           <AppointmentConfirmed onClose={() => { window.location.reload();;
             setShowConfirm(false)}} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
         </div>
-      )}
+      )} */}
+    <AppointmentConfirmed open={showConfirm} close={()=>setShowConfirm(false)}  keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}></AppointmentConfirmed>
 
       {showCancel && (
         <div key={keyOfSelectedAppointment} className="cancelpage-overlay">

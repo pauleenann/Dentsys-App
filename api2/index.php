@@ -296,9 +296,19 @@ if($method ==='PUT'){
                 break;
 
         case 'getAppointments':
-            $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
-            FROM appointment INNER JOIN temppatient
-            ON appointment.id = temppatient.id";
+            $sql = "SELECT 
+                        a_id, 
+                        fname, 
+                        lname, 
+                        email, 
+                        phone, 
+                        service_name, 
+                        date_, 
+                        time_, 
+                        status_
+                    FROM appointment 
+                    JOIN temppatient ON appointment.id = temppatient.id
+                    JOIN services ON appointment.service_ = services.service_id";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $appt = $stmt->fetchAll(PDO::FETCH_ASSOC);

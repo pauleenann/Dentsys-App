@@ -10,7 +10,6 @@
    --black:#000;
    --green: #36CE57;
    --green2: #31B957;
-   --green-hover: #3bff72;
    --neon-green:#66ff00;
    --light-yellow: #ffeec4;
    --yellow: #B99331;
@@ -143,4 +142,9 @@ body {
 
 .patients-container .prev-next-btn .hide-button{
    background-color: var(--shadow);
+}
+
+.patients-container .button-view{
+   background-color: var(--blue);
+   color: var(--white);
 }

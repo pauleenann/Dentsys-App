@@ -39,7 +39,12 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
+}
+
+.dental-history-container .content .back{
+    text-decoration: none;
+    color: var(--blue);
 }
 
 .dental-history-container .tooth-chart{
@@ -71,7 +76,7 @@ body {
     font-weight: 500;
 }
 
-.dental-history-info{
+.dental-history-container .dental-history-info{
     text-transform: capitalize;
     background-color: var(--lighter-green);
     padding: 50px 80px;
@@ -79,12 +84,12 @@ body {
     color: var(--blue);
 }
 
-.receipt-container{
+.dental-history-container .receipt-container{
     background-color: var(--white);
     border-radius: 10px;
 }
 
-.receipt-header{
+.dental-history-container .receipt-header{
     background-color: var(--blue);
     color: var(--white);
     display: flex;
@@ -93,7 +98,7 @@ body {
     border-radius: 10px 10px 0px 0px;
 }
 
-.receipt-info{
+.dental-history-container .receipt-info{
     background-color: var(--white);
     display: flex;
     justify-content: space-around;
@@ -101,66 +106,66 @@ body {
     text-transform: capitalize;
 }
 
-.receipt-total{
+.dental-history-container .receipt-total{
     background-color: var(--lightest-blue2);
     display: flex;
     justify-content: space-around;
     border-radius: 0 0 10px  10px;
 }
 
-.receipt-total-amount{
+.dental-history-container .receipt-total-amount{
     display: flex;
     gap: 150px;
     padding: 15px 0;
 }
 
-.total-paid{
+.dental-history-container .total-paid{
     display: flex;
     justify-content: end;
     gap: 100px;
     margin-top: 60px;
 }
 
-.balance{
+.dental-history-container .balance{
     display: flex;
     justify-content: end;
     gap: 100px;
 }
 
-.balance-text{
+.dental-history-container .balance-text{
     font-size: 1.3rem;
     font-weight: 500;
     color: var(--green);
 }
 
 
-.tooth{
+.dental-history-container .tooth{
     width: 50px;
     height: 90px;
 }
 
-.payment-table-text{
+.dental-history-container .payment-table-text{
     color: var(--blue) !important;
 }
 
-.payment-table{
+.dental-history-container .payment-table{
     margin: 0 15px;
 }
 
-.payment-table td{
+.dental-history-container .payment-table td{
     padding: 20px;
 }
 
 
-.tooth-no{
+.dental-history-container .tooth-no{
     width: 150px;
 }
 
-.service-name{
+.dental-history-container .service-name{
     width: 200px;
 }
 
-.dental-history-title{
+.dental-history-container .dental-history-title{
     color: var(--blue);
     font-weight: 600;
 }

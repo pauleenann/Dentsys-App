@@ -16,7 +16,6 @@ import CancelAppointment from "./Components/CancelAppointment/CancelAppointment"
 import AppointmentSubmittedPage from "./Pages/AppointmentSubmittedPage";
 import ViewPatientInfo from "./Components/ViewPatientInfo/ViewPatientInfo";
 import EditPatientInfo from "./Components/EditPatientInfo/EditPatientInfo";
-import AddService from "./Components/AddService/AddService";
 import DentalHistory from "./Components/DentalHistory/DentalHistory";
 import ServicesOffered from "./Pages/ServicesOffered";
 import AddAppointment from "./Components/AddAppointment/AddAppointment";
@@ -30,8 +29,7 @@ import AppointmentCancelledConfirm from "./Components/AppointmentCancelledConfir
 import Accounts from "./Components/Accounts/Accounts";
 import AuditLogs from "./Components/AuditLogs/AuditLogs";
 import Reports from "./Components/Reports/Reports";
-import AddServiceCopy from "./Components/AddService/AddDentalHistory";
-import AddDentalHistory from "./Components/AddService/AddDentalHistory";
+import AddDentalHistory from "./Components/AddDentalHistory/AddDentalHistory";
 import AdminDash from "./Components/AdminDash/AdminDash";
 
 

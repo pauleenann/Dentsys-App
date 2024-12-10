@@ -97,26 +97,22 @@ const EditPatientInfo = () => {
     }
 
   return (
-    <div className='wrapper'>
+    <div className='edit-patient-info-container'>
         <AdminNavbar />
-        <div id="content">
+        <div className="content">
             <AdminInfo />
             {/* go back button */}
             <div className="row">
                 <Link to={`/view-patient-info/${patient.id}`}>
-                    <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
-                    </div>
+                    <i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
 
             {/* Header */}
-            <div className="rol">
-                <h1 className='edit-patient-title'>Edit Patient Record</h1>
-            </div>
-
+            <h1 className='edit-patient-title'>Edit Patient Record</h1>
+        
             {/* form */}
-            <div className="rol add-patient-container mt-3">
+            <div className="row mt-3">
                 <div className="col">
                     <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
                     <form onSubmit={handleClick}>

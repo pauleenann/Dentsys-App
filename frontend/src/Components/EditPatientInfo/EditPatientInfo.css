@@ -28,40 +28,15 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.edit-patient-info-container {
     display: flex;
     width: 100%;
-    align-items: stretch;
 }
 
-
-#content {
+.edit-patient-info-container .content{
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0;
+    margin-left: 18%;
 }
 
-.no-bg-color{
-    background-color: transparent !important; 
-}
-
-.dhistory-list-th, .dhistory-info{
-    color: var(--blue) !important;
-    font-weight: 500;
-}
-
-.button-view,  .button-save-record{
-    background-color: var(--blue);
-    color: var(--white);
-  }
- 
-  .button-view:hover, .button-save-record:hover{
-    background-color: var(--blue);
-    color: var(--white);
-  }
-
-.edit-patient-title{
-    color: var(--blue);
-    font-weight: 600;
-}

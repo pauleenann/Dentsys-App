@@ -65,6 +65,10 @@ body {
   color: var(--blue);
 }
 
+.view-patient-container .view-patient-form input{
+  text-transform: capitalize;
+}
+
 .view-patient-container .view-patient-form .edit-record{
   background-color: var(--blue);
   color: var(--white);
@@ -103,6 +107,19 @@ body {
 .view-patient-container .add-service-btn:focus,
 .view-patient-container .add-service-btn:hover
 .view-patient-container .add-service-btn:active{
+  background-color: var(--blue-hover);
+  border-color: var(--blue-hover);
+  color: var(--white);
+}
+
+.view-patient-container .button-view{
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.view-patient-container .button-view:focus,
+.view-patient-container .button-view:hover
+.view-patient-container .button-view:active{
   background-color: var(--blue-hover);
   border-color: var(--blue-hover);
   color: var(--white);

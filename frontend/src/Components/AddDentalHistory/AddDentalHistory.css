@@ -39,7 +39,7 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
 .add-dental-history-header h1{
@@ -50,7 +50,7 @@ body {
     background-color: var(--lightest-blue);
     padding: 30px 50px;
     border-radius: 10px;
-
+    color: var(--blue);
 }
 
 .add-dental-history-form .tooth-chart{
@@ -99,7 +99,42 @@ body {
     text-transform: capitalize;
 }
 
-.spinner-overlay{
+.add-dental-history-container .receipt-container{
+    background-color: var(--white);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.add-dental-history-container .receipt-header{
+    background-color: var(--blue);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.add-dental-history-container .receipt-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.add-dental-history-container .receipt-info{
+    padding: 50px 20px;
+}
+
+.add-dental-history-container .receipt-info .receipt-procedure{
+    position: relative;
+    left: 200px;
+}
+
+.add-dental-history-container .receipt-info .receipt-cost{
+    position: relative;
+    left: 290px;
+}
+
+.add-dental-history-container .spinner-overlay{
     position: fixed; 
     top: 0;
     left: 0;
@@ -112,7 +147,20 @@ body {
     height: 100%;
 }
 
-.error-message{
+.add-dental-history-container .receipt-total{
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 20px;  padding-right: 100px;
+}
+.add-dental-history-container .receipt-total h6{
+    text-align: end;
+}
+
+.add-dental-history-container .receipt-total p{
+    text-align: center;
+}
+
+.add-dental-history-container .error-message{
     color: var(--red);
     font-size: 12px;
     font-style: italic;
@@ -123,4 +171,9 @@ body {
 
 .add-dental-history-form .save-patient-button{
     border: none;
+}
+
+.add-dental-history-container .save-patient{
+    background-color: var(--blue);
+    color: var(--white);
 }

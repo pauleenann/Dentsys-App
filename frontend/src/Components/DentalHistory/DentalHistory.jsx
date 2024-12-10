@@ -157,18 +157,16 @@ const DentalHistory = () => {
         <AdminNavbar/>
       <div className="content">
         <AdminInfo/>
-
         {/* go back button */}
         <div className="row">
-            <Link to='/patient-list'>
-            <div className="back-to-patients">
-                <p><i class="fa-solid fa-chevron-left mt-4"></i> <Link to={`/view-patient-info/${patientId}`}><span>Go back</span></Link></p>
-            </div>
+            <Link to={`/view-patient-info/${patientId}`} className='back'>
+                <i class="fa-solid fa-chevron-left mt-4"></i>
+                <span>Go back</span>
             </Link>
         </div>
 
         {/* Header */}
-        <div className="row">
+        <div className="row mt-3">
             <h1 className='dental-history-title'>Dental History</h1>
         </div>
 

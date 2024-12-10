@@ -596,9 +596,9 @@ const AddService = () => {
                             <h6 className='m-0'>Cost</h6>
                         </div>
                         {/* receipt info */}
-                        <div className="receipt-info">
+                        <div className="receipt-info row">
                             {/* receipt procedure */}
-                            <div className="receipt-procedure">
+                            <div className="receipt-procedure col-6">
                                 <ul>
                                     <li className='service-name'> {services?services.map(item=>{
                                         if(item.service_id==dentalHistory.p_service){
@@ -618,20 +618,15 @@ const AddService = () => {
                                 </ul>
                             </div>
                             {/* receipt cost */}
-                            <div className="receipt-cost">
+                            <div className="receipt-cost col-6">
                                 <p>₱ {totalPrice}
                                 </p>
                             </div>
                         </div>
                         {/* total */}
-                        <div className="receipt-total">
-                            <div>
-
-                            </div>
-                            <div className="receipt-total-amount">
-                                <h6 className='m-0'>Total Due</h6>
-                                <p className='m-0'>₱ {totalPrice}<span></span></p>
-                            </div>
+                        <div className="receipt-total row">
+                                <h6 className='m-0 col-8'>Total Due</h6>
+                                <p className='m-0 col'>₱ {totalPrice}<span></span></p>
                         </div>
                     </div>
                     
@@ -640,7 +635,7 @@ const AddService = () => {
 
             {/* button */}
             <div className="text-center">
-                <button className='btn save-patient-button' onClick={handleSave} disabled={Object.keys(error).length!=0}>Save</button>
+                <button className='btn save-patient' onClick={handleSave} disabled={Object.keys(error).length!=0}>Save</button>
             </div>
         </div>
       </div>

@@ -37,52 +37,73 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
-.no-bg-color{
-    background-color: transparent !important; 
+.view-patient-container .back{
+  text-decoration: none;
+  color: var(--blue);
 }
 
-.dhistory-list-th, .dhistory-info{
-    color: var(--blue) !important;
-    font-weight: 500;
-    text-transform: capitalize;
-}
-
-.view-patient-title{
+.view-patient-container .view-patient-title{
   color: var(--blue);
   font-weight: 600;
+  margin-top: 15px;
 }
 
-.view-patient-form-title{
+.view-patient-container .view-patient-form{
+  background-color: var(--lightest-blue);
+  padding: 50px;
+  border-radius: 5px;
+}
+
+.view-patient-container .view-patient-form-title{
   color: var(--blue);
 }
-.view-patient-form-hr{
-  background-color: var(--blue);
+
+.view-patient-container .view-patient-form label{
+  color: var(--blue);
 }
-.button-view{
-    background-color: var(--blue);
-    color: var(--white);
-  }
- 
-  .button-view:hover{
-    background-color: var(--blue);
-    color: var(--white);
-  }
 
-  .button-edit-record{
-    background-color: var(--white);
-    border: 1px solid var(--blue);
-    color: var(--blue);
-  }
-  .button-edit-record:hover{
-    background-color: var(--blue-hover);
-    border: none;
-    color: var(--white);
-  }
+.view-patient-container .view-patient-form .edit-record{
+  background-color: var(--blue);
+  color: var(--white);
+}
 
-  .button-service-icon, .button-service{
-    color: var(--blue) !important;
-    font-weight: 500;
-  }
+.view-patient-container .view-patient-form .edit-record:hover{
+  background-color: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.view-patient-container .view-patient-form hr{
+  color: var(--blue);
+}
+
+.view-patient-container table{
+  color: #000;
+}
+
+.view-patient-container .table thead tr th,
+.view-patient-container .table tbody tr td{
+  background-color: transparent !important;
+  color: var(--blue);
+  text-transform: capitalize;
+  vertical-align: middle;
+}
+
+
+.view-patient-container .add-service-btn{
+  background-color: var(--blue);
+  height: 50px;
+  color: var(--white);
+  margin-top: 20px;
+}
+
+.view-patient-container .add-service-btn:focus,
+.view-patient-container .add-service-btn:hover
+.view-patient-container .add-service-btn:active{
+  background-color: var(--blue-hover);
+  border-color: var(--blue-hover);
+  color: var(--white);
+}

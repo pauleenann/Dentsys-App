@@ -18,7 +18,6 @@ const ViewPatientInfo = () => {
 
     const {id} = useParams();
     
-    
     useEffect(()=>{
         getPatient();
         getProcedureHistory();
@@ -35,32 +34,21 @@ const ViewPatientInfo = () => {
         };
     }, []);
 
-    function getPatient() {
-        axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
-          .then(function(response) {
-            console.log(response.data); 
-              setPatient(response.data);
-          
-          })
+    const getPatient = async()=> {
+        try{
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
+            setPatient(response.data);
+        }catch(err){
+            console.log("Couldn't get patients. An error occurred: ", err.message)
+        }
     };
     
-    function getProcedureHistory() {
-        axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory`)
-          .then(function(response) {
-            console.log(response.data); 
-              setHistory(response.data);
-          
-          })
-    };
-
-    const handleClick = async (e) => {
-        e.preventDefault();
-        try {
-          await axios.post("http://localhost:80/api2/user/save", patient);
-          // Uncomment the next line if you want to navigate after submission
-          // navigate("/appointment-request-submitted", {state: patient});
-        } catch (err) {
-          console.log(err);
+    const getProcedureHistory = async ()=> {
+        try{
+            const response =await axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory`);
+            setHistory(response.data);
+        }catch(err){
+            console.log("Couldn't get dental history. An error occurred: ", err.message)
         }
     };
 
@@ -71,23 +59,20 @@ const ViewPatientInfo = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/patient-list'>
-                    <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
-                    </div>
+                <Link to='/patient-list' className='back'>
+                    <i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
 
             {/* Header */}
-            <div className="row">
-                <h1 className='view-patient-title'>Patient Record</h1>
-            </div>
+            <h1 className='view-patient-title'>Patient Record</h1>
+        
 
             {/* form */}
-            <div className="row add-patient-container mt-3">
+            <div className="row view-patient-form mt-3">
                 <div className="col">
                     <h5 className='text-center mb-5 mt-4 view-patient-form-title'>Patient Information</h5>
-                    <form onSubmit={handleClick}>
+                    <form>
                         <div className="row">
                             {/* fname */}
                             <div className="col-4 mb-4">
@@ -138,12 +123,12 @@ const ViewPatientInfo = () => {
                             </div>
 
                             <div className="col-12 text-end">
-                                <Link to={`/edit-patient-info/${patient.id}`}><button className='btn button-edit-record'> Edit</button></Link>
+                                <Link to={`/edit-patient-info/${patient.id}`}><button className='btn edit-record'> Edit</button></Link>
                             </div>
                         </div>
                     </form>
 
-                    <hr className='my-5 view-patient-form-hr'/>
+                    <hr className='my-5'/>
 
                     {/* dental history text header */}
                     <div className="col ">
@@ -152,50 +137,40 @@ const ViewPatientInfo = () => {
 
                     {/* table */}
                     <div className="col">
-                    <table className="table ">
+                        <table className="table ">
                             <thead>
                                 <tr>
-                                <td className='no-bg-color dhistory-list-th' scope="col">Date of Service</td>
-                                <td className='no-bg-color dhistory-list-th'  scope="col">Dentist</td>
-                                <td className='no-bg-color dhistory-list-th'  scope="col">Procedure</td>
-                                <td className='no-bg-color '  scope="col"></td>
+                                    <th scope="col">Date of Service</th>
+                                    <th scope="col">Dentist</th>
+                                    <th scope="col">Procedure</th>
+                                    <th scope="col"></th>
                                 </tr>
-                                
                             </thead>
                             <tbody>
-                                    {Array.isArray(history) && history.length > 0 ? (
-                                        history.map((item, index) => (
-                                                <tr className=''>
-                                                    <td className='no-bg-color dhistory-info pt-3'scope="row">{item.p_date}</td>
-                                                    <td className='no-bg-color dhistory-info pt-3' >Dr. {item.p_dentist} </td>
-                                                    <td className='no-bg-color dhistory-info pt-3' >{item.service_name}</td>
-                                                    <td className='no-bg-color app-today-info' >
-                                                        <Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
-                                                    </Link></td>
-                                                </tr>
-                                        ))
+                                {history? history.map((item, index) => (
+                                        <tr className=''>
+                                            <td scope="row">{item.p_date}</td>
+                                            <td>Dr. {item.p_dentist} </td>
+                                            <td>{item.service_name}</td>
+                                            <td>
+                                            <Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>
+                                            </Link></td>
+                                        </tr>
+                                    )
                                     ) : (
-                                        
-                                        <p className='my-3'>No history available.</p>
-                                        
-                                        
-                                    )}
-                                
-                                
-                            </tbody>
-                            
-                            
-                            
+                                        <p className='my-3'>No history available.</p>   
+                                    )}      
+                            </tbody>   
                         </table>
                     </div>
 
+                    {/* add service button */}
                     <div className="col-12 text-center">
                         <Link to={`/add-service/${id}`}>
-                            <button className='btn service-button-color'><i class="fa-regular fa-square-plus button-service-icon"></i><span className='text-light button-service'> Add another procedure</span></button>
+                            <button className='btn add-service-btn'><i class="fa-regular fa-square-plus button-service-icon"></i>
+                            <span> Add another procedure</span></button>
                         </Link>
                     </div>
-
-
 
                 </div>
             </div>

@@ -57,7 +57,6 @@ body {
     background-color: var(--blue);
     height: 50px;
     color: var(--white);
-    transition: all 0.3s;
 }
 
 .admin-appointment-container .appoint-header button:focus,

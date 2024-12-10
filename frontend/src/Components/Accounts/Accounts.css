@@ -39,48 +39,97 @@ body {
     margin-left: 18%;
 }
 
-.accounts-header{
+.accounts-container .accounts-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 25px;
+
 }
 
-.accounts-header h1{
+.accounts-container .accounts-header h1{
     color: var(--blue);
     font-weight: 600;
 }
 
-.add-account{
+.accounts-container .add-account{
     background-color: var(--blue);
+    height: 50px;
+    color: var(--white);
 }
 
-.accounts-column{
+.accounts-container .add-account:focus,
+.accounts-container .add-account:hover
+.accounts-container .add-account:active{
+    background-color: var(--blue-hover);
+    border-color: var(--blue-hover);
+    color: var(--white);
+}
+
+.accounts-container .search-bar{
+    width: 100%;
+    padding: 10px 20px 10px;
+    margin-top: 20px;
+    border-radius: 50px;
+    background-color: var(--light-gray);
+    border: none;
+ }
+
+.accounts-container .button-group {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.accounts-container .btn-alphabet {
+    margin: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.accounts-container .button-group button:hover {
+    background-color: #ddd;
+    border-color: transparent;
+}
+  
+.accounts-container .button-group .btn-selected {
+    background-color: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+}
+
+/* .accounts-container .accounts-column{
     text-align: center;
     background-color: var(--blue);
     padding: 15px;
     color: var(--white);
     border-radius: 8px;
-}
+} */
 
-.user-name{
+.accounts-container .user-name{
     justify-content: left;
 }
 
-.user-accounts{
+.accounts-container .user-accounts{
     background-color: var(--lightest-blue);
     padding: 15px;
     border-radius: 8px;
 }
 
-.user-accounts .col{
+.accounts-container .user-accounts .col{
     display: flex;
     gap: 10px;
     align-items: center;
     justify-content: center;
     color: var(--blue);
+    text-transform: capitalize;
 }
 
-.edit-user-button{
+.accounts-container .edit-user-button{
     display: flex;
     align-items: center;
     background-color: var(--white);
@@ -89,9 +138,10 @@ body {
     gap: 10px;
     padding: 5px 10px;
     border-radius: 5px;
+    height: 40px;
 }
 
-.remove-user-button{
+.accounts-container .remove-user-button{
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -100,3 +150,33 @@ body {
     padding: 5px 10px;
     border: none;
 }
+
+.accounts-container .pagination-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+ }
+ 
+ .accounts-container .prev-next-btn button{
+    background-color: var(--blue);
+    color: var(--white);
+    height: 40px;
+ }
+ 
+ .accounts-container .prev-next-btn button:hover,
+ .accounts-container .prev-next-btn button:active,
+ .accounts-container .prev-next-btn button:focus{
+    background-color: var(--blue-hover);
+    border-color: var(--blue-hover);
+    color: var(--white);
+ }
+ 
+ .accounts-container.prev-next-btn .hide-button{
+    background-color: var(--shadow);
+ }
+ 
+ .accounts-container .button-view{
+    background-color: var(--blue);
+    color: var(--white);
+ }

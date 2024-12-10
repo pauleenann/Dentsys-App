@@ -107,6 +107,7 @@ body {
 .remove-user-button {
     display: flex;
     align-items: center; /* Ensures icon and text are vertically aligned */
+    gap: 10px;
     padding: 8px 15px; /* Ensure consistent padding */
     background-color: var(--red);
     color: var(--white);

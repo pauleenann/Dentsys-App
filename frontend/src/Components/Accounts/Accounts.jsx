@@ -61,7 +61,6 @@ const Accounts = () => {
 
   const getUsers = async (page = 1) => {
     const offset = (page - 1) * LIMIT;
-
     try {
       const response = await axios.get(
         `http://localhost:80/api2/?action=getUsers&limit=${LIMIT}&offset=${offset}`
@@ -103,7 +102,7 @@ const Accounts = () => {
 
   const handleUserUpdated = () => {
     getUsers(); // Refresh user data
-};
+  };
 
   return (
     <div className="accounts-container">
@@ -171,7 +170,7 @@ const Accounts = () => {
                 if (user.u_fname.toLowerCase().includes(search) || user.u_lname.toLowerCase().includes(search) || search === '') {
                   return (
                     <div>
-                        <div className="user-accounts row mt-4">
+                        <div className="user-accounts row mt-3">
                             <div className="col user-name">
                                 <i class="fa-regular fa-circle-user "></i>
                                     {user.u_fname} {user.u_lname}
@@ -194,10 +193,7 @@ const Accounts = () => {
                                     <span>Set as Inactive</span>
                                 </button> */}
                             </div>
-                        </div>
-
-                      
-                      
+                        </div> 
                     </div>
                   ) 
                 }
@@ -205,25 +201,13 @@ const Accounts = () => {
               }) : <p className='text-center mt-5'>No patient record found</p>}
 
             {/* Pagination Buttons */}
-              
             <div className="pagination-buttons">
-                  <button
-                    className="btn"
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </button>
-                  <span>
-                    Page {currentPage} of {Math.ceil(totalUsers / LIMIT)}
-                  </span>
-                  <button
-                    className="btn"
-                    onClick={handleNextPage}
-                    disabled={currentPage * LIMIT >= totalUsers}
-                  >
-                    Next
-                  </button>
+              <span>Page {currentPage} of {Math.ceil(totalUsers / LIMIT)}</span>
+              {/* prev and next buttons */}
+              <div className="prev-next-btn">
+                <button className="btn" onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
+                <button className="btn" onClick={handleNextPage} disabled={currentPage * LIMIT >= totalUsers}>Next</button>
+              </div>
             </div>
              
         

@@ -21,7 +21,6 @@ const InvoiceDetails = () => {
        getTotalPaid();
     }, []);
 
-
     const getInvoiceDetails = async()=>{
         try {
             const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
@@ -83,15 +82,13 @@ const InvoiceDetails = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/invoice-list'>
-                    <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
-                    </div>
+                <Link to='/invoice-list' className='back'>
+                        <i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
 
             {invoiceDetails.map((item, key)=>(
-                <div className="row invoice-detail-info">
+            <div className="row invoice-detail-info">
                 <div className="row invoice-detail-header">
                     <div className="col invoice-detail-header-text">Invoice Details</div>
                 </div>

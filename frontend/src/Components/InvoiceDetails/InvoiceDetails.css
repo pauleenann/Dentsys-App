@@ -38,11 +38,15 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
+.inv-details-container .content .back{
+  text-decoration: none;
+  color: var(--blue);
+}
 
-.invoice-detail-header{
+.inv-details-container .invoice-detail-header{
   background-color: var(--blue);
   border-radius: 5px 5px 0 0;
   padding: 0;
@@ -50,27 +54,26 @@ body {
 
 }
 
-.invoice-detail-header-text{
+.inv-details-container .invoice-detail-header-text{
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   font-size: 1.5rem;
-  
 }
 
-.invoice-detail-info{
+.inv-details-container .invoice-detail-info{
   background-color: var(--lighter-green);
-  margin: 0;
+  margin-top: 30px;
 }
 
-.invoice-user-info{
+.inv-details-container .invoice-user-info{
   padding: 50px 200px;
   color: var(--blue);
 }
 
-.cost-header{
+.inv-details-container .cost-header{
   padding: 20px 200px;
   color: var(--blue);
 }
@@ -85,12 +88,12 @@ body {
   text-transform: capitalize;
 }
 
-.nothing-follows{
+.inv-details-container .nothing-follows{
   font-size: 0.8rem;
   color: var(--blue);
 }
 
-.invoice-total-price{
+.inv-details-container .invoice-total-price{
   color: var(--blue);
   font-weight: 600;
   background-color: #31a2b92a;
@@ -98,7 +101,7 @@ body {
   margin: 0;
 }
 
-.invoice-payment-details{
+.inv-details-container .invoice-payment-details{
   background-color: #fff;
   width: 80%;
   padding: 20px 50px;
@@ -106,45 +109,45 @@ body {
   color: var(--blue);
 }
 
-.invoice-payment{
+.inv-details-container .invoice-payment{
   font-size: 1.3rem;
   font-weight: 500;
   width: 60%;
   color: var(--blue);
 }
 
-.invoice-update-button{
+.inv-details-container .invoice-update-button{
   background-color: #fff;
   border: 1px solid #31A3B9;
   padding: 10px 15px;
   color: #31A3B9;
 }
 
-.invoice-update-button:hover, .invoice-update-button:active{
+.inv-details-container .invoice-update-button:hover, .invoice-update-button:active{
   background-color: #006f85;
   border: none;
   color: #ffffff;
 }
 
-.invoice-balance{
+.inv-details-container .invoice-balance{
   color: #36CE57;
   font-weight: 500;
   font-size: 1.5rem;
 }
 
-.inv-details-hr{
+.inv-details-container .inv-details-hr{
   border-color: var(--blue);
 }
 
-.inv-details-total{
+.inv-details-container .inv-details-total{
   color: var(--blue);
 }
 
-.total-amount-paid{
+.inv-details-container .total-amount-paid{
   font-weight: 600;
 }
 
-.inv-details-name,.inv-status{
+.inv-details-container .inv-details-name,.inv-status{
   text-transform: capitalize;
   font-weight: 600;
 }

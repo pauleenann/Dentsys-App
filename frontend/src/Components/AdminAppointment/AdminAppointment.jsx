@@ -231,26 +231,14 @@ const AdminAppointment = () => {
         </div>
       )} */}
 
-      {/* Show confirmation dialog */}
-      {/* {showConfirm && (
-        <div key={keyOfSelectedAppointment} className="confirmpage-overlay">
-          <AppointmentConfirmed onClose={() => { window.location.reload();;
-            setShowConfirm(false)}} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
-        </div>
-      )} */}
+    {/* Show confirmation modal */}
     <AppointmentConfirmed open={showConfirm} close={()=>setShowConfirm(false)}  keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}></AppointmentConfirmed>
 
-      {showCancel && (
-        <div key={keyOfSelectedAppointment} className="cancelpage-overlay">
-          <CancelAppointment onClose={() => setShowCancel(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
-        </div>
-      )}
+    {/* Show cancelation modal */}
+    <CancelAppointment open={showCancel} close={()=>setShowCancel(false)}  keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}></CancelAppointment>
 
-      {showView && (
-        <div key={keyOfSelectedAppointment} className="viewpage-overlay">
-          <ViewAppointment onClose={() => setShowView(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment} />
-        </div>
-      )}
+    {/* Show view modal */}
+    <ViewAppointment open={showView} close={()=>setShowView(false)} keyOfSelectedAppointment={keyOfSelectedAppointment} appointments={appointment}></ViewAppointment>
 
     </div>
   );

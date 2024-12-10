@@ -3,10 +3,11 @@ import './CancelAppointment.css'
 import axios from 'axios'
 import isAuthenticated from '../Auth'
 import io from 'socket.io-client';
+import ReactDom from 'react-dom';
 
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
-const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) => {
+const CancelAppointment = ({open, close, keyOfSelectedAppointment, appointments}) => {
   const [appointment, setAppointment] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,7 +15,7 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
     getAppointment();
   }, []);
 
-  function getAppointment() {
+  const getAppointment =()=> {
     axios.get('http://localhost:80/api2/?action=getAppointments')
       .then(response => {
         console.log(response.data);
@@ -43,8 +44,10 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
     console.log(appointment)
   }
 
-
-  return (
+  if(!open){
+    return null
+  }
+  return ReactDom.createPortal(
     <div className='cancel-app'>
       <div className="cancel-app-card">
         {/* header */}
@@ -54,7 +57,7 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
                 <div className="col-8">
                     <h5 className='text-light m-0 text-center '>Cancel an Appointment</h5>
                 </div>
-                <div className="col-2 text-end" onClick={onClose}>
+                <div className="col-2 text-end" onClick={close}>
                     <i class="fa-solid fa-x text-light close-resched" ></i>
                 </div>
             </div>
@@ -65,14 +68,14 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
             if (appointment.a_id === keyOfSelectedAppointment) {
                 return (
                 <div className="row p-5 cancel-info" key={index}>
-                  <div className="col-2 mb-2 black-color">Client Name:</div>
-                  <div className="col-3 mb-2 fw-bold  black-color text-capitalize">{appointment.fname} {appointment.lname}</div>
-                  <div className="col-3 mb-2 black-color">Service Acquired:</div>
-                  <div className="col-3 mb-2 black-color fw-bold  ">{appointment.service_}</div>
-                  <div className="col-2 mb-2 black-color">Date:</div>
-                  <div className="col-3 mb-2 black-color fw-bold  ">{appointment.date_}</div>
-                  <div className="col-3 mb-2 black-color">Time:</div>
-                  <div className="col-3 mb-2 black-color fw-bold  ">{appointment.time_}</div>
+                  <div className="col-6 mb-2 black-color">Client Name:</div>
+                  <div className="col-6 mb-2 fw-bold  black-color text-capitalize">{appointment.fname} {appointment.lname}</div>
+                  <div className="col-6 mb-2 black-color">Service Acquired:</div>
+                  <div className="col-6 mb-2 black-color fw-bold  ">{appointment.service_name}</div>
+                  <div className="col-6 mb-2 black-color">Date:</div>
+                  <div className="col-6 mb-2 black-color fw-bold  ">{appointment.date_}</div>
+                  <div className="col-6 mb-2 black-color">Time:</div>
+                  <div className="col-6 mb-2 black-color fw-bold  ">{appointment.time_}</div>
                   <div className="button-container text-center mt-5">
                       <button className='btn cancel-discard-button'>Discard</button>
                       <button className='btn cancel-button' onClick={cancelAppointment}>Cancel Appointment</button>
@@ -94,9 +97,9 @@ const CancelAppointment = ({ onClose, keyOfSelectedAppointment, appointments}) =
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-          
         )}
-    </div>
+    </div>,
+    document.getElementById('portal')
   )
 }
 

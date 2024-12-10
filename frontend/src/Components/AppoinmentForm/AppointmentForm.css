@@ -26,71 +26,71 @@
     color: var(--blue);
 }
 
-.appointment-row{
+.appoinment-container .appointment-row{
     width: 100%;
     margin-top: 30px;
     
     
 }
-.input-form{
+.appoinment-container .input-form{
     text-transform: capitalize;
 }
 
-.patient-info{
+.appoinment-container .patient-info{
     background-color: var(--light-blue);
     padding: 50px 80px;
 }
 
-.patient-info-text{
+.appoinment-container .patient-info-text{
     color: var(--blue);
 }
 
-.labels, .time-text, .labels-email{
+.appoinment-container .labels, .time-text, .labels-email{
     color: var(--blue);
 }
 
-.labels{
+.appoinment-container .labels{
     text-transform: capitalize;
 }
 
-.appointment-summary{
+.appoinment-container .appointment-summary{
     background-color: var(--light-blue);
     padding: 50px 60px;
     margin: 0 30px; 
 }
 
-.appointment-summary .client{
+.appoinment-container .appointment-summary .client{
     word-wrap: break-word;
 }
 
-.submit-button{
+.appoinment-container .submit-button{
     background-color: var(--blue);
     color: var(--white);
     width: 70%;
     padding: 13px 0;
 }
 
-.submit-button:active, .submit-button:hover{
+.appoinment-container .submit-button:active, .submit-button:hover{
     border: none;
     background-color: var(--blue-hover);
     color: var(--white);
 }
 
-.reminder{
+.appoinment-container .reminder{
     margin-top: 20px;
     font-style: italic;
 }
 
-.required-field{
+.appoinment-container .required-field{
     color: var(--red);
 }
 
-.client{
+.appoinment-container .client{
     font-weight: 400;
     font-size: 1.5rem;
 }
 
-.form{
+.appoinment-container .form{
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -99,7 +99,7 @@
     
 }
 
-.spinner-overlay{
+.appoinment-container .spinner-overlay{
     position: fixed; 
     top: 0;
     left: 0;
@@ -112,7 +112,7 @@
     height: 100%;
 }
 
-.error-message{
+.appoinment-container .error-message{
     color: var(--red);
     font-size: 12px;
     font-style: italic;
@@ -123,11 +123,11 @@
 
 @media screen and (max-width: 1000px) {
 
-    .patient-info{
+    .appoinment-container .patient-info{
         margin-bottom: 20px;
     }
 
-    .appointment-summary{
+    .appoinment-container .appointment-summary{
         padding: 50px 60px;
         margin: 0 0px; 
     }

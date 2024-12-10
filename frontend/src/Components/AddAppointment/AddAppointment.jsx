@@ -7,14 +7,15 @@ import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import AdminInfo from "../AdminInfo/AdminInfo";
 import isAuthenticated from "../Auth";
 import io from 'socket.io-client';
-
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AddAppointment = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [services, setServices] = useState([]);
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        error:'error'
+    });
     const [submitForm, setSubmitForm] = useState(false)
     const [occupiedTime, setOccupiedTime] = useState([])
     const [minDate, setMinDate] = useState("");
@@ -102,7 +103,7 @@ const AddAppointment = () => {
     }
 
 
-    async function getServices() {
+    const getServices = async()=> {
         try {
             const response = await axios.get('http://localhost:80/api2/?action=getServices');
             console.log('Full API response:', response);
@@ -184,14 +185,16 @@ const AddAppointment = () => {
        
     }
 
+    console.log(formData)
+
   return (
-    <div className='wrapper'>
+    <div className='add-app-container'>
         <AdminNavbar />
-        <div id="content">
+        <div className="content">
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to='/appointment-list'>
+                <Link to='/appointment-list' className="back">
                     <div className="back-to-patients">
                         <p><i className="fa-solid fa-chevron-left mt-4"></i> <span className="go-back">Go back</span></p>
                     </div>
@@ -200,109 +203,102 @@ const AddAppointment = () => {
 
             {/* Header */}
             <div className="row">
-                <h1 className="appointment2-title">Add an Appointment</h1>
+                <h1 className="add-app-title">Add an Appointment</h1>
             </div>
 
             {/* form */}
-            <div className='appointment2-container container'>
-        <form action="" className='form2'>
-        <div className="row appointment2-row">
-            <div className="col-xl-6 col-sm-12 patient2-info">
+            <form action="" className="row">
                 <h5 className='text-center mb-5 accordion patient-info-text'>Patient Information</h5>
-                <div className="row">
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
-                        <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} onBlur={formValidation}/>
-                        <p className="error-message">{errors.fname}</p>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} onBlur={formValidation}/>
-                        <p className="error-message">{errors.lname}</p>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels">Middle name </label>
-                        <input type="text" className="form-control input-form" name='mname' id='mname' value={formData.mname} onChange={handleChange}/>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels">Extension  name </label>
-                        <input type="text" className="form-control input-form" name='ename' id='ename' value={formData.ename} onChange={handleChange}/>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} onBlur={formValidation}/>
-                        <p className="error-message">{errors.email}</p>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-label labels">Phone <span className='required-field'>*</span></label>
-                        <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} onBlur={formValidation}/>
-                        <p className="error-message">{errors.phone}</p>
-                    </div>
-                    <hr className='my-5'/>
-                    <h5 className='text-center mb-5 labels'>Appointment Information</h5>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field' >*</span></label>
-                        <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} onBlur={formValidation}>
-                            <option value="" labels disabled>Select a Service</option>
-                                    {services.map((service, key) => (
-                                        <option key={service.service_id} value={service.service_name}>{service.service_name}</option>
-                                    ))}
-                        </select>
-                        <p className="error-message">{errors.service}</p>
-                    </div>
-                    <div className="col-4 mb-3">
-                        <label htmlFor="" className="labels p-0" >Date <span className='required-field' >*</span></label>
-                        <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation} min={minDate}/>
-                        <p className="error-message">{errors.date}</p>
-                    </div>
-                </div>
+                        <div className="row">
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels" >First name <span className='required-field' >*</span></label>
+                                <input type="text" className="form-control input-form" name='fname' id='fname' value={formData.fname} onChange={handleChange} onBlur={formValidation}/>
+                                <p className="error-message">{errors.fname}</p>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels">Last name <span className='required-field'>*</span></label>
+                                <input type="text" className="form-control input-form" name='lname' id='lname' value={formData.lname} onChange={handleChange} onBlur={formValidation}/>
+                                <p className="error-message">{errors.lname}</p>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels">Middle name </label>
+                                <input type="text" className="form-control input-form" name='mname' id='mname' value={formData.mname} onChange={handleChange}/>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels">Extension  name </label>
+                                <input type="text" className="form-control input-form" name='ename' id='ename' value={formData.ename} onChange={handleChange}/>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels">Email <span className='required-field'>*</span></label>
+                                <input type="text" className="form-control" name='email' id='email' value={formData.email} onChange={handleChange} onBlur={formValidation}/>
+                                <p className="error-message">{errors.email}</p>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-label labels">Phone <span className='required-field'>*</span></label>
+                                <input type="text" className="form-control" name='phone' id='phone' value={formData.phone} onChange={handleChange} onBlur={formValidation}/>
+                                <p className="error-message">{errors.phone}</p>
+                            </div>
+                            <hr className='my-5'/>
+                            <h5 className='text-center mb-5 labels'>Appointment Information</h5>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="form-lavel labels">Type of Service <span className='required-field' >*</span></label>
+                                <select class="form-select" aria-label="Default select example" id="service" name="service_" value={formData.service_} onChange={handleChange} onBlur={formValidation}>
+                                    <option value="" labels disabled>Select a Service</option>
+                                            {services.map((service, key) => (
+                                                <option key={service.service_id} value={service.service_id}>{service.service_name}</option>
+                                            ))}
+                                </select>
+                                <p className="error-message">{errors.service}</p>
+                            </div>
+                            <div className="col-4 mb-3">
+                                <label htmlFor="" className="labels p-0" >Date <span className='required-field' >*</span></label>
+                                <input  type="date" id="date" name="date_" className="form-control labels" value={formData.date_} onChange={handleChange} onBlur={formValidation} min={minDate}/>
+                                <p className="error-message">{errors.date}</p>
+                            </div>
+                        </div>
 
-                {/* time form */}
-                <div className="col">
-                    <label htmlFor="" className="form-label labels" >Time <span className='required-field'>*</span></label>
-                    <div className="row">
-                        <div className="col-xl-3 col-sm-12 mb-3">
-                            {/* iterate appointment time array */}
-                            {appointmentTime.map((time,index)=>{
-                                // if yung index ay di pa umaaabot ng 4, display first 4 time in the first column
-                                if(index<=3){
-                                    return <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={
-                                        // occupiedTime.includes(time);
-                                        unavailableTime(time)
-                                    } checked={formData.time_===time}/>
-                                    <label class="form-check-label time-text" for="flexRadioDefault1">
-                                    {time}
-                                    </label>
+                        {/* time form */}
+                        <div className="col">
+                            <label htmlFor="" className="form-label labels" >Time <span className='required-field'>*</span></label>
+                            <div className="row">
+                                <div className="col-xl-4 col-sm-12 mb-3">
+                                    {/* iterate appointment time array */}
+                                    {appointmentTime.map((time,index)=>{
+                                        // if yung index ay di pa umaaabot ng 4, display first 4 time in the first column
+                                        if(index<=3){
+                                            return <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={
+                                                // occupiedTime.includes(time);
+                                                unavailableTime(time)
+                                            } checked={formData.time_===time}/>
+                                            <label class="form-check-label time-text" for="flexRadioDefault1">
+                                            {time}
+                                            </label>
+                                        </div>
+                                        }
+                                })}
                                 </div>
-                                }
-                           })}
-                        </div>
-                        <div className="col-xl-3 col-sm-12 mb-3">
-                            {/* iterate appointment time array */}
-                            {appointmentTime.map((time,index)=>{
-                                // if yung index ay greater than 3, display ung natitirang time
-                                if(index>3){
-                                    return <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={unavailableTime(time)} checked={formData.time_===time}/>
-                                    <label class="form-check-label time-text" for="flexRadioDefault1">
-                                    {time}
-                                    </label>
+                                <div className="col-xl-4 col-sm-12 mb-3">
+                                    {/* iterate appointment time array */}
+                                    {appointmentTime.map((time,index)=>{
+                                        // if yung index ay greater than 3, display ung natitirang time
+                                        if(index>3){
+                                            return <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={unavailableTime(time)} checked={formData.time_===time}/>
+                                            <label class="form-check-label time-text" for="flexRadioDefault1">
+                                            {time}
+                                            </label>
+                                        </div>
+                                        }
+                                })}
                                 </div>
-                                }
-                           })}
+                                <p className="error-message">{errors.time}</p>
+                            </div>
                         </div>
-                        <p className="error-message">{errors.time}</p>
-                    </div>
-                </div>
-                <div className="col text-center">
-                    <button className="add-app-button mt-5" onClick={handleClick}>Add Appointment</button>
-                </div>
-                
-            </div>
-        </div>
-        </form>
-        </div>
+                        <div className="col-12 text-center">
+                            <button className="btn add-app-button mt-5" onClick={handleClick} disabled={Object.keys(errors).length>=1}>Add Appointment</button>
+                        </div>      
+            </form>
 
         </div>
         {loading && (

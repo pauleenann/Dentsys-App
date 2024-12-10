@@ -23,97 +23,74 @@
     --shadow: #a9a9a989;
 }
 
-*{
-    margin: 0;
-    padding: 0;
+body {
     font-family: "Inter", sans-serif;
+    background: var(--white);
 }
 
-a{
-    text-decoration: none;
-}
-
-.appointment2-container{
-    padding: 0;    
-}
-
-.appointment2-row{
-    width: 100%;
-    margin-top: 30px;
+.add-app-container {
     display: flex;
-    justify-content: center;
-    
-}
-
-.appointment2-title{
-    color: var(--blue);
-    margin: 0;
-}
-.input-form{
-    text-transform: capitalize;
-}
-
-.patient2-info{
-    background-color: var(--lightest-blue);
-    padding: 50px 80px;
     width: 100%;
 }
 
-.patient-info-text{
+.add-app-container .content {
+    width: 100%;
+    padding: 30px 50px;
+    min-height: 100vh;
+    margin-left: 15%;
+}
+
+.add-app-container .content .back{
+    text-decoration: none;
     color: var(--blue);
 }
 
-.labels, .time-text, .labels-email{
+.add-app-title{
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.add-app-container form{
+    background-color: var(--lighter-blue);
+    padding: 80px 50px;
+    border-radius: 5px;
+}
+
+.add-app-container h5{
     color: var(--blue);
 }
 
-.labels{
-    text-transform: capitalize;
+.add-app-container form label{
+    color: var(--blue);
 }
 
-.appointment-summary{
-    background-color: var(--lighter-green);
-    padding: 50px 60px;
-    margin: 0 30px; 
-}
-
-.add-app-button{
-    background-color: var(--blue);
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    padding: 13px 15px;
-}
-
-.add-app-button:hover, .add-app-button:active, .add-app-button:focus{
-    background-color: var(--blue-hover);
-}
-
-.reminder{
-    margin-top: 20px;
-    font-style: italic;
-}
-
-.required-field{
+.add-app-container .required-field{
     color: var(--red);
 }
 
-.client{
-    font-weight: 400;
-    font-size: 1.5rem;
+.add-app-container form hr{
+    color: var(--blue);
 }
 
-.form2{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    
+.add-app-container .error-message{
+    font-style: italic;
+    color: var(--red);
+    font-size: 0.8rem;
 }
 
-.spinner-overlay{
+.add-app-container .add-app-button{
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.add-app-container .add-app-button:hover,
+.add-app-container .add-app-button:focus,
+.add-app-container .add-app-button:active{
+    background-color: var(--blue-hover);
+    color: var(--white);
+}
+
+.add-app-container .spinner-overlay{
     position: fixed; 
     top: 0;
     left: 0;
@@ -125,12 +102,3 @@ a{
     width: 100%;
     height: 100%;
 }
-
-.back-to-patients{
-    color: var(--blue);
-}
-
-.back-to-patients span{
-    border-bottom: 1px solid var(--blue);
-}
-

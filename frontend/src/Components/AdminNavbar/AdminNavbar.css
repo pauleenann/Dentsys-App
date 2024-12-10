@@ -40,28 +40,29 @@ body {
     min-height: 100vh;
 }
 
-.sidebar-logo{
+.sidebar .sidebar-logo{
     width: 150px;
 }
 
-.sidebar-menu-container{
+.sidebar .sidebar-menu-container{
     margin-top: 30px;
     width: 100%;
     overflow: hidden;
 }
 
-.sidebar-menu{
+.sidebar .sidebar-menu{
     color: var(--white);
     font-size: 1.1rem;
     display: flex;
     align-items: center;
     padding: 7px 25px;
+    text-decoration: none;
 }
 
-.sidebar-menu:hover{
+.sidebar .sidebar-menu:hover{
     background-color: var(--green);
 }
 
-.hide-menu{
+.sidebar .hide-menu{
     display: none;
 }

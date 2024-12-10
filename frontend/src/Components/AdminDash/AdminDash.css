@@ -24,7 +24,9 @@ body {
 .admindash-container {
     display: flex;
     width: 100%;
+
 }
+
 
 .admindash-container .content{
     width: 100%;
@@ -33,13 +35,13 @@ body {
     margin-left: 15%;
 }
 
-.admin-dash-cards{
+.admindash-container .admin-dash-cards{
     display: flex;
     gap: 25px;
     padding: 0 13px;
 }
 
-.dashboard-card{
+.admindash-container .dashboard-card{
     border-radius: 10px;
     font-size: 1rem;
     padding: 20px;
@@ -47,45 +49,46 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
 }
 
-.admin-info-dashtext{
+.admindash-container .admin-info-dashtext{
     color: var(--blue);
     font-weight: 600;
     margin: 25px 0;
 }
 
-.dashcard-p{
+.admindash-container .dashcard-p{
     color: var(--white);
     font-size: 1.2rem;
 }
 
-.total{
+.admindash-container .total{
     font-size: 4rem;
     font-weight: 700;
     color: var(--white);
 }
 
-.patients-today{
+.admindash-container .patients-today{
     background-color: var(--green);
 }
 
-.pending-appointments{
+.admindash-container .pending-appointments{
     background-color: var(--yellow);
 }
 
-.cancelled-appointments{
+.admindash-container .cancelled-appointments{
     background-color: var(--red);
 }
 
-.recent-visits{
+.admindash-container .recent-visits{
     background-color: var(--light-green);
 }
-.recent-visit-header{
+.admindash-container .recent-visit-header{
     color: var(--blue);
 }
 
-.earnings-today{
+.admindash-container .earnings-today{
     background-color: var(--blue);
 }
 
@@ -99,55 +102,55 @@ body {
 
 }
 
-.row2{
+.admindash-container .row2{
     display: flex;
     gap: 25px;
     padding: 0 13px;
 }
 
-.appointments-today-p{
+.admindash-container .appointments-today-p{
     font-size: 1.3rem;
     color: var(--green);
     font-weight: 500;
 }
 
-.no-bg-color{
+.admindash-container .no-bg-color{
     background-color: transparent !important; 
 }
 
-.up-app{
+.admindash-container .up-app{
     padding: 30px 30px;
     background-color: var(--green2);
     border-radius: 10px;
 
 }
 
-.button-link{
+.admindash-container .button-link{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
 }
 
-.up-app-button{
+.admindash-container .up-app-button{
     background-color: var(--light-green);
     padding: 10px 30px;
     margin-top: 50px;
 }
 
-.up-app-button:hover{
+.admindash-container .up-app-button:hover{
     background-color: var(--green-hover);
 }
 
 
 
-.up-app-text{
+.admindash-container .up-app-text{
     font-size: 1.3rem;
     font-weight: 500;
     
 }
 
-.up-app-label{
+.admindash-container .up-app-label{
     font-weight: 200;
 }
 
@@ -155,56 +158,60 @@ body {
     font-size: 1.2rem;
 }
 
-.app-today-info{
+.admindash-container .app-today-info{
     font-weight: 500;
     color: var(--green) !important;
 }
 
-.up-app-link{
+.admindash-container .up-app-link{
     font-style: italic;
     font-size: 0.8rem;
     text-decoration: underline;
 }
 
-.nothing{
+.admindash-container .nothing{
     font-style: italic;
     color: var(--green);
     font-weight: 500;
     font-size: 0.8rem;
 }
 
-.row3{
+.admindash-container .row3{
     padding: 25px 13px;
 }
 
-.recent-visits-card{
+.admindash-container .recent-visits-card{
     background-color: var(--lighter-blue);
     padding: 30px 50px;
     border-radius: 10px;
 }
 
-.nothing2{
+.admindash-container .recent-visits-card table thead tr td{ 
+    color: var(--blue);
+}
+
+.admindash-container .nothing2{
     font-style: italic;
     color: var(--blue);
     font-weight: 500;
     font-size: 0.8rem;
 }
 
-.recent-visit-info{
+.admindash-container .recent-visit-info{
     padding-top: 15px !important; 
     color: var(--blue) !important;
     font-weight: 500;
 }
 
-.recent-visit-th{
+.admindash-container.recent-visit-th{
     color: var(--blue) !important;
 }
 
-.app-list-th{
+.admindash-container .app-list-th{
     color: var(--green) !important;
 }
 
-.recent-visit-total-earnings{
+.admindash-container .recent-visit-total-earnings{
     text-align: end;
     display: flex;
     align-items: end;
@@ -212,30 +219,30 @@ body {
     /* margin-right: 240px; */
 }
 
-.rv-total{
+.admindash-container .rv-total{
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 50px;
 }
 
-.recent-visit-header, .rv-total-label{
+.admindash-container .recent-visit-header, .rv-total-label{
     font-size: 1.3rem;
     font-weight: 500;
 }
 
-.rv-total-amount{
+.admindash-container .rv-total-amount{
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.rv-button{
+.admindash-container .rv-button{
     background-color: var(--blue);
     padding: 5px 30px;
     color: var(--white);
 }
 
-.rv-button:hover{
+.admindash-container .rv-button:hover{
     background-color: var(--blue);
     color: var(--white);
 }

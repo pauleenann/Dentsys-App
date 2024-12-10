@@ -10,7 +10,6 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
-
 const AdminDash = () => {
     //usestates for total num of pending, cancelled, recent, and upcoming appointments
     //usestate for appointment today
@@ -266,7 +265,7 @@ const AdminDash = () => {
 
               
                 <div className="row row3">
-                <div className="col-12 recent-visits-card">
+                  <div className="col-12 recent-visits-card">
                         <div>
                         <div className="">
                             <p className='recent-visit-header'>Recent Visits</p>
@@ -275,7 +274,7 @@ const AdminDash = () => {
                         <table className="table ">
                             <thead>
                                 <tr>
-                                <td className='no-bg-color recent-visit-th' scope="col ">Name</td>
+                                 <td className='no-bg-color recent-visit-th' scope="col ">Name</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Phone Number</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Service</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Time</td>

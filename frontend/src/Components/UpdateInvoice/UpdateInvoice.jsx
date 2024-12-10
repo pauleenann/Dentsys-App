@@ -132,8 +132,6 @@ const UpdateInvoice = () => {
         setErrors(error)
 
     }
-
-    console.log(payment)
    
   return (
     <div className='update-invoice-container'>
@@ -142,10 +140,8 @@ const UpdateInvoice = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to={`/invoice-details/${id}`}>
-                    <div className="back-to-patients">
-                        <p><i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
-                    </div>
+                <Link to={`/invoice-details/${id}`}className='back'>
+                   <i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
 

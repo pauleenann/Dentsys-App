@@ -38,11 +38,15 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
+.update-invoice-container .content .back{
+  text-decoration: none;
+  color: var(--blue);
+}
 
-.invoice-detail-header{
+.update-invoice-container .invoice-detail-header{
   background-color: var(--blue);
   border-radius: 5px 5px 0 0;
   padding: 0;
@@ -50,7 +54,7 @@ body {
 
 }
 
-.invoice-detail-header-text{
+.update-invoice-container .invoice-detail-header-text{
   color: var(--white);
   display: flex;
   align-items: center;
@@ -60,16 +64,17 @@ body {
   
 }
 
-.invoice-detail-info{
+.update-invoice-container .invoice-detail-info{
   background-color: var(--lighter-green);
-  margin: 0;
+  margin-top: 20px;
+  color: var(--blue);
 }
 
-.invoice-user-info{
+.update-invoice-container .invoice-user-info{
   padding: 50px 200px;
 }
 
-.cost-header{
+.update-invoice-container .cost-header{
   padding: 20px 200px;
 }
 
@@ -83,46 +88,47 @@ body {
   text-transform: capitalize;
 }
 
-.invoice-total-price{
+.update-invoice-container .invoice-total-price{
   background-color: #31a2b92a;
   padding: 20px;
   margin: 0;
 }
 
-.invoice-payment-details{
+.update-invoice-container .invoice-payment-details{
   background-color: #fff;
   width: 80%;
   padding: 20px 50px;
   border-radius: 6px;
 }
 
-.invoice-payment{
+.update-invoice-container .invoice-payment{
   font-size: 1.3rem;
   font-weight: 500;
   width: 60%;
 }
 
-.invoice-update-button2{
+.update-invoice-container .invoice-update-button2{
   background-color: #31A3B9;
   border: none;
   padding: 10px 15px;
   color: #fff;
 }
 
-.invoice-update-button2:hover, .invoice-update-button2:active{
+.update-invoice-container .invoice-update-button2:hover, 
+.update-invoice-container .invoice-update-button2:active{
     background-color: #098199;
     border: none;
     padding: 10px 15px;
     color: #fff;
   }
 
-.invoice-balance{
+.update-invoice-container .invoice-balance{
   color: #36CE57;
   font-weight: 500;
   font-size: 1.5rem;
 }
 
-.edit-invoice{
+.update-invoice-container .edit-invoice{
     display: flex;
     justify-content: center;
     margin:0;
@@ -130,27 +136,33 @@ body {
     color: var(--blue);
 }
 
-.inv_input{
+.update-invoice-container .inv_input{
     width: 100%;
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #31A3B9;
 }
 
-.update-inv-info, .update-status{
+.update-invoice-container .update-inv-info, .update-status{
   text-transform: capitalize;
   font-weight: 600;
 }
 
-.price .total-amount-paid{
+.update-invoice-container .price .total-amount-paid{
   font-weight: 600;
 }
 
-.update-nothing-follows{
+.update-invoice-container .update-nothing-follows{
   color: var(--blue);
   font-size: 0.8rem;
 }
 
-.edit-invoice label{
+.update-invoice-container .edit-invoice label{
   margin-bottom: 5px;
+}
+
+.update-invoice-container .error-message{
+  color: var(--red);
+  font-size: 0.8rem;
+  font-style: italic;
 }

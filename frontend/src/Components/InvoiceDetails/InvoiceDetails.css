@@ -65,7 +65,7 @@ body {
 
 .inv-details-container .invoice-detail-info{
   background-color: var(--lighter-green);
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .inv-details-container .invoice-user-info{

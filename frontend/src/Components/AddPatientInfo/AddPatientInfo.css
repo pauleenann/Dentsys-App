@@ -29,133 +29,55 @@ body {
     background: var(--white);
 }
 
-.wrapper {
+.add-patient-box {
     display: flex;
-    width: 100%;
-    align-items: stretch;
+    width: 100%;;
+    padding: 0;
 }
 
-
-
-#content {
+.add-patient-box .content{
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    transition: all 0;
+    margin-left: 18%;
 }
 
-
-.add-patient-container{
-    background-color: var(--lighter-green);
-    padding: 50px 80px;
-    border-radius: 15px;
+.add-patient-box .back{
+    text-decoration: none;
+    color: var(--blue);
 }
-
-.receipt-container{
-    background-color: var(--white);
-    border-radius: 10px;
-}
-
-.receipt-header{
-    background-color: var(--blue);
-    color: var(--white);
-    display: flex;
-    justify-content: space-around;
-    padding: 20px 0;
-    border-radius: 10px 10px 0px 0px;
-}
-
-.receipt-info{
-    background-color: var(--white);
-    display: flex;
-    justify-content: space-around;
-    padding: 20px 0;
-}
-
-.receipt-total{
-    background-color: var(--lightest-blue2);
-    display: flex;
-    justify-content: space-around;
-    border-radius: 0 0 10px  10px;
-}
-
-.receipt-total-amount{
-    display: flex;
-    gap: 150px;
-    padding: 15px 0;
-}
-
-.total-paid{
-    display: flex;
-    justify-content: end;
-    gap: 100px;
-    margin-top: 60px;
-}
-
-.balance{
-    display: flex;
-    justify-content: end;
-    gap: 100px;
-}
-
-.balance-text{
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: #36CE57;
-}
-
-.save-patient-button{
-    background-color: var(--blue);
-    color: var(--white);
-    padding: 10px 25px;
-}
-
-.save-patient-button:hover{
-    background-color: var(--blue-hover);
-    color: var(--white);
-}
-
-.tooth{
-    width: 50px;
-    height: 90px;
-}
-
-.tooth-button{
-    margin: 5px 0;
-    background-color: var(--blue);
-    color: var(--white);
-    width: 50px;
-}
-
-.tooth-button:hover{
-    background-color: var(--blue-hover);
-    color: var(--white);
-}
-
-.button-save{
-    background-color: var(--blue);
-    color: var(--white);
-    transition: all 0.2s linear;
-}
-.button-save:hover, .button-save:active,.button-save:focus{
-    background-color: var(--blue-hover) !important;
-    color: var(--white) !important;
-}
-
-.error-message{
-    color: var(--red);
-    font-size: 12px;
-    font-style: italic;
-    margin: 0;
-    margin-top: 3px;
-    /* display: none; */
-}
-
-.add-patient-title{
+  
+.add-patient-box .add-patient-title{
     color: var(--blue);
     font-weight: 600;
 }
 
-.add-patient-form-title{
+.add-patient-box .add-patient-form{
+    background-color: var(--lighter-green);
+    padding: 60px 50px;
+    border-radius: 5px;
+
+}
+
+.add-patient-box .add-patient-form label{
     color: var(--blue);
+}
+
+.add-patient-box .add-patient-form-title{
+    color: var(--blue);
+}
+
+.add-patient-box .required-field{
+    color: var(--red);
+}
+
+.add-patient-box .button-save{
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.add-patient-box .button-save:hover,
+.add-patient-box .button-save:focus,
+.add-patient-box .button-save:active{
+    background-color: var(--blue-hover);
 }

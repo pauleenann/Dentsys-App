@@ -457,11 +457,10 @@ if($method ==='PUT'){
             break;
 
         case 'getPatient':
-            $sql = "SELECT * from patients";
+            $sql = "SELECT * FROM patients WHERE id = :id";
             $path = explode('/',$_SERVER['REQUEST_URI']);
             // print_r($path);
             if(isset($path[2]) && is_numeric($path[2])){
-                $sql .= " WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $path[2]);
                 $stmt->execute();
@@ -477,7 +476,17 @@ if($method ==='PUT'){
 
             //for patient record overview
             case 'getProcedureHistory':
-                $sql = "SELECT patienthistory.id, patienthistory.p_date, patienthistory.p_dentist,services.service_name FROM patienthistory JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
+                $sql = "SELECT 
+                            patienthistory.id, 
+                            patienthistory.p_date, 
+                            patienthistory.p_dentist,
+                            patients.p_fname,
+                            patients.p_lname,
+                            services.service_name 
+                        FROM patients
+                        JOIN patienthistory ON patienthistory.p_id = patients.id
+                        JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service 
+                        JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
                 
                 $path = explode('/',$_SERVER['REQUEST_URI']);
                 // print_r($path);
@@ -493,7 +502,6 @@ if($method ==='PUT'){
                     $stmt->execute();
                     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 }
-                
                 echo json_encode($users);
                 break;
 

@@ -21,7 +21,8 @@
    --light-green:#87D99E;
    --lighter-green: #EBF9F7;
    --shadow: #a9a9a989;
-   --search-bar: #00000005;
+   --light-gray: #c5c3c323;
+   --search-bar: #000000;
 }
 
 body {
@@ -41,105 +42,50 @@ body {
    margin-left: 18%;
 }
 
-.patient-header{
+.patients-container .patient-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 25px;
- }
+}
 
-.patient-header h1{
+ .patients-container .patient-header h1{
    color: var(--blue);
    font-weight: 600;
-   margin-top: 25px;
+   margin: 0;
 }
  
- .patient-button-color{
-     background-color: var(--blue);
- }
-
- .patient-button-color:hover{
-    background-color: var(--blue-hover);
- }
- 
- .button-text{
-     color: var(--white);
-     padding: 10px;
- }
-
- .search{
-    margin-top: 25px;
-    display: flex;
-    align-items: center;
- }
-
- .search-bar{
-    width: 100%;
-    padding: 10px 20px;
-    border: none;
-    background-color: var(--search-bar);
-    color: var(--blue);
-    border-radius: 15px;
-    color: var(--black);
- }
-
- .filter-button, .orderby-button{
-    width: 100%;
-    padding: 10px 20px;
-    border: none;
-    background-color: var(--search-bar);
-    border-radius: 25px;
-    display: flex;
-    color: var(--black);
- }
-
- .patient-record{
-    background-color: var(--lightest-blue);
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
- }
-
- .button-edit-container{
-    background-color: var(--white);
-    border: 1px solid var(--blue);
-    margin-left: 10px;
- }
-
- .button-edit-container:hover{
-    background-color: var(--blue-hover);
-    color: var(--white);
- }
-
- .button-edit-pencil:hover{
-    color: var(--white);
- }
-
- .button-view, .search-button{
+.patients-container .patient-button{
    background-color: var(--blue);
+   height: 50px;
    color: var(--white);
- }
-
- .button-view:hover, .search-button:hover{
-   background-color: var(--blue-hover);
-   color: var(--white);
- }
-
-.patient-name{
-   color: var(--blue);
-   text-transform: capitalize;
 }
 
-.button-group {
+.patients-container .patient-button:focus,
+.patients-container .patient-button:hover
+.patients-container .patient-button:active{
+    background-color: var(--blue-hover);
+    border-color: var(--blue-hover);
+    color: var(--white);
+}
+
+.patients-container .search-bar{
+   width: 100%;
+   padding: 10px 20px 10px;
+   margin-top: 20px;
+   border-radius: 50px;
+   background-color: var(--light-gray);
+   border: none;
+}
+
+.patients-container .button-group {
    margin-top: 20px;
    display: flex;
    flex-wrap: wrap;
    margin-bottom: 20px;
  }
  
- .btn-alphabet {
+ .patients-container .btn-alphabet {
    margin: 5px;
    padding: 8px 12px;
    font-size: 14px;
@@ -148,30 +94,53 @@ body {
    transition: background-color 0.3s;
  }
  
- .btn:hover {
+ .patients-container .button-group button:hover {
    background-color: #ddd;
+   border-color: transparent;
  }
  
- .btn-selected {
-   background-color: #31A3B9;
-   color: #fff;
-   border-color: #0056b3;
+ .patients-container .button-group .btn-selected {
+   background-color: var(--blue);
+   color: var(--white);
+   border-color: var(--blue);
  }
 
-.pagination-buttons {
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  margin-top: 20px;
+.patients-container .patient-record{
+   background-color: var(--lightest-blue);
+   padding: 10px;
+   border-radius: 5px;
 }
 
-.pagination-buttons .btn {
-  margin: 0 10px;
-  background-color: #31A3B9;
-  color: #fff;
-
+.patients-container .patient-record div{
+   display: flex;
+   align-items: center;
 }
 
-.pagination-buttons span {
-  font-size: 16px;
+.patients-container .patient-record .patient-name{
+   color: var(--blue);
+   font-weight: 500;
+}
+
+.patients-container .pagination-buttons{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 20px;
+}
+
+.patients-container .prev-next-btn button{
+   background-color: var(--blue);
+   color: var(--white);
+}
+
+.patients-container .prev-next-btn button:hover,
+.patients-container .prev-next-btn button:active,
+.patients-container .prev-next-btn button:focus{
+   background-color: var(--blue-hover);
+   border-color: var(--blue-hover);
+   color: var(--white);
+}
+
+.patients-container .prev-next-btn .hide-button{
+   background-color: var(--shadow);
 }

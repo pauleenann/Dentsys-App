@@ -139,7 +139,7 @@ const AdminPatients = () => {
             <div className="patient-header">
                   <h1>Patients</h1>
                   <Link to='/add-new-patient'>
-                  <button className='btn patient-button-color'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add a New Patient</span></button>
+                  <button className='btn patient-button'><i class="fa-regular fa-square-plus button-text text-light"></i><span className='text-light button-add'> Add a New Patient</span></button>
                   </Link>
                 </div>
 
@@ -148,33 +148,6 @@ const AdminPatients = () => {
                     <div className="col-12">
                       <input type="text" name="search" id="" placeholder='Search' className='search-bar' value={search} onChange={handleChange}/>  
                     </div>
-                    {/* <div className="col-1">
-                      <button className='btn search-button'>Search</button>
-                    </div> */}
-                    
-
-                     {/*dropdown for filter  */}
-                    {/* <div class="dropdown col-2">
-                    <button class="btn dropdown-toggle filter-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       Filter
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                    </div> */}
-
-                    {/* dropdown for order by */}
-                     {/* <div class="dropdown col-2">
-                    <button class="btn orderby-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       Order by
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Ascending Order</a></li>
-                        <li><a class="dropdown-item" href="#">Descending Order</a></li>
-                    </ul>
-                    </div> */}
                 </div>
 
                 <div className="button-group">
@@ -185,8 +158,7 @@ const AdminPatients = () => {
                       onClick={() => fetchPatientsByLetter(letter)}
                     >
                       {letter}
-                    </button>
-                    
+                    </button> 
                   ))}
                   <button className="btn reset-button" onClick={handleReset}>
                     Reset
@@ -200,8 +172,7 @@ const AdminPatients = () => {
                   {patients.length > 0 ? (
                     patients.map((name, index) => (
                       <div className="list-item" key={index}>
-                        {name}
-                        
+                      {name}
                       </div>
                     ))
                   ) : (
@@ -240,27 +211,24 @@ const AdminPatients = () => {
               }) : <p className='text-center mt-5'>No patient record found</p>}
 
               {/* Pagination Buttons */}
-              
               <div className="pagination-buttons">
-                  <button
-                    className="btn"
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </button>
+                {/* page */}
+                <div>
                   <span>
                     Page {currentPage} of {Math.ceil(totalPatients / LIMIT)}
                   </span>
-                  <button
-                    className="btn"
-                    onClick={handleNextPage}
-                    disabled={currentPage * LIMIT >= totalPatients}
-                  >
-                    Next
+                </div>
+                {/* page buttons */}
+                <div className='prev-next-btn'>
+                  <button className={`btn ${currentPage === 1?'hide-button':''}` }onClick={handlePreviousPage} disabled={currentPage === 1}>
+                  Previous
+                  </button>
+                  <button className="btn" onClick={handleNextPage}disabled={currentPage * LIMIT >= totalPatients}>
+                  Next
                   </button>
                 </div>
               </div>
+            </div>
       
     </div>
     

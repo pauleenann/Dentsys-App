@@ -12,7 +12,9 @@ const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
 const AddPatientInfo = () => {
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        error:'error'
+    });
     const [submitForm, setSubmitForm] = useState(false)
     const navigate = useNavigate();
     const [patient, setPatient] = useState({
@@ -168,7 +170,7 @@ const AddPatientInfo = () => {
                                 <p className="error-message">{errors.phone}</p>
                             </div>
                         </div>
-                        <div className="col-12 text-center"><button type="submit" className="btn button-save" onClick={handleClick}>Save</button></div>
+                        <div className="col-12 text-center"><button type="submit" className="btn button-save" onClick={handleClick} disabled={Object.keys(errors).length>=1}>Save</button></div>
                     </form>
                 </div>
             </div>

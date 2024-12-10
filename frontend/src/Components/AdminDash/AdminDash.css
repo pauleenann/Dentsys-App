@@ -32,17 +32,17 @@ body {
     width: 100%;
     padding: 30px 50px;
     min-height: 100vh;
-    margin-left: 15%;
+    margin-left: 18%;
 }
 
 .admindash-container .admin-dash-cards{
     display: flex;
-    gap: 25px;
+    gap: 15px;
     padding: 0 13px;
 }
 
 .admindash-container .dashboard-card{
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 1rem;
     padding: 20px;
     display: flex;
@@ -56,6 +56,7 @@ body {
     color: var(--blue);
     font-weight: 600;
     margin: 25px 0;
+    font-size: 2.7rem;
 }
 
 .admindash-container .dashcard-p{
@@ -121,7 +122,7 @@ body {
 .admindash-container .up-app{
     padding: 30px 30px;
     background-color: var(--green2);
-    border-radius: 10px;
+    border-radius: 5px;
 
 }
 
@@ -154,13 +155,15 @@ body {
     font-weight: 200;
 }
 
-.up-app-info{
+.admindash-container .up-app-info{
     font-size: 1.2rem;
+    text-transform: capitalize;
 }
 
 .admindash-container .app-today-info{
     font-weight: 500;
     color: var(--green) !important;
+    text-transform: capitalize;
 }
 
 .admindash-container .up-app-link{
@@ -177,13 +180,13 @@ body {
 }
 
 .admindash-container .row3{
-    padding: 25px 13px;
+    padding: 20px 13px;
 }
 
 .admindash-container .recent-visits-card{
     background-color: var(--lighter-blue);
     padding: 30px 50px;
-    border-radius: 10px;
+    border-radius: 5;
 }
 
 .admindash-container .recent-visits-card table thead tr td{ 
@@ -201,6 +204,7 @@ body {
     padding-top: 15px !important; 
     color: var(--blue) !important;
     font-weight: 500;
+    text-transform: capitalize;
 }
 
 .admindash-container.recent-visit-th{

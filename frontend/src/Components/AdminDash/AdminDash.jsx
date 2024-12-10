@@ -15,7 +15,7 @@ const AdminDash = () => {
     //usestate for appointment today
     const [totalPending, setTotalPending] = useState(0);
     const [totalCancelled, setTotalCancelled] = useState(0);
-    const [recentVisits, setRecentVisits] = useState(0);
+    const [totalRecentVisits, setTotalRecentVisits] = useState(0);
     const [recentAppDetail, setRecentAppDetail] = useState([]);
     const [totalUpcoming, setTotalUpcoming] = useState(0);
     const [earningsToday, setEarningsToday] = useState(0);
@@ -27,9 +27,9 @@ const AdminDash = () => {
   //loads when component renders
   useEffect(() => {
     getTotalPendingAppointments();
-    getCancelledAppointments();
-    getRecentAppointments();
-    getUpcomingAppointments();
+    getTotalUpcomingAppointments();
+    getTotalCancelledAppointments();
+    getTotalRecentVisits();
     getAppointmentsToday();
     getRecentAppointmentDetails();
     getEarningsToday();
@@ -38,9 +38,9 @@ const AdminDash = () => {
     //Listen for the 'updateData' event from the server
    socket.on('updatedData', ()=>{
     getTotalPendingAppointments();
-    getCancelledAppointments();
-    getRecentAppointments();
-    getUpcomingAppointments();
+    getTotalUpcomingAppointments();
+    getTotalCancelledAppointments();
+    getTotalRecentVisits();
     getAppointmentsToday();
     getRecentAppointmentDetails();
     getEarningsToday();
@@ -63,7 +63,7 @@ const AdminDash = () => {
       });
   };
 
-
+  // retrieve total number of pending appointments
   const getTotalPendingAppointments = () => {
     axios.get('http://localhost:80/api2/?action=getPendingAppointments')
       .then(response => {
@@ -74,7 +74,19 @@ const AdminDash = () => {
       });
   };
 
-  const getCancelledAppointments = () => {
+  //retrieve total number of upcoming appointments
+  const getTotalUpcomingAppointments = () => {
+    axios.get('http://localhost:80/api2/?action=getUpcomingAppointments')
+      .then(response => {
+        setTotalUpcoming(response.data.total_upcoming);
+      })
+      .catch(error => {
+        console.error('Error fetching total cancelled appointments:', error);
+      });
+  };
+
+  //retrieve total number of cancelled appointments
+  const getTotalCancelledAppointments = () => {
     axios.get('http://localhost:80/api2/?action=getCancelledAppointments')
       .then(response => {
         setTotalCancelled(response.data.total_cancelled);
@@ -84,25 +96,18 @@ const AdminDash = () => {
       });
   };
 
-  const getRecentAppointments = () => {
+  //retrieve total number of recent visits
+  const getTotalRecentVisits= () => {
     axios.get('http://localhost:80/api2/?action=getRecentAppointments')
       .then(response => {
-        setRecentVisits(response.data.recent_visits);
+        setTotalRecentVisits(response.data.recent_visits);
       })
       .catch(error => {
         console.error('Error fetching total cancelled appointments:', error);
       });
   };
 
-  const getUpcomingAppointments = () => {
-    axios.get('http://localhost:80/api2/?action=getUpcomingAppointments')
-      .then(response => {
-        setTotalUpcoming(response.data.total_upcoming);
-      })
-      .catch(error => {
-        console.error('Error fetching total cancelled appointments:', error);
-      });
-  };
+  // retrieve earnings today
   const getEarningsToday = () => {
     axios.get('http://localhost:80/api2/?action=getEarningsToday')
       .then(response => {
@@ -113,6 +118,7 @@ const AdminDash = () => {
       });
   };
 
+  // retrieve appointments today
   const getAppointmentsToday = () => {
     axios.get('http://localhost:80/api2/?action=getAppointmentsToday')
       .then(response => {
@@ -176,7 +182,7 @@ const AdminDash = () => {
                           <p className='m-0 dashcard-p'>
                               Recent<br/>Visits
                           </p>
-                          <span className='total-recent-visits total'>{recentVisits}</span>
+                          <span className='total-recent-visits total'>{totalRecentVisits}</span>
                       </div>
                   </Link>
                   <Link to='/invoice-list' className="col earnings-today text-center dashboard-card">
@@ -193,7 +199,7 @@ const AdminDash = () => {
                     
                 </div>
                 
-                <div className="row mt-5 row2">
+                <div className="row mt-3 row2">
     {/* appointments today */}
     <div className="col appointment-today-card">
         <div>
@@ -216,7 +222,7 @@ const AdminDash = () => {
                                 <tr key={index}>
                                     <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.phone}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.service_}</td>
+                                    <td className='no-bg-color app-today-info'>{appointment.service_name}</td>
                                     <td className='no-bg-color app-today-info'>{appointment.time_}</td>
                                 </tr>
                             ))}
@@ -240,7 +246,7 @@ const AdminDash = () => {
         </div>
         <div className="up-app-service">
             <p className='m-0 text-light up-app-label '>Service</p>
-            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].service_}</p>
+            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].service_name}</p>
         </div>
         <div className="up-app-patient">
             <p className='m-0 text-light up-app-label'>Patient Name</p>
@@ -274,7 +280,7 @@ const AdminDash = () => {
                         <table className="table ">
                             <thead>
                                 <tr>
-                                 <td className='no-bg-color recent-visit-th' scope="col ">Name</td>
+                                <td className='no-bg-color recent-visit-th' scope="col ">Name</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Phone Number</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Service</td>
                                 <td className='no-bg-color recent-visit-th'  scope="col">Time</td>
@@ -287,7 +293,7 @@ const AdminDash = () => {
                                 <tr>
                                 <td className='no-bg-color recent-visit-info'scope="row">{`${item.fname} ${item.lname}`}</td>
                                 <td className='no-bg-color recent-visit-info' >{item.phone}</td>
-                                <td className='no-bg-color recent-visit-info' >{item.service_}</td>
+                                <td className='no-bg-color recent-visit-info' >{item.service_name}</td>
                                 <td className='no-bg-color recent-visit-info' >{item.time_}</td>
                                 <td className='no-bg-color recent-visit-info' ></td>
                                 {/* <td className='no-bg-color ' ><button className='btn rv-button'>View</button></td> */}

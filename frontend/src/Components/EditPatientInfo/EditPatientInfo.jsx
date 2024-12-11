@@ -7,7 +7,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import isAuthenticated from '../Auth';
 
-
 const EditPatientInfo = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -103,7 +102,7 @@ const EditPatientInfo = () => {
             <AdminInfo />
             {/* go back button */}
             <div className="row">
-                <Link to={`/view-patient-info/${patient.id}`}>
+                <Link to={`/view-patient-info/${patient.id}`} className='back'>
                     <i className="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
@@ -112,7 +111,7 @@ const EditPatientInfo = () => {
             <h1 className='edit-patient-title'>Edit Patient Record</h1>
         
             {/* form */}
-            <div className="row mt-3">
+            <div className="row mt-3 edit-patient-form">
                 <div className="col">
                     <h5 className='text-center mb-5 mt-4'>Patient Information</h5>
                     <form onSubmit={handleClick}>

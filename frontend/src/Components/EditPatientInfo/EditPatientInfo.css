@@ -40,3 +40,53 @@ body {
     margin-left: 18%;
 }
 
+.edit-patient-info-container .back{
+    text-decoration: none;
+    color: var(--blue);
+}
+
+.edit-patient-info-container .edit-patient-title{
+    color: var(--blue);
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.edit-patient-info-container .edit-patient-form{
+    background-color: var(--lightest-blue);
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.edit-patient-info-container .edit-patient-form h5{
+    color: var(--blue);
+}
+
+.edit-patient-info-container .edit-patient-form .labels{
+    color: var(--blue);
+}
+
+.edit-patient-form .spinner-overlay{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--overlay);
+    width: 100%;
+    height: 100%;
+}
+
+.edit-patient-info-container .button-save-record{
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.edit-patient-info-container .button-save-record:hover,
+.edit-patient-info-container .button-save-record:active,
+.edit-patient-info-container .button-save-record:focus{
+    background-color: var(--blue-hover);
+    border-color: var(--blue-hover);
+    color: var(--white);
+}

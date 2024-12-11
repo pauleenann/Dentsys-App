@@ -472,10 +472,8 @@ const AddService = () => {
             <AdminInfo></AdminInfo>
             {/* go back button */}
             <div className="row">
-                <Link to='/patient-list'>
-                <div className="back-to-patients">
-                    <p><i class="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span></p>
-                </div>
+                <Link to='/patient-list' className='back'>
+                <i class="fa-solid fa-chevron-left mt-4"></i> <span>Go back</span>
                 </Link>
             </div>
             {/* header */}

@@ -42,6 +42,12 @@ body {
     margin-left: 18%;
 }
 
+.add-dental-history-container .back{
+    text-decoration: none;
+    color: var(--blue);
+}
+
+
 .add-dental-history-header h1{
     color: var(--blue);
 }

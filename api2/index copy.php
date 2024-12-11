@@ -170,41 +170,7 @@ if($method ==='PUT'){
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
                 if($stmt->execute()){
-                    // if set to cancelled, execute email 
-                    $cancelledApptDetailsQ = "SELECT
-                                                appointment.date_,
-                                                appointment.a_id,
-                                                appointment.time_,
-                                                temppatient.fname,
-                                                temppatient.lname,
-                                                temppatient.email,
-                                                services.service_name
-                                            FROM appointment
-                                            JOIN temppatient ON temppatient.id = appointment.id 
-                                            JOIN services ON appointment.service_ = services.service_id
-                                            WHERE a_id = :id";
-                    $cancelledApptDetailsStmt = $conn->prepare($cancelledApptDetailsQ);
-                    $cancelledApptDetailsStmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-                    // execute $cancelledApptDetailsQ
-                    if($cancelledApptDetailsStmt->execute()){
-                        $cancelledAppt = $cancelledApptDetailsStmt->fetchAll(PDO::FETCH_ASSOC);
-
-                        $recipientEmail = $cancelledAppt[0]['email'];
-                        $recipientFname = $cancelledAppt[0]['fname'];
-                        $recipientLname = $cancelledAppt[0]['lname'];
-                        $apptDate = $cancelledAppt[0]['date_'];
-                        $apptTime = $cancelledAppt[0]['time_'];
-                        $apptService = $cancelledAppt[0]['service_name'];
-                        $recipientAppointmentId = $id;
-
-                        // Execute send-email.php
-                        require 'send-cancelled-email.php';
-    
-                        echo json_encode(['status' => 1, 'message' => 'Appointment accepted and email sent.']);
-
-                    }
-
+                    $response = ['status' => 1, 'message' => 'Record updated successfully.'];
                 }else{
                     $response = ['status' => 0, 'message' => 'Failed to update Record.'];
                 }
@@ -330,19 +296,9 @@ if($method ==='PUT'){
                 break;
 
         case 'getAppointments':
-            $sql = "SELECT 
-                        a_id, 
-                        fname, 
-                        lname, 
-                        email, 
-                        phone, 
-                        service_name, 
-                        date_, 
-                        time_, 
-                        status_
-                    FROM appointment 
-                    JOIN temppatient ON appointment.id = temppatient.id
-                    JOIN services ON appointment.service_ = services.service_id";
+            $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
+            FROM appointment INNER JOIN temppatient
+            ON appointment.id = temppatient.id";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $appt = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -379,20 +335,9 @@ if($method ==='PUT'){
         case 'getRecentAppointmentDetails':
                 date_default_timezone_set('Asia/Singapore');
                 $today = date('Y-m-d');
-                $sql = "SELECT 
-                        a_id, 
-                        fname, 
-                        lname, 
-                        email, 
-                        phone, 
-                        service_name, 
-                        date_, 
-                        time_, 
-                        status_
-                    FROM appointment 
-                    JOIN temppatient ON appointment.id = temppatient.id
-                    JOIN services ON appointment.service_ = services.service_id
-                    WHERE status_ = 'finished' AND date_ <= :today";
+                $sql = "SELECT a_id, fname, lname, phone, service_, time_
+                FROM appointment INNER JOIN temppatient
+                ON appointment.id = temppatient.id WHERE status_ = 'finished' AND date_ <= :today";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':today', $today, PDO::PARAM_STR);
                 $stmt->execute();
@@ -439,19 +384,9 @@ if($method ==='PUT'){
                 //sets correct timezone
                 date_default_timezone_set('Asia/Singapore');
                 $today = date('Y-m-d');
-                $sql = "SELECT 
-                        a_id, 
-                        fname, 
-                        lname, 
-                        email, 
-                        phone, 
-                        service_name, 
-                        date_, 
-                        time_, 
-                        status_
-                    FROM appointment 
-                    JOIN temppatient ON appointment.id = temppatient.id
-                    JOIN services ON appointment.service_ = services.service_id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
+                $sql = "SELECT a_id, fname, lname, email, phone, service_, date_, time_, status_
+                FROM appointment INNER JOIN temppatient
+                ON appointment.id = temppatient.id WHERE date_ = :today AND status_='accepted' ORDER BY time_ DESC";
                 //change time for testing purposes
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':today', $today, PDO::PARAM_STR);
@@ -491,10 +426,11 @@ if($method ==='PUT'){
             break;
 
         case 'getPatient':
-            $sql = "SELECT * FROM patients WHERE id = :id";
+            $sql = "SELECT * from patients";
             $path = explode('/',$_SERVER['REQUEST_URI']);
             // print_r($path);
             if(isset($path[2]) && is_numeric($path[2])){
+                $sql .= " WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $path[2]);
                 $stmt->execute();
@@ -510,17 +446,7 @@ if($method ==='PUT'){
 
             //for patient record overview
             case 'getProcedureHistory':
-                $sql = "SELECT 
-                            patienthistory.id, 
-                            patienthistory.p_date, 
-                            patienthistory.p_dentist,
-                            patients.p_fname,
-                            patients.p_lname,
-                            services.service_name 
-                        FROM patients
-                        JOIN patienthistory ON patienthistory.p_id = patients.id
-                        JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service 
-                        JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
+                $sql = "SELECT patienthistory.id, patienthistory.p_date, patienthistory.p_dentist,services.service_name FROM patienthistory JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
                 
                 $path = explode('/',$_SERVER['REQUEST_URI']);
                 // print_r($path);
@@ -536,6 +462,7 @@ if($method ==='PUT'){
                     $stmt->execute();
                     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 }
+                
                 echo json_encode($users);
                 break;
 
@@ -926,89 +853,49 @@ if($method ==='PUT'){
                 echo json_encode($response);
                 break;
             
-            // case 'addPayment':
-            //         $sql = "INSERT INTO payment(pay_id, inv_id, pay_date, pay_time, pay_method, pay_amount) VALUES(null, :inv_id, :pay_date, :pay_time, :pay_method, :pay_amount)";
-            //         $stmt = $conn->prepare($sql);
-            //         $stmt->bindParam(':inv_id', $user->inv_id);
-            //         $stmt->bindParam(':pay_date', $user->pay_date);
-            //         $stmt->bindParam(':pay_time', $user->pay_time);
-            //         $stmt->bindParam(':pay_method', $user->pay_method);
-            //         $stmt->bindParam(':pay_amount', $user->pay_amount);
-                    
-            //         if($stmt->execute()){
-            //             // Update the invoice status after payment is added
-            //             $updateSql = "
-            //                 UPDATE invoices i
-            //                 JOIN (
-            //                     SELECT inv_id, SUM(pay_amount) AS totalpaid
-            //                     FROM payment
-            //                     GROUP BY inv_id
-            //                 ) p ON i.inv_id = p.inv_id
-            //                 SET i.inv_status = CASE
-            //                     WHEN p.totalpaid = i.inv_totalamount THEN 'paid'
-            //                     WHEN p.totalpaid <= i.inv_totalamount and p.totalpaid != 0 THEN 'partial'
-            //                     WHEN p.totalpaid != i.inv_totalamount AND i.inv_duedate < CURDATE() THEN 'overdue'
-            //                     ELSE i.inv_status
-            //                 END
-            //                 WHERE i.inv_id = :inv_id;
-            //             ";
-                        
-            //             $updateStmt = $conn->prepare($updateSql);
-            //             $updateStmt->bindParam(':inv_id', $user->inv_id);
-                        
-            //             if ($updateStmt->execute()) {
-            //                 $response = ['status' => 1, 'message' => 'Record created and status updated successfully.'];
-            //             } else {
-            //                 $response = ['status' => 1, 'message' => 'Record created, but failed to update status.'];
-            //             }
-            //         } else {
-            //             $response = ['status' => 0, 'message' => 'Failed to create Record.'];
-            //         }
-                    
-            //         echo json_encode($response);
-            // break;
-
+            
                 
-            case 'addPayment':
-                $sql = "INSERT INTO payment(pay_id, inv_id, pay_date, pay_time, pay_method, pay_amount) VALUES(null, :inv_id, :pay_date, :pay_time, :pay_method, :pay_amount)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':inv_id', $user->inv_id);
-                $stmt->bindParam(':pay_date', $user->pay_date);
-                $stmt->bindParam(':pay_time', $user->pay_time);
-                $stmt->bindParam(':pay_method', $user->pay_method);
-                $stmt->bindParam(':pay_amount', $user->pay_amount);
-                
-                if($stmt->execute()){
-                    // Update the invoice status after payment is added
-                    $updateSql = "
-                        UPDATE invoices i
-                        JOIN (
-                            SELECT inv_id, SUM(pay_amount) AS totalpaid
-                            FROM payment
-                            GROUP BY inv_id
-                        ) p ON i.inv_id = p.inv_id
-                        SET i.inv_status = CASE
-                            WHEN p.totalpaid = i.inv_totalamount THEN 'paid'
-                            WHEN p.totalpaid <= i.inv_totalamount and p.totalpaid != 0 THEN 'partial'
-                            ELSE i.inv_status
-                        END
-                        WHERE i.inv_id = :inv_id;
-                    ";
+                case 'addPayment':
+                    $sql = "INSERT INTO payment(pay_id, inv_id, pay_date, pay_time, pay_method, pay_amount) VALUES(null, :inv_id, :pay_date, :pay_time, :pay_method, :pay_amount)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':inv_id', $user->inv_id);
+                    $stmt->bindParam(':pay_date', $user->pay_date);
+                    $stmt->bindParam(':pay_time', $user->pay_time);
+                    $stmt->bindParam(':pay_method', $user->pay_method);
+                    $stmt->bindParam(':pay_amount', $user->pay_amount);
                     
-                    $updateStmt = $conn->prepare($updateSql);
-                    $updateStmt->bindParam(':inv_id', $user->inv_id);
-                    
-                    if ($updateStmt->execute()) {
-                        $response = ['status' => 1, 'message' => 'Record created and status updated successfully.'];
+                    if($stmt->execute()){
+                        // Update the invoice status after payment is added
+                        $updateSql = "
+                            UPDATE invoices i
+                            JOIN (
+                                SELECT inv_id, SUM(pay_amount) AS totalpaid
+                                FROM payment
+                                GROUP BY inv_id
+                            ) p ON i.inv_id = p.inv_id
+                            SET i.inv_status = CASE
+                                WHEN p.totalpaid = i.inv_totalamount THEN 'paid'
+                                WHEN p.totalpaid <= i.inv_totalamount and p.totalpaid != 0 THEN 'partial'
+                                WHEN p.totalpaid != i.inv_totalamount AND i.inv_duedate < CURDATE() THEN 'overdue'
+                                ELSE i.inv_status
+                            END
+                            WHERE i.inv_id = :inv_id;
+                        ";
+                        
+                        $updateStmt = $conn->prepare($updateSql);
+                        $updateStmt->bindParam(':inv_id', $user->inv_id);
+                        
+                        if ($updateStmt->execute()) {
+                            $response = ['status' => 1, 'message' => 'Record created and status updated successfully.'];
+                        } else {
+                            $response = ['status' => 1, 'message' => 'Record created, but failed to update status.'];
+                        }
                     } else {
-                        $response = ['status' => 1, 'message' => 'Record created, but failed to update status.'];
+                        $response = ['status' => 0, 'message' => 'Failed to create Record.'];
                     }
-                } else {
-                    $response = ['status' => 0, 'message' => 'Failed to create Record.'];
-                }
-                
-                echo json_encode($response);
-        break;
+                    
+                    echo json_encode($response);
+                    break;
                 
             
 

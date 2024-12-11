@@ -153,7 +153,7 @@ const AdminDash = () => {
                 <AdminInfo></AdminInfo>
                 <h2 className='admin-info-dashtext'>Dashboard</h2>
                 <div className="row admin-dash-cards">
-                  <Link to='/appointment-list' className='col patients-today text-center dashboard-card'>
+                  <Link to="/appointment-list/?filter=today" className='col patients-today text-center dashboard-card'>
                     <div className="">
                           <p className='m-0 dashcard-p'>
                               Patients<br/>today
@@ -161,7 +161,7 @@ const AdminDash = () => {
                           <span className='total-patients-today total'>{totalUpcoming === 0 ? 0 : totalUpcoming}</span>
                     </div>
                   </Link>
-                  <Link to='/appointment-list' className="col pending-appointments text-center dashboard-card">
+                  <Link to="/appointment-list/?filter=pending" className="col pending-appointments text-center dashboard-card">
                     <div >
                           <p className='m-0 dashcard-p'>
                               Pending<br/>Appointments
@@ -169,7 +169,7 @@ const AdminDash = () => {
                           <span className='total-pending-appoint total'>{totalPending}</span>
                     </div>
                   </Link>
-                  <Link to='/appointment-list' className="col cancelled-appointments text-center dashboard-card">
+                  <Link to="/appointment-list/?filter=cancelled" className="col cancelled-appointments text-center dashboard-card">
                     <div >
                         <p className='m-0 dashcard-p'>
                             Cancelled<br/>Appointments
@@ -177,7 +177,7 @@ const AdminDash = () => {
                         <span className='total-cancelled-appoint total'>{totalCancelled}</span>
                     </div>
                   </Link>
-                  <Link to='/appointment-list' className="col recent-visits text-center dashboard-card">
+                  <Link to="/appointment-list/?filter=recent" className="col recent-visits text-center dashboard-card">
                     <div >
                           <p className='m-0 dashcard-p'>
                               Recent<br/>Visits
@@ -195,81 +195,76 @@ const AdminDash = () => {
                           </p>
                       </div>
                   </Link>
-                    
-                    
                 </div>
                 
                 <div className="row mt-3 row2">
-    {/* appointments today */}
-    <div className="col appointment-today-card">
-        <div>
-            <div className="appointments-today-header">
-                <p className='appointments-today-p'>Appointments Today</p>
-            </div>
-            {appToday.length > 0  ? (
-                <div className="appointment-list">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <td className='no-bg-color app-list-th' scope="col">Name</td>
-                                <td className='no-bg-color app-list-th' scope="col">Phone Number</td>
-                                <td className='no-bg-color app-list-th' scope="col">Service</td>
-                                <td className='no-bg-color app-list-th' scope="col">Time</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {appToday.map((appointment, index) => (
-                                <tr key={index}>
-                                    <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.phone}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.service_name}</td>
-                                    <td className='no-bg-color app-today-info'>{appointment.time_}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            ) : (
-                <div className="nothing text-center">
-                    -- Nothing follows --
-                </div>
-            )}
-        </div>
-    </div>
+              {/* appointments today */}
+              <div className="col appointment-today-card">
+                  <div>
+                      <div className="appointments-today-header">
+                          <p className='appointments-today-p'>Appointments Today</p>
+                      </div>
+                      {appToday.length > 0  ? (
+                          <div className="appointment-list">
+                              <table className="table">
+                                  <thead>
+                                      <tr>
+                                          <td className='no-bg-color app-list-th' scope="col">Name</td>
+                                          <td className='no-bg-color app-list-th' scope="col">Phone Number</td>
+                                          <td className='no-bg-color app-list-th' scope="col">Service</td>
+                                          <td className='no-bg-color app-list-th' scope="col">Time</td>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      {appToday.map((appointment, index) => (
+                                          <tr key={index}>
+                                              <td className='no-bg-color app-today-info text-capitalize' scope="row">{appointment.fname} {appointment.lname}</td>
+                                              <td className='no-bg-color app-today-info'>{appointment.phone}</td>
+                                              <td className='no-bg-color app-today-info'>{appointment.service_name}</td>
+                                              <td className='no-bg-color app-today-info'>{appointment.time_}</td>
+                                          </tr>
+                                      ))}
+                                  </tbody>
+                              </table>
+                          </div>
+                      ) : (
+                          <div className="nothing text-center">
+                              -- Nothing follows --
+                          </div>
+                      )}
+                  </div>
+              </div>
 
-    {/* upcoming appointments */}
-    <div className="col-4 up-app">
-        <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
-        <div className="up-app-time ">
-            <p className='m-0 text-light up-app-label'>Time</p>
-            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].time_}</p>
-        </div>
-        <div className="up-app-service">
-            <p className='m-0 text-light up-app-label '>Service</p>
-            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].service_name}</p>
-        </div>
-        <div className="up-app-patient">
-            <p className='m-0 text-light up-app-label'>Patient Name</p>
-            <p className='text-light up-app-info text-capitalize'>{appToday.length == 0 ? "":`${appToday[0].fname} ${appToday[0].lname}`}</p>
-        </div>
-        <div className="up-app-email">
-            <p className='m-0 text-light up-app-label'>Patient Email</p>
-            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].email}</p>
-        </div>
-        <div className="up-app-phone">
-            <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
-            <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].phone}</p>
-        </div>
-        <div className="button-link">
-            {/* <button type="" className="btn text-light up-app-button" >View Appointment</button> */}
-            <Link to='/appointment-list'><p className='text-light up-app-info up-app-link'>View more appointments</p></Link>
-            
-        </div>
-    </div>
-</div>
-
-
-              
+              {/* upcoming appointments */}
+              <div className="col-4 up-app">
+                  <p className='text-center text-light up-app-text '>Upcoming<br/>Appointment</p>
+                  <div className="up-app-time ">
+                      <p className='m-0 text-light up-app-label'>Time</p>
+                      <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].time_}</p>
+                  </div>
+                  <div className="up-app-service">
+                      <p className='m-0 text-light up-app-label '>Service</p>
+                      <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].service_name}</p>
+                  </div>
+                  <div className="up-app-patient">
+                      <p className='m-0 text-light up-app-label'>Patient Name</p>
+                      <p className='text-light up-app-info text-capitalize'>{appToday.length == 0 ? "":`${appToday[0].fname} ${appToday[0].lname}`}</p>
+                  </div>
+                  <div className="up-app-email">
+                      <p className='m-0 text-light up-app-label'>Patient Email</p>
+                      <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].email}</p>
+                  </div>
+                  <div className="up-app-phone">
+                      <p className='m-0 text-light up-app-label'>Patient Phone Number</p>
+                      <p className='text-light up-app-info'>{appToday.length == 0 ? "":appToday[0].phone}</p>
+                  </div>
+                  <div className="button-link">
+                      {/* <button type="" className="btn text-light up-app-button" >View Appointment</button> */}
+                      <Link to='/appointment-list'><p className='text-light up-app-info up-app-link'>View more appointments</p></Link>
+                      
+                  </div>
+              </div>
+          </div>
                 <div className="row row3">
                   <div className="col-12 recent-visits-card">
                         <div>

@@ -184,3 +184,13 @@ body {
     background-color: var(--blue-hover);
     color: var(--white);
 }
+
+.admin-appointment-container .filter-selected{
+    background-color: var(--blue);
+    color: var(--white) !important;
+}
+
+.admin-appointment-container .cancelled-row{
+    background-color: var(--light-red);
+    color: var(--red);
+}

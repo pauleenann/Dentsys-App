@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
 import './AdminAppointment.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Reschedule from '../Reschedule/Reschedule';
 import axios from 'axios';
 import AppointmentConfirmed from '../AppoinmentConfirmed/AppointmentConfirmed';
@@ -23,7 +23,8 @@ const AdminAppointment = () => {
   const [appointment, setAppointment] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('all');
-
+  const [searchParams] = useSearchParams();
+  const queryFilter = searchParams.get('filter');
 
   useEffect(() => {
    // Fetch appointments when the component is mounted
@@ -40,6 +41,12 @@ const AdminAppointment = () => {
      socket.off('updatedData');
    };
   }, []);
+
+  useEffect(()=>{
+    setFilter(queryFilter)
+  },[queryFilter])
+
+  console.log(queryFilter)
 
   const getAppointment = async () => {
     try {
@@ -105,11 +112,11 @@ const AdminAppointment = () => {
 
         {/* buttons */}
         <div className="buttons">
-          <button className='btn' onClick={() => setFilter('all')}>All</button>
-          <button className='btn' onClick={() => setFilter('today')}>Today</button>
-          <button className='btn' onClick={() => setFilter('pending')}>Pending</button>
-          <button className='btn' onClick={() => setFilter('cancelled')}>Cancelled</button>
-          <button className='btn' onClick={() => setFilter('recent')}>Recent Visits</button>
+          <button className={`btn ${filter=='all'?'filter-selected':''}`} onClick={() => setFilter('all')}>All</button>
+          <button className={`btn ${filter=='today'?'filter-selected':''}`} onClick={() => setFilter('today')}>Today</button>
+          <button className={`btn ${filter=='pending'?'filter-selected':''}`} onClick={() => setFilter('pending')}>Pending</button>
+          <button className={`btn ${filter=='cancelled'?'filter-selected':''}`} onClick={() => setFilter('cancelled')}>Cancelled</button>
+          <button className={`btn ${filter=='recent'?'filter-selected':''}`} onClick={() => setFilter('recent')}>Recent Visits</button>
         </div>
 
         {/* appointment list - upcoming */}
@@ -189,19 +196,18 @@ const AdminAppointment = () => {
         {filteredAppointments.map((appointment, index) => {
           if(appointment.status_ === 'cancelled'){
             return (
-              <div className="row cancelled-row" key={index}>
+              <div className="row app-row cancelled-row" key={index}>
                 <div className="col">
-                  <p className='m-0 app-patient-label-cancelled'>{appointment.fname} {appointment.lname}</p>
-                  <p className='m-0 app-patient-info-cancelled'>{appointment.service_}</p>
+                  <p className='m-0 app-patient-label'>{appointment.fname} {appointment.lname}</p>
+                  <p className='m-0 app-patient-label-sub'>{appointment.service_name}</p>
                 </div>
-                <div className="col app-patient-info-cancelled">
+                <div className="col app-patient-info">
                   {appointment.time_}
                 </div>
-                <div className="col app-patient-info-cancelled">
+                <div className="col app-patient-info">
                   CANCELLED
                 </div>
                 <div className="col">
-                  
                 </div>
               </div>
             );

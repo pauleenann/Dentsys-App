@@ -80,37 +80,37 @@ const ViewPatientInfo = () => {
                             {/* fname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >First name </label>
-                                <input type="text" className="form-control" name='p_fname' id='p_fname' value={patient?patient.p_fname:''}  readOnly/>
+                                <input type="text" className="form-control text-capitalize" name='p_fname' id='p_fname' value={patient?patient.p_fname:''}  readOnly/>
                             </div>
 
                             {/* lname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Last name </label>
-                                <input type="text" className="form-control" name='p_lname' id='p_lname' value={patient?patient.p_lname:''} readOnly />
+                                <input type="text" className="form-control text-capitalize" name='p_lname' id='p_lname' value={patient?patient.p_lname:''} readOnly />
                             </div>
 
                             {/* mname */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Middle name</label>
-                                <input type="text" className="form-control" name='p_mname' id='p_mname' value={patient?patient.p_mname === '' ? 'n/a' : patient.p_mname:''} readOnly/>
+                                <input type="text" className="form-control text-capitalize" name='p_mname' id='p_mname' value={patient?patient.p_mname === '' ? 'n/a' : patient.p_mname:''} readOnly/>
                             </div>
 
                             {/* ename */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Extension name</label>
-                                <input type="text" className="form-control" name='p_ename' id='p_ename' value={patient?patient.p_ename === '' ? 'n/a' : patient.p_ename:''} readOnly/>
+                                <input type="text" className="form-control text-capitalize" name='p_ename' id='p_ename' value={patient?patient.p_ename === '' ? 'n/a' : patient.p_ename:''} readOnly/>
                             </div>
 
                             {/* age */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels" >Age </label>
-                                <input type="text" className="form-control" name='p_age' id='p_age' value={patient?patient.p_age==null ? 'n/a' : patient.p_age:''}  readOnly/>
+                                <input type="text" className="form-control text-capitalize" name='p_age' id='p_age' value={patient?patient.p_age==null ? 'n/a' : patient.p_age:''}  readOnly/>
                             </div>
 
                             {/* gender */}
                             <div className="col-4 mb-4">
                                 <label htmlFor="" className="form-label labels">Gender</label>
-                                <input type="text" className="form-control" name='p_gender' id='p_gender' value={patient?patient.p_gender==null ? 'n/a' : patient.p_gender:''} readOnly/>
+                                <input type="text" className="form-control text-capitalize" name='p_gender' id='p_gender' value={patient?patient.p_gender==null ? 'n/a' : patient.p_gender:''} readOnly/>
                             </div>
 
                             {/* email */}
@@ -153,7 +153,7 @@ const ViewPatientInfo = () => {
                                 {Array.isArray(history)? history.map((item, index) => (
                                         <tr className=''>
                                             <td scope="row">{item.p_date}</td>
-                                            <td>Dr. {item.p_dentist} </td>
+                                            <td>Dr. {item.u_fname} {item.u_lname}</td>
                                             <td>{item.service_name}</td>
                                             <td>
                                             <Link to={`/dental-history/${item.id}`}><button className='btn button-view'>View</button>

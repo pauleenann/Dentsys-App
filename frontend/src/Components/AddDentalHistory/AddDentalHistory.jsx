@@ -81,6 +81,7 @@ const AddService = () => {
     const [loading, setLoading] = useState(false);
     const [services,setServices] = useState()
     const [options,setOptions] = useState()
+    const [dentists, setDentists] = useState([])
     const [startingPrice,setStartingPrice] = useState(0)
     const [toothFactor,setToothFactor] = useState(0)
     const [additionalFee,setAdditionalFee] = useState(0)
@@ -146,15 +147,13 @@ const AddService = () => {
         31: { default: tooth31, selected: selected31 },
         32: { default: tooth32, selected: selected32 },
     };
-    const dentist = [
-        'Dingcong',
-        'Bernal'
-    ]
 
     useEffect(()=>{
         getServices()
         getOptions()
+        getDentists()
     },[])
+
 
     useEffect(()=>{
         // reset tooth factor
@@ -337,6 +336,15 @@ const AddService = () => {
         try{
             const response = await axios.get(`http://localhost:80/api2/?action=getOptions`);
             setOptions(response.data)
+        }catch(err){
+            console.log("Couldn't retrieve options: ", err.message)
+        }
+    }
+
+    const getDentists = async()=>{
+        try{
+            const response = await axios.get(`http://localhost:80/api2/?action=getDentists`);
+            setDentists(response.data)
         }catch(err){
             console.log("Couldn't retrieve options: ", err.message)
         }
@@ -578,8 +586,8 @@ const AddService = () => {
                     <label htmlFor="" className="form-lavel labels">Dentist</label>
                     <select class="form-select" aria-label="Default select example" id="p_dentist" name="p_dentist" onChange={handleChange} onBlur={formValidation}>
                         <option value="" labels disabled selected>Select Dentist</option>
-                        {dentist.map(item=>{
-                            return <option value={item} labels>Dr. {item}</option>
+                        {dentists.map(item=>{
+                            return <option value={item.id} labels>Dr. {item.u_fname} {item.u_lname}</option>
                         })}
                     </select>
                     <p className="error-message">{error.dentist}</p>

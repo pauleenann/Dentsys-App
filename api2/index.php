@@ -295,8 +295,8 @@ if($method ==='PUT'){
             echo json_encode($services);
             break;
 
-        case 'getDentist':
-            $sql = "SELECT * FROM dentist";
+        case 'getDentists':
+            $sql = "SELECT * FROM users WHERE account_type = 'dentist'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $dentist = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -516,11 +516,14 @@ if($method ==='PUT'){
                             patienthistory.p_dentist,
                             patients.p_fname,
                             patients.p_lname,
-                            services.service_name 
+                            services.service_name,
+                            users.u_fname,
+                            users.u_lname 
                         FROM patients
                         JOIN patienthistory ON patienthistory.p_id = patients.id
                         JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service 
-                        JOIN services ON services.service_id = servicesoptions.service_id WHERE p_id = :id";
+                        JOIN services ON services.service_id = servicesoptions.service_id
+                        JOIN users ON patienthistory.p_dentist = users.id WHERE p_id = :id";
                 
                 $path = explode('/',$_SERVER['REQUEST_URI']);
                 // print_r($path);
@@ -540,17 +543,20 @@ if($method ==='PUT'){
                 break;
 
                 //for viewing dental record
-                case 'dentalRecord':
-                    $sql = "SELECT patienthistory.p_date, 
-                                patienthistory.p_dentist, 
+                case 'getDentalRecord':
+                    $sql = "SELECT 
+                                patienthistory.p_date, 
                                 patienthistory.p_selectedTeeth, 
                                 services.service_name, 
                                 servicesoptions.option_name, 
-                                invoices.inv_totalamount 
+                                invoices.inv_totalamount,
+                                users.u_fname,
+								users.u_lname 
                             FROM patienthistory
                             JOIN servicesoptions ON servicesoptions.option_id = patienthistory.p_service
                             JOIN services ON services.service_id = servicesoptions.service_id
                             JOIN invoices ON patienthistory.id = invoices.ph_id
+                            JOIN users ON patienthistory.p_dentist = users.id
                             WHERE patienthistory.id = :id";
 
                     $path = explode('/',$_SERVER['REQUEST_URI']);

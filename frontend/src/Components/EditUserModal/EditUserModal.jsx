@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './EditUserModal.css';
+import AuditLogger from '../auditLogger';
 //import SetInactiveModal from '../SetInactiveModal/SetInactiveModal';
 
 const EditUserModal = ({ open, close, user, onUserUpdated }) => {
@@ -13,6 +14,13 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false); // For save button loading state
     const [error, setError] = useState(null);
+
+    const username = localStorage.getItem("username")
+ 
+    const [logAction, setLogAction] = useState(false); // State to trigger AuditLogger
+    const [action, setAction] = useState("");
+   
+
 
     useEffect(() => {
         if (open && user) {
@@ -32,13 +40,16 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
 
     const handleSave = () => {
         if (!userData) return;
-
+        setAction("Save");
+      
         setLoading(true);
         axios
             .put(`http://localhost:80/api2/${user}/?action=updateUserData`, userData)
             .then((response) => {
                 console.log('User data updated successfully:', response.data);
+                setLogAction(true);
                 if (onUserUpdated) onUserUpdated();
+                
                 close(); // Close the modal after saving
             })
             .catch((error) => {
@@ -48,6 +59,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
             .finally(() => {
                 setLoading(false);
             });
+            //setTimeout(() => setLogAction(false), 1000);
     };
 
     const handleStatusToggle = () => {
@@ -134,8 +146,9 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                             onChange={(e) =>
                                 setUserData({ ...userData, account_type: e.target.value })
                             }>
+                            <option value="" disabled>Select Role</option>
                             <option value="dentist">Dentist</option>
-                            <option value="staff">Staff</option>
+                            
                             <option value="admin">Admin</option>
                         </select>
                     </div>
@@ -181,6 +194,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                         onClick={handleSave}
                         disabled={loading}
                     >
+                        {logAction && <AuditLogger action={action} user={username}/>}
                         {loading ? 'Saving...' : 'Save'}
                     </button>
                 </div>
@@ -199,9 +213,12 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                         </div>
                     </div>
                 </div>
+                
             )}
+            
         </div>,
         document.getElementById('portal')
+        
     );
 };
 

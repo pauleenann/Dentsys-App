@@ -93,7 +93,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
           <div className="add-user-modal-input col-4">
             <label>Role:</label>
             <select name="account_type" value={formData.account_type} onChange={handleInputChange}>
-              <option value="">Select Role</option>
+              <option value="" disabled>Select Role</option>
               <option value="dentist">Dentist</option>
               <option value="staff">Staff</option>
             </select>

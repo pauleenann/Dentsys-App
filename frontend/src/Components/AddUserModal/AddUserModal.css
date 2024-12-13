@@ -114,3 +114,9 @@ body {
    color: var(--white);
    border-radius: 5px;
 }
+
+.error {
+    color: var(--red);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }

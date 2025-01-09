@@ -107,7 +107,7 @@ body {
 
 .reports-container table tr td{
     padding: 10px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .reports-container table tr:nth-child(even){

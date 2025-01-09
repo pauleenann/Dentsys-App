@@ -132,6 +132,12 @@ const AdminAppointment = () => {
                   {appointment.time_}
                 </div>
                 <div className="col app-patient-info">
+                  {appointment.date_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.phone}
+                </div>
+                <div className="col app-patient-info">
                   UPCOMING
                 </div>
                 <div className="col app-actions text-end">
@@ -156,6 +162,12 @@ const AdminAppointment = () => {
                   {appointment.time_}
                 </div>
                 <div className="col app-patient-info">
+                  {appointment.date_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.phone}
+                </div>
+                <div className="col app-patient-info">
                   FINISHED
                 </div>
                 <div className="col app-actions text-end">
@@ -172,6 +184,12 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col app-patient-info">
                   {appointment.time_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.date_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.phone}
                 </div>
                 <div className="col app-patient-info">
                   PENDING
@@ -203,6 +221,12 @@ const AdminAppointment = () => {
                 </div>
                 <div className="col app-patient-info">
                   {appointment.time_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.date_}
+                </div>
+                <div className="col app-patient-info">
+                  {appointment.phone}
                 </div>
                 <div className="col app-patient-info">
                   CANCELLED

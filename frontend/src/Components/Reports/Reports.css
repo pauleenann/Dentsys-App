@@ -52,87 +52,82 @@ body {
     font-size: 2.7rem;
 }
 
-.reports-container  .reports-filter-box{
-    margin: auto;
-    color: var(--blue);
-    width: 40%;
-    background-color: var(--lighter-blue);
-    padding: 50px 60px;
+.reports-container .reports-summary{
+    width: 100%;
+    background-color: var(--lighter-green);
+    padding: 50px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    border-radius: 10px;
-}
-
-
-.reports-container  .reports-type{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.reports-container  .reports-type select{
-    height: 40px;
-    border-radius: 5px;
-    border:1px solid var(--shadow);
-    padding: 5px;
-}
-
-.reports-container  .reports-date-toggle{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.reports-container .reports-date-toggle input{
-    height: 20px;
-}
-
-.reports-container .reports-start-date,.reports-end-date{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.reports-container .reports-start-date input,
-.reports-container .reports-end-date input{
-    height: 40px;
-    padding: 5px;
-    border: 1px solid var(--shadow);
-    border-radius: 5px;
-}
-
-.reports-container  .reports-buttons{
-    display: flex;
     gap: 10px;
-    justify-content: center;
+    border-radius: 10px;
+
 }
 
-.reports-container .reports-buttons .clear{
-    height: 40px;
-    width: 100px;
+.reports-container .report-type, .reports-container .sub-options{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.reports-container select{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.reports-container .buttons{
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.reports-container .clear-btn{
     background-color: var(--white);
-    border-radius: 5px;
-    border: 1px solid var(--blue);
+    border: none;
     color: var(--blue);
-    transition: all 0.3s;
 }
 
-.reports-container  .reports-buttons .generate{
-    height: 40px;
-    width: 150px;
-    color: var(--white);
+.reports-container .generate-report{
     background-color: var(--blue);
-    border-radius: 5px;
-    border: 1px solid var(--blue);
+    color: var(--white);
+    border: none;
 }
 
-.reports-container .reports-buttons .clear:hover,
-.reports-container .reports-buttons .generate:hover{
-    background-color: var(--blue-hover);
-    border-color: var(--blue-hover);
+.reports-container table{
+    table-layout: fixed;
+    background-color: var(--white);
+    border-radius: 10px;
+    overflow:hidden;
+    margin-top: 10px;
+}
+
+.reports-container table thead{
+    background-color: var(--blue);
     color: var(--white);
 }
 
+.reports-container table tr td{
+    padding: 10px;
+    text-transform: capitalize;
+}
 
+.reports-container table tr:nth-child(even){
+    background-color: var(--lightest-blue);
+}
 
+.reports-container .custom{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.reports-container .custom input{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.reports-container .export-report{
+    background-color: var(--blue);
+    color: var(--white);
+    margin-top: 5px;
+}

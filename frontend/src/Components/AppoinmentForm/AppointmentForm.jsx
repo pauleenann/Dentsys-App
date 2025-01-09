@@ -249,9 +249,7 @@ const AppointmentForm = () => {
                                 // if yung index ay di pa umaaabot ng 4, display first 4 time in the first column
                                 if(index<=3){
                                     return <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={
-                                        // occupiedTime.includes(time);
-                                        unavailableTime(time)
+                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={occupiedTime.includes(time)||unavailableTime(time)
                                     } checked={formData.time_===time}/>
                                     <label class="form-check-label time-text" for="flexRadioDefault1">
                                     {time}
@@ -266,7 +264,7 @@ const AppointmentForm = () => {
                                 // if yung index ay greater than 3, display ung natitirang time
                                 if(index>3){
                                     return <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={unavailableTime(time)} checked={formData.time_===time}/>
+                                    <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={occupiedTime.includes(time)||unavailableTime(time)} checked={formData.time_===time}/>
                                     <label class="form-check-label time-text" for="flexRadioDefault1">
                                     {time}
                                     </label>

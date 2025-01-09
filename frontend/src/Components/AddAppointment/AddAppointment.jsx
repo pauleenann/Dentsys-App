@@ -9,6 +9,7 @@ import isAuthenticated from "../Auth";
 import io from 'socket.io-client';
 const socket = io('http://localhost:3001'); // Connect to the Socket.IO server
 
+
 const AddAppointment = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -185,7 +186,8 @@ const AddAppointment = () => {
        
     }
 
-    console.log(formData)
+    console.log(occupiedTime)
+   
 
   return (
     <div className='add-app-container'>
@@ -268,8 +270,7 @@ const AddAppointment = () => {
                                         if(index<=3){
                                             return <div class="form-check">
                                             <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={
-                                                // occupiedTime.includes(time);
-                                                unavailableTime(time)
+                                                occupiedTime.includes(time)||unavailableTime(time)
                                             } checked={formData.time_===time}/>
                                             <label class="form-check-label time-text" for="flexRadioDefault1">
                                             {time}
@@ -284,7 +285,7 @@ const AddAppointment = () => {
                                         // if yung index ay greater than 3, display ung natitirang time
                                         if(index>3){
                                             return <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={unavailableTime(time)} checked={formData.time_===time}/>
+                                            <input class="form-check-input" type="radio" name="time_" id="" value={time} onChange={handleChange} onBlur={formValidation} disabled={occupiedTime.includes(time)||unavailableTime(time)} checked={formData.time_===time}/>
                                             <label class="form-check-label time-text" for="flexRadioDefault1">
                                             {time}
                                             </label>

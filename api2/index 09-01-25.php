@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL); //Sets PHP to report all errors, warnings, and notices.
 ini_set('display_errors',1);//display errors directly on the web page for debugging purposes.
-header("Access-Control-Allow-Origin: *");//Sets CORS policy to allow access to this API from any domain.
+header("Access-Control-Allow-Origin: http://localhost:3000");//Sets CORS policy to allow access to this API from any domain.
 header("Access-Control-Allow-Headers: *");// Allows any headers to be sent in the request.
 header("Access-Control-Allow-Methods: *");// Allows any HTTP methods (GET, POST, PUT, DELETE, etc.) to be used in requests.
 
@@ -9,13 +9,7 @@ include 'DbConnect.php'; //Includes the DbConnect.php file, which likely contain
 $objDb = new DbConnect;
 $conn = $objDb->connect();
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
 $method = $_SERVER['REQUEST_METHOD'];
-
 if($method ==='PUT'){
     //  This line checks if the 'action' parameter is present in the URL query string 
     $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -24,36 +18,6 @@ if($method ==='PUT'){
     print_r($id);
         //print_r($request);
         switch($action){
-            case 'updateStatus':
-                $user = json_decode(file_get_contents('php://input'));
-                $path = explode('/',$_SERVER['REQUEST_URI']);
-                
-                //echo json_encode(["id" => $id, "status" => $userData]);
-                
-                if (isset($user->status) && isset($path[2])) {
-                    $id = isset($path[2]) ? $path[2] : null;
-                    $userData = $user->status;
-
-                    try {
-                        // Prepare the SQL statement to update the user status
-                        $stmt = $conn->prepare("UPDATE users SET status = :status WHERE id = :id");
-                        $stmt->bindParam(':status', $userData, PDO::PARAM_STR);
-                        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-
-                        // Execute the statement
-                        if ($stmt->execute()) {
-                            echo json_encode(["success" => true, "message" => "User status updated successfully"]);
-                        } else {
-                            echo json_encode(["success" => false, "message" => "Failed to update user status"]);
-                        }
-                    } catch (PDOException $e) {
-                        echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
-                    }
-                } else {
-                    echo json_encode(["success" => false, "message" => "Invalid input"]);
-                }
-                break;
-
             case 'accept':
                 // Update appointment to accepted
                 $sql = "UPDATE appointment SET status_ = 'accepted' WHERE a_id = :id";
@@ -378,7 +342,8 @@ if($method ==='PUT'){
                         status_
                     FROM appointment 
                     JOIN temppatient ON appointment.id = temppatient.id
-                    JOIN services ON appointment.service_ = services.service_id";
+                    JOIN services ON appointment.service_ = services.service_id
+                    ORDER BY appointment.a_id DESC";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $appt = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -764,6 +729,170 @@ if($method ==='PUT'){
                     echo json_encode($users);
                     break;
 
+            case 'reports':
+                $type = $_GET['type'] ?? '';
+                $kind = $_GET['kind'] ?? '';
+                $startDate = $_GET['startDate'] ?? null;
+                $endDate = $_GET['endDate'] ?? null;
+                    
+                $response = [];
+                    
+                try {
+                    if ($type === 'Appointment Report') {
+                        if ($kind === 'Daily Report') {
+                            $stmt = $conn->prepare("SELECT 
+                                a.a_id as 'ID',
+								CONCAT(t.fname, ' ', t.lname) AS 'Patient Name',
+                                t.email as Email,
+                                s.service_name as Service,
+                                a.date_ as 'Appointment Date',
+                                a.time_ as 'Appointment Time',
+                                a.status_ as 'Appointment Status'
+                            FROM appointment a 
+                            JOIN temppatient t ON a.id = t.id
+                            JOIN services s ON a.service_ = s.service_id
+                            WHERE DATE(date_) = CURDATE()");
+                        } elseif ($kind === 'Monthly Report') {
+                            $stmt = $conn->prepare("SELECT 
+                                a.a_id as 'ID',
+								CONCAT(t.fname, ' ', t.lname) AS 'Patient Name',
+                                t.email as Email,
+                                s.service_name as Service,
+                                a.date_ as 'Appointment Date',
+                                a.time_ as 'Appointment Time',
+                                a.status_ as 'Appointment Status'
+                            FROM appointment a 
+                            JOIN temppatient t ON a.id = t.id
+                            JOIN services s ON a.service_ = s.service_id WHERE MONTH(date_) = MONTH(CURDATE()) AND YEAR(date_) = YEAR(CURDATE())");
+                        } elseif ($kind === 'Custom Date' && $startDate && $endDate) {
+                            $stmt = $conn->prepare("SELECT 
+                                a.a_id as 'ID',
+								CONCAT(t.fname, ' ', t.lname) AS 'Patient Name',
+                                t.email as Email,
+                                s.service_name as Service,
+                                a.date_ as 'Appointment Date',
+                                a.time_ as 'Appointment Time',
+                                a.status_ as 'Appointment Status'
+                            FROM appointment a 
+                            JOIN temppatient t ON a.id = t.id
+                            JOIN services s ON a.service_ = s.service_id WHERE date_ BETWEEN :startDate AND :endDate");
+                            $stmt->bindParam(':startDate', $startDate);
+                            $stmt->bindParam(':endDate', $endDate);
+                        } else {
+                            throw new Exception("Invalid kind for Appointment Report.");
+                        }
+                    } elseif ($type === 'Invoices Report') {
+                        if ($kind === 'Pending') {
+                            $stmt = $conn->prepare("SELECT 
+                                i.inv_id as ID,
+                                CONCAT(p.p_fname, ' ', p.p_lname) as 'Patient Name',
+                                p_email as Email,
+                                i.inv_issuedate as 'Issue Date',
+                                i.inv_duedate as 'Issue Due Date',
+                                i.inv_totalamount as 'Total Ammount'
+                            FROM invoices i
+                            JOIN patienthistory ph ON i.ph_id = ph.id
+                            JOIN patients p ON p.id = ph.p_id
+                            WHERE inv_status = 'pending'");
+                        } elseif ($kind === 'Paid') {
+                            $stmt = $conn->prepare("SELECT 
+                                i.inv_id as ID,
+                                CONCAT(p.p_fname, ' ', p.p_lname) as 'Patient Name',
+                                p_email as Email,
+                                i.inv_issuedate as 'Issue Date',
+                                i.inv_duedate as 'Issue Due Date',
+                                i.inv_totalamount as 'Total Ammount'
+                            FROM invoices i
+                            JOIN patienthistory ph ON i.ph_id = ph.id
+                            JOIN patients p ON p.id = ph.p_id
+                            WHERE inv_status = 'paid'");
+                        } elseif ($kind === 'Overdue') {
+                            $stmt = $conn->prepare("SELECT 
+                                i.inv_id as ID,
+                                CONCAT(p.p_fname, ' ', p.p_lname) as 'Patient Name',
+                                p_email as Email,
+                                i.inv_issuedate as 'Issue Date',
+                                i.inv_duedate as 'Issue Due Date',
+                                i.inv_totalamount as 'Total Ammount'
+                            FROM invoices i
+                            JOIN patienthistory ph ON i.ph_id = ph.id
+                            JOIN patients p ON p.id = ph.p_id
+                            WHERE inv_status = 'overdue'");
+                        } else {
+                            throw new Exception("Invalid kind for Payment Report.");
+                        }
+                    }else if ($type === 'Payment Report') {
+                        if ($kind === 'Daily Report') {
+                            $stmt = $conn->prepare("SELECT 
+                                pay.pay_id as ID,
+                                CONCAT(p_fname, ' ', p_lname) AS 'Payer Name',
+                                i.inv_id as 'Invoice ID',
+                                pay.pay_date as 'Payment Date',
+                                pay.pay_time as 'Payment Time',
+                                pay.pay_method as 'Payment Method',
+                                pay.pay_amount as 'Payment Amount'
+                            FROM payment pay
+                            JOIN invoices i ON i.inv_id = pay.inv_id
+                            JOIN patienthistory ph ON ph.id = i.ph_id 
+                            JOIN patients p ON ph.p_id = p.id
+                            WHERE DATE(pay.pay_date) = CURDATE()");
+                        } elseif ($kind === 'Monthly Report') {
+                            $stmt = $conn->prepare("SELECT 
+                                pay.pay_id as ID,
+                                CONCAT(p_fname, ' ', p_lname) AS 'Payer Name',
+                                i.inv_id as 'Invoice ID',
+                                pay.pay_date as 'Payment Date',
+                                pay.pay_time as 'Payment Time',
+                                pay.pay_method as 'Payment Method',
+                                pay.pay_amount as 'Payment Amount'
+                            FROM payment pay
+                            JOIN invoices i ON i.inv_id = pay.inv_id
+                            JOIN patienthistory ph ON ph.id = i.ph_id 
+                            JOIN patients p ON ph.p_id = p.id 
+                            WHERE MONTH(pay.pay_date) = MONTH(CURDATE()) AND YEAR(pay.pay_date) = YEAR(CURDATE())");
+                        } elseif ($kind === 'Custom Date' && $startDate && $endDate) {
+                            $stmt = $conn->prepare("SELECT 
+                                pay.pay_id as ID,
+                                CONCAT(p_fname, ' ', p_lname) AS 'Payer Name',
+                                i.inv_id as 'Invoice ID',
+                                pay.pay_date as 'Payment Date',
+                                pay.pay_time as 'Payment Time',
+                                pay.pay_method as 'Payment Method',
+                                pay.pay_amount as 'Payment Amount'
+                            FROM payment pay
+                            JOIN invoices i ON i.inv_id = pay.inv_id
+                            JOIN patienthistory ph ON ph.id = i.ph_id 
+                            JOIN patients p ON ph.p_id = p.id 
+                            WHERE pay.pay_date BETWEEN :startDate AND :endDate");
+                            $stmt->bindParam(':startDate', $startDate);
+                            $stmt->bindParam(':endDate', $endDate);
+                        } else {
+                            throw new Exception("Invalid kind for Appointment Report.");
+                        }
+                    } elseif ($type === 'Patients Report') {
+                        $stmt = $conn->prepare("SELECT 
+                            id as ID,
+                            concat(p_fname, ' ', p_lname) as 'Patient Name',
+                            p_email as Email,
+                            p_phone as Phone
+                        FROM patients");
+                    } else {
+                        throw new Exception("Invalid report type.");
+                    }
+                    
+                    // Execute the query and fetch results
+                    $stmt->execute();
+                    $response = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                } catch (Exception $e) {
+                    $response = ['error' => $e->getMessage()];
+                }
+                    
+                // Return JSON response
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                break;
+
        
         case 'getPatientsByLetter':
             if (isset($_GET['letter']) && !empty($_GET['letter'])) {
@@ -886,74 +1015,6 @@ if($method ==='PUT'){
     // Check the action type
     if (isset($user->action)) {
         switch ($user->action) {
-
-            case 'check':
-                // Check if username exists
-                $username = $user->username;
-
-                try {
-                    $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
-                    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-                    $stmt->execute();
-                    $exists = $stmt->fetchColumn() > 0;
-
-                    echo json_encode(["exists" => $exists]);
-                } catch (PDOException $e) {
-                    echo json_encode(["status" => "error", "message" => "Error: " . $e->getMessage()]);
-                }
-                break;
-
-                case 'addUser':
-                    // Add new user
-                    $username = $user->username;
-                    $password = password_hash($user->password, PASSWORD_BCRYPT); // Hashing the password for security
-                    $account_type = $user->account_type; // Account type (e.g., admin, user)
-                    $u_fname = $user->u_fname; // User's first name
-                    $u_lname = $user->u_lname; // User's last name
-                    $loggedin = $user->loggedin;
-                    $status =  'active'; // Default status to 'active'
-                    $timestamp = date("Y-m-d H:i:s");
-                    $affected_table = "users";
-                    $action = "Added a user"; // Description of the action
-                    
-    
-                    try {
-                        // Prepare the SQL statement to insert the user data
-                        $stmt = $conn->prepare("INSERT INTO users (id, username, password, account_type, u_fname, u_lname, status) VALUES (null, :username, :password, :account_type, :u_fname, :u_lname, :status)");
-                        // Bind the parameters using bindParam()
-                        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-                        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-                        $stmt->bindParam(':account_type', $account_type, PDO::PARAM_STR);
-                        $stmt->bindParam(':u_fname', $u_fname, PDO::PARAM_STR);
-                        $stmt->bindParam(':u_lname', $u_lname, PDO::PARAM_STR);
-                        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
-    
-                        // Execute the statement
-                        if ($stmt->execute()) {
-                            $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, old_value, new_value, timestamp) VALUES (null, :user, :action, :affected_table, null, null, :new_value, :timestamp)");
-                            $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
-                            $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
-                            $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
-                            $logStmt->bindParam(':new_value', $username, PDO::PARAM_STR);
-                            $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
-
-                            if ($logStmt->execute()) {
-                                echo json_encode(["success" => true, "message" => "User added and action logged"]);
-                            } else {
-                                echo $logStmt->queryString;
-                                echo json_encode(["success" => false, "message" => "User added, but failed to log action"]);
-                            }
-                            //echo json_encode(["success" => true]);
-                        } else {
-                            echo json_encode(["success" => false, "message" => "Failed to add user"]);
-                        }
-                    } catch (PDOException $e) {
-                        echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
-                    }
-                    break;
-
-                
-
             case 'logSession':
                 
                 $session_id = $user->session_id;
@@ -1099,7 +1160,7 @@ if($method ==='PUT'){
                         ) p ON i.inv_id = p.inv_id
                         SET i.inv_status = CASE
                             WHEN p.totalpaid = i.inv_totalamount THEN 'paid'
-                            WHEN p.totalpaid <= i.inv_totalamount and p.totalpaid != 0 THEN 'partial'
+                            WHEN p.totalpaid < i.inv_totalamount and p.totalpaid != 0 THEN 'pending'
                             ELSE i.inv_status
                         END
                         WHERE i.inv_id = :inv_id;
@@ -1109,7 +1170,51 @@ if($method ==='PUT'){
                     $updateStmt->bindParam(':inv_id', $user->inv_id);
                     
                     if ($updateStmt->execute()) {
-                        $response = ['status' => 1, 'message' => 'Record created and status updated successfully.'];
+                        // check if updated invoice is paid
+                        $checkIfPaidQ = "SELECT 
+                                            invoices.inv_id,
+                                            invoices.inv_issuedate,
+                                            invoices.inv_totalamount,
+                                            patients.p_fname,
+                                            patients.p_lname,
+                                            patients.p_email,
+                                            users.u_fname,
+                                            users.u_lname,
+                                            services.service_name,
+                                            servicesoptions.option_name,
+                                            patienthistory.p_selectedTeeth
+                                        FROM invoices
+                                        JOIN patienthistory ON invoices.ph_id = patienthistory.id
+                                        JOIN patients ON patienthistory.p_id = patients.id
+                                        JOIN servicesoptions ON patienthistory.p_service = servicesoptions.option_id
+                                        JOIN services ON servicesoptions.service_id = services.service_id
+                                        JOIN users ON patienthistory.p_dentist = users.id
+                                        WHERE invoices.inv_id = :inv_id AND invoices.inv_status = 'paid'";
+                        $checkIfPaidStmt = $conn->prepare($checkIfPaidQ);
+                        $checkIfPaidStmt->bindParam(':inv_id', $user->inv_id);
+
+                        if($checkIfPaidStmt->execute()){
+                            $paidDetails = $checkIfPaidStmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            $recipientEmail = $paidDetails[0]['p_email'];
+                            $recipientFname = $paidDetails[0]['p_fname'];
+                            $recipientLname = $paidDetails[0]['p_lname'];
+                            $dentistFname = $paidDetails[0]['u_fname'];
+                            $dentistLname = $paidDetails[0]['u_lname'];
+                            $service = $paidDetails[0]['service_name'];
+                            $serviceOption = $paidDetails[0]['option_name'];
+                            $serviceDate = $paidDetails[0]['inv_issuedate'];
+                            $toothNo = $paidDetails[0]['p_selectedTeeth'];
+                            $totalAmount = $paidDetails[0]['inv_totalamount'];
+
+                            // Execute send-email.php
+                            require 'send-fully-paid-email.php';
+
+                            $response = ['status' => 1, 'message' => 'Paid invoices checked'];
+                        }else{
+                            $response = ['status' => 0, 'message' => 'Failed to check paid record.'];
+                        }
+                       
                     } else {
                         $response = ['status' => 1, 'message' => 'Record created, but failed to update status.'];
                     }
@@ -1134,15 +1239,20 @@ if($method ==='PUT'){
                 $stmt->bindParam(':p_gender', $user->p_gender);
                 $stmt->bindParam(':p_email', $user->p_email);
                 $stmt->bindParam(':p_phone', $user->p_phone);
-                
+                // $stmt->bindParam(':p_date', $user->p_date);
+                // $stmt->bindParam(':p_time', $user->p_time);
+                // $stmt->bindParam(':p_service', $user->p_service);
+                // $p_selectedteeth_json = json_encode($user->p_selectedteeth);
+                //  $stmt->bindParam(':p_selectedteeth', $p_selectedteeth_json);
+                // $stmt->bindParam(':p_dentist', $user->p_dentist);
+                // $stmt->bindParam(':p_payment', $user->p_payment);
+                // $stmt->bindParam(':p_paidamount', $user->p_paidamount);
                 if($stmt->execute()){
                     $response = ['status' => 1, 'message' => 'Record created successfully.'];
                 }else{
                     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
                 }
                 break;
-            
-                
               
 
             case 'login':
@@ -1254,7 +1364,12 @@ if($method ==='PUT'){
                 }
                 break;
             
+            default:
+                echo json_encode(['error' => 'Invalid action']);
+                break;
         }
+    
+    
     } else {
         echo json_encode(['error' => 'No action specified']);
     }

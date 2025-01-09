@@ -109,9 +109,9 @@ a[x-apple-data-detectors],
                   <td align="left" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px">
+                      <td align="left" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px;text-transform:capitalize;">
                       <!-- PATIENT NAME -->
-                        Dear <?php echo "$recipientFname $recipientLname";?>,</p><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px"><br></p><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px;text-transform:capitalize;">
+                        Dear <?php echo "$recipientFname $recipientLname";?>,</p><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px"><br></p><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;letter-spacing:0;color:#31a3b9;font-size:14px;">
                         Your appointment for<em>
                       <!-- SERVICE  -->
                         <strong style="text-transform:capitalize;"> <?php echo $apptService?> </strong></em> on <em>

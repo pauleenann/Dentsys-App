@@ -1160,7 +1160,7 @@ if($method ==='PUT'){
                         ) p ON i.inv_id = p.inv_id
                         SET i.inv_status = CASE
                             WHEN p.totalpaid = i.inv_totalamount THEN 'paid'
-                            WHEN p.totalpaid <= i.inv_totalamount and p.totalpaid != 0 THEN 'partial'
+                            WHEN p.totalpaid < i.inv_totalamount and p.totalpaid != 0 THEN 'pending'
                             ELSE i.inv_status
                         END
                         WHERE i.inv_id = :inv_id;

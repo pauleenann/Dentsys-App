@@ -5,12 +5,12 @@ use PHPMailer\PHPMailer\Exception;
 
 // Autoload PHPMailer using Composer
 require 'vendor/autoload.php'; // Use this if installed via Composer
-require 'email.php';
+// require 'email.php';
 
-//Ensure that recipientemail is set
-if (!isset($recipientEmail)) {
-    die('Recipient email is not set.');
-}
+// //Ensure that recipientemail is set
+// if (!isset($recipientEmail)) {
+//     die('Recipient email is not set.');
+// }
 $mail = new PHPMailer(true);
 
 try {
@@ -19,7 +19,7 @@ try {
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'pndingcong.stjames@gmail.com';
-    $mail->Password   = 'kwhfngmmwkfudzzz'; // Use an App Password, not your Gmail password
+    $mail->Password   = 'ljjwnvktxtnzpvwh'; // Use an App Password, not your Gmail password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
@@ -32,6 +32,7 @@ try {
     ob_start();
     include 'email.php';
     $mail->Body = ob_get_clean();
+    // $mail->Body = "hello";
     $mail->send();
     echo 'Email sent successfully!';
 } catch (Exception $e) {

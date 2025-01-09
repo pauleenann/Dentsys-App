@@ -5,12 +5,12 @@ use PHPMailer\PHPMailer\Exception;
 
 // Autoload PHPMailer using Composer
 require 'vendor/autoload.php'; // Use this if installed via Composer
-require 'cancel-email.php';
+// require 'fully-paid-email.php';
 
 //Ensure that recipientemail is set
-if (!isset($recipientEmail)) {
-    die('Recipient email is not set.');
-}
+// if (!isset($recipientEmail)) {
+//     die('Recipient email is not set.');
+// }
 $mail = new PHPMailer(true);
 
 try {
@@ -26,12 +26,12 @@ try {
     // Email settings
     $mail->setFrom('pndingcong.stjames@gmail.com', 'Toothie Cutie Dental Clinic');
     $mail->addAddress($recipientEmail); // Recipient's email address
-
     $mail->isHTML(true);
-    $mail->Subject = 'Your appointment has been cancelled';
+    $mail->Subject = 'Your bill is now fully paid!';
     ob_start();
-    include 'cancel-email.php';
+    include 'fully-paid-email.php';
     $mail->Body = ob_get_clean();
+    // $mail->Body = 'hello';
     $mail->send();
     echo 'Email sent successfully!';
 } catch (Exception $e) {

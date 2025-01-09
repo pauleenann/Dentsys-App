@@ -8,7 +8,6 @@
       margin: 0;
       padding: 0;
       background-color: #f9f9f9;
-      text-transform: capitalize;
     }
     .email-container {
       max-width: 600px;
@@ -59,35 +58,35 @@
     </div>
     <div class="content">
       <h1>Payment Confirmation</h1>
-      <p>Dear <strong style="text-transform: capitalize;"><?php echo "$recipientFname $recipientLname";?></strong>,</p>
-      <p>Thank you for visiting <strong>Toothie Cutie Dental Clinic</strong>. This email confirms that your payment has been successfully processed. Below are the details of your visit:</p>
+      <p>Dear <strong>[Patient Name]</strong>,</p>
+      <p>Thank you for visiting <strong>[Clinic Name]</strong>. This email confirms that your payment has been successfully processed. Below are the details of your visit:</p>
       <table class="details">
         <tr>
           <td><strong>Patient Name:</strong></td>
-          <td style="text-transform: capitalize;"><?php echo "$recipientFname $recipientLname";?></td>
+          <td>[Patient Name]</td>
+        </tr>
+        <tr>
+          <td><strong>Patient ID:</strong></td>
+          <td>[Patient ID]</td>
         </tr>
         <tr>
           <td><strong>Dentist Name:</strong></td>
-          <td style="text-transform: capitalize;"><?php echo "$dentistFname $dentistLname";?></td>
+          <td>[Dentist Name]</td>
         </tr>
         <tr>
           <td><strong>Date of Service:</strong></td>
-          <td style="text-transform: capitalize;"><?php echo $serviceDate;?></td>
-        </tr>
-        <tr>
-          <td><strong>Service:</strong></td>
-          <td><?php echo $service;?></td>
+          <td>[Date of Service]</td>
         </tr>
         <tr>
           <td><strong>Total Cost:</strong></td>
-          <td><?php echo "Php $totalAmount";?></td>
+          <td>[Total Cost]</td>
         </tr>
       </table>
-      <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <strong>toothiecute@gmail.com</strong>.</p>
-      <p>We appreciate your trust in <strong>Toothie Cutie Dental Clinic</strong> and look forward to serving you again!</p>
+      <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <strong>[Clinic Contact Information]</strong>.</p>
+      <p>We appreciate your trust in <strong>[Clinic Name]</strong> and look forward to serving you again!</p>
     </div>
     <div class="footer">
-      <p>toothiecute@gmail.com | Paranaque City | 09878757892</p>
+      <p>[Clinic Name] | [Clinic Address] | [Clinic Contact]</p>
     </div>
   </div>
 </body>

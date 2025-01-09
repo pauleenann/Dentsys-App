@@ -114,7 +114,7 @@ if($method ==='PUT'){
                     $loggedin = $user->loggedin;
                     $action = "Set an appointment to finish";
                     $timestamp = date("Y-m-d H:i:s");
-                    $affected_table = "appointment, temppatient"; 
+                    $affected_table = "patients"; 
                     $sql = "UPDATE appointment SET status_ = 'finished' WHERE a_id = :id";
                     $stmt = $conn->prepare($sql);
                     $stmt->bindParam(':id', $id);
@@ -167,7 +167,27 @@ if($method ==='PUT'){
                                             $stmtPatient->bindParam(':p_email', $patient[0]['email']);
                                             $stmtPatient->bindParam(':p_phone', $patient[0]['phone']);
                                             
+                                            $variables = "patient ID = {$id}, " .
+                                                        "patient name = {$patient[0]['fname']} {$patient[0]['lname']}, " .
+                                                        "email = {$patient[0]['email']}, " .
+                                                        "phone number = {$patient[0]['phone']}";
+
                                             if ($stmtPatient->execute()) {
+
+                                                $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, new_value, timestamp) VALUES (null, :user, :action, :affected_table, :record_id, :new_value, :timestamp)");
+                                                $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
+                                                $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
+                                                $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
+                                                $logStmt->bindParam(':record_id', $id, PDO::PARAM_STR);
+                                                $logStmt->bindParam(':new_value', $variables, PDO::PARAM_STR);
+                                                $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
+                                                
+                                                if ($logStmt->execute()) {
+                                                    echo json_encode(["success" => true, "message" => "User added and action logged"]);
+                                                } else {
+                                                    echo $logStmt->queryString;
+                                                    echo json_encode(["success" => false, "message" => "User added, but failed to log action"]);
+                                                }
                                                 $response = ['status' => 1, 'message' => 'Patient added successfully'];
                                             } else {
                                                 $response = ['status' => 0, 'message' => 'Failed to add patient to the patients table.'];

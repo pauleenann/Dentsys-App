@@ -36,17 +36,17 @@ const AdminNavbar = () => {
                 <p className="col-10 m-0">Patients</p>     
             </Link>
             {/* accounts */}
-            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/accounts'>
+            <Link className={`sidebar-menu row ${accountType === 'dentist' || accountType === 'staff' ? 'hide-menu' : ''}`} to='/accounts'>
                 <i className="fa-solid fa-users col-2"></i> 
                 <p className="col-10 m-0">Accounts</p>     
             </Link>
             {/* audit logs */}
-            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/audit'>
+            <Link className={`sidebar-menu row ${accountType === 'dentist' || accountType === 'staff' ? 'hide-menu' : ''}`} to='/audit'>
                 <i className="fa-solid fa-file col-2"></i> 
                 <p className="col-10 m-0">Audit Logs</p>     
             </Link>
             {/* reports */}
-            <Link className={`sidebar-menu row ${accountType === 'dentist' ? 'hide-menu' : ''}`} to='/reports'>
+            <Link className={`sidebar-menu row ${accountType === 'dentist' || accountType === 'staff'? 'hide-menu' : ''}`} to='/reports'>
                 <i className="fa-solid fa-chart-line col-2"></i> 
                 <p className="col-10 m-0">Reports</p>     
             </Link>

@@ -24,7 +24,8 @@ $sql = "SELECT
         JOIN patienthistory ph ON i.ph_id = ph.id
         JOIN patients p ON ph.p_id = p.id
         JOIN services s ON ph.p_service = s.service_id
-        WHERE inv_duedate < DATE(NOW()) AND inv_status = 'pending';";
+        WHERE inv_duedate < DATE(NOW()) 
+        AND (inv_status = 'pending' OR inv_status = 'overdue');";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute();

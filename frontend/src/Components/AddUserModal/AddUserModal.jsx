@@ -40,7 +40,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
       const response = await axios.post("http://localhost:80/api2/user/save", {
         action: "check",
         username: formData.username,
-        loggedin: loggedin,
+        
       });
       if (response.data.exists) {
         alert("Username already exists. Please choose a different username.");
@@ -48,6 +48,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
       }
 
       const addResponse = await axios.post("http://localhost:80/api2/user/save", {
+        loggedin: loggedin,
         action: "addUser",
         ...formData,
       });

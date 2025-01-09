@@ -1,22 +1,15 @@
 <?php
 error_reporting(E_ALL); //Sets PHP to report all errors, warnings, and notices.
 ini_set('display_errors',1);//display errors directly on the web page for debugging purposes.
-header("Access-Control-Allow-Origin: *");//Sets CORS policy to allow access to this API from any domain.
+header("Access-Control-Allow-Origin: http://localhost:3000");//Sets CORS policy to allow access to this API from any domain.
 header("Access-Control-Allow-Headers: *");// Allows any headers to be sent in the request.
 header("Access-Control-Allow-Methods: *");// Allows any HTTP methods (GET, POST, PUT, DELETE, etc.) to be used in requests.
 
 include 'DbConnect.php'; //Includes the DbConnect.php file, which likely contains code to establish a database connection.
 $objDb = new DbConnect;
 $conn = $objDb->connect();
-date_default_timezone_set('Asia/Manila');
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
 
 $method = $_SERVER['REQUEST_METHOD'];
-
 if($method ==='PUT'){
     //  This line checks if the 'action' parameter is present in the URL query string 
     $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -110,11 +103,6 @@ if($method ==='PUT'){
             case 'finish':
                     // id is appointment id
                     // Update the appointment status to 'finished'
-                    $user = json_decode(file_get_contents('php://input'));
-                    $loggedin = $user->loggedin;
-                    $action = "Set an appointment to finish";
-                    $timestamp = date("Y-m-d H:i:s");
-                    $affected_table = "patients"; 
                     $sql = "UPDATE appointment SET status_ = 'finished' WHERE a_id = :id";
                     $stmt = $conn->prepare($sql);
                     $stmt->bindParam(':id', $id);
@@ -167,27 +155,7 @@ if($method ==='PUT'){
                                             $stmtPatient->bindParam(':p_email', $patient[0]['email']);
                                             $stmtPatient->bindParam(':p_phone', $patient[0]['phone']);
                                             
-                                            $variables = "patient ID = {$id}, " .
-                                                        "patient name = {$patient[0]['fname']} {$patient[0]['lname']}, " .
-                                                        "email = {$patient[0]['email']}, " .
-                                                        "phone number = {$patient[0]['phone']}";
-
                                             if ($stmtPatient->execute()) {
-
-                                                $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, new_value, timestamp) VALUES (null, :user, :action, :affected_table, :record_id, :new_value, :timestamp)");
-                                                $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
-                                                $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
-                                                $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
-                                                $logStmt->bindParam(':record_id', $id, PDO::PARAM_STR);
-                                                $logStmt->bindParam(':new_value', $variables, PDO::PARAM_STR);
-                                                $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
-                                                
-                                                if ($logStmt->execute()) {
-                                                    echo json_encode(["success" => true, "message" => "User added and action logged"]);
-                                                } else {
-                                                    echo $logStmt->queryString;
-                                                    echo json_encode(["success" => false, "message" => "User added, but failed to log action"]);
-                                                }
                                                 $response = ['status' => 1, 'message' => 'Patient added successfully'];
                                             } else {
                                                 $response = ['status' => 0, 'message' => 'Failed to add patient to the patients table.'];
@@ -311,16 +279,8 @@ if($method ==='PUT'){
 
                 case 'updateUserData':
                     $path = explode('/', $_SERVER['REQUEST_URI']);
-                    $user = json_decode(file_get_contents('php://input'));
-                    $timestamp = date("Y-m-d H:i:s");
-                    $loggedin = $user->loggedin;
-                    $status = $user->status;
-                    $action = "Edited a user";
-                    $affected_table = "users";
-
                     if (isset($path[2]) && is_numeric($path[2])) {
                         $id = $path[2];
-
                         $input = json_decode(file_get_contents('php://input'), true);
                 
                         $sql = "UPDATE users SET u_fname = :u_fname, u_lname = :u_lname, account_type = :account_type, username = :username, password = :password WHERE id = :id";
@@ -332,23 +292,7 @@ if($method ==='PUT'){
                         $stmt->bindParam(':password', $input['password']); // Consider hashing the password
                         $stmt->bindParam(':id', $id);
                 
-                        $variables = "username = {$input['username']}, status = {$input['status']}, first name = {$input['u_fname']}, last name = {$input['u_lname']}, account type = {$input['account_type']}, password = {$input['password']}";
-
                         if ($stmt->execute()) {
-                            $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, new_value, timestamp) VALUES (null, :user, :action, :affected_table, :record_id, :new_value, :timestamp)");
-                            $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
-                            $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
-                            $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
-                            $logStmt->bindParam(':record_id', $id, PDO::PARAM_STR);
-                            $logStmt->bindParam(':new_value', $variables, PDO::PARAM_STR);
-                            $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
-
-                            if ($logStmt->execute()) {
-                                echo json_encode(["success" => true, "message" => "User added and action logged"]);
-                            } else {
-                                echo $logStmt->queryString;
-                                echo json_encode(["success" => false, "message" => "User added, but failed to log action"]);
-                            }
                             echo json_encode(['message' => 'User updated successfully']);
                         } else {
                             http_response_code(500);
@@ -1101,7 +1045,6 @@ if($method ==='PUT'){
     // Check the action type
     if (isset($user->action)) {
         switch ($user->action) {
-
             case 'check':
                 // Check if username exists
                 $username = $user->username;
@@ -1145,12 +1088,14 @@ if($method ==='PUT'){
     
                         // Execute the statement
                         if ($stmt->execute()) {
-                            $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, new_value, timestamp) VALUES (null, :user, :action, :affected_table, null, :new_value, :timestamp)");
+                            $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, old_value, new_value, timestamp) VALUES (null, :user, :action, :affected_table, null, null, :new_value, :timestamp)");
                             $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
                             $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
                             $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
                             $logStmt->bindParam(':new_value', $username, PDO::PARAM_STR);
                             $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
+
+                            
 
                             if ($logStmt->execute()) {
                                 echo json_encode(["success" => true, "message" => "User added and action logged"]);
@@ -1166,9 +1111,6 @@ if($method ==='PUT'){
                         echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
                     }
                     break;
-
-                
-
             case 'logSession':
                 
                 $session_id = $user->session_id;
@@ -1202,12 +1144,6 @@ if($method ==='PUT'){
             case 'addAppointment':
                 // Check if the patient already exists
                 // $sqlCheck = "SELECT id FROM patients WHERE p_fname = :p_fname AND p_lname = :p_lname AND p_mname = :p_mname AND p_ename = :p_ename AND p_email = :p_email AND p_phone = :p_phone";
-                $loggedin = $user->loggedin;
-                $action = "Added an appointment";
-                $timestamp = date("Y-m-d H:i:s");
-                $affected_table = "appointment, temppatient";
-
-
                 $sqlCheck = "SELECT id FROM temppatient WHERE fname = :fname AND lname = :lname AND email = :email AND phone = :phone";
                 $stmtCheck = $conn->prepare($sqlCheck);
                 $stmtCheck->bindParam(':fname', $user->fname);
@@ -1248,35 +1184,8 @@ if($method ==='PUT'){
                 $stmtAppointment->bindParam(':time_', $user->time_);
                 $stmtAppointment->bindParam(':status_', $user->status_);
             
-                $variables = "patient ID = {$temppatient_id}, " .
-                            "patient name = {$user->fname} {$user->lname}, " .
-                            "email = {$user->email}, " .
-                            "phone number = {$user->phone}, " .
-                            "service = {$user->service_}, " .
-                            "date = {$user->date_}, " .
-                            "time = {$user->time_}";
-
-            
                 if ($stmtAppointment->execute()) {
-                    
-                    
-                    $logStmt = $conn->prepare("INSERT INTO audit_log (audit_id, user, action, affected_table, record_id, new_value, timestamp) VALUES (null, :user, :action, :affected_table, :record_id, :new_value, :timestamp)");
-                    $logStmt->bindParam(':user', $loggedin, PDO::PARAM_STR);
-                    $logStmt->bindParam(':action', $action, PDO::PARAM_STR);
-                    $logStmt->bindParam(':affected_table', $affected_table, PDO::PARAM_STR);
-                    $logStmt->bindParam(':record_id', $temppatient_id, PDO::PARAM_STR);
-                    $logStmt->bindParam(':new_value', $variables, PDO::PARAM_STR);
-                    $logStmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
-
-                    if ($logStmt->execute()) {
-                        echo json_encode(["success" => true, "message" => "User added and action logged"]);
-                    } else {
-                        echo $logStmt->queryString;
-                        echo json_encode(["success" => false, "message" => "User added, but failed to log action"]);
-                    }
-                    //echo json_encode(['message' => 'User updated successfully']);
                     $response = ['status' => 1, 'message' => 'Appointment created successfully.'];
-                    
                 } else {
                     $response = ['status' => 0, 'message' => 'Failed to create appointment.'];
                 }
@@ -1434,15 +1343,12 @@ if($method ==='PUT'){
                 // $stmt->bindParam(':p_dentist', $user->p_dentist);
                 // $stmt->bindParam(':p_payment', $user->p_payment);
                 // $stmt->bindParam(':p_paidamount', $user->p_paidamount);
-                
                 if($stmt->execute()){
                     $response = ['status' => 1, 'message' => 'Record created successfully.'];
                 }else{
                     $response = ['status' => 0, 'message' => 'Failed to create Record.'];
                 }
                 break;
-              
-
               
 
             case 'login':
@@ -1558,6 +1464,8 @@ if($method ==='PUT'){
                 echo json_encode(['error' => 'Invalid action']);
                 break;
         }
+    
+    
     } else {
         echo json_encode(['error' => 'No action specified']);
     }

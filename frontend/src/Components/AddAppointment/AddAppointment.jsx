@@ -34,6 +34,7 @@ const AddAppointment = () => {
         status_: 'pending'
     });
 
+    const loggedin = localStorage.getItem("username")
     const appointmentTime = [
         "9:00 AM - 10:00 AM",
         "10:00 AM - 11:00 AM",
@@ -131,17 +132,20 @@ const AddAppointment = () => {
     }
 
     const handleClick = async () => {
+        
         if(submitForm == false){
             formValidation();
         }else if(submitForm){
             console.log('form submitted')
             setLoading(true);
                     try {
-                        const response = await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+                        const response = await axios.post("http://localhost:80/api2/user/save", {loggedin:loggedin, ...formData,}).finally(() => setLoading(false));
                         console.log(response.data.status)
+                        alert(response.data.status);
                         //if may nainsert na data, send event sa server (node)
                         if(response.data.status==1){
                             socket.emit('newData');
+                            
                         }
                         navigate("/appointment-list");
                     } catch (err) {
@@ -297,7 +301,7 @@ const AddAppointment = () => {
                             </div>
                         </div>
                         <div className="col-12 text-center">
-                            <button className="btn add-app-button mt-5" onClick={handleClick} disabled={Object.keys(errors).length>=1}>Add Appointment</button>
+                            <button type="button" className="btn add-app-button mt-5" onClick={handleClick} disabled={Object.keys(errors).length>=1}>Add Appointment</button>
                         </div>      
             </form>
 

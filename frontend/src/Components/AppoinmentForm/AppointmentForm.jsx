@@ -15,6 +15,7 @@ const AppointmentForm = () => {
     const [submitForm, setSubmitForm] = useState(false)
     const [occupiedTime, setOccupiedTime] = useState([])
     const [minDate, setMinDate] = useState("");
+    const loggedin = "patient"
     const [formData, setFormData] = useState({
         action: 'addAppointment',
         fname: '',
@@ -132,7 +133,7 @@ const AppointmentForm = () => {
             console.log('form submitted')
             setLoading(true);
                     try {
-                        const response = await axios.post("http://localhost:80/api2/user/save", formData).finally(() => setLoading(false));
+                        const response = await axios.post("http://localhost:80/api2/user/save", {loggedin:loggedin, ...formData,}).finally(() => setLoading(false));
                         console.log(response.data.status)
                         //if may nainsert na data, send event sa server (node)
                         if(response.data.status==1){

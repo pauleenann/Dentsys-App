@@ -25,6 +25,7 @@ const AdminAppointment = () => {
   const [filter, setFilter] = useState('all');
   const [searchParams] = useSearchParams();
   const queryFilter = searchParams.get('filter');
+  const loggedin = localStorage.getItem("username")
 
   useEffect(() => {
    // Fetch appointments when the component is mounted
@@ -78,7 +79,7 @@ const AdminAppointment = () => {
   const finishAppointment = async (id) => {
     console.log(id)
     setLoading(true); // Set loading to true when the request is sent
-    const response = await axios.put(`http://localhost:80/api2/${id}/?action=finish`,appointment)
+    const response = await axios.put(`http://localhost:80/api2/${id}/?action=finish`,{loggedin:loggedin, ...appointment,})
     if(response.status==200){
       socket.emit('newData');
       setLoading(false);

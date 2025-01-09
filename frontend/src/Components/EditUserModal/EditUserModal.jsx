@@ -37,17 +37,22 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
     }, [open, user]);
 
     const navigate = useNavigate();
-
+    const newStatus = userData.status === 'active' ? 'inactive' : 'active';
+    const origStatus = userData.status;
+    
     const handleSave = () => {
         if (!userData) return;
         setAction("Save");
       
         setLoading(true);
         axios
-            .put(`http://localhost:80/api2/${user}/?action=updateUserData`, userData)
+            .put(`http://localhost:80/api2/${user}/?action=updateUserData`, {
+                loggedin: username,
+                ...userData,
+              })
             .then((response) => {
                 console.log('User data updated successfully:', response.data);
-                setLogAction(true);
+                //setLogAction(true);
                 if (onUserUpdated) onUserUpdated();
                 
                 close(); // Close the modal after saving
@@ -62,8 +67,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
             //setTimeout(() => setLogAction(false), 1000);
     };
 
-    const newStatus = userData.status === 'active' ? 'inactive' : 'active';
-    const origStatus = userData.status;
+    
 
     const handleStatusToggle = () => {
         

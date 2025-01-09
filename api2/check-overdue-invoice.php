@@ -10,9 +10,21 @@ $objDb = new DbConnect;
 $conn = $objDb->connect();
 
 // Query pending appointments past their time
-$sql = "SELECT inv_id, inv_duedate, inv_status 
-        FROM invoices
-        WHERE inv_duedate < DATE(NOW()) AND inv_status = 'pending'";
+$sql = "SELECT 
+            i.inv_id, 
+            i.inv_issuedate,
+            i.inv_duedate, 
+            i.inv_status, 
+            i.inv_totalamount,
+            p.p_fname,
+            p.p_lname,
+            p.p_email,
+            s.service_name
+        FROM invoices i
+        JOIN patienthistory ph ON i.ph_id = ph.id
+        JOIN patients p ON ph.p_id = p.id
+        JOIN services s ON ph.p_service = s.service_id
+        WHERE inv_duedate < DATE(NOW()) AND inv_status = 'pending';";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -24,6 +36,16 @@ if ($overdues) {
     if(count($overdues)>0){
         foreach($overdues as $overdue){
             $invoiceId = $overdue['inv_id'];
+            $recipientEmail = $overdue['p_email'];
+            $recipientFname = $overdue['p_fname'];
+            $recipientLname = $overdue['p_lname'];
+            $issueDate = $overdue['inv_issuedate'];
+            $dueDate = $overdue['inv_duedate'];
+            $total = $overdue['inv_totalamount'];
+            $service = $overdue['service_name'];
+
+            require 'send-overdue-email.php';
+
             echo $invoiceId;
             $sql = "UPDATE invoices 
                     SET inv_status = 'overdue'

@@ -62,8 +62,11 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
             //setTimeout(() => setLogAction(false), 1000);
     };
 
+    const newStatus = userData.status === 'active' ? 'inactive' : 'active';
+    const origStatus = userData.status;
+
     const handleStatusToggle = () => {
-        const newStatus = userData.status === 'active' ? 'inactive' : 'active';
+        
         axios
             .put(`http://localhost:80/api2/${user}/?action=updateStatus`, { status: newStatus })
             .then((response) => {
@@ -80,7 +83,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
         // Check if data has changed
         if (JSON.stringify(userData) !== JSON.stringify(originalData)) {
             setShowDiscardModal(true);
-            handleStatusToggle();
+            //handleStatusToggle();
         } else {
             close(); // Close without confirmation if no changes
         }
@@ -88,7 +91,11 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
 
     const handleDiscardChanges = () => {
         setShowDiscardModal(false); // Hide discard modal
+        if(originalData.status =! origStatus){
+            handleStatusToggle();
+        }
         setUserData(originalData); // Reset changes
+        
         close(); // Close main modal
     };
 
@@ -148,7 +155,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                             }>
                             <option value="" disabled>Select Role</option>
                             <option value="dentist">Dentist</option>
-                            
+                            <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
@@ -207,7 +214,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
                     <div className="discard-changes-modal-box">
                         <p>Are you sure you want to discard changes?</p>
                         <div className="discard-changes-modal-buttons">
-                        <button onClick={() => {setShowDiscardModal(false); handleStatusToggle()}} className="no-button">No</button>
+                        <button onClick={() => {setShowDiscardModal(false); }} className="no-button">No</button>
                             <button onClick={handleDiscardChanges} className="yes-button">Yes</button>
                             
                         </div>

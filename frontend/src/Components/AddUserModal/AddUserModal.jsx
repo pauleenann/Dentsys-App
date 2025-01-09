@@ -12,7 +12,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
     u_lname: "",
     confirmPassword: "",
   });
-
+  const loggedin = localStorage.getItem("username")
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -40,8 +40,8 @@ const AddUserModal = ({ open, close, onSuccess }) => {
       const response = await axios.post("http://localhost:80/api2/user/save", {
         action: "check",
         username: formData.username,
+        loggedin: loggedin,
       });
-
       if (response.data.exists) {
         alert("Username already exists. Please choose a different username.");
         return;
@@ -55,6 +55,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
       if (addResponse.data.success) {
         alert("User added successfully!");
         onSuccess();
+        setFormData("")
         close(); // Close the modal
       } else {
         alert("Error adding user: " + addResponse.data.message);
@@ -96,6 +97,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
               <option value="" disabled>Select Role</option>
               <option value="dentist">Dentist</option>
               <option value="staff">Staff</option>
+              <option value="admin">Admin</option>
             </select>
             {errors.account_type && <p className="error">{errors.account_type}</p>}
           </div>

@@ -212,25 +212,30 @@ const Reports = () => {
                 {generatedReport.length > 0 ? (
                 <table>
                     <thead>
-                    <tr>
-                        {Object.keys(generatedReport[0]).map((key, index) => (
-                        <td key={index}>{key}</td>
-                        ))}
-                    </tr>
+                        <tr>
+                            {Object.keys(generatedReport[0]).map((key) => (
+                                <td key={key}>{key}</td>
+                            ))}
+                        </tr>
                     </thead>
                     <tbody>
-                    {generatedReport.map((item, index) => (
-                        <tr key={index}>
-                        {Object.keys(item).map((key, index) => (
-                            <td key={index}>{item[key]}</td>
+                        {generatedReport.map((item, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {Object.entries(item).map(([key, value]) => (
+                                    <td key={key}>{value}</td>
+                                ))}
+                            </tr>
                         ))}
-                        </tr>
-                    ))}
                     </tbody>
                 </table>
-            ) : (
+            ) : !loading ? (
                 <p>No data available</p>
+            ) : (
+                <div className="spinner-border text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
             )}
+
 
             {generatedReport.length>0?
             <div className="d-flex"><button className='btn export-report' onClick={exportToExcel}>Export</button></div>:''}

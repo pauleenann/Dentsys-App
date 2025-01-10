@@ -17,7 +17,7 @@ const AppointmentCancelledConfirm = () => {
     },[])
 
     const cancelAppointment = async () => {
-        const response = await axios.put(`http://localhost:80/api2/${id}/?action=cancel`);
+        const response = await axios.put(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=cancel`);
         console.log(response.status);
         // if cancelled, emit socket
         if(response.status==200){

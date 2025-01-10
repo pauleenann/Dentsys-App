@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './AuditLogs.css'
+import axios from 'axios';
 import isAuthenticated from '../Auth';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import AdminInfo from '../AdminInfo/AdminInfo';
 
 const AuditLogs = () => {
+    const [audits, setAudits] = useState([]);
+
+    useEffect(() => {
+       // Fetch appointments when the component is mounted
+       getAudit();
+    
+       //Listen for the 'updateData' event from the server
+       
+    });
+
+    const getAudit = async () => {
+        try {
+          const response = await axios.get("https://prodbackenddentsys.tuplrc-cla.com/?action=getAudit");
+          setAudits(response.data); // Update state with fetched data
+          console.log(response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
   return (
     <div className='audit-container'>
        <AdminNavbar />
@@ -44,11 +64,13 @@ const AuditLogs = () => {
                     </tr>
                 </thead>
                 <tbody className='audit-tbody'>
+                    {audits.length>0?audits.map((entry, index) => (
                     <tr>
-                        <td>lance.bernal</td>
-                        <td>Processed payment</td>
-                        <td>05-20-2024  9:30 AM</td>
+                        <td>{entry.user}</td>
+                        <td>{entry.action}</td>
+                        <td>{entry.timestamp}</td>
                     </tr>
+                    )):''}
                 </tbody>
             </table>
             {/* pagination */}

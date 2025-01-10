@@ -35,7 +35,7 @@ const Admin = () => {
 
   const handleLogin = async () => {
     try {
-        const response = await axios.post('http://localhost:80/api2/user/save', loginData);
+        const response = await axios.post('https://prodbackenddentsys.tuplrc-cla.com/user/save', loginData);
         console.log(response)
         const data = response.data;
             if (data.status === 1) {

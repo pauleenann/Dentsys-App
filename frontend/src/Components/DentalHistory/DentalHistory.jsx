@@ -88,10 +88,10 @@ const DentalHistory = () => {
     const fetchData = async () => {
         try {
             const [historyResponse, invoiceResponse, paymentResponse, totalpaidResponse] = await Promise.all([
-                axios.get(`http://localhost:80/api2/${id}/?action=getDentalRecord`),
-                axios.get(`http://localhost:80/api2/${id}/?action=getInvoice`),
-                axios.get(`http://localhost:80/api2/${id}/?action=getPaymentDetails`),
-                await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaidDentalHistory`)
+                axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getDentalRecord`),
+                axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getInvoice`),
+                axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getPaymentDetails`),
+                await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getTotalPaidDentalHistory`)
             ]);
 
             setHistory(historyResponse.data);

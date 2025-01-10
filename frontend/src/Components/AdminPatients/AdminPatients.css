@@ -109,6 +109,7 @@ body {
    background-color: var(--lightest-blue);
    padding: 10px;
    border-radius: 5px;
+   margin-top: 10px;
 }
 
 .patients-container .patient-record div{

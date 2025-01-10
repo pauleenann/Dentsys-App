@@ -414,7 +414,15 @@ if($method ==='PUT'){
                 $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($services);
                 break;
-
+            
+        case 'getAudit':
+            $sql = "SELECT * FROM audit_log";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $appt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($appt);
+            break;
+            
         case 'getAppointments':
             $sql = "SELECT 
                         a_id, 

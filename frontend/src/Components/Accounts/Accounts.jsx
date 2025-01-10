@@ -45,7 +45,7 @@ const Accounts = () => {
     const offset = (page - 1) * LIMIT;
     setSelectedLetter(letter);
     try {
-      const response = await axios.get(`http://localhost:80/api2/?action=getUsersByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`);
+      const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getUsersByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`);
       setUsers(response.data.users);
       setTotalUsers(response.data.total);
       setCurrentPage(page);
@@ -63,7 +63,7 @@ const Accounts = () => {
     const offset = (page - 1) * LIMIT;
     try {
       const response = await axios.get(
-        `http://localhost:80/api2/?action=getUsers&limit=${LIMIT}&offset=${offset}`
+        `https://prodbackenddentsys.tuplrc-cla.com/?action=getUsers&limit=${LIMIT}&offset=${offset}`
       );
       console.log(response.data)
       setUsers(response.data.users);

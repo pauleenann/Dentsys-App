@@ -28,7 +28,7 @@ const AddUserModal = ({open,close}) => {
         }
     
         try {
-          const response = await axios.post("http://localhost:80/api2/user/save", {
+          const response = await axios.post("https://prodbackenddentsys.tuplrc-cla.com/user/save", {
             action: "addUser",
             username,
             password,

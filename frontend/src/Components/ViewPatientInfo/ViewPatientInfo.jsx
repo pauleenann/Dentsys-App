@@ -36,7 +36,7 @@ const ViewPatientInfo = () => {
 
     const getPatient = async()=> {
         try{
-            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPatient`);
+            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getPatient`);
             console.log(response)
             setPatient(response.data);
         }catch(err){
@@ -46,7 +46,7 @@ const ViewPatientInfo = () => {
     
     const getProcedureHistory = async ()=> {
         try{
-            const response =await axios.get(`http://localhost:80/api2/${id}/?action=getProcedureHistory`);
+            const response =await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getProcedureHistory`);
             setHistory(response.data);
         }catch(err){
             console.log("Couldn't get dental history. An error occurred: ", err.message)

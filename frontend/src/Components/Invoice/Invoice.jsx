@@ -15,7 +15,7 @@ const Invoice = () => {
 
     const getInvoices = async ()=> {
         try {
-            const response = await axios.get('http://localhost:80/api2/?action=getInvoices');
+            const response = await axios.get('https://prodbackenddentsys.tuplrc-cla.com/?action=getInvoices');
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 

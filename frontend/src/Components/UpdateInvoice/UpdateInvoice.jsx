@@ -40,7 +40,7 @@ const UpdateInvoice = () => {
 
     const getTotalPaid = async ()=> {
         try {
-            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
+            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getTotalPaid`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 
@@ -63,7 +63,7 @@ const UpdateInvoice = () => {
             setLoading(true);
             try {
             console.log("Sending payment data to server:", payment);
-            await axios.post("http://localhost:80/api2/", payment).finally(() => setLoading(false));;
+            await axios.post("https://prodbackenddentsys.tuplrc-cla.com/", payment).finally(() => setLoading(false));;
             navigate(`/invoice-details/${id}`);
             } catch (err) {
             console.log(err);
@@ -74,7 +74,7 @@ const UpdateInvoice = () => {
 
     const getInvoiceDetails = async()=> {
         try {
-            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
+            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getInvoiceDetails`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data[0].inv_totalamount);
 
@@ -94,7 +94,7 @@ const UpdateInvoice = () => {
 
     const getPayment = async()=> {
         try {
-            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPayment`);
+            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getPayment`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 

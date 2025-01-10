@@ -23,7 +23,7 @@ const AdminPatients = () => {
   /* const fetchPatients = async (letter) => {
     setSelectedLetter(letter);
     try {
-      const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getPatientsByLetter&letter=${letter}`);
+      const response = await axios.get(`http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}`);
       setPatients(response.data);
     } catch (error) {
       console.error("Error fetching patient data:", error);
@@ -50,7 +50,7 @@ const AdminPatients = () => {
     const offset = (page - 1) * LIMIT;
     setSelectedLetter(letter);
     try {
-      const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getPatientsByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`);
+      const response = await axios.get(`http://localhost:80/api2/?action=getPatientsByLetter&letter=${letter}&limit=${LIMIT}&offset=${offset}`);
       setPatients(response.data.patients);
       setTotalPatients(response.data.total);
       setCurrentPage(page);
@@ -73,7 +73,7 @@ const AdminPatients = () => {
   console.log(selectedLetter)
 
   /* function getPatients() {
-    axios.get('https://prodbackenddentsys.tuplrc-cla.com/?action=getPatients')
+    axios.get('http://localhost:80/api2/?action=getPatients')
       .then(response => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
@@ -93,7 +93,7 @@ const AdminPatients = () => {
     
         try {
           const response = await axios.get(
-            `https://prodbackenddentsys.tuplrc-cla.com/?action=getPatients&limit=${LIMIT}&offset=${offset}`
+            `http://localhost:80/api2/?action=getPatients&limit=${LIMIT}&offset=${offset}`
           );
           console.log(response.data)
           setPatients(response.data.patients);

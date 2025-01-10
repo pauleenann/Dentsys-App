@@ -37,7 +37,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
     if (!validateForm()) return;
 
     try {
-      const response = await axios.post("https://prodbackenddentsys.tuplrc-cla.com/user/save", {
+      const response = await axios.post("http://localhost:80/api2/user/save", {
         action: "check",
         username: formData.username,
         
@@ -47,7 +47,7 @@ const AddUserModal = ({ open, close, onSuccess }) => {
         return;
       }
 
-      const addResponse = await axios.post("https://prodbackenddentsys.tuplrc-cla.com/user/save", {
+      const addResponse = await axios.post("http://localhost:80/api2/user/save", {
         loggedin: loggedin,
         action: "addUser",
         ...formData,

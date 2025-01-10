@@ -15,7 +15,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
     useEffect(() => {
         if (open && user) {
             axios
-                .get(`https://prodbackenddentsys.tuplrc-cla.com/${user}/?action=getUserData`)
+                .get(`http://localhost:80/api2/${user}/?action=getUserData`)
                 .then((response) => {
                     setUserData(response.data);
                 })
@@ -32,7 +32,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
 
         setLoading(true);
         axios
-            .put(`https://prodbackenddentsys.tuplrc-cla.com/${user}/?action=updateUserData`, userData)
+            .put(`http://localhost:80/api2/${user}/?action=updateUserData`, userData)
             .then((response) => {
                 console.log('User data updated successfully:', response.data);
                 if (onUserUpdated) onUserUpdated();
@@ -50,7 +50,7 @@ const EditUserModal = ({ open, close, user, onUserUpdated }) => {
     const handleStatusToggle = () => {
         const newStatus = userData.status === 'active' ? 'inactive' : 'active';
         axios
-            .put(`https://prodbackenddentsys.tuplrc-cla.com/${user}/?action=updateStatus`, { status: newStatus })
+            .put(`http://localhost:80/api2/${user}/?action=updateStatus`, { status: newStatus })
             .then((response) => {
                 console.log(`User status updated to ${newStatus}:`, response.data);
                 setUserData({ ...userData, status: newStatus }); // Update local state

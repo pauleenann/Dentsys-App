@@ -23,7 +23,7 @@ const InvoiceDetails = () => {
 
     const getInvoiceDetails = async()=>{
         try {
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getInvoiceDetails`);
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getInvoiceDetails`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 
@@ -41,7 +41,7 @@ const InvoiceDetails = () => {
 
     const getPayment = async ()=> {
         try {
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getPayment`);
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getPayment`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 
@@ -59,7 +59,7 @@ const InvoiceDetails = () => {
 
     const getTotalPaid = async()=> {
         try {
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getTotalPaid`);
+            const response = await axios.get(`http://localhost:80/api2/${id}/?action=getTotalPaid`);
             console.log('Full API response:', response);
             console.log('API response data:', response.data);
 

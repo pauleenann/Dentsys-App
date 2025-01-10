@@ -31,7 +31,7 @@ const EditPatientInfo = () => {
     }, []);
 
     const getPatient = ()=> {
-        axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=getPatient`)
+        axios.get(`http://localhost:80/api2/${id}/?action=getPatient`)
           .then(function(response) {
             console.log(response.data); 
               setPatient(response.data);
@@ -53,7 +53,7 @@ const EditPatientInfo = () => {
         }else{
             setLoading(true);
             try {
-            await axios.put(`https://prodbackenddentsys.tuplrc-cla.com/${id}/?action=editPatient`, patient).finally(() => setLoading(false));
+            await axios.put(`http://localhost:80/api2/${id}/?action=editPatient`, patient).finally(() => setLoading(false));
             // Uncomment the next line if you want to navigate after submission
             navigate(`/view-patient-info/${patient.id}`);
             } catch (err) {

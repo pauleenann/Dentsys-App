@@ -80,7 +80,7 @@ const Reports = () => {
             }),
           };
           
-          const response = await axios.get('https://prodbackenddentsys.tuplrc-cla.com/?action=reports', { params });
+          const response = await axios.get('http://localhost:80/api2/?action=reports', { params });
           console.log(response.data);  // Handle response here
           setGeneratedReport(response.data)
         } catch (error) {

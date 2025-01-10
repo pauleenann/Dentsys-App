@@ -57,7 +57,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
         }else if(submitForm){
             try{
                 setLoading(true);
-                const response =await axios.put(`https://prodbackenddentsys.tuplrc-cla.com/${keyOfSelectedAppointment}/?action=reschedule`, input).finally(() => setLoading(false)); 
+                const response =await axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=reschedule`, input).finally(() => setLoading(false)); 
                 console.log(response)
                 if(response.status==200){
                     socket.emit('newData');
@@ -71,7 +71,7 @@ const Reschedule = ({ onClose, keyOfSelectedAppointment, appointments}) => {
 
     const getUnavailableTime = (date) => {
         const times = []
-        axios.get(`https://prodbackenddentsys.tuplrc-cla.com/${date}/?action=getUnavailableTime`)
+        axios.get(`http://localhost:80/api2/${date}/?action=getUnavailableTime`)
           .then(response => {
             console.log(response.data)
             const results = response.data;

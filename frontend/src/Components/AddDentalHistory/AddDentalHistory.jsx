@@ -325,7 +325,7 @@ const AddService = () => {
 
     const getServices = async ()=>{
         try{
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getServices`);
+            const response = await axios.get(`http://localhost:80/api2/?action=getServices`);
             setServices(response.data)
         }catch(err){
             console.log("Couldn't retrieve services: ", err.message)
@@ -334,7 +334,7 @@ const AddService = () => {
 
     const getOptions = async ()=>{
         try{
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getOptions`);
+            const response = await axios.get(`http://localhost:80/api2/?action=getOptions`);
             setOptions(response.data)
         }catch(err){
             console.log("Couldn't retrieve options: ", err.message)
@@ -343,7 +343,7 @@ const AddService = () => {
 
     const getDentists = async()=>{
         try{
-            const response = await axios.get(`https://prodbackenddentsys.tuplrc-cla.com/?action=getDentists`);
+            const response = await axios.get(`http://localhost:80/api2/?action=getDentists`);
             setDentists(response.data)
         }catch(err){
             console.log("Couldn't retrieve options: ", err.message)
@@ -452,7 +452,7 @@ const AddService = () => {
     const handleSave = async ()=>{
         setLoading(true);
             try{
-                const response = await axios.post("https://prodbackenddentsys.tuplrc-cla.com/user/save", dentalHistory).finally(() => setLoading(false));
+                const response = await axios.post("http://localhost:80/api2/user/save", dentalHistory).finally(() => setLoading(false));
                 console.log(response)
                 if(response.status==200){
                     socket.emit('newData');

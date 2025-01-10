@@ -16,7 +16,7 @@ const CancelAppointment = ({open, close, keyOfSelectedAppointment, appointments}
   }, []);
 
   const getAppointment =()=> {
-    axios.get('https://prodbackenddentsys.tuplrc-cla.com/?action=getAppointments')
+    axios.get('http://localhost:80/api2/?action=getAppointments')
       .then(response => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
@@ -35,7 +35,7 @@ const CancelAppointment = ({open, close, keyOfSelectedAppointment, appointments}
   const cancelAppointment = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true when the request is sent
-    const response = await axios.put(`https://prodbackenddentsys.tuplrc-cla.com/${keyOfSelectedAppointment}/?action=cancel`, appointment);
+    const response = await axios.put(`http://localhost:80/api2/${keyOfSelectedAppointment}/?action=cancel`, appointment);
     if(response.status==200){
       socket.emit('newData');
       window.location.reload();

@@ -12,7 +12,7 @@ const SetInactiveModal = ({open, close, user, onStatusUpdated }) => {
         if (open && user) {
             console.log(user)
             axios
-                .get(`https://prodbackenddentsys.tuplrc-cla.com/${user}/?action=getUserData`)
+                .get(`http://localhost:80/api2/${user}/?action=getUserData`)
                 .then((response) => {
                     //console.log(response.data);
                     setUserData(response.data);
@@ -29,7 +29,7 @@ const SetInactiveModal = ({open, close, user, onStatusUpdated }) => {
         setError(null);
 
         try {
-            const response = await axios.put(`https://prodbackenddentsys.tuplrc-cla.com/${user}/?action=setInactive`, {
+            const response = await axios.put(`http://localhost:80/api2/${user}/?action=setInactive`, {
                 status: 'inactive', // Assumes the backend expects a 'status' field
             });
 

@@ -63,7 +63,7 @@ const App = () => {
         <Route path="/invoice-list" element={<Protected allowedRoles={['admin','staff']}><Invoice/></Protected>} />
         <Route path="/accounts" element={<Protected allowedRoles={['admin']}><Accounts/></Protected>} />
         <Route path="/audit" element={<Protected allowedRoles={['admin']}><AuditLogs/></Protected>} />
-        <Route path="/reports" element={<Protected allowedRoles={['admin']}><Reports/></Protected>} />
+        <Route path="/reports" element={<Protected allowedRoles={['admin','staff']}><Reports/></Protected>} />
         <Route path="/invoice-details/:id" element={<Protected allowedRoles={['admin','staff']}><InvoiceDetails/></Protected>} />
         <Route path="/update-invoice/:id" element={<Protected allowedRoles={['admin','staff']}><UpdateInvoice/></Protected>} />     
         <Route path="/appointment-cancelled/:id" element={<AppointmentCancelledConfirm/>} />      

@@ -72,4 +72,9 @@
     .back-text{
         display: none;
     }
+
+    .client-container-email, .client-container-phone{
+        text-align: start !important;
+        width: 100%;
+    }
 }

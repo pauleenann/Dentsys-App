@@ -84,6 +84,7 @@ const AdminAppointment = () => {
       socket.emit('newData');
       setLoading(false);
     }
+    window.location.reload()
     console.log(appointment)
   }
   

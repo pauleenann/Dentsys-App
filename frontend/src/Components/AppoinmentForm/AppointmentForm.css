@@ -50,7 +50,7 @@
 }
 
 .appoinment-container .labels{
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .appoinment-container .appointment-summary{
@@ -79,6 +79,7 @@
 .appoinment-container .reminder{
     margin-top: 20px;
     font-style: italic;
+    color: var(--blue);
 }
 
 .appoinment-container .required-field{
@@ -123,13 +124,28 @@
 
 @media screen and (max-width: 1000px) {
 
+    .appoinment-container .labels{
+        font-size: 1rem !important;
+        margin-bottom: 0px !important;
+    }
+
+    .appoinment-container{
+        padding: 0 20px;
+        
+    }
+
     .appoinment-container .patient-info{
         margin-bottom: 20px;
+        padding: 50px 40px;
     }
 
     .appoinment-container .appointment-summary{
-        padding: 50px 60px;
+        padding: 50px 40px;
         margin: 0 0px; 
+    }
+
+    .appoinment-container .reminder{
+        font-size: 0.9rem;
     }
 }
 

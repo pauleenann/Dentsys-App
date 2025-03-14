@@ -141,7 +141,7 @@ const AddAppointment = () => {
                     try {
                         const response = await axios.post("http://localhost:80/api2/user/save", {loggedin:loggedin, ...formData,}).finally(() => setLoading(false));
                         console.log(response.data.status)
-                        alert(response.data.status);
+                        // alert(response.data.status);
                         //if may nainsert na data, send event sa server (node)
                         if(response.data.status==1){
                             socket.emit('newData');
